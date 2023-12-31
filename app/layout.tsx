@@ -1,8 +1,15 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Lato } from 'next/font/google'
 import './globals.css'
+import { Header } from './_components/header'
+import { Footer } from './_components/footer'
+import { Web3Provider } from './_providers/web3'
+import { Toaster } from '@/components/ui/toaster'
 
-const inter = Inter({ subsets: ['latin'] })
+const lato = Lato({
+  weight: ['100', '300', '400', '700', '900'],
+  subsets: ['latin'],
+})
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,12 +24,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`flex flex-col min-h-screen bg-zinc-950 w-full items-center justify-center ${inter.className}`}
+        className={`bg-background bg-[url('/bbblur.svg')] bg-no-repeat bg-center bg-cover ${lato.className}`}
       >
-        <main className="flex flex-col min-h-screen w-full items-center justify-center">
-          {children}
-          <div className="grow" />
-        </main>
+        <Web3Provider>
+          <div className="flex flex-col w-full items-center justify-center min-h-screen">
+            <Header />
+            <main className="container flex flex-col w-full items-center justify-center py-24">
+              {children}
+              <div className="grow" />
+            </main>
+            <div className="grow" />
+            <Footer />
+          </div>
+        </Web3Provider>
+        <Toaster />
       </body>
     </html>
   )
