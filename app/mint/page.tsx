@@ -22,6 +22,9 @@ import {
 } from '@/components/ui/command'
 import { toast } from '@/components/ui/use-toast'
 import Image from 'next/image'
+import { useContractWrite } from 'wagmi'
+import { arbitrumBridgeABI } from '@/app/mint/abi'
+import { parseEther } from 'viem/utils'
 
 const CHAINS = [
   { label: 'BNB', value: 'bnb', image: '/bnb.svg' },
@@ -41,20 +44,35 @@ const FormSchema = z.object({
 export default function MintPage() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      chainFrom: 'arb-nova',
+      chainTo: 'polygon',
+    },
   })
   const { watch, setValue } = form
 
   const fields = watch()
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+  const { isSuccess, write } = useContractWrite({
+    address: '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08',
+    abi: arbitrumBridgeABI,
+    functionName: 'mint',
+    chainId: 42170,
+  })
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    write({
+      value: parseEther('0'),
     })
+    if (isSuccess)
+      toast({
+        title: 'You submitted the following values:',
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          </pre>
+        ),
+      })
   }
 
   return (
