@@ -1,13 +1,19 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-
-import { Repeat2 } from 'lucide-react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Check, ChevronsUpDown } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
+import { RefuelSchema } from '@/app/_utils/schemas'
+import { Button } from '@/components/ui/button'
+import { Repeat2, Check, ChevronsUpDown } from 'lucide-react'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 import {
   Popover,
   PopoverContent,
@@ -21,29 +27,25 @@ import {
   CommandInput,
   CommandItem,
 } from '@/components/ui/command'
+import { Input } from '@/components/ui/input'
 import Image from 'next/image'
-import { useAccount, useContractWrite, useContractRead } from 'wagmi'
-import { Separator } from '@/components/ui/separator'
+import { CHAINS } from '@/app/_utils/chains'
+import { useState } from 'react'
+import { useAccount } from 'wagmi'
+import { Slider } from '@/components/ui/slider'
 
-import { MintButton } from '../_components/mint-button/mint-button'
-import { Balance } from '../_components/balance'
-import { toast } from 'sonner'
-import { formatEther, parseEther } from 'viem/utils'
-import { CHAINS } from '../_utils/chains'
-import { BridgeSchema } from '@/app/_utils/schemas'
-import { arbitrumABI } from '../_utils/abi/arbitrum'
+export default function RefuelPage() {
+  const { address } = useAccount()
 
-export default function MintPage() {
-  const { address, status } = useAccount()
-
-  const form = useForm<z.infer<typeof BridgeSchema>>({
-    resolver: zodResolver(BridgeSchema),
+  const [isLoading] = useState(false)
+  const form = useForm<z.infer<typeof RefuelSchema>>({
+    resolver: zodResolver(RefuelSchema),
     defaultValues: {
-      balance: 0,
       chainFrom: 42170,
       chainTo: 102,
     },
   })
+
   const {
     watch,
     formState: { isValid },
@@ -51,82 +53,16 @@ export default function MintPage() {
 
   const fields = watch()
 
-  const { write, isLoading } = useContractWrite({
-    address: '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08',
-    abi: arbitrumABI,
-    functionName: 'sendFrom',
-    chainId: 42170,
-    value: parseEther('0.0006'),
-    onError(error) {
-      toast('Error occurred!', {
-        description: `${error.message.slice(0, 400)}${
-          error.message.length > 400 ? '...' : ''
-        }`,
-      })
-    },
-  })
-
-  const { refetch, error } = useContractRead({
-    address: '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08',
-    abi: arbitrumABI,
-    functionName: 'estimateSendFee',
-    chainId: 42170,
-    args: [
-      fields.chainTo,
-      address!,
-      BigInt(521), // tokenId
-      true,
-      '0x00010000000000000000000000000000000000000000000000000000000000030d40',
-    ],
-    enabled: false,
-  })
-
-  async function bridgeNFT({ chainTo }: z.infer<typeof BridgeSchema>) {
-    const estimateFee = await refetch()
-
-    if (!estimateFee?.data)
-      return toast('Error occurred!', {
-        description: `${error?.message.slice(0, 400)}${
-          error?.message?.length! > 400 ? '...' : ''
-        }`,
-      })
-
-    const fee = parseEther(formatEther(estimateFee.data[0]))
-
-    write({
-      value: fee,
-      args: [
-        address!,
-        chainTo,
-        address!,
-        BigInt(521), // tokenId
-        address!,
-        '0x0000000000000000000000000000000000000000',
-        '0x00010000000000000000000000000000000000000000000000000000000000030d40',
-      ],
-    })
+  function refuel(data: z.infer<typeof RefuelSchema>) {
+    console.log(data)
   }
 
   return (
     <section className="border text-sm text-foreground rounded-md border-border max-w-xl w-full px-4 pt-3 pb-4 bg-background/60 backdrop-blur-xl flex flex-col">
-      <h2 className="font-bold text-lg mb-6">NFT Bridge</h2>
+      <h2 className="font-bold text-lg mb-6">Refuel Gas</h2>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(bridgeNFT)}>
-          <p className="mb-1">Mint NFT</p>
-
-          <MintButton />
-
-          <Balance
-            address={address}
-            status={status}
-            onSuccess={(n) =>
-              form.setValue('balance', n, { shouldValidate: true })
-            }
-          />
-
-          <Separator className="my-5" />
-
+        <form onSubmit={form.handleSubmit(refuel)}>
           <div className="w-full flex justify-between items-center mt-4 mb-4">
             <FormField
               control={form.control}
@@ -281,13 +217,63 @@ export default function MintPage() {
             />
           </div>
 
-          <p className="mb-1">Bridge</p>
+          <FormField
+            control={form.control}
+            name="amount"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="flex items-end justify-between">
+                  Refuel Amount
+                  <button
+                    type="button"
+                    className="text-[10px] opacity-75 text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4]"
+                  >
+                    MAX
+                  </button>
+                </FormLabel>
+                <FormControl>
+                  <Input placeholder="0.000 ETH" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <div className="flex items-center justify-between w-full my-7 gap-4 text-xs">
+            <span className="flex items-center justify-center bg-background rounded-md py-1 w-16 border border-border">
+              0
+            </span>
+            <Slider defaultValue={[33]} max={100} step={1} />
+            <span className="flex items-center justify-center bg-background rounded-md py-1 w-16 border border-border">
+              123
+            </span>
+          </div>
+
+          <article className="bg-background/50 border border-border rounded-md px-3 py-2 mb-6">
+            <h3 className="font-bold text-lg mb-3">Transaction Summary</h3>
+
+            <div className="flex items-center justify-between w-full">
+              Estimated Transfer Time:
+              <span className="text-secondary tracking-wide">~5 mins</span>
+            </div>
+            <div className="flex items-center justify-between w-full">
+              Refuel cost:
+              <span className="text-secondary tracking-wide">
+                0.00015 ETH ($0.34)
+              </span>
+            </div>
+            <div className="flex items-center justify-between w-full">
+              Expected Output:
+              <span className="text-secondary tracking-wide">0 MATIC ($0)</span>
+            </div>
+          </article>
+
           <Button
             type="submit"
             disabled={!isValid || !address || isLoading}
             className="w-full"
           >
-            Bridge
+            Refuel
           </Button>
         </form>
       </Form>

@@ -1,4 +1,4 @@
-export const arbitrumBridgeABI = [
+export const arbitrumABI = [
   {
     inputs: [
       { internalType: 'string', name: '_baseTokenURI', type: 'string' },
@@ -903,4 +903,4 @@ export const arbitrumBridgeABI = [
     stateMutability: 'view',
     type: 'function',
   },
-]
+] as const

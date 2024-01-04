@@ -12,7 +12,7 @@ export default function Home() {
           Mint, bridge, and refuel assets across the chains.
         </p>
 
-        <Button asChild>
+        <Button>
           <Link href="/mint">Launch App</Link>
         </Button>
       </div>

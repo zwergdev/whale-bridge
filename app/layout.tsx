@@ -4,7 +4,7 @@ import './globals.css'
 import { Header } from './_components/header'
 import { Footer } from './_components/footer'
 import { Web3Provider } from './_providers/web3'
-import { Toaster } from '@/components/ui/toaster'
+import { Toaster } from '@/components/ui/sonner'
 
 const lato = Lato({
   weight: ['100', '300', '400', '700', '900'],
