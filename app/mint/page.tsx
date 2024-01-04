@@ -74,7 +74,7 @@ export default function MintPage() {
     args: [
       fields.chainTo,
       address!,
-      BigInt(521), // tokenId
+      BigInt(5), // tokenId
       true,
       '0x00010000000000000000000000000000000000000000000000000000000000030d40',
     ],
@@ -99,7 +99,7 @@ export default function MintPage() {
         address!,
         chainTo,
         address!,
-        BigInt(521), // tokenId
+        BigInt(5), // tokenId
         address!,
         '0x0000000000000000000000000000000000000000',
         '0x00010000000000000000000000000000000000000000000000000000000000030d40',
