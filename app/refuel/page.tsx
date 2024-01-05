@@ -29,25 +29,31 @@ import {
 } from '@/components/ui/command'
 import { Input } from '@/components/ui/input'
 import Image from 'next/image'
-import { CHAINS } from '@/app/_utils/chains'
+import { CHAINS, selectedChain } from '@/app/_utils/chains'
 import { useState } from 'react'
-import { useAccount } from 'wagmi'
+import { useAccount, useBalance } from 'wagmi'
 import { Slider } from '@/components/ui/slider'
 
 export default function RefuelPage() {
   const { address } = useAccount()
+  const { data } = useBalance({ address })
+  const balance = Number(data?.formatted)
 
   const [isLoading] = useState(false)
+
   const form = useForm<z.infer<typeof RefuelSchema>>({
     resolver: zodResolver(RefuelSchema),
     defaultValues: {
-      chainFrom: 42170,
+      amount: balance ? balance / 3 : 0,
+      balance: balance ?? 0,
+      chainFrom: 175,
       chainTo: 102,
     },
   })
 
   const {
     watch,
+    setValue,
     formState: { isValid },
   } = form
 
@@ -76,15 +82,10 @@ export default function RefuelPage() {
                           disabled={isLoading}
                           variant="outline"
                           role="combobox"
-                          className={cn(
-                            'w-[200px] justify-between',
-                            !field.value && 'text-muted-foreground',
-                          )}
+                          className="w-[200px] justify-between"
                         >
-                          {field.value
-                            ? CHAINS.find(({ value }) => value === field.value)
-                                ?.label
-                            : 'Select chain'}
+                          {selectedChain(field.value)}
+
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
@@ -156,15 +157,9 @@ export default function RefuelPage() {
                           disabled={isLoading}
                           variant="outline"
                           role="combobox"
-                          className={cn(
-                            'w-[200px] justify-between',
-                            !field.value && 'text-muted-foreground',
-                          )}
+                          className="w-[200px] justify-between"
                         >
-                          {field.value
-                            ? CHAINS.find(({ value }) => value === field.value)
-                                ?.label
-                            : 'Select chain'}
+                          {selectedChain(field.value)}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
@@ -227,12 +222,18 @@ export default function RefuelPage() {
                   <button
                     type="button"
                     className="text-[10px] opacity-75 text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4]"
+                    disabled={!balance}
+                    onClick={() => setValue('amount', balance)}
                   >
                     MAX
                   </button>
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="0.000 ETH" {...field} />
+                  <Input
+                    placeholder={`0.0001 ${data?.symbol}`}
+                    {...field}
+                    max={balance}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -243,9 +244,15 @@ export default function RefuelPage() {
             <span className="flex items-center justify-center bg-background rounded-md py-1 w-16 border border-border">
               0
             </span>
-            <Slider defaultValue={[33]} max={100} step={1} />
-            <span className="flex items-center justify-center bg-background rounded-md py-1 w-16 border border-border">
-              123
+            <Slider
+              defaultValue={[balance / 3]}
+              max={balance}
+              value={[fields.amount]}
+              step={0.000001}
+              onValueChange={(v) => setValue('amount', v[0])}
+            />
+            <span className="flex items-center justify-center bg-background rounded-md py-1 w-fit px-2 border border-border">
+              {!balance ? '...' : balance < 1 ? balance.toFixed(5) : balance}
             </span>
           </div>
 

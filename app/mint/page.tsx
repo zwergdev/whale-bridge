@@ -22,16 +22,18 @@ import {
   CommandItem,
 } from '@/components/ui/command'
 import Image from 'next/image'
-import { useAccount, useContractWrite, useContractRead } from 'wagmi'
+import { useAccount } from 'wagmi'
 import { Separator } from '@/components/ui/separator'
 
 import { MintButton } from '../_components/mint-button/mint-button'
 import { Balance } from '../_components/balance'
-import { toast } from 'sonner'
-import { formatEther, parseEther } from 'viem/utils'
-import { CHAINS } from '../_utils/chains'
-import { BridgeSchema } from '@/app/_utils/schemas'
-import { arbitrumABI } from '../_utils/abi/arbitrum'
+import { CHAINS, selectedChain } from '../_utils/chains'
+import { BridgeSchema } from '../_utils/schemas'
+import { truncatedToaster } from '../_utils/truncatedToaster'
+import {
+  estimateFeeArbitrum,
+  bridgeArbitrum,
+} from '../_utils/contract-actions/arbitrum'
 
 export default function MintPage() {
   const { address, status } = useAccount()
@@ -40,7 +42,7 @@ export default function MintPage() {
     resolver: zodResolver(BridgeSchema),
     defaultValues: {
       balance: 0,
-      chainFrom: 42170,
+      chainFrom: 175,
       chainTo: 102,
     },
   })
@@ -51,55 +53,26 @@ export default function MintPage() {
 
   const fields = watch()
 
-  const { write, isLoading } = useContractWrite({
-    address: '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08',
-    abi: arbitrumABI,
-    functionName: 'sendFrom',
-    chainId: 42170,
-    value: parseEther('0.0006'),
-    onError(error) {
-      toast('Error occurred!', {
-        description: `${error.message.slice(0, 400)}${
-          error.message.length > 400 ? '...' : ''
-        }`,
-      })
-    },
-  })
+  const { write, isLoading } = bridgeArbitrum()
 
-  const { refetch, error } = useContractRead({
-    address: '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08',
-    abi: arbitrumABI,
-    functionName: 'estimateSendFee',
-    chainId: 42170,
-    args: [
-      fields.chainTo,
-      address!,
-      BigInt(5), // tokenId
-      true,
-      '0x00010000000000000000000000000000000000000000000000000000000000030d40',
-    ],
-    enabled: false,
-  })
+  const { refetch, error } = estimateFeeArbitrum(
+    fields.chainTo,
+    address!,
+    BigInt(521), // tokenId
+  )
 
   async function bridgeNFT({ chainTo }: z.infer<typeof BridgeSchema>) {
-    const estimateFee = await refetch()
+    const fee = await refetch()
 
-    if (!estimateFee?.data)
-      return toast('Error occurred!', {
-        description: `${error?.message.slice(0, 400)}${
-          error?.message?.length! > 400 ? '...' : ''
-        }`,
-      })
-
-    const fee = parseEther(formatEther(estimateFee.data[0]))
+    if (!fee?.data) return truncatedToaster('Error occurred!', error?.message!)
 
     write({
-      value: fee,
+      value: fee.data[0],
       args: [
         address!,
         chainTo,
         address!,
-        BigInt(5), // tokenId
+        BigInt(521), // tokenId
         address!,
         '0x0000000000000000000000000000000000000000',
         '0x00010000000000000000000000000000000000000000000000000000000000030d40',
@@ -140,15 +113,9 @@ export default function MintPage() {
                           disabled={isLoading}
                           variant="outline"
                           role="combobox"
-                          className={cn(
-                            'w-[200px] justify-between',
-                            !field.value && 'text-muted-foreground',
-                          )}
+                          className="w-[200px] justify-between"
                         >
-                          {field.value
-                            ? CHAINS.find(({ value }) => value === field.value)
-                                ?.label
-                            : 'Select chain'}
+                          {selectedChain(field.value)}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>
@@ -220,15 +187,9 @@ export default function MintPage() {
                           disabled={isLoading}
                           variant="outline"
                           role="combobox"
-                          className={cn(
-                            'w-[200px] justify-between',
-                            !field.value && 'text-muted-foreground',
-                          )}
+                          className="w-[200px] justify-between"
                         >
-                          {field.value
-                            ? CHAINS.find(({ value }) => value === field.value)
-                                ?.label
-                            : 'Select chain'}
+                          {selectedChain(field.value)}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </FormControl>

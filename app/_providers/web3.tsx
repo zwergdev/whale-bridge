@@ -6,13 +6,23 @@ import {
   midnightTheme,
 } from '@rainbow-me/rainbowkit'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
-import { arbitrumNova, bsc, arbitrum } from 'wagmi/chains'
+import { arbitrumNova, bsc, polygon } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, publicClient } = configureChains(
-  [arbitrumNova, bsc, arbitrum],
+  [arbitrumNova, bsc, polygon],
   [publicProvider()],
 )
+
+const RAINBOW_CHAINS = [
+  { name: 'BSC', id: 56, iconUrl: '/bnb.svg' },
+  {
+    name: 'Arbitrum Nova',
+    id: 42170,
+    iconUrl: '/arb-nova.svg',
+  },
+  { name: 'Polygon', id: 137, iconUrl: '/polygon.svg' },
+]
 
 const { connectors } = getDefaultWallets({
   appName: 'Whale Bridge App',
@@ -30,7 +40,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider
-        chains={chains}
+        chains={RAINBOW_CHAINS}
         theme={midnightTheme({
           accentColor: 'hsla(20.5 90.2% 48.2%)',
           accentColorForeground: 'hsla(60 9.1% 97.8%)',
