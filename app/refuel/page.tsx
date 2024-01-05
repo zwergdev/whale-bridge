@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { RefuelSchema } from '@/app/_utils/schemas'
+import { RefuelSchema } from '../_utils/schemas'
 import { Button } from '@/components/ui/button'
 import { Repeat2, Check, ChevronsUpDown } from 'lucide-react'
 import {
@@ -29,7 +29,7 @@ import {
 } from '@/components/ui/command'
 import { Input } from '@/components/ui/input'
 import Image from 'next/image'
-import { CHAINS, selectedChain } from '@/app/_utils/chains'
+import { CHAINS, selectedChain } from '../_utils/chains'
 import { useState } from 'react'
 import { useAccount, useBalance } from 'wagmi'
 import { Slider } from '@/components/ui/slider'

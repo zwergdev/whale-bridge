@@ -55,10 +55,13 @@ export default function MintPage() {
 
   const { write, isLoading } = bridgeArbitrum()
 
+  // @TODO Change this to a dynamic value
+  const tokenId = BigInt(521)
+
   const { refetch, error } = estimateFeeArbitrum(
     fields.chainTo,
     address!,
-    BigInt(521), // tokenId
+    tokenId,
   )
 
   async function bridgeNFT({ chainTo }: z.infer<typeof BridgeSchema>) {
@@ -72,7 +75,7 @@ export default function MintPage() {
         address!,
         chainTo,
         address!,
-        BigInt(521), // tokenId
+        tokenId,
         address!,
         '0x0000000000000000000000000000000000000000',
         '0x00010000000000000000000000000000000000000000000000000000000000030d40',
