@@ -1,19 +1,23 @@
 import { useContractWrite, useContractRead } from 'wagmi'
-import { arbitrumABI } from '../abi/arbitrum'
+import { abi } from './abi'
 import { parseEther } from 'viem/utils'
-import { truncatedToaster } from '../truncatedToaster'
+import { truncatedToaster } from './truncatedToaster'
 
-const ARBITRUM_CONTRACT_ADDR = '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08'
+const CONTRACTS: { [chainId: number]: `0x${string}` } = {
+  42170: '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08', // arbitrum-nova
+  56: '0xa930241019d1e9b2d246Ba34c54DFcF5a9573179', // bsc
+}
 
-function balanceArbitrum(
+function balance(
   address: `0x${string}`,
   onSuccess: (number: number) => void,
+  chainId: number,
 ) {
   return useContractRead({
-    address: ARBITRUM_CONTRACT_ADDR,
-    abi: arbitrumABI,
+    address: CONTRACTS[chainId],
+    abi,
     functionName: 'balanceOf',
-    chainId: 42170,
+    chainId,
     args: [address],
     onSuccess(data) {
       onSuccess(Number(data))
@@ -21,12 +25,12 @@ function balanceArbitrum(
   })
 }
 
-function mintArbitrum() {
+function mint(chainId: number) {
   return useContractWrite({
-    address: ARBITRUM_CONTRACT_ADDR,
-    abi: arbitrumABI,
+    address: CONTRACTS[chainId],
+    abi,
     functionName: 'mint',
-    chainId: 42170,
+    chainId,
     value: parseEther('0'),
     onError(error) {
       truncatedToaster('Error occurred!', error?.message!)
@@ -34,12 +38,12 @@ function mintArbitrum() {
   })
 }
 
-function bridgeArbitrum() {
+function bridge(chainId: number) {
   return useContractWrite({
-    address: ARBITRUM_CONTRACT_ADDR,
-    abi: arbitrumABI,
+    address: CONTRACTS[chainId],
+    abi,
     functionName: 'sendFrom',
-    chainId: 42170,
+    chainId,
     value: parseEther('0.0006'),
     onError(error) {
       truncatedToaster('Error occurred!', error.message)
@@ -47,16 +51,17 @@ function bridgeArbitrum() {
   })
 }
 
-function estimateFeeArbitrum(
+function estimateFee(
   chainTo: number,
   address: `0x${string}`,
   tokenId: bigint,
+  chainId: number,
 ) {
   return useContractRead({
-    address: ARBITRUM_CONTRACT_ADDR,
-    abi: arbitrumABI,
+    address: CONTRACTS[chainId],
+    abi,
     functionName: 'estimateSendFee',
-    chainId: 42170,
+    chainId,
     args: [
       chainTo,
       address,
@@ -68,4 +73,4 @@ function estimateFeeArbitrum(
   })
 }
 
-export { balanceArbitrum, mintArbitrum, bridgeArbitrum, estimateFeeArbitrum }
+export { balance, mint, bridge, estimateFee }

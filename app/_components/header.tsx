@@ -1,26 +1,22 @@
-import { Separator } from '@/components/ui/separator'
-
-import { Rotate3D } from 'lucide-react'
 import Link from 'next/link'
 import { ConnectButton } from './connect-button'
+import { Logo } from '@/components/ui/icons'
 import { Navigation } from './navigation'
 
 export const Header = () => {
   return (
-    <header className="w-full text-foreground bg-background/50 backdrop-blur-xl py-2 border-b border-border">
-      <div className="container flex justify-between items-center px-10">
-        <nav className="flex items-center gap-8 text-sm">
-          <Link href="/" className="flex items-center text-xl gap-2 font-bold">
-            <Rotate3D size={24} strokeWidth={2} className="stroke-foreground" />
-            Whale
-          </Link>
-          <Separator orientation="vertical" className="h-6 rotate-[30deg]" />
+    <header className="w-full text-foreground py-6">
+      <nav className="container flex justify-between items-center px-10">
+        <Link href="/">
+          <Logo />
+        </Link>
 
+        <div className="flex gap-16 font-medium text-xl">
           <Navigation />
-        </nav>
+        </div>
 
         <ConnectButton />
-      </div>
+      </nav>
     </header>
   )
 }

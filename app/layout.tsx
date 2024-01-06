@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
-import { Lato } from 'next/font/google'
+import { Poppins } from 'next/font/google'
 import './globals.css'
 import { Header } from './_components/header'
 import { Footer } from './_components/footer'
 import { Web3Provider } from './_providers/web3'
 import { Toaster } from '@/components/ui/sonner'
 
-const lato = Lato({
-  weight: ['100', '300', '400', '700', '900'],
+const poppins = Poppins({
+  weight: ['100', '300', '400', '500', '600', '700', '800', '900'],
   subsets: ['latin'],
 })
 
@@ -23,13 +23,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`bg-background bg-[url('/bbblur.svg')] bg-no-repeat bg-center bg-cover ${lato.className}`}
-      >
+      <body className={`bg-background ${poppins.className}`}>
         <Web3Provider>
           <div className="flex flex-col w-full items-center justify-center min-h-screen">
             <Header />
-            <main className="container flex flex-col w-full items-center justify-center py-24">
+            <main className="container flex flex-col w-full items-center justify-center pt-12 pb-52">
               {children}
               <div className="grow" />
             </main>

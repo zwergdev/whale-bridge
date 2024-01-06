@@ -28,25 +28,34 @@ export const ConnectButton = () => {
             {(() => {
               if (!connected) {
                 return (
-                  <Button onClick={openConnectModal} className="h-7">
+                  <Button
+                    onClick={openConnectModal}
+                    size="sm"
+                    variant="secondary"
+                    className="before:scale-x-[1.03]"
+                  >
                     Connect Wallet
                   </Button>
                 )
               }
               if (chain.unsupported) {
                 return (
-                  <Button onClick={openChainModal} className="h-7">
+                  <Button
+                    onClick={openChainModal}
+                    size="sm"
+                    variant="secondary"
+                    className="before:scale-x-[1.03]"
+                  >
                     Wrong network
                   </Button>
                 )
               }
               return (
-                <div className="flex gap-3">
+                <div className="flex gap-3 items-center">
                   <Button
-                    variant="link"
+                    variant="secondary"
                     onClick={openChainModal}
-                    className="flex items-center h-7 px-2 border-border border"
-                    type="button"
+                    className="px-2 py-1 h-8 before:scale-x-[1.03] before:scale-y-[1.04]"
                   >
                     {chain.hasIcon && (
                       <div
@@ -65,7 +74,12 @@ export const ConnectButton = () => {
                       </div>
                     )}
                   </Button>
-                  <Button onClick={openAccountModal} className="h-7">
+                  <Button
+                    onClick={openAccountModal}
+                    size="sm"
+                    variant="secondary"
+                    className="before:scale-x-[1.03]"
+                  >
                     {account.displayName}
                   </Button>
                 </div>

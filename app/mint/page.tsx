@@ -22,7 +22,7 @@ import {
   CommandItem,
 } from '@/components/ui/command'
 import Image from 'next/image'
-import { useAccount } from 'wagmi'
+import { useAccount, useNetwork } from 'wagmi'
 import { Separator } from '@/components/ui/separator'
 
 import { MintButton } from '../_components/mint-button/mint-button'
@@ -30,13 +30,11 @@ import { Balance } from '../_components/balance'
 import { CHAINS, selectedChain } from '../_utils/chains'
 import { BridgeSchema } from '../_utils/schemas'
 import { truncatedToaster } from '../_utils/truncatedToaster'
-import {
-  estimateFeeArbitrum,
-  bridgeArbitrum,
-} from '../_utils/contract-actions/arbitrum'
+import { estimateFee, bridge } from '../_utils/contract-actions'
 
 export default function MintPage() {
   const { address, status } = useAccount()
+  const { chain } = useNetwork()
 
   const form = useForm<z.infer<typeof BridgeSchema>>({
     resolver: zodResolver(BridgeSchema),
@@ -53,15 +51,16 @@ export default function MintPage() {
 
   const fields = watch()
 
-  const { write, isLoading } = bridgeArbitrum()
+  const { write, isLoading } = bridge(chain?.id ?? 0)
 
   // @TODO Change this to a dynamic value
   const tokenId = BigInt(521)
 
-  const { refetch, error } = estimateFeeArbitrum(
+  const { refetch, error } = estimateFee(
     fields.chainTo,
     address!,
     tokenId,
+    chain?.id ?? 0,
   )
 
   async function bridgeNFT({ chainTo }: z.infer<typeof BridgeSchema>) {
@@ -99,6 +98,7 @@ export default function MintPage() {
             onSuccess={(n) =>
               form.setValue('balance', n, { shouldValidate: true })
             }
+            chainId={chain?.id ?? 0}
           />
 
           <Separator className="my-5" />

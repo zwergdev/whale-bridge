@@ -1,4 +1,4 @@
-export const bscABI = [
+export const abi = [
   {
     inputs: [
       { internalType: 'string', name: '_baseTokenURI', type: 'string' },

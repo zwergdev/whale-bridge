@@ -1,17 +1,18 @@
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { Button } from '@/components/ui/button'
-import { useAccount, useWaitForTransaction } from 'wagmi'
+import { useAccount, useNetwork, useWaitForTransaction } from 'wagmi'
 import { useState } from 'react'
 import { MintedDialog } from './minted-dialog'
 import { truncatedToaster } from '../../_utils/truncatedToaster'
-import { mintArbitrum } from '../../_utils/contract-actions/arbitrum'
+import { mint } from '../../_utils/contract-actions'
 
 export const MintButton = () => {
   const { address, status } = useAccount()
+  const { chain } = useNetwork()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const { openConnectModal } = useConnectModal()
 
-  const { write, data: signData, isLoading: isSigning } = mintArbitrum()
+  const { write, data: signData, isLoading: isSigning } = mint(chain?.id ?? 0)
   const mintNFT = () => write()
 
   const { isLoading: isWaiting } = useWaitForTransaction({

@@ -13,14 +13,14 @@ export const selectedChain = (fieldValue: number) => {
   const selectedChain = CHAINS.find(({ value }) => value === fieldValue)
   if (!selectedChain) return 'Select chain'
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center w-full">
       <Image
         src={selectedChain.image}
-        width={16}
-        height={16}
+        width={54}
+        height={54}
         alt="selected-chain-icon"
       />
-      {selectedChain.label}
+      <p className="w-full text-base text-center font-medium">{selectedChain.label}</p>
     </div>
   )
 }
