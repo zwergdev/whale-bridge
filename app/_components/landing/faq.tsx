@@ -6,6 +6,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import { SectionWrapper } from './misc'
+import { Tail } from '@/components/ui/icons'
 
 const FAQ_ITEMS = [
   {
@@ -32,11 +34,7 @@ const FAQ_ITEMS = [
 
 export const FAQ = () => {
   return (
-    <section className="max-w-screen-xl mx-auto w-full">
-      <h2 className="text-4xl text-foreground text-center font-semibold mb-2">
-        FAQ
-      </h2>
-
+    <SectionWrapper titleClassName="mb-2" title="FAQ">
       <Accordion type="single" collapsible className="w-full">
         {FAQ_ITEMS.map(({ question, answer }, idx) => (
           <AccordionItem value={`item-${idx}`}>
@@ -45,6 +43,7 @@ export const FAQ = () => {
           </AccordionItem>
         ))}
       </Accordion>
-    </section>
+      <Tail className="absolute -bottom-96 left-10" />
+    </SectionWrapper>
   )
 }

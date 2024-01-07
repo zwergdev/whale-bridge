@@ -1,4 +1,5 @@
 import Image from 'next/image'
+
 export const CHAINS = [
   { label: 'BSC', value: 102, image: '/bnb.svg' },
   {
@@ -20,7 +21,9 @@ export const selectedChain = (fieldValue: number) => {
         height={54}
         alt="selected-chain-icon"
       />
-      <p className="w-full text-base text-center font-medium">{selectedChain.label}</p>
+      <p className="w-full text-base text-center font-medium">
+        {selectedChain.label}
+      </p>
     </div>
   )
 }

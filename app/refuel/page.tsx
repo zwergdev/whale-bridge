@@ -222,7 +222,7 @@ export default function RefuelPage() {
                   Enter Refuel Amount
                   <button
                     type="button"
-                    className="text-[10px] opacity-75 text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4]"
+                    className="text-[10px] opacity-75 cursor-pointer text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4]"
                     disabled={!balance}
                     onClick={() => setValue('amount', balance)}
                   >
@@ -230,11 +230,18 @@ export default function RefuelPage() {
                   </button>
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder={`0.0001 ${data?.symbol}`}
-                    {...field}
-                    max={balance}
-                  />
+                  <div className="relative flex items-center">
+                    <Input
+                      placeholder={`0.0001 ${data?.symbol}`}
+                      {...field}
+                      max={balance}
+                    />
+                    {data?.symbol && (
+                      <span className="absolute text-lg right-3 font-medium">
+                        {data?.symbol}
+                      </span>
+                    )}
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -276,7 +283,7 @@ export default function RefuelPage() {
           <Button
             type="submit"
             disabled={!isValid || !address || isLoading}
-            className="w-full"
+            className="w-full text-base py-2.5"
           >
             Refuel
           </Button>

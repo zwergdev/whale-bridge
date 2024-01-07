@@ -5,7 +5,7 @@ import { Navigation } from './navigation'
 
 export const Header = () => {
   return (
-    <header className="w-full text-foreground py-6">
+    <header className="w-full py-6">
       <nav className="container flex justify-between items-center px-10">
         <Link href="/">
           <Logo />

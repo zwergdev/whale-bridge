@@ -15,8 +15,8 @@ export const Navigation = () => {
     <Link
       key={href}
       href={href}
-      className={`hover:text-[#07DEFB] transition-colors duration-300 ${
-        pathname === href ? 'text-[#07DEFB]' : 'text-foreground'
+      className={`hover:text-primary transition-colors duration-300 ${
+        pathname === href ? 'text-primary' : 'text-foreground'
       }`}
     >
       {label}

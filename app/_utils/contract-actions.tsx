@@ -8,11 +8,14 @@ const CONTRACTS: { [chainId: number]: `0x${string}` } = {
   56: '0xa930241019d1e9b2d246Ba34c54DFcF5a9573179', // bsc
 }
 
-function balance(
-  address: `0x${string}`,
-  onSuccess: (number: number) => void,
-  chainId: number,
-) {
+type BalanceParams = {
+  address?: `0x${string}`
+  onSuccess: (number: number) => void
+  chainId: number
+}
+
+function balance({ address, onSuccess, chainId }: BalanceParams) {
+  if (!address) return
   return useContractRead({
     address: CONTRACTS[chainId],
     abi,
