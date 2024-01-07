@@ -43,7 +43,7 @@ export const FAQ = () => {
           </AccordionItem>
         ))}
       </Accordion>
-      <Tail className="absolute -bottom-96 left-10" />
+      <Tail className="absolute -bottom-96 left-10 -z-10" />
     </SectionWrapper>
   )
 }
