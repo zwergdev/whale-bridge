@@ -1,8 +1,7 @@
 export const abi = [
   {
     inputs: [
-      { internalType: 'string', name: '_baseTokenURI', type: 'string' },
-      { internalType: 'uint256', name: '_minGasToStore', type: 'uint256' },
+      { internalType: 'uint256', name: '_minGasToTransfer', type: 'uint256' },
       { internalType: 'address', name: '_layerZeroEndpoint', type: 'address' },
       { internalType: 'uint256', name: '_startMintId', type: 'uint256' },
       { internalType: 'uint256', name: '_endMintId', type: 'uint256' },
@@ -395,10 +394,14 @@ export const abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'baseTokenURI',
-    outputs: [{ internalType: 'string', name: '', type: 'string' }],
-    stateMutability: 'view',
+    inputs: [
+      { internalType: 'uint16', name: '_dstChainId', type: 'uint16' },
+      { internalType: 'address', name: '_zroPaymentAddress', type: 'address' },
+      { internalType: 'bytes', name: '_adapterParams', type: 'bytes' },
+    ],
+    name: 'bridgeGas',
+    outputs: [],
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -419,6 +422,20 @@ export const abi = [
     inputs: [{ internalType: 'uint16', name: '', type: 'uint16' }],
     name: 'dstChainIdToTransferGas',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'uint16', name: '_dstChainId', type: 'uint16' },
+      { internalType: 'bool', name: '_useZro', type: 'bool' },
+      { internalType: 'bytes', name: '_adapterParams', type: 'bytes' },
+    ],
+    name: 'estimateGasBridgeFee',
+    outputs: [
+      { internalType: 'uint256', name: 'nativeFee', type: 'uint256' },
+      { internalType: 'uint256', name: 'zroFee', type: 'uint256' },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
@@ -462,6 +479,13 @@ export const abi = [
     ],
     name: 'failedMessages',
     outputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'fee',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -724,13 +748,6 @@ export const abi = [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'string', name: '_baseTokenURI', type: 'string' }],
-    name: 'setBaseURI',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     inputs: [
       { internalType: 'uint16', name: '_version', type: 'uint16' },
       { internalType: 'uint16', name: '_chainId', type: 'uint16' },
@@ -766,6 +783,13 @@ export const abi = [
       },
     ],
     name: 'setDstChainIdToTransferGas',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'uint256', name: '_fee', type: 'uint256' }],
+    name: 'setFee',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -872,7 +896,7 @@ export const abi = [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'uint256', name: '_nftId', type: 'uint256' }],
+    inputs: [{ internalType: 'uint256', name: 'id', type: 'uint256' }],
     name: 'tokenURI',
     outputs: [{ internalType: 'string', name: '', type: 'string' }],
     stateMutability: 'view',
@@ -901,6 +925,13 @@ export const abi = [
     name: 'trustedRemoteLookup',
     outputs: [{ internalType: 'bytes', name: '', type: 'bytes' }],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'withdraw',
+    outputs: [],
+    stateMutability: 'payable',
     type: 'function',
   },
 ] as const

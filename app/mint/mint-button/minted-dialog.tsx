@@ -20,7 +20,7 @@ export const MintedDialog = ({ open, hash }: MintedDialogProps) => {
     <AlertDialog open={open}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>You've successfully minted LZNFT!</AlertDialogTitle>
+          <AlertDialogTitle>You've successfully minted TWHL!</AlertDialogTitle>
           <AlertDialogDescription>
             <div className="flex gap-4 items-center">
               <Image
@@ -31,7 +31,7 @@ export const MintedDialog = ({ open, hash }: MintedDialogProps) => {
                 className="border border-border rounded-lg"
               />
               <div className="truncate max-w-96 text-left">
-                <p className="mb-2">Now you're able to bridge your LZNFT.</p>
+                <p className="mb-2">Now you're able to bridge your TWHL.</p>
                 Transaction link:{' '}
                 <Link
                   target="_blank"

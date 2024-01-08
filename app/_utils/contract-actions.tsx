@@ -4,8 +4,9 @@ import { parseEther } from 'viem/utils'
 import { truncatedToaster } from './truncatedToaster'
 
 const CONTRACTS: { [chainId: number]: `0x${string}` } = {
-  42170: '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08', // arbitrum-nova
-  56: '0xa930241019d1e9b2d246Ba34c54DFcF5a9573179', // bsc
+  42170: '0x4dDAAa68882e44976548Ec04268138009ae4bB09', // arbitrum-nova
+  56: '0x086FBdcE11686E00129C43EBf749503ed1b68Ae4', // bsc
+  137: '0x3993B7b29F2DF08eA19f2D0ECc980103e2B79d5c', // polygon
 }
 
 type BalanceParams = {
