@@ -63,7 +63,7 @@ export const Articles = () => {
         <div className="relative mt-24">
           <div className="border-2 border-primary rounded-lg">
             <Image
-              src="/whale.jpg"
+              src="/mint-nft.webp"
               width={350}
               height={350}
               alt="mint-picture"
@@ -71,7 +71,7 @@ export const Articles = () => {
             />
           </div>
           <Image
-            src="/whale.jpg"
+            src="/bridge-nft.webp"
             width={300}
             height={300}
             alt="mint-picture"
@@ -89,11 +89,12 @@ export const Articles = () => {
           'Elit. Hac ornare lorem mattis lorem effid.',
           'Elit. Hac ornare lorem mattis lorem effid.',
         ]}
-        button={{ link: '/mint', text: 'Bridge' }}
+        button={{ link: '/bridge', text: 'Bridge' }}
       >
         <div className="border-primary rounded-lg border-2 relative">
           <Image
             src="/bridge.webp"
+            quality={100}
             width={600}
             height={330}
             alt="bridge-picture"
@@ -118,6 +119,7 @@ export const Articles = () => {
         <div className="border-primary rounded-lg border-2 relative">
           <Image
             src="/refuel.webp"
+            quality={100}
             width={480}
             height={460}
             alt="refuel-picture"

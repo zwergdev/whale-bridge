@@ -23,9 +23,9 @@ export const Tail = (props: SVGProps<SVGSVGElement>) => (
         y2="314.861"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0.283433" stop-color="#07C0FB" stop-opacity="0" />
-        <stop offset="0.415852" stop-color="#07C0FB" stop-opacity="0" />
-        <stop offset="1" stop-color="#07C0FB" />
+        <stop offset="0.283433" stopColor="#07C0FB" stopOpacity="0" />
+        <stop offset="0.415852" stopColor="#07C0FB" stopOpacity="0" />
+        <stop offset="1" stopColor="#07C0FB" />
       </linearGradient>
     </defs>
   </svg>

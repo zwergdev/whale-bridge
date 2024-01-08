@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { RefuelSchema } from '../_utils/schemas'
 import { Button } from '@/components/ui/button'
-import { Repeat2, Check, ChevronDown } from 'lucide-react'
+import { Repeat2, ChevronDown } from 'lucide-react'
 import {
   Form,
   FormControl,
@@ -19,7 +19,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { cn } from '@/lib/utils'
 import {
   Command,
   CommandEmpty,
@@ -28,11 +27,11 @@ import {
   CommandItem,
 } from '@/components/ui/command'
 import { Input } from '@/components/ui/input'
-import Image from 'next/image'
 import { CHAINS, selectedChain } from '../_utils/chains'
 import { useState } from 'react'
 import { useAccount, useBalance } from 'wagmi'
 import { Slider } from '@/components/ui/slider'
+import { Paper } from '../_components/paper'
 
 export default function RefuelPage() {
   const { address } = useAccount()
@@ -64,9 +63,7 @@ export default function RefuelPage() {
   }
 
   return (
-    <section className="text-sm text-foreground rounded-md max-w-screen-md w-full px-6 pt-8 pb-10 bg-[#011D36] flex flex-col">
-      <h2 className="font-semibold text-2xl mb-5">REFUEL GAS</h2>
-
+    <Paper title="REFUEL GAS">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(refuel)}>
           <div className="w-full flex justify-between items-center mb-5">
@@ -99,34 +96,14 @@ export default function RefuelPage() {
                             <CommandItem
                               value={label}
                               key={value}
+                              image={image}
                               disabled={fields.chainTo === value}
-                              className={
-                                fields.chainTo === value
-                                  ? 'opacity-50 cursor-not-allowed'
-                                  : ''
-                              }
+                              checked={value === field.value}
                               onSelect={() => {
                                 form.setValue('chainFrom', value)
                               }}
                             >
-                              <div className="flex items-center gap-2">
-                                <Image
-                                  src={image}
-                                  width={16}
-                                  height={16}
-                                  alt={`chain-${value}-icon`}
-                                />
-                                {label}
-                              </div>
-
-                              <Check
-                                className={cn(
-                                  'mr-2 h-4 w-4',
-                                  value === field.value
-                                    ? 'opacity-100'
-                                    : 'opacity-0',
-                                )}
-                              />
+                              {label}
                             </CommandItem>
                           ))}
                         </CommandGroup>
@@ -174,34 +151,14 @@ export default function RefuelPage() {
                             <CommandItem
                               value={label}
                               key={value}
+                              image={image}
                               disabled={fields.chainFrom === value}
-                              className={
-                                fields.chainFrom === value
-                                  ? 'opacity-50 cursor-not-allowed'
-                                  : ''
-                              }
+                              checked={value === field.value}
                               onSelect={() => {
                                 form.setValue('chainTo', value)
                               }}
                             >
-                              <div className="flex items-center gap-2">
-                                <Image
-                                  src={image}
-                                  width={16}
-                                  height={16}
-                                  alt={`chain-${value}-icon`}
-                                />
-                                {label}
-                              </div>
-
-                              <Check
-                                className={cn(
-                                  'mr-2 h-4 w-4',
-                                  value === field.value
-                                    ? 'opacity-100'
-                                    : 'opacity-0',
-                                )}
-                              />
+                              {label}
                             </CommandItem>
                           ))}
                         </CommandGroup>
@@ -289,6 +246,6 @@ export default function RefuelPage() {
           </Button>
         </form>
       </Form>
-    </section>
+    </Paper>
   )
 }

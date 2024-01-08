@@ -3,10 +3,11 @@
 import * as React from 'react'
 import { type DialogProps } from '@radix-ui/react-dialog'
 import { Command as CommandPrimitive } from 'cmdk'
-import { Search } from 'lucide-react'
+import { Search, Check } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
+import Image from 'next/image'
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
@@ -115,16 +116,28 @@ CommandSeparator.displayName = CommandPrimitive.Separator.displayName
 
 const CommandItem = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>
->(({ className, ...props }, ref) => (
-  <CommandPrimitive.Item
-    ref={ref}
-    className={cn(
-      'relative flex justify-between cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      className,
-    )}
-    {...props}
-  />
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item> & {
+    checked?: boolean
+    image: string
+  }
+>(({ className, children, checked, image, ...props }, ref) => (
+  <>
+    <CommandPrimitive.Item
+      ref={ref}
+      className={cn(
+        'relative flex justify-between cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-paper aria-selected:text-accent-foreground data-[disabled]:pointer-events-none',
+        props.disabled && 'opacity-50 cursor-not-allowed',
+        className,
+      )}
+      {...props}
+    >
+      <div className="flex items-center gap-2">
+        <Image src={image} width={16} height={16} alt="chain-icon" />
+        {children}
+      </div>
+      {checked && <Check className="mr-2 h-4 w-4" />}
+    </CommandPrimitive.Item>
+  </>
 ))
 
 CommandItem.displayName = CommandPrimitive.Item.displayName

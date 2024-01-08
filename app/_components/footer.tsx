@@ -19,15 +19,17 @@ export const Footer = () => (
           LayerZero.Scan
         </Link>
       </nav>
-      <LayerZero />
+      <Link href="https://layerzero.network/" target="_blank">
+        <LayerZero />
+      </Link>
     </div>
 
     <Separator className="my-6 bg-primary" />
 
     <div className="flex justify-between items-center">
       <div className="flex items-center gap-4">
-        {[<Telegram />, <Twitter />].map((item) => (
-          <Link href="#" className="">
+        {[<Telegram />, <Twitter />].map((item, idx) => (
+          <Link href="#" key={idx}>
             {cloneElement(item, {
               className:
                 'fill-foreground hover:fill-primary transition-colors duration-300 w-6 h-auto',

@@ -37,7 +37,7 @@ export const FAQ = () => {
     <SectionWrapper titleClassName="mb-2" title="FAQ">
       <Accordion type="single" collapsible className="w-full">
         {FAQ_ITEMS.map(({ question, answer }, idx) => (
-          <AccordionItem value={`item-${idx}`}>
+          <AccordionItem value={`item-${idx}`} key={idx}>
             <AccordionTrigger>{question}</AccordionTrigger>
             <AccordionContent>{answer}</AccordionContent>
           </AccordionItem>

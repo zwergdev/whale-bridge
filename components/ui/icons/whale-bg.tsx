@@ -23,9 +23,9 @@ export const WhaleBg = (props: SVGProps<SVGSVGElement>) => (
         y2="130.161"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#07C0FB" stop-opacity="0" />
-        <stop offset="0.316317" stop-color="#07C0FB" stop-opacity="0" />
-        <stop offset="1" stop-color="#07C0FB" />
+        <stop stopColor="#07C0FB" stopOpacity="0" />
+        <stop offset="0.316317" stopColor="#07C0FB" stopOpacity="0" />
+        <stop offset="1" stopColor="#07C0FB" />
       </linearGradient>
     </defs>
   </svg>

@@ -1,5 +1,7 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
-import { Repeat2, Check, ChevronDown } from 'lucide-react'
+import { Repeat2, ChevronDown, Settings } from 'lucide-react'
 import {
   Form,
   FormControl,
@@ -12,7 +14,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { cn } from '@/lib/utils'
 import {
   Command,
   CommandEmpty,
@@ -20,7 +21,6 @@ import {
   CommandInput,
   CommandItem,
 } from '@/components/ui/command'
-import Image from 'next/image'
 import { CHAINS, selectedChain } from '@/app/_utils/chains'
 import { LayerZero } from '@/components/ui/icons'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -30,8 +30,9 @@ import { useAccount, useNetwork } from 'wagmi'
 import { BridgeSchema } from '@/app/_utils/schemas'
 import { truncatedToaster } from '@/app/_utils/truncatedToaster'
 import { estimateFee, bridge } from '@/app/_utils/contract-actions'
+import { Paper } from '../_components/paper'
 
-export const BridgePage = () => {
+export default function BridgePage() {
   const { address } = useAccount()
   const { chain } = useNetwork()
 
@@ -81,9 +82,7 @@ export const BridgePage = () => {
   }
 
   return (
-    <section className="text-sm text-foreground rounded-md max-w-screen-md w-full px-6 pt-8 pb-12 bg-[#011D36] flex flex-col">
-      <h2 className="font-semibold text-2xl mb-5">NFT BRIDGE</h2>
-
+    <Paper title="NFT BRIDGE" icon={<Settings />}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(bridgeNFT)}>
           <div className="w-full flex justify-between items-center mb-16">
@@ -116,34 +115,14 @@ export const BridgePage = () => {
                             <CommandItem
                               value={label}
                               key={value}
+                              image={image}
                               disabled={fields.chainTo === value}
-                              className={
-                                fields.chainTo === value
-                                  ? 'opacity-50 cursor-not-allowed'
-                                  : ''
-                              }
+                              checked={value === field.value}
                               onSelect={() => {
                                 form.setValue('chainFrom', value)
                               }}
                             >
-                              <div className="flex items-center gap-2">
-                                <Image
-                                  src={image}
-                                  width={16}
-                                  height={16}
-                                  alt={`chain-${value}-icon`}
-                                />
-                                {label}
-                              </div>
-
-                              <Check
-                                className={cn(
-                                  'mr-2 h-4 w-4',
-                                  value === field.value
-                                    ? 'opacity-100'
-                                    : 'opacity-0',
-                                )}
-                              />
+                              {label}
                             </CommandItem>
                           ))}
                         </CommandGroup>
@@ -191,34 +170,14 @@ export const BridgePage = () => {
                             <CommandItem
                               value={label}
                               key={value}
+                              image={image}
                               disabled={fields.chainFrom === value}
-                              className={
-                                fields.chainFrom === value
-                                  ? 'opacity-50 cursor-not-allowed'
-                                  : ''
-                              }
+                              checked={value === field.value}
                               onSelect={() => {
                                 form.setValue('chainTo', value)
                               }}
                             >
-                              <div className="flex items-center gap-2">
-                                <Image
-                                  src={image}
-                                  width={16}
-                                  height={16}
-                                  alt={`chain-${value}-icon`}
-                                />
-                                {label}
-                              </div>
-
-                              <Check
-                                className={cn(
-                                  'mr-2 h-4 w-4',
-                                  value === field.value
-                                    ? 'opacity-100'
-                                    : 'opacity-0',
-                                )}
-                              />
+                              {label}
                             </CommandItem>
                           ))}
                         </CommandGroup>
@@ -240,6 +199,6 @@ export const BridgePage = () => {
           <LayerZero className="text-center w-full" />
         </form>
       </Form>
-    </section>
+    </Paper>
   )
 }

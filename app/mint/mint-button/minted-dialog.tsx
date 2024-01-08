@@ -13,10 +13,9 @@ import Link from 'next/link'
 type MintedDialogProps = {
   hash?: `0x${string}`
   open: boolean
-  onClick: () => void
 }
 
-export const MintedDialog = ({ open, onClick, hash }: MintedDialogProps) => {
+export const MintedDialog = ({ open, hash }: MintedDialogProps) => {
   return (
     <AlertDialog open={open}>
       <AlertDialogContent>
@@ -25,7 +24,7 @@ export const MintedDialog = ({ open, onClick, hash }: MintedDialogProps) => {
           <AlertDialogDescription>
             <div className="flex gap-4 items-center">
               <Image
-                src="/whale.jpg"
+                src="/mint-nft.webp"
                 width={100}
                 height={100}
                 alt="nft-image"
@@ -46,7 +45,9 @@ export const MintedDialog = ({ open, onClick, hash }: MintedDialogProps) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction onClick={onClick}>Continue</AlertDialogAction>
+          <AlertDialogAction>
+            <Link href="/bridge">Continue</Link>
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

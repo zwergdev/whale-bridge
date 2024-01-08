@@ -12,18 +12,12 @@ const buttonVariants = cva(
         default:
           'text-foreground bg-gradient-to-b from-primary to-[#035D79] rounded-[10px]',
         clean: '',
-        outline:
-          'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
         secondary:
-          'bg-black relative before:w-full before:h-full before:scale-x-[1.05] before:scale-y-[1.08] before:absolute before:top-[50%] before:left-[50%] before:-z-10 before:translate-x-[-50%] before:translate-y-[-50%] before:from-[#07C0FB] before:to-[#035D79] before:bg-gradient-to-b before:rounded-md',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+          'bg-black relative before:w-full before:h-full before:scale-x-[1.05] before:scale-y-[1.08] before:absolute before:top-[50%] before:left-[50%] before:-z-10 before:translate-x-[-50%] before:translate-y-[-50%] before:from-primary before:to-[#035D79] before:bg-gradient-to-b before:rounded-md',
       },
       size: {
         default: 'px-14 py-3.5',
         sm: 'py-2.5 px-6',
-        lg: 'h-11 rounded-md px-8',
-        icon: 'h-10 w-10',
       },
     },
     defaultVariants: {

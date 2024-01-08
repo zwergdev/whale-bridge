@@ -18,7 +18,7 @@ export const Roadmap = () => {
         <path
           d="M113 290C113 387 135.987 577 314.882 577C493.776 577 538.5 419 538.5 290"
           stroke="url(#paint0_linear_216_4)"
-          stroke-width="5"
+          strokeWidth="5"
         />
         <circle cx="539" cy="290" r="20" fill="url(#paint1_linear_216_4)" />
         <circle cx="113" cy="290" r="20" fill="url(#paint2_linear_216_4)" />
@@ -31,12 +31,12 @@ export const Roadmap = () => {
         <path
           d="M966.5 290C966.5 387 989.487 577 1168.38 577C1347.28 577 1392 419 1392 290"
           stroke="url(#paint5_linear_216_4)"
-          stroke-width="5"
+          strokeWidth="5"
         />
         <path
           d="M538 202C538 134.742 582.448 3 744.363 3C902.282 3 963 112.554 963 202"
           stroke="url(#paint6_linear_216_4)"
-          stroke-width="5"
+          strokeWidth="5"
         />
         <g filter="url(#filter2_f_216_4)">
           <circle cx="966" cy="290" r="20" fill="url(#paint7_linear_216_4)" />
@@ -70,7 +70,7 @@ export const Roadmap = () => {
             width="70"
             height="70"
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
             <feFlood flood-opacity="0" result="BackgroundImageFix" />
             <feBlend
@@ -91,7 +91,7 @@ export const Roadmap = () => {
             width="70"
             height="70"
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
             <feFlood flood-opacity="0" result="BackgroundImageFix" />
             <feBlend
@@ -112,7 +112,7 @@ export const Roadmap = () => {
             width="70"
             height="70"
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
             <feFlood flood-opacity="0" result="BackgroundImageFix" />
             <feBlend
@@ -133,7 +133,7 @@ export const Roadmap = () => {
             width="70"
             height="70"
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
             <feFlood flood-opacity="0" result="BackgroundImageFix" />
             <feBlend
@@ -155,8 +155,8 @@ export const Roadmap = () => {
             y2="291.082"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#07DEFB" />
-            <stop offset="1" stop-color="#37DCF2" />
+            <stop stopColor="#07DEFB" />
+            <stop offset="1" stopColor="#37DCF2" />
           </linearGradient>
           <linearGradient
             id="paint1_linear_216_4"
@@ -166,8 +166,8 @@ export const Roadmap = () => {
             y2="296.857"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#07DEFB" />
-            <stop offset="1" stop-color="#37DCF2" />
+            <stop stopColor="#07DEFB" />
+            <stop offset="1" stopColor="#37DCF2" />
           </linearGradient>
           <linearGradient
             id="paint2_linear_216_4"
@@ -177,8 +177,8 @@ export const Roadmap = () => {
             y2="296.857"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#07DEFB" />
-            <stop offset="1" stop-color="#37DCF2" />
+            <stop stopColor="#07DEFB" />
+            <stop offset="1" stopColor="#37DCF2" />
           </linearGradient>
           <linearGradient
             id="paint3_linear_216_4"
@@ -188,8 +188,8 @@ export const Roadmap = () => {
             y2="296.857"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#07DEFB" />
-            <stop offset="1" stop-color="#37DCF2" />
+            <stop stopColor="#07DEFB" />
+            <stop offset="1" stopColor="#37DCF2" />
           </linearGradient>
           <linearGradient
             id="paint4_linear_216_4"
@@ -199,8 +199,8 @@ export const Roadmap = () => {
             y2="296.857"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#07DEFB" />
-            <stop offset="1" stop-color="#37DCF2" />
+            <stop stopColor="#07DEFB" />
+            <stop offset="1" stopColor="#37DCF2" />
           </linearGradient>
           <linearGradient
             id="paint5_linear_216_4"
@@ -210,8 +210,8 @@ export const Roadmap = () => {
             y2="291.082"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#07DEFB" />
-            <stop offset="1" stop-color="#37DCF2" />
+            <stop stopColor="#07DEFB" />
+            <stop offset="1" stopColor="#37DCF2" />
           </linearGradient>
           <linearGradient
             id="paint6_linear_216_4"
@@ -221,8 +221,8 @@ export const Roadmap = () => {
             y2="292.872"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#07DEFB" />
-            <stop offset="1" stop-color="#37DCF2" />
+            <stop stopColor="#07DEFB" />
+            <stop offset="1" stopColor="#37DCF2" />
           </linearGradient>
           <linearGradient
             id="paint7_linear_216_4"
@@ -232,8 +232,8 @@ export const Roadmap = () => {
             y2="296.857"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#07DEFB" />
-            <stop offset="1" stop-color="#37DCF2" />
+            <stop stopColor="#07DEFB" />
+            <stop offset="1" stopColor="#37DCF2" />
           </linearGradient>
           <linearGradient
             id="paint8_linear_216_4"
@@ -243,8 +243,8 @@ export const Roadmap = () => {
             y2="296.857"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#07DEFB" />
-            <stop offset="1" stop-color="#37DCF2" />
+            <stop stopColor="#07DEFB" />
+            <stop offset="1" stopColor="#37DCF2" />
           </linearGradient>
           <linearGradient
             id="paint9_linear_216_4"
@@ -254,8 +254,8 @@ export const Roadmap = () => {
             y2="296.857"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#07DEFB" />
-            <stop offset="1" stop-color="#37DCF2" />
+            <stop stopColor="#07DEFB" />
+            <stop offset="1" stopColor="#37DCF2" />
           </linearGradient>
           <linearGradient
             id="paint10_linear_216_4"
@@ -265,8 +265,8 @@ export const Roadmap = () => {
             y2="296.857"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#07DEFB" />
-            <stop offset="1" stop-color="#37DCF2" />
+            <stop stopColor="#07DEFB" />
+            <stop offset="1" stopColor="#37DCF2" />
           </linearGradient>
         </defs>
       </svg>

@@ -42,7 +42,7 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
       <RainbowKitProvider
         chains={RAINBOW_CHAINS}
         theme={midnightTheme({
-          accentColor: 'hsla(20.5 90.2% 48.2%)',
+          accentColor: 'hsla(195, 97%, 51%)',
           accentColorForeground: 'hsla(60 9.1% 97.8%)',
           borderRadius: 'medium',
         })}

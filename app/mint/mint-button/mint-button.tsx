@@ -1,16 +1,14 @@
+'use client'
+
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { Button } from '@/components/ui/button'
 import { useAccount, useNetwork, useWaitForTransaction } from 'wagmi'
 import { useState } from 'react'
 import { MintedDialog } from './minted-dialog'
-import { truncatedToaster } from '../../../_utils/truncatedToaster'
-import { mint } from '../../../_utils/contract-actions'
+import { truncatedToaster } from '../../_utils/truncatedToaster'
+import { mint } from '../../_utils/contract-actions'
 
-type MintButtonProps = {
-  changePage: () => void
-}
-
-export const MintButton = ({ changePage }: MintButtonProps) => {
+export const MintButton = () => {
   const { address, status } = useAccount()
   const { chain } = useNetwork()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -47,14 +45,7 @@ export const MintButton = ({ changePage }: MintButtonProps) => {
         {address ? 'Mint' : 'Connect wallet'}
       </Button>
 
-      <MintedDialog
-        hash={signData?.hash}
-        open={isDialogOpen}
-        onClick={() => {
-          setIsDialogOpen(false)
-          changePage()
-        }}
-      />
+      <MintedDialog hash={signData?.hash} open={isDialogOpen} />
     </>
   )
 }
