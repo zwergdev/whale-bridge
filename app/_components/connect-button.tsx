@@ -55,11 +55,11 @@ export const ConnectButton = () => {
                   <Button
                     variant="secondary"
                     onClick={openChainModal}
-                    className="px-2 py-1 h-8 before:scale-x-[1.03] before:scale-y-[1.04]"
+                    className="px-2 py-1 h-10 before:scale-x-[1.03] before:scale-y-[1.04]"
                   >
                     {chain.hasIcon && (
                       <div
-                        className="w-4 h-4 rounded-full overflow-hidden"
+                        className="rounded-full overflow-hidden flex items-center justify-between"
                         style={{
                           background: chain.iconBackground,
                         }}
@@ -68,7 +68,7 @@ export const ConnectButton = () => {
                           <img
                             alt={chain.name ?? 'Chain icon'}
                             src={chain.iconUrl}
-                            className="w-4 h-4"
+                            className="w-6 h-6"
                           />
                         )}
                       </div>

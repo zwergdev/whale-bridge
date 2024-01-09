@@ -29,13 +29,16 @@ import {
 import { Input } from '@/components/ui/input'
 import { CHAINS, selectedChain } from '../_utils/chains'
 import { useState } from 'react'
-import { useAccount, useBalance } from 'wagmi'
+import { useAccount, useBalance, useNetwork } from 'wagmi'
 import { Slider } from '@/components/ui/slider'
 import { Paper } from '../_components/paper'
 import { SubmitButton } from '../_components/submit-button'
 import { truncatedToaster } from '../_utils/truncatedToaster'
 
 export default function RefuelPage() {
+  const [popoverFromOpen, setPopoverFromOpen] = useState(false)
+  const [popoverToOpen, setPopoverToOpen] = useState(false)
+  const { chain } = useNetwork()
   const { address } = useAccount()
   const { data } = useBalance({
     address,
@@ -52,8 +55,9 @@ export default function RefuelPage() {
     defaultValues: {
       amount: balance ? balance / 3 : 0,
       balance: balance ?? 0,
-      chainFrom: 175,
-      chainTo: 102,
+      chainFrom:
+        CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
+      chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value, // 102
     },
   })
 
@@ -85,7 +89,10 @@ export default function RefuelPage() {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Transfer from</FormLabel>
-                  <Popover>
+                  <Popover
+                    open={popoverFromOpen}
+                    onOpenChange={setPopoverFromOpen}
+                  >
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
@@ -113,6 +120,7 @@ export default function RefuelPage() {
                               checked={value === field.value}
                               onSelect={() => {
                                 form.setValue('chainFrom', value)
+                                setPopoverFromOpen(false)
                               }}
                             >
                               {label}
@@ -140,7 +148,7 @@ export default function RefuelPage() {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Transfer to</FormLabel>
-                  <Popover>
+                  <Popover open={popoverToOpen} onOpenChange={setPopoverToOpen}>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
@@ -168,6 +176,7 @@ export default function RefuelPage() {
                               checked={value === field.value}
                               onSelect={() => {
                                 form.setValue('chainTo', value)
+                                setPopoverToOpen(false)
                               }}
                             >
                               {label}
@@ -233,7 +242,9 @@ export default function RefuelPage() {
           </div>
 
           <article className="bg-popover rounded-md md:pt-5 pt-3 px-4 max-w-xl mx-auto mb-11">
-            <h3 className="font-semibold md:text-lg text-base md:mb-4 mb-2">Transaction Summary</h3>
+            <h3 className="font-semibold md:text-lg text-base md:mb-4 mb-2">
+              Transaction Summary
+            </h3>
             <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary">
               Estimated Transfer Time:
               <span className="font-semibold">~5 mins</span>

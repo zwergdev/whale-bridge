@@ -34,11 +34,14 @@ import { Paper } from '../_components/paper'
 import { SubmitButton } from '../_components/submit-button'
 import { getNFTBalance } from '../_utils/nftBalance'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 export default function BridgePage() {
   const { address } = useAccount()
   const { chain } = useNetwork()
   const [tokenId, setTokenId] = useState<bigint>(BigInt(0))
+  const [popoverFromOpen, setPopoverFromOpen] = useState(false)
+  const [popoverToOpen, setPopoverToOpen] = useState(false)
 
   useEffect(() => {
     ;(async () => {
@@ -50,8 +53,9 @@ export default function BridgePage() {
   const form = useForm<z.infer<typeof BridgeSchema>>({
     resolver: zodResolver(BridgeSchema),
     defaultValues: {
-      chainFrom: 175,
-      chainTo: 102,
+      chainFrom:
+        CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
+      chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value, // 102
     },
   })
   const {
@@ -105,7 +109,10 @@ export default function BridgePage() {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Transfer from</FormLabel>
-                  <Popover>
+                  <Popover
+                    open={popoverFromOpen}
+                    onOpenChange={setPopoverFromOpen}
+                  >
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
@@ -133,6 +140,7 @@ export default function BridgePage() {
                               checked={value === field.value}
                               onSelect={() => {
                                 form.setValue('chainFrom', value)
+                                setPopoverFromOpen(false)
                               }}
                             >
                               {label}
@@ -160,7 +168,7 @@ export default function BridgePage() {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>Transfer to</FormLabel>
-                  <Popover>
+                  <Popover open={popoverToOpen} onOpenChange={setPopoverToOpen}>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
@@ -188,6 +196,7 @@ export default function BridgePage() {
                               checked={value === field.value}
                               onSelect={() => {
                                 form.setValue('chainTo', value)
+                                setPopoverToOpen(false)
                               }}
                             >
                               {label}
@@ -203,13 +212,16 @@ export default function BridgePage() {
           </div>
 
           <SubmitButton
-            disabled={!isValid || isLoading}
+            disabled={!isValid}
             chainFrom={fields.chainFrom}
+            loading={isLoading}
           >
             Bridge
           </SubmitButton>
 
-          <LayerZero className="text-center w-full mt-10" />
+          <Link href="https://layerzero.network/" target="_blank">
+            <LayerZero className="text-center w-full mt-10" />
+          </Link>
         </form>
       </Form>
     </Paper>

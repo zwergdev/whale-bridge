@@ -5,15 +5,15 @@ import { cn } from '@/lib/utils'
 import { Loader } from 'lucide-react'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-xl font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2  disabled:opacity-50 disabled:cursor-not-allowed',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-xl font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed',
   {
     variants: {
       variant: {
         default:
-          'text-foreground bg-gradient-to-b from-primary to-[#035D79] rounded-[10px]',
+          'text-foreground bg-gradient-to-b from-primary to-[#035D79] hover:brightness-125 rounded-[10px] transition-all duration-300',
         clean: '',
         secondary:
-          'bg-black relative before:w-full before:h-full before:scale-x-[1.05] before:scale-y-[1.08] before:absolute before:top-[50%] before:left-[50%] before:-z-10 before:translate-x-[-50%] before:translate-y-[-50%] before:from-primary before:to-[#035D79] before:bg-gradient-to-b before:rounded-md',
+          'bg-background hover:bg-paper relative before:w-full before:h-full before:scale-x-[1.05] before:scale-y-[1.08] before:absolute before:top-[50%] before:left-[50%] before:-z-10 before:translate-x-[-50%] before:translate-y-[-50%] before:from-primary before:to-[#035D79] before:bg-gradient-to-b before:rounded-md transition-all duration-300',
       },
       size: {
         default: 'px-14 py-3.5',

@@ -8,6 +8,7 @@ import { CHAINS } from '../_utils/chains'
 type SubmitButtonProps = {
   chainFrom: number
   disabled: boolean
+  loading?: boolean
   children: React.ReactNode
 }
 
@@ -15,6 +16,7 @@ export const SubmitButton = ({
   disabled,
   chainFrom,
   children,
+  loading,
 }: SubmitButtonProps) => {
   const { address, status } = useAccount()
   const { openConnectModal, connectModalOpen } = useConnectModal()
@@ -59,6 +61,7 @@ export const SubmitButton = ({
     <Button
       type="submit"
       disabled={disabled}
+      loading={loading}
       className="w-full text-base py-2.5"
     >
       {children}
