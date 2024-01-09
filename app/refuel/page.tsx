@@ -78,7 +78,7 @@ export default function RefuelPage() {
     <Paper title="REFUEL GAS">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(refuel)}>
-          <div className="w-full flex justify-between items-center mb-5">
+          <div className="w-full flex justify-between items-center md:mb-5 mb-7 gap-5 md:gap-0 md:flex-row flex-col">
             <FormField
               control={form.control}
               name="chainFrom"
@@ -92,7 +92,7 @@ export default function RefuelPage() {
                           disabled={isLoading}
                           role="combobox"
                           variant="clean"
-                          className="flex justify-between w-80 pl-3 pr-5 bg-popover"
+                          className="flex justify-between md:w-80 w-60 pl-3 md:pr-5 pr-2 bg-popover"
                         >
                           {selectedChain(field.value)}
                           <ChevronDown className="h-4 w-4" />
@@ -127,7 +127,7 @@ export default function RefuelPage() {
             />
 
             <Repeat2
-              className="stroke-foreground cursor-pointer opacity-75 hover:opacity-100 duration-300 transition-opacity relative top-3"
+              className="stroke-foreground cursor-pointer opacity-75 hover:opacity-100 duration-300 transition-opacity relative md:top-3 top-1"
               onClick={() => {
                 form.setValue('chainFrom', fields.chainTo)
                 form.setValue('chainTo', fields.chainFrom)
@@ -147,7 +147,7 @@ export default function RefuelPage() {
                           disabled={isLoading}
                           role="combobox"
                           variant="clean"
-                          className="flex justify-between w-80 pl-3 pr-5 bg-popover"
+                          className="flex justify-between md:w-80 w-60 pl-3 md:pr-5 pr-2 bg-popover"
                         >
                           {selectedChain(field.value)}
                           <ChevronDown className="h-4 w-4" />
@@ -232,17 +232,17 @@ export default function RefuelPage() {
             </span>
           </div>
 
-          <article className="bg-popover rounded-md py-5 px-4 max-w-xl mx-auto mb-11">
-            <h3 className="font-semibold text-lg mb-4">Transaction Summary</h3>
-            <div className="flex items-center justify-between w-full font-medium text-base py-2.5 border-t border-t-primary">
+          <article className="bg-popover rounded-md md:pt-5 pt-3 px-4 max-w-xl mx-auto mb-11">
+            <h3 className="font-semibold md:text-lg text-base md:mb-4 mb-2">Transaction Summary</h3>
+            <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary">
               Estimated Transfer Time:
               <span className="font-semibold">~5 mins</span>
             </div>
-            <div className="flex items-center justify-between w-full font-medium text-base py-2.5 border-t border-t-primary">
+            <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary">
               Refuel cost:
               <span className="font-semibold">0.00015 ETH ($0.34)</span>
             </div>
-            <div className="flex items-center justify-between w-full font-medium text-base py-2.5 border-t border-t-primary">
+            <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary md:mb-5 mb-2">
               Expected Output:
               <span className="font-semibold">0 MATIC ($0)</span>
             </div>

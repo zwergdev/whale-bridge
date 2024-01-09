@@ -17,7 +17,7 @@ export const SectionWrapper = ({
     <section className={cn('max-w-screen-xl mx-auto relative w-full', sectionClassName)}>
       <h2
         className={cn(
-          'text-4xl text-foreground text-center font-semibold',
+          'md:text-4xl text-2xl text-foreground text-center font-semibold',
           titleClassName,
         )}
       >

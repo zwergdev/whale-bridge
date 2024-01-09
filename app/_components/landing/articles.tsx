@@ -26,21 +26,21 @@ const Article = ({
   return (
     <article
       className={cn(
-        'flex items-start justify-center gap-10 mb-20 last:mb-12',
-        revert ? 'flex-row-reverse' : 'flex-row',
+        'flex md:items-start items-center flex-col justify-center gap-10 mb-20 last:mb-12',
+        revert ? 'md:flex-row-reverse' : 'md:flex-row',
       )}
     >
       <div className="flex flex-col gap-4">
-        <h3 className="text-primary text-4xl font-semibold mb-10">{title}</h3>
+        <h3 className="text-primary md:text-4xl text-2xl font-semibold md:mb-10 mb-5">{title}</h3>
         {bio.map((text, idx) => (
           <p
             key={idx}
-            className="before:content-[''] before:w-full before:max-w-5 before:h-5 before:rounded-full before:bg-primary before:block before:relative before:top-1.5 before:drop-shadow-[0_0_4px_#30DDF4] flex items-start gap-5 text-2xl font-medium mb-5 max-w-[500px]"
+            className="before:content-[''] before:w-full before:max-w-5 before:h-5 before:rounded-full before:bg-primary before:block before:relative before:top-1 before:drop-shadow-[0_0_4px_#30DDF4] flex items-start gap-5 md:text-2xl text-base sm:text-xl font-medium mb-5 max-w-[500px]"
           >
             {text}
           </p>
         ))}
-        <Button className="w-32 mt-10" variant="secondary">
+        <Button className="w-32 md:mt-10 mt-0" variant="secondary">
           <Link href={button.link}>{button.text}</Link>
         </Button>
       </div>
@@ -60,7 +60,7 @@ export const Articles = () => {
         ]}
         button={{ link: '/mint', text: 'Mint NFT' }}
       >
-        <div className="relative mt-24">
+        <div className="relative lg:mt-24 mt-0">
           <div className="border-2 border-primary rounded-lg">
             <Image
               src="/mint-nft.webp"
@@ -75,7 +75,7 @@ export const Articles = () => {
             width={300}
             height={300}
             alt="mint-picture"
-            className="absolute -top-32 -right-32 rounded-lg scale-x-[-1] -z-10"
+            className="absolute -top-32 -right-32 rounded-lg scale-x-[-1] -z-10 lg:block hidden"
           />
           <div className="w-56 h-56 -z-10 bg-primary blur-[150px] absolute bottom-0 right-0" />
         </div>
@@ -101,7 +101,7 @@ export const Articles = () => {
             className="relative left-2 top-2 rounded-lg "
           />
           <Repeat2
-            className="absolute right-3 -bottom-16 w-32 h-auto"
+            className="absolute right-3 md:-bottom-16 -bottom-8 md:w-32 w-16 h-auto"
             strokeWidth={1.5}
           />
           <div className="w-56 h-56 -z-10 bg-primary blur-[150px] absolute -bottom-10 opacity-50 left-0" />

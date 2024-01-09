@@ -78,7 +78,7 @@ export const ConnectButton = () => {
                     onClick={openAccountModal}
                     size="sm"
                     variant="secondary"
-                    className="before:scale-x-[1.03]"
+                    className="before:scale-x-[1.03] md:text-xl text-base"
                   >
                     {account.displayName}
                   </Button>

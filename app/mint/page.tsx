@@ -4,7 +4,7 @@ import { MintButton } from './mint-button/mint-button'
 
 export default function MintPage() {
   return (
-    <section className="flex gap-36 items-center justify-center">
+    <section className="flex max-w-screen-xl w-full flex-wrap items-center justify-center gap-16">
       <div className="flex flex-col">
         <h2 className="font-semibold text-4xl mb-5">Mint NFT</h2>
         <div className="mb-10 rounded-full w-fit border border-primary flex items-center gap-2.5 justify-start p-2.5">
@@ -19,7 +19,7 @@ export default function MintPage() {
           ))}
           And 21 More Chains
         </div>
-        <p className="font-medium text-2xl mb-8 max-w-lg">
+        <p className="font-medium md:text-2xl text-xl mb-8 max-w-lg">
           Nisi quam, interdum nunc faucibus. Elit. Aenean platea malesuada ipsum
           pulvinar amet, vulputate ornare dapibus odio. Mauris risus vestibulum
           orci, eleifend eleifend integer arcu dolor consectetur quam, sit

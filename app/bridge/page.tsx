@@ -32,10 +32,20 @@ import { truncatedToaster } from '@/app/_utils/truncatedToaster'
 import { estimateFee, bridge } from '@/app/_utils/contract-actions'
 import { Paper } from '../_components/paper'
 import { SubmitButton } from '../_components/submit-button'
+import { getNFTBalance } from '../_utils/nftBalance'
+import { useEffect, useState } from 'react'
 
 export default function BridgePage() {
   const { address } = useAccount()
   const { chain } = useNetwork()
+  const [tokenId, setTokenId] = useState<bigint>(BigInt(0))
+
+  useEffect(() => {
+    ;(async () => {
+      const nfts = await getNFTBalance(address!, chain?.id ?? 0)
+      setTokenId(BigInt(nfts?.[0] ?? 0))
+    })()
+  }, [address, chain])
 
   const form = useForm<z.infer<typeof BridgeSchema>>({
     resolver: zodResolver(BridgeSchema),
@@ -53,10 +63,7 @@ export default function BridgePage() {
 
   const { write, isLoading } = bridge(chain?.id ?? 0)
 
-  // @TODO Change this to a dynamic value
-  const tokenId = BigInt(521)
-
-  const { refetch, error } = estimateFee(
+  const { refetch: refetchFee, error: feeError } = estimateFee(
     fields.chainTo,
     address!,
     tokenId,
@@ -64,17 +71,22 @@ export default function BridgePage() {
   )
 
   async function bridgeNFT({ chainTo }: z.infer<typeof BridgeSchema>) {
-    const fee = await refetch()
+    if (tokenId === BigInt(0))
+      return truncatedToaster('Error occurred!', 'No NFTs found!')
 
-    if (!fee?.data) return truncatedToaster('Error occurred!', error?.message!)
+    const { data: fee } = await refetchFee()
+
+    console.log(fee)
+
+    if (!fee) return truncatedToaster('Error occurred!', feeError?.message!)
 
     write({
-      value: fee.data[0],
+      value: fee[0],
       args: [
         address!,
         chainTo,
         address!,
-        tokenId,
+        tokenId, // tokenId
         address!,
         '0x0000000000000000000000000000000000000000',
         '0x00010000000000000000000000000000000000000000000000000000000000030d40',
@@ -86,7 +98,7 @@ export default function BridgePage() {
     <Paper title="NFT BRIDGE" icon={<Settings />}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(bridgeNFT)}>
-          <div className="w-full flex justify-between items-center mb-16">
+          <div className="w-full flex justify-between items-center mb-16 gap-5 md:gap-0 md:flex-row flex-col">
             <FormField
               control={form.control}
               name="chainFrom"
@@ -100,7 +112,7 @@ export default function BridgePage() {
                           disabled={isLoading}
                           role="combobox"
                           variant="clean"
-                          className="flex justify-between w-80 pl-3 pr-5 bg-popover"
+                          className="flex justify-between md:w-80 w-60 pl-3 md:pr-5 pr-2 bg-popover"
                         >
                           {selectedChain(field.value)}
                           <ChevronDown className="h-4 w-4" />
@@ -135,7 +147,7 @@ export default function BridgePage() {
             />
 
             <Repeat2
-              className="stroke-foreground cursor-pointer opacity-75 hover:opacity-100 duration-300 transition-opacity relative top-3"
+              className="stroke-foreground cursor-pointer opacity-75 hover:opacity-100 duration-300 transition-opacity relative md:top-3 top-1"
               onClick={() => {
                 form.setValue('chainFrom', fields.chainTo)
                 form.setValue('chainTo', fields.chainFrom)
@@ -155,7 +167,7 @@ export default function BridgePage() {
                           disabled={isLoading}
                           role="combobox"
                           variant="clean"
-                          className="flex justify-between w-80 pl-3 pr-5 bg-popover"
+                          className="flex justify-between md:w-80 w-60 pl-3 md:pr-5 pr-2 bg-popover"
                         >
                           {selectedChain(field.value)}
                           <ChevronDown className="h-4 w-4" />

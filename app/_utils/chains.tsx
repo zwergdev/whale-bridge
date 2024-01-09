@@ -18,9 +18,10 @@ export const selectedChain = (fieldValue: number) => {
     <div className="flex items-center w-full">
       <Image
         src={selectedChain.image}
-        width={54}
-        height={54}
+        width={48}
+        height={48}
         alt="selected-chain-icon"
+        className='md:w-12 md:h-12 w-6 h-6'
       />
       <p className="w-full text-base text-center font-medium">
         {selectedChain.label}

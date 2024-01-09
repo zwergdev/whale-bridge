@@ -9,26 +9,6 @@ const CONTRACTS: { [chainId: number]: `0x${string}` } = {
   137: '0x3993B7b29F2DF08eA19f2D0ECc980103e2B79d5c', // polygon
 }
 
-type BalanceParams = {
-  address?: `0x${string}`
-  onSuccess: (number: number) => void
-  chainId: number
-}
-
-function balance({ address, onSuccess, chainId }: BalanceParams) {
-  if (!address) return
-  return useContractRead({
-    address: CONTRACTS[chainId],
-    abi,
-    functionName: 'balanceOf',
-    chainId,
-    args: [address],
-    onSuccess(data) {
-      onSuccess(Number(data))
-    },
-  })
-}
-
 function mint(chainId: number) {
   return useContractWrite({
     address: CONTRACTS[chainId],
@@ -77,4 +57,4 @@ function estimateFee(
   })
 }
 
-export { balance, mint, bridge, estimateFee }
+export { mint, bridge, estimateFee }
