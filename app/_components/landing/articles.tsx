@@ -31,7 +31,9 @@ const Article = ({
       )}
     >
       <div className="flex flex-col gap-4">
-        <h3 className="text-primary md:text-4xl text-2xl font-semibold md:mb-10 mb-5">{title}</h3>
+        <h3 className="text-primary md:text-4xl text-2xl font-semibold md:mb-10 mb-5">
+          {title}
+        </h3>
         {bio.map((text, idx) => (
           <p
             key={idx}
@@ -40,9 +42,12 @@ const Article = ({
             {text}
           </p>
         ))}
-        <Button className="w-32 md:mt-10 mt-0" variant="secondary">
-          <Link href={button.link}>{button.text}</Link>
-        </Button>
+
+        <Link href={button.link}>
+          <Button className="w-32 md:mt-10 mt-0" variant="secondary">
+            {button.text}
+          </Button>
+        </Link>
       </div>
       {children}
     </article>

@@ -11,9 +11,9 @@ export const Hero = () => {
         vel molestie non dictum.
       </p>
 
-      <Button>
-        <Link href="/mint">Launch App</Link>
-      </Button>
+      <Link href="/mint">
+        <Button>Launch App</Button>
+      </Link>
     </section>
   )
 }

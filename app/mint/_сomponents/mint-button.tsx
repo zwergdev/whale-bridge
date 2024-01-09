@@ -12,7 +12,7 @@ export const MintButton = () => {
   const { address, status } = useAccount()
   const { chain } = useNetwork()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const { openConnectModal,connectModalOpen } = useConnectModal()
+  const { openConnectModal, connectModalOpen } = useConnectModal()
 
   const { write, data: signData, isLoading: isSigning } = mint(chain?.id ?? 0)
   const mintNFT = () => write()

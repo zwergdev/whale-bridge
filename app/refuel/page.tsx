@@ -4,8 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { RefuelSchema } from '../_utils/schemas'
-import { Button } from '@/components/ui/button'
-import { Repeat2, ChevronDown } from 'lucide-react'
 import {
   Form,
   FormControl,
@@ -14,26 +12,21 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from '@/components/ui/command'
+import { Popover } from '@/components/ui/popover'
 import { Input } from '@/components/ui/input'
-import { CHAINS, selectedChain } from '../_utils/chains'
+import { CHAINS } from '../_utils/chains'
 import { useState } from 'react'
 import { useAccount, useBalance, useNetwork } from 'wagmi'
 import { Slider } from '@/components/ui/slider'
-import { Paper } from '../_components/paper'
 import { SubmitButton } from '../_components/submit-button'
 import { truncatedToaster } from '../_utils/truncatedToaster'
+import {
+  ChainList,
+  ChainyTrigger,
+  Paper,
+} from '../_components/chainy/chains-popover'
+import { TransactionSummary } from './_components/transaction-summary'
+import { RepeatButton } from '@/app/_components/chainy/chains-popover'
 
 export default function RefuelPage() {
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
@@ -93,49 +86,24 @@ export default function RefuelPage() {
                     open={popoverFromOpen}
                     onOpenChange={setPopoverFromOpen}
                   >
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          disabled={isLoading}
-                          role="combobox"
-                          variant="clean"
-                          className="flex justify-between md:w-80 w-60 pl-3 md:pr-5 pr-2 bg-popover"
-                        >
-                          {selectedChain(field.value)}
-                          <ChevronDown className="h-4 w-4" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-80 p-0">
-                      <Command>
-                        <CommandInput placeholder="Search chain..." />
-                        <CommandEmpty>No chain found.</CommandEmpty>
-                        <CommandGroup>
-                          {CHAINS.map(({ label, value, image }) => (
-                            <CommandItem
-                              value={label}
-                              key={value}
-                              image={image}
-                              disabled={fields.chainTo === value}
-                              checked={value === field.value}
-                              onSelect={() => {
-                                form.setValue('chainFrom', value)
-                                setPopoverFromOpen(false)
-                              }}
-                            >
-                              {label}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
+                    <ChainyTrigger
+                      disabled={isLoading}
+                      selectedValue={field.value}
+                    />
+                    <ChainList
+                      selectedValue={fields.chainTo}
+                      fieldValue={field.value}
+                      onSelect={(value) => {
+                        form.setValue('chainFrom', value)
+                        setPopoverFromOpen(false)
+                      }}
+                    />
                   </Popover>
                 </FormItem>
               )}
             />
 
-            <Repeat2
-              className="stroke-foreground cursor-pointer opacity-75 hover:opacity-100 duration-300 transition-opacity relative md:top-3 top-1"
+            <RepeatButton
               onClick={() => {
                 form.setValue('chainFrom', fields.chainTo)
                 form.setValue('chainTo', fields.chainFrom)
@@ -149,42 +117,18 @@ export default function RefuelPage() {
                 <FormItem className="flex flex-col">
                   <FormLabel>Transfer to</FormLabel>
                   <Popover open={popoverToOpen} onOpenChange={setPopoverToOpen}>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          disabled={isLoading}
-                          role="combobox"
-                          variant="clean"
-                          className="flex justify-between md:w-80 w-60 pl-3 md:pr-5 pr-2 bg-popover"
-                        >
-                          {selectedChain(field.value)}
-                          <ChevronDown className="h-4 w-4" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-80 p-0">
-                      <Command>
-                        <CommandInput placeholder="Search chain..." />
-                        <CommandEmpty>No chain found.</CommandEmpty>
-                        <CommandGroup>
-                          {CHAINS.map(({ label, value, image }) => (
-                            <CommandItem
-                              value={label}
-                              key={value}
-                              image={image}
-                              disabled={fields.chainFrom === value}
-                              checked={value === field.value}
-                              onSelect={() => {
-                                form.setValue('chainTo', value)
-                                setPopoverToOpen(false)
-                              }}
-                            >
-                              {label}
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
+                    <ChainyTrigger
+                      disabled={isLoading}
+                      selectedValue={field.value}
+                    />
+                    <ChainList
+                      selectedValue={fields.chainFrom}
+                      fieldValue={field.value}
+                      onSelect={(value) => {
+                        form.setValue('chainTo', value)
+                        setPopoverToOpen(false)
+                      }}
+                    />
                   </Popover>
                 </FormItem>
               )}
@@ -241,26 +185,15 @@ export default function RefuelPage() {
             </span>
           </div>
 
-          <article className="bg-popover rounded-md md:pt-5 pt-3 px-4 max-w-xl mx-auto mb-11">
-            <h3 className="font-semibold md:text-lg text-base md:mb-4 mb-2">
-              Transaction Summary
-            </h3>
-            <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary">
-              Estimated Transfer Time:
-              <span className="font-semibold">~5 mins</span>
-            </div>
-            <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary">
-              Refuel cost:
-              <span className="font-semibold">0.00015 ETH ($0.34)</span>
-            </div>
-            <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary md:mb-5 mb-2">
-              Expected Output:
-              <span className="font-semibold">0 MATIC ($0)</span>
-            </div>
-          </article>
+          <TransactionSummary
+            time="5"
+            refuelCost="0.00015 ETH ($0.34)"
+            output="0 MATIC ($0)"
+          />
 
           <SubmitButton
-            disabled={!isValid || isLoading}
+            disabled={!isValid}
+            loading={isLoading}
             chainFrom={fields.chainFrom}
           >
             Refuel

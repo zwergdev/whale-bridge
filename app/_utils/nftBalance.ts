@@ -18,7 +18,7 @@ export const getNFTBalance = async (address: string, chainId: number) => {
   if (chainId === 0) return []
   const res = await fetch(
     `https://api.opensea.io/api/v2/chain/${CHAINS[chainId].chain}/account/${address}/nfts?collection=${CHAINS[chainId].collection}`,
-    options,
+    { cache: 'no-cache', ...options },
   )
     .then((response) => response.json())
     .catch((err) => console.error(err))

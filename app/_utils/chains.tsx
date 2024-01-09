@@ -11,6 +11,12 @@ export const CHAINS = [
   { label: 'Polygon', value: 137, image: '/polygon.svg', chainId: 137 },
 ] as const
 
+export const TX_LINK: { [chainId: number]: string } = {
+  42170: 'nova.arbiscan.io', // arbitrum-nova
+  56: 'bscscan.com', // bsc
+  137: 'polygonscan.com', // polygon
+}
+
 export const selectedChain = (fieldValue: number) => {
   const selectedChain = CHAINS.find(({ value }) => value === fieldValue)
   if (!selectedChain) return 'Select chain'
@@ -21,7 +27,7 @@ export const selectedChain = (fieldValue: number) => {
         width={48}
         height={48}
         alt="selected-chain-icon"
-        className='md:w-12 md:h-12 w-6 h-6'
+        className="md:w-12 md:h-12 w-6 h-6"
       />
       <p className="w-full text-base text-center font-medium">
         {selectedChain.label}

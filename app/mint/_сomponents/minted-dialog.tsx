@@ -1,3 +1,4 @@
+import { TX_LINK } from '../../_utils/chains'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,12 +15,6 @@ type MintedDialogProps = {
   hash?: `0x${string}`
   open: boolean
   chainId: number
-}
-
-const TX_LINK: { [chainId: number]: string } = {
-  42170: 'nova.arbiscan.io', // arbitrum-nova
-  56: 'bscscan.com', // bsc
-  137: 'polygonscan.com', // polygon
 }
 
 export const MintedDialog = ({ open, hash, chainId }: MintedDialogProps) => {

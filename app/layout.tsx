@@ -12,10 +12,30 @@ const poppins = Poppins({
   subsets: ['latin'],
 })
 
+const title = '🐋 Whale'
+const description =
+  'Elit. Hac ornare lorem mattis lorem efficitur amet, sed platea cursus vel molestie non dictum.'
+
 export const metadata: Metadata = {
-  title: '🐋 Whale',
-  description:
-    'Elit. Hac ornare lorem mattis lorem efficitur amet, sed platea cursus vel molestie non dictum.',
+  metadataBase: new URL('https://whale-bridge.vercel.app'),
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    url: 'https://ragate.vercel.app',
+    siteName: title,
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title,
+    description,
+    siteId: '1654564851425869826',
+    creator: '@zwergdev',
+    creatorId: '1654564851425869826',
+  },
 }
 
 export default function RootLayout({

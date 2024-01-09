@@ -1,6 +1,6 @@
-import { CHAINS } from '@/app/_utils/chains'
+import { CHAINS } from '../_utils/chains'
 import Image from 'next/image'
-import { MintButton } from './mint-button/mint-button'
+import { MintButton } from './_сomponents/mint-button'
 
 export default function MintPage() {
   return (

@@ -47,6 +47,7 @@ module.exports = {
         popover: {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))',
+          light: 'hsl(var(--popover-light))',
         },
         card: {
           DEFAULT: 'hsl(var(--card))',
