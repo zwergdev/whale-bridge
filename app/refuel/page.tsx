@@ -32,10 +32,17 @@ import { useState } from 'react'
 import { useAccount, useBalance } from 'wagmi'
 import { Slider } from '@/components/ui/slider'
 import { Paper } from '../_components/paper'
+import { SubmitButton } from '../_components/submit-button'
+import { truncatedToaster } from '../_utils/truncatedToaster'
 
 export default function RefuelPage() {
   const { address } = useAccount()
-  const { data } = useBalance({ address })
+  const { data } = useBalance({
+    address,
+    onSuccess({ formatted }) {
+      form.setValue('balance', Number(formatted))
+    },
+  })
   const balance = Number(data?.formatted)
 
   const [isLoading] = useState(false)
@@ -58,7 +65,12 @@ export default function RefuelPage() {
 
   const fields = watch()
 
-  function refuel(data: z.infer<typeof RefuelSchema>) {
+  function refuel({ amount, balance }: z.infer<typeof RefuelSchema>) {
+    if (amount > balance)
+      return truncatedToaster(
+        'Insufficient balance',
+        `Your balance is ${balance} ${data?.symbol}. Please enter amount less than or equal to your balance.`,
+      )
     console.log(data)
   }
 
@@ -189,15 +201,14 @@ export default function RefuelPage() {
                 <FormControl>
                   <div className="relative flex items-center">
                     <Input
-                      placeholder={`0.0001 ${data?.symbol}`}
+                      placeholder={`0.0001 ${!balance ? 'XXX' : data?.symbol}`}
                       {...field}
                       max={balance}
                     />
-                    {data?.symbol && (
-                      <span className="absolute text-lg right-3 font-medium">
-                        {data?.symbol}
-                      </span>
-                    )}
+
+                    <span className="absolute text-lg right-3 font-medium">
+                      {!balance ? 'XXX' : data?.symbol}
+                    </span>
                   </div>
                 </FormControl>
                 <FormMessage />
@@ -217,7 +228,7 @@ export default function RefuelPage() {
               onValueChange={(v) => setValue('amount', v[0])}
             />
             <span className="flex items-center justify-center rounded-md py-3 w-fit min-w-20 px-2 border border-primary">
-              {!balance ? '...' : balance < 1 ? balance.toFixed(5) : balance}
+              {!balance ? '...' : balance.toFixed(5)}
             </span>
           </div>
 
@@ -237,13 +248,12 @@ export default function RefuelPage() {
             </div>
           </article>
 
-          <Button
-            type="submit"
-            disabled={!isValid || !address || isLoading}
-            className="w-full text-base py-2.5"
+          <SubmitButton
+            disabled={!isValid || isLoading}
+            chainFrom={fields.chainFrom}
           >
             Refuel
-          </Button>
+          </SubmitButton>
         </form>
       </Form>
     </Paper>

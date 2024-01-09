@@ -35,7 +35,7 @@ function mint(chainId: number) {
     abi,
     functionName: 'mint',
     chainId,
-    value: parseEther('0'),
+    value: parseEther('0.0006'),
     onError(error) {
       truncatedToaster('Error occurred!', error?.message!)
     },

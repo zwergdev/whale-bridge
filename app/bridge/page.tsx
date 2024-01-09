@@ -31,6 +31,7 @@ import { BridgeSchema } from '@/app/_utils/schemas'
 import { truncatedToaster } from '@/app/_utils/truncatedToaster'
 import { estimateFee, bridge } from '@/app/_utils/contract-actions'
 import { Paper } from '../_components/paper'
+import { SubmitButton } from '../_components/submit-button'
 
 export default function BridgePage() {
   const { address } = useAccount()
@@ -189,14 +190,14 @@ export default function BridgePage() {
             />
           </div>
 
-          <Button
-            type="submit"
-            disabled={!isValid || !address || isLoading}
-            className="w-full mb-10 text-base py-2.5"
+          <SubmitButton
+            disabled={!isValid || isLoading}
+            chainFrom={fields.chainFrom}
           >
             Bridge
-          </Button>
-          <LayerZero className="text-center w-full" />
+          </SubmitButton>
+
+          <LayerZero className="text-center w-full mt-10" />
         </form>
       </Form>
     </Paper>

@@ -13,9 +13,16 @@ import Link from 'next/link'
 type MintedDialogProps = {
   hash?: `0x${string}`
   open: boolean
+  chainId: number
 }
 
-export const MintedDialog = ({ open, hash }: MintedDialogProps) => {
+const TX_LINK: { [chainId: number]: string } = {
+  42170: 'nova.arbiscan.io', // arbitrum-nova
+  56: 'bscscan.com', // bsc
+  137: 'polygonscan.com', // polygon
+}
+
+export const MintedDialog = ({ open, hash, chainId }: MintedDialogProps) => {
   return (
     <AlertDialog open={open}>
       <AlertDialogContent>
@@ -35,10 +42,10 @@ export const MintedDialog = ({ open, hash }: MintedDialogProps) => {
                 Transaction link:{' '}
                 <Link
                   target="_blank"
-                  href={`https://nova.arbiscan.io/tx/${hash}`}
+                  href={`https://${TX_LINK[chainId]}/tx/${hash}`}
                   className="text-foreground underline"
                 >
-                  {`nova.arbiscan.io/tx/${hash}`}
+                  {`${TX_LINK[chainId]}/tx/${hash}`}
                 </Link>
               </div>
             </div>

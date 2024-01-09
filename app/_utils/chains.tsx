@@ -1,13 +1,14 @@
 import Image from 'next/image'
 
 export const CHAINS = [
-  { label: 'BSC', value: 102, image: '/bnb.svg' },
+  { label: 'BSC', value: 102, image: '/bnb.svg', chainId: 56 },
   {
     label: 'Arbitrum Nova',
     value: 175,
     image: '/arb-nova.svg',
+    chainId: 42170,
   },
-  { label: 'Polygon', value: 137, image: '/polygon.svg' },
+  { label: 'Polygon', value: 137, image: '/polygon.svg', chainId: 137 },
 ] as const
 
 export const selectedChain = (fieldValue: number) => {
