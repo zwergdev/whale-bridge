@@ -10,7 +10,7 @@ const options = {
 
 const CHAINS: { [key: number]: { chain: string; collection: string } } = {
   56: { chain: 'bsc', collection: 'whaletest-onft-2' },
-  42170: { chain: 'arbitrum_nova', collection: 'whaletest-onft-2' },
+  42170: { chain: 'arbitrum_nova', collection: 'whaletest-onft-1' },
   137: { chain: 'matic', collection: 'whaletest-onft' },
 }
 
@@ -22,6 +22,8 @@ export const getNFTBalance = async (address: string, chainId: number) => {
   )
     .then((response) => response.json())
     .catch((err) => console.error(err))
+
+  console.log(res)
 
   const NFTs = res.nfts.map(
     ({ identifier }: { identifier: string }) => identifier,
