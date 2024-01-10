@@ -48,7 +48,7 @@ export const MintedDialog = ({ open, hash, chainId }: MintedDialogProps) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <Link href="/bridge">
-            <AlertDialogAction>Continue</AlertDialogAction>
+            <AlertDialogAction>To Bridge</AlertDialogAction>
           </Link>
         </AlertDialogFooter>
       </AlertDialogContent>

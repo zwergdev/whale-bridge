@@ -15,7 +15,7 @@ function mint(chainId: number) {
     abi,
     functionName: 'mint',
     chainId,
-    value: parseEther('0.0006'),
+    value: parseEther('0'),
     onError(error) {
       truncatedToaster('Error occurred!', error?.message!)
     },
@@ -28,7 +28,7 @@ function bridge(chainId: number) {
     abi,
     functionName: 'sendFrom',
     chainId,
-    value: parseEther('0.0006'),
+    value: parseEther('0'),
     onError(error) {
       truncatedToaster('Error occurred!', error.message)
     },
