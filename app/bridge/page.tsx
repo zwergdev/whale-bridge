@@ -63,8 +63,6 @@ export default function BridgePage() {
     chain?.id ?? 0,
   )
 
-  console.log(chain?.id)
-
   async function bridgeNFT({ chainTo }: z.infer<typeof BridgeSchema>) {
     if (tokenId === BigInt(0))
       return truncatedToaster('Error occurred!', 'No NFTs found!')

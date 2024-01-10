@@ -45,8 +45,9 @@ function estimateFee(
     address: CONTRACTS[chainId],
     abi,
     functionName: 'estimateSendFee',
+    chainId,
     args: [
-      102,
+      chainTo,
       address,
       tokenId,
       false,

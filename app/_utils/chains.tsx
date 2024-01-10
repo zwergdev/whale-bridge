@@ -8,7 +8,7 @@ export const CHAINS = [
     image: '/arb-nova.svg',
     chainId: 42170,
   },
-  { label: 'Polygon', value: 137, image: '/polygon.svg', chainId: 137 },
+  { label: 'Polygon', value: 109, image: '/polygon.svg', chainId: 137 },
 ] as const
 
 export const TX_LINK: { [chainId: number]: string } = {
