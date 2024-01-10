@@ -12,7 +12,7 @@ const poppins = Poppins({
   subsets: ['latin'],
 })
 
-const title = '🐋 Whale'
+const title = 'Whale'
 const description =
   'Elit. Hac ornare lorem mattis lorem efficitur amet, sed platea cursus vel molestie non dictum.'
 
