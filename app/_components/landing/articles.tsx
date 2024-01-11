@@ -121,16 +121,24 @@ export const Articles = () => {
         ]}
         button={{ link: '/refuel', text: 'Refuel' }}
       >
-        <div className="border-primary rounded-lg border-2 relative">
+        <div className="relative lg:mt-24 mt-0">
+          <div className="border-2 border-primary rounded-lg">
+            <Image
+              src="/refuel.webp"
+              width={360}
+              height={350}
+              alt="mint-picture"
+              className="relative left-3 bottom-3 rounded-lg"
+            />
+          </div>
           <Image
-            src="/refuel.webp"
-            quality={100}
-            width={480}
-            height={460}
-            alt="refuel-picture"
-            className="relative right-3 bottom-3 rounded-lg "
+            src="/refuel-nft.webp"
+            width={300}
+            height={300}
+            alt="mint-picture"
+            className="absolute -top-32 -right-32 rounded-lg scale-x-[-1] border border-primary -z-10 lg:block hidden"
           />
-          <div className="w-64 h-64 -z-10 bg-primary blur-[150px] absolute -bottom-10 opacity-50 right-0" />
+          <div className="w-56 h-56 -z-10 bg-primary blur-[150px] absolute bottom-0 right-0" />
         </div>
       </Article>
     </SectionWrapper>

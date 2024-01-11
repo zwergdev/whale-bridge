@@ -16,7 +16,9 @@ function mint(chainId: number) {
     functionName: 'mint',
     chainId,
     value: parseEther('0.00001'),
-    onError(error) {
+    onError(error, ssad) {
+      console.log(ssad)
+
       truncatedToaster('Error occurred!', error?.message!)
     },
   })

@@ -15,24 +15,26 @@ export const ConnectButton = () => {
       }) => {
         const connected = mounted && account && chain
         return (
-          <div
-            {...(!mounted && {
-              'aria-hidden': true,
-              style: {
-                opacity: 0,
-                pointerEvents: 'none',
-                userSelect: 'none',
-              },
-            })}
-          >
+          <div>
             {(() => {
+              if (!mounted) {
+                return (
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    className="before:scale-x-[1.03] md:text-xl text-base pointer-events-none"
+                  >
+                    Connect Wallet
+                  </Button>
+                )
+              }
               if (!connected) {
                 return (
                   <Button
                     onClick={openConnectModal}
                     size="sm"
                     variant="secondary"
-                    className="before:scale-x-[1.03]"
+                    className="before:scale-x-[1.03] md:text-xl text-base"
                   >
                     Connect Wallet
                   </Button>
@@ -44,7 +46,7 @@ export const ConnectButton = () => {
                     onClick={openChainModal}
                     size="sm"
                     variant="secondary"
-                    className="before:scale-x-[1.03]"
+                    className="before:scale-x-[1.03] md:text-xl text-base"
                   >
                     Wrong network
                   </Button>

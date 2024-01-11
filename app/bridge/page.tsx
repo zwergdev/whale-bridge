@@ -1,7 +1,12 @@
 'use client'
 
-import { Settings } from 'lucide-react'
-import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@/components/ui/form'
 import { Popover } from '@/components/ui/popover'
 import { CHAINS } from '../_utils/chains'
 import { LayerZero } from '@/components/ui/icons'
@@ -23,11 +28,17 @@ import {
 } from '../_components/chainy/chains-popover'
 import { RepeatButton } from '@/app/_components/chainy/chains-popover'
 import { BridgedDialog } from './_components/bridged-dialog'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+} from '@/components/ui/select'
+import { ChevronsUpDown } from 'lucide-react'
 
 export default function BridgePage() {
   const { address } = useAccount()
   const { chain } = useNetwork()
-  const [tokenId, setTokenId] = useState<bigint>(BigInt(0))
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
   const [popoverToOpen, setPopoverToOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -35,7 +46,8 @@ export default function BridgePage() {
   useEffect(() => {
     ;(async () => {
       const nfts = await getNFTBalance(address!, chain?.id ?? 0)
-      setTokenId(BigInt(nfts?.[0] ?? 0))
+      form.setValue('tokenId', nfts?.[0] ?? '0')
+      form.setValue('nfts', nfts ?? [])
     })()
   }, [address, chain])
 
@@ -45,6 +57,8 @@ export default function BridgePage() {
       chainFrom:
         CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
       chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value, // 102
+      tokenId: '0',
+      nfts: [],
     },
   })
   const {
@@ -59,13 +73,16 @@ export default function BridgePage() {
   const { refetch: refetchFee, error: feeError } = estimateFee(
     fields.chainTo,
     address!,
-    tokenId,
+    BigInt(fields.tokenId),
     chain?.id ?? 0,
   )
 
-  async function bridgeNFT({ chainTo }: z.infer<typeof BridgeSchema>) {
-    if (tokenId === BigInt(0))
-      return truncatedToaster('Error occurred!', 'No NFTs found!')
+  async function bridgeNFT({ chainTo, tokenId }: z.infer<typeof BridgeSchema>) {
+    if (tokenId === '0')
+      return truncatedToaster(
+        'Error occurred!',
+        'You do not have any NFTs to bridge.',
+      )
 
     const { data: fee } = await refetchFee()
 
@@ -77,7 +94,7 @@ export default function BridgePage() {
         address!,
         chainTo,
         address!,
-        tokenId, // tokenId
+        BigInt(tokenId),
         address!,
         '0x0000000000000000000000000000000000000000',
         '0x00010000000000000000000000000000000000000000000000000000000000030d40',
@@ -89,9 +106,37 @@ export default function BridgePage() {
 
   return (
     <>
-      <Paper title="NFT BRIDGE" icon={<Settings />}>
+      <Paper title="NFT BRIDGE">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(bridgeNFT)}>
+          <form onSubmit={form.handleSubmit(bridgeNFT)} className="relative">
+            <FormField
+              control={form.control}
+              name="tokenId"
+              render={({ field }) => (
+                <FormItem className="absolute -top-12 right-0">
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <ChevronsUpDown />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {fields.nfts.length ? (
+                        fields.nfts.map((token) => (
+                          <SelectItem value={token}>{token}</SelectItem>
+                        ))
+                      ) : (
+                        <p className="mx-2 text-xl">No NFTs found!</p>
+                      )}
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
+
             <div className="w-full flex justify-between items-center mb-16 gap-5 md:gap-0 md:flex-row flex-col">
               <FormField
                 control={form.control}

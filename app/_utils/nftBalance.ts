@@ -15,7 +15,8 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
 }
 
 export const getNFTBalance = async (address: string, chainId: number) => {
-  if (chainId === 0) return []
+  if (chainId === 0 || !address) return []
+
   const res = await fetch(
     `https://api.opensea.io/api/v2/chain/${CHAINS[chainId].chain}/account/${address}/nfts?collection=${CHAINS[chainId].collection}`,
     { cache: 'no-cache', ...options },
@@ -23,7 +24,7 @@ export const getNFTBalance = async (address: string, chainId: number) => {
     .then((response) => response.json())
     .catch((err) => console.error(err))
 
-  console.log(res)
+  if (res.length === 0) return []
 
   const NFTs = res.nfts.map(
     ({ identifier }: { identifier: string }) => identifier,
