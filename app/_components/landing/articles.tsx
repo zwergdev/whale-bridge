@@ -124,19 +124,19 @@ export const Articles = () => {
         <div className="relative lg:mt-24 mt-0">
           <div className="border-2 border-primary rounded-lg">
             <Image
-              src="/refuel.webp"
-              width={360}
+              src="/refuel-nft.webp"
+              width={350}
               height={350}
               alt="mint-picture"
-              className="relative left-3 bottom-3 rounded-lg"
+              className="relative left-2 bottom-2 rounded-lg"
             />
           </div>
           <Image
-            src="/refuel-nft.webp"
+            src="/refuel.webp"
             width={300}
             height={300}
             alt="mint-picture"
-            className="absolute -top-32 -right-32 rounded-lg scale-x-[-1] border border-primary -z-10 lg:block hidden"
+            className="absolute -top-32 -right-32 rounded-lg -z-10 lg:block hidden"
           />
           <div className="w-56 h-56 -z-10 bg-primary blur-[150px] absolute bottom-0 right-0" />
         </div>

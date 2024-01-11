@@ -14,21 +14,26 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
   137: { chain: 'matic', collection: 'whaletest-onft' },
 }
 
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
+
+const fetchNFTs = async (address: string, chainId: number) => {
+  const url = `https://api.opensea.io/api/v2/chain/${CHAINS[chainId].chain}/account/${address}/nfts?collection=${CHAINS[chainId].collection}`
+  const response = await fetch(url, { cache: 'no-cache', ...options })
+  return response.json()
+}
+
+const extractIdentifiers = (nfts: any[]) =>
+  nfts.map(({ identifier }: { identifier: string }) => identifier)
+
 export const getNFTBalance = async (address: string, chainId: number) => {
   if (chainId === 0 || !address) return []
 
-  const res = await fetch(
-    `https://api.opensea.io/api/v2/chain/${CHAINS[chainId].chain}/account/${address}/nfts?collection=${CHAINS[chainId].collection}`,
-    { cache: 'no-cache', ...options },
-  )
-    .then((response) => response.json())
-    .catch((err) => console.error(err))
+  let res = await fetchNFTs(address, chainId)
 
-  if (res.length === 0) return []
+  if (res.nfts.length === 0) {
+    await delay(2500)
+    res = await fetchNFTs(address, chainId)
+  }
 
-  const NFTs = res.nfts.map(
-    ({ identifier }: { identifier: string }) => identifier,
-  )
-
-  return NFTs
+  return extractIdentifiers(res.nfts)
 }
