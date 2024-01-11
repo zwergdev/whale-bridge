@@ -10,13 +10,19 @@ import {
 } from '@/components/ui/alert-dialog'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Loader } from 'lucide-react'
+import { Check, Loader, Plus } from 'lucide-react'
+import {
+  waitForMessageReceived,
+  MessageStatus,
+} from '@layerzerolabs/scan-client'
+import { cloneElement, useState } from 'react'
 
 type BridgedDialogProps = {
   hash?: `0x${string}`
   open: boolean
   chainId: number
   onOpenChange: (open: boolean) => void
+  chainTo: number
 }
 
 export const BridgedDialog = ({
@@ -24,17 +30,54 @@ export const BridgedDialog = ({
   hash,
   chainId,
   onOpenChange,
+  chainTo,
 }: BridgedDialogProps) => {
+  const [txStatus, setTxStatus] = useState(MessageStatus.INFLIGHT)
+
+  waitForMessageReceived(chainTo, hash!).then(({ status }) => {
+    if (status === MessageStatus.DELIVERED)
+      return setTxStatus(MessageStatus.DELIVERED)
+
+    if (status === MessageStatus.FAILED)
+      return setTxStatus(MessageStatus.FAILED)
+  })
+
+  function renderStatus() {
+    if (txStatus === MessageStatus.INFLIGHT) {
+      return {
+        icon: <Loader className="animate-spin-slow" />,
+        text: 'Bridge transaction in process.',
+      }
+    }
+    if (txStatus === MessageStatus.DELIVERED) {
+      return {
+        icon: <Check className="stroke-green-600" />,
+        text: 'Transaction delivered.',
+      }
+    }
+    return {
+      icon: <Plus className="rotate-45 stroke-red-700" />,
+      text: 'Transaction failed.',
+    }
+  }
+
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Transaction status</AlertDialogTitle>
           <AlertDialogDescription className="flex flex-col items-center justify-center py-8">
-            <Loader className="mb-4 h-8 w-8 animate-spin-slow" />
-            <p className="text-xl font-medium text-foreground mb-2">
-              Bridge transaction in process.
-            </p>
+            {(() => {
+              const { icon, text } = renderStatus()
+              return (
+                <>
+                  {cloneElement(icon, { size: 32 })}
+                  <p className="text-xl font-medium text-foreground mt-4 mb-2">
+                    {text}
+                  </p>
+                </>
+              )
+            })()}
             <p>
               You can verify its status using the{' '}
               <Link

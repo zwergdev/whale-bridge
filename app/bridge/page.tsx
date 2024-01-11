@@ -126,7 +126,7 @@ export default function BridgePage() {
                     <SelectContent>
                       {fields.nfts.length ? (
                         fields.nfts.map((token) => (
-                          <SelectItem value={token}>{token}</SelectItem>
+                          <SelectItem value={token} key={token}>{token}</SelectItem>
                         ))
                       ) : (
                         <p className="mx-2 text-xl">No NFTs found!</p>
@@ -219,6 +219,7 @@ export default function BridgePage() {
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
         chainId={chain?.id ?? 0}
+        chainTo={fields.chainTo}
       />
     </>
   )
