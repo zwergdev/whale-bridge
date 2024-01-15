@@ -30,20 +30,16 @@ export const MintImage = ({
 
   const definedChain = chainId || chain?.id
 
-  return definedChain && status === 'connected' ? (
+  return (
     <Image
-      src={IMAGES[definedChain]}
+      src={
+        definedChain && status === 'connected'
+          ? IMAGES[definedChain]
+          : defaultImage
+      }
       width={size}
       height={size}
       className={cn('rounded-xl', className)}
-      alt="mint-picture"
-    />
-  ) : (
-    <Image
-      src={defaultImage}
-      width={size}
-      height={size}
-      className="rounded-xl"
       alt="mint-picture"
     />
   )
