@@ -21,6 +21,10 @@ const CONTRACTS: {
     address: '0xE1c907503B8d1545AFD5A89cc44FC1E538A132DA',
     mintPrice: '0.010751115000000',
   }, // polygon
+  0: {
+    address: '0x00',
+    mintPrice: '0',
+  },
 }
 
 function mint(chainId: number) {
