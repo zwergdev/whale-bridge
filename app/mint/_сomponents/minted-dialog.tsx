@@ -8,8 +8,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import Image from 'next/image'
 import Link from 'next/link'
+import { MintImage } from './mint-image'
 
 type MintedDialogProps = {
   hash?: `0x${string}`
@@ -25,12 +25,10 @@ export const MintedDialog = ({ open, hash, chainId }: MintedDialogProps) => {
           <AlertDialogTitle>You've successfully minted TWHL!</AlertDialogTitle>
           <AlertDialogDescription>
             <div className="flex gap-4 items-center">
-              <Image
-                src="/mint-nft.webp"
-                width={100}
-                height={100}
-                alt="nft-image"
-                className="border border-border rounded-lg"
+              <MintImage
+                className="border border-border"
+                size={100}
+                chainId={chainId}
               />
               <div className="truncate max-w-96 text-left">
                 <p className="mb-2">Now you're able to bridge your TWHL.</p>

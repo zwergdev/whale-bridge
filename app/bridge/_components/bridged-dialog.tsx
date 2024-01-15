@@ -8,7 +8,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import Image from 'next/image'
 import Link from 'next/link'
 import { Check, Loader, Plus } from 'lucide-react'
 import {
@@ -16,6 +15,7 @@ import {
   MessageStatus,
 } from '@layerzerolabs/scan-client'
 import { cloneElement, useState } from 'react'
+import { MintImage } from '@/app/mint/_сomponents/mint-image'
 
 type BridgedDialogProps = {
   hash?: `0x${string}`
@@ -91,12 +91,10 @@ export const BridgedDialog = ({
             </p>
 
             <div className="flex gap-4 items-center mt-16 w-full">
-              <Image
-                src="/bridge-nft.webp"
-                width={100}
-                height={100}
-                alt="nft-image"
-                className="border border-border rounded-lg"
+              <MintImage
+                className="border border-border"
+                size={100}
+                chainId={chainId}
               />
               <div className="truncate max-w-96 text-left">
                 <p>Transaction link:</p>

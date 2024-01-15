@@ -1,6 +1,7 @@
 import { CHAINS } from '../_utils/chains'
 import Image from 'next/image'
 import { MintButton } from './_сomponents/mint-button'
+import { MintImage } from './_сomponents/mint-image'
 
 export default function MintPage() {
   return (
@@ -27,13 +28,7 @@ export default function MintPage() {
         </p>
         <MintButton />
       </div>
-      <Image
-        src="/mint-nft.webp"
-        width={440}
-        height={440}
-        className="rounded-xl"
-        alt="mint-picture"
-      />
+      <MintImage />
     </section>
   )
 }
