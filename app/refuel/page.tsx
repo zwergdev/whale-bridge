@@ -156,6 +156,7 @@ export default function RefuelPage() {
                     <Input
                       placeholder={`0.0001 ${!balance ? 'XXX' : data?.symbol}`}
                       {...field}
+                      autoComplete='off'
                       max={balance}
                     />
 

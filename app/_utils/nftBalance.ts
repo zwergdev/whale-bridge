@@ -10,14 +10,15 @@ const options = {
 
 const CHAINS: { [key: number]: { chain: string; collection: string } } = {
   56: { chain: 'bsc', collection: 'whaletest-onft-2' },
-  42170: { chain: 'arbitrum_nova', collection: 'whaletest-onft-1' },
-  137: { chain: 'matic', collection: 'whaletest-onft' },
+  42170: { chain: 'arbitrum_nova', collection: 'whale-onft-2' },
+  137: { chain: 'matic', collection: 'whale-onft' },
 }
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
 
 const fetchNFTs = async (address: string, chainId: number) => {
   const url = `https://api.opensea.io/api/v2/chain/${CHAINS[chainId].chain}/account/${address}/nfts?collection=${CHAINS[chainId].collection}`
+
   const response = await fetch(url, { cache: 'no-cache', ...options })
   return response.json()
 }
