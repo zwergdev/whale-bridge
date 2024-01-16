@@ -16,7 +16,7 @@ import * as z from 'zod'
 import { useAccount, useNetwork } from 'wagmi'
 import { BridgeSchema } from '../_utils/schemas'
 import { truncatedToaster } from '../_utils/truncatedToaster'
-import { estimateFee, bridge } from '../_utils/contract-actions'
+import { estimateBridgeFee, bridge } from '../_utils/contract-actions'
 import { SubmitButton } from '../_components/submit-button'
 import { getNFTBalance } from '../_utils/nftBalance'
 import { useEffect, useState } from 'react'
@@ -70,7 +70,7 @@ export default function BridgePage() {
 
   const { data: bridgingData, writeAsync, isLoading } = bridge(chain?.id ?? 0)
 
-  const { refetch: refetchFee, error: feeError } = estimateFee(
+  const { refetch: refetchFee, error: feeError } = estimateBridgeFee(
     fields.chainTo,
     address!,
     BigInt(fields.tokenId),
@@ -84,7 +84,7 @@ export default function BridgePage() {
         'You do not have any NFTs to bridge.',
       )
 
-    const { data: fee } = await refetchFee()
+    const { data: fee }: any = await refetchFee()
 
     if (!fee) return truncatedToaster('Error occurred!', feeError?.message!)
 
@@ -126,7 +126,9 @@ export default function BridgePage() {
                     <SelectContent>
                       {fields.nfts.length ? (
                         fields.nfts.map((token) => (
-                          <SelectItem value={token} key={token}>{token}</SelectItem>
+                          <SelectItem value={token} key={token}>
+                            {token}
+                          </SelectItem>
                         ))
                       ) : (
                         <p className="mx-2 text-xl">No NFTs found!</p>

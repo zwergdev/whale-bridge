@@ -27,6 +27,8 @@ import {
 } from '../_components/chainy/chains-popover'
 import { TransactionSummary } from './_components/transaction-summary'
 import { RepeatButton } from '@/app/_components/chainy/chains-popover'
+import { refuel, estimateRefuelFee } from '@/app/_utils/contract-actions'
+import { parseEther } from 'viem/utils'
 
 export default function RefuelPage() {
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
@@ -40,8 +42,6 @@ export default function RefuelPage() {
     },
   })
   const balance = Number(data?.formatted)
-
-  const [isLoading] = useState(false)
 
   const form = useForm<z.infer<typeof RefuelSchema>>({
     resolver: zodResolver(RefuelSchema),
@@ -62,19 +62,42 @@ export default function RefuelPage() {
 
   const fields = watch()
 
-  function refuel({ amount, balance }: z.infer<typeof RefuelSchema>) {
+  const { data: fee, error: feeError } = estimateRefuelFee(
+    fields.chainTo,
+    chain?.id ?? 0,
+  )
+  console.log(fee, feeError)
+
+  const { data: refuelingData, writeAsync, isLoading } = refuel(chain?.id ?? 0)
+
+  async function onFormSubmit({
+    amount,
+    balance,
+    chainTo,
+  }: z.infer<typeof RefuelSchema>) {
     if (amount > balance)
       return truncatedToaster(
         'Insufficient balance',
         `Your balance is ${balance} ${data?.symbol}. Please enter amount less than or equal to your balance.`,
       )
     console.log(data)
+
+    await writeAsync({
+      value: parseEther(amount.toString()),
+      args: [
+        chainTo,
+        address,
+        '0x00020000000000000000000000000000000000000000000000000000000000030d40000000000000000000000000000000000000000000000000000009184e72a000e1ea2a7ff6864aa8555c85b61f506e1f674028ce',
+      ],
+    })
+
+    console.log(refuelingData)
   }
 
   return (
     <Paper title="REFUEL GAS">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(refuel)}>
+        <form onSubmit={form.handleSubmit(onFormSubmit)}>
           <div className="w-full flex justify-between items-center md:mb-5 mb-7 gap-5 md:gap-0 md:flex-row flex-col">
             <FormField
               control={form.control}
@@ -156,7 +179,7 @@ export default function RefuelPage() {
                     <Input
                       placeholder={`0.0001 ${!balance ? 'XXX' : data?.symbol}`}
                       {...field}
-                      autoComplete='off'
+                      autoComplete="off"
                       max={balance}
                     />
 
