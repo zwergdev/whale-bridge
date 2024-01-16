@@ -6,11 +6,11 @@ import {
   midnightTheme,
 } from '@rainbow-me/rainbowkit'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
-import { arbitrumNova, bsc, polygon } from 'wagmi/chains'
+import { arbitrumNova, bsc, polygon, arbitrum } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, publicClient } = configureChains(
-  [arbitrumNova, bsc, polygon],
+  [arbitrumNova, bsc, polygon, arbitrum],
   [publicProvider()],
 )
 
@@ -22,6 +22,7 @@ const RAINBOW_CHAINS = [
     iconUrl: '/arb-nova.svg',
   },
   { name: 'Polygon', id: 137, iconUrl: '/polygon.svg' },
+  { name: 'Arbitrum', id: 42161, iconUrl: '/arb.svg' },
 ]
 
 const { connectors } = getDefaultWallets({

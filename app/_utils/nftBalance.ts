@@ -9,9 +9,10 @@ const options = {
 }
 
 const CHAINS: { [key: number]: { chain: string; collection: string } } = {
-  56: { chain: 'bsc', collection: 'whaletest-onft-2' },
+  56: { chain: 'bsc', collection: 'whale-onft-4' },
   42170: { chain: 'arbitrum_nova', collection: 'whale-onft-2' },
   137: { chain: 'matic', collection: 'whale-onft' },
+  42161: { chain: 'arbitrum', collection: 'whale-onft-5' },
 }
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))

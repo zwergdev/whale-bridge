@@ -9,12 +9,14 @@ export const CHAINS = [
     chainId: 42170,
   },
   { label: 'Polygon', value: 109, image: '/polygon.svg', chainId: 137 },
-] as const
+  { label: 'Arbitrum', value: 110, image: '/arb.svg', chainId: 42161 },
+]
 
 export const TX_LINK: { [chainId: number]: string } = {
   42170: 'nova.arbiscan.io', // arbitrum-nova
   56: 'bscscan.com', // bsc
   137: 'polygonscan.com', // polygon
+  42161: 'arbiscan.io', // arbitrum
 }
 
 export const selectedChain = (fieldValue: number) => {

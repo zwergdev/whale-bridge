@@ -16,15 +16,20 @@ const CONTRACTS: {
     mintPrice: '0',
   }, // arbitrum-nova
   56: {
-    mintAddress: '0x086FBdcE11686E00129C43EBf749503ed1b68Ae4',
+    mintAddress: '0x006E23eb40eBc1805783e3a6c39283bcF5799368',
     refuelAddress: '0x6D096d86F1fE43aed8A073DAd9823C987A450f0e',
-    mintPrice: '0',
+    mintPrice: '0.0001',
   }, // bsc
   137: {
     mintAddress: '0xE1c907503B8d1545AFD5A89cc44FC1E538A132DA',
     refuelAddress: '0x45265fB77A51e3B4ec70142f993F1654A8f7ab32',
-    mintPrice: '0.010751115000000',
+    mintPrice: '0.337511150000000',
   }, // polygon
+  42161: {
+    mintAddress: '0x26E9934024cdC7fcc9f390973d4D9ac1FA954a37',
+    refuelAddress: '0x00000',
+    mintPrice: '0.0001',
+  }, // arbitrum
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',

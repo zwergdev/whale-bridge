@@ -5,6 +5,7 @@ import { useNetwork, useAccount } from 'wagmi'
 import bsc from '@/public/nft-bsc.webp'
 import polygon from '@/public/nft-polygon.webp'
 import arbitrumNova from '@/public/nft-arbitrum-nova.webp'
+import arbitrum from '@/public/nft-arbitrum.webp'
 import defaultImage from '@/public/mint-nft.webp'
 import { cn } from '@/lib/utils'
 
@@ -12,6 +13,7 @@ const IMAGES: { [key: number]: StaticImageData } = {
   56: bsc,
   137: polygon,
   42170: arbitrumNova,
+  42161: arbitrum,
 }
 
 type MintImageProps = {
@@ -37,6 +39,7 @@ export const MintImage = ({
           ? IMAGES[definedChain]
           : defaultImage
       }
+      quality={100}
       width={size}
       height={size}
       className={cn('rounded-xl', className)}
