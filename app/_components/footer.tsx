@@ -40,9 +40,12 @@ export const Footer = () => (
 
     <div className="container flex justify-between items-center">
       <div className="flex items-center gap-4">
-        {[<Telegram />, <Twitter />].map((item, idx) => (
-          <Link href="#" key={idx}>
-            {cloneElement(item, {
+        {[
+          { icon: <Telegram />, href: '#' },
+          { icon: <Twitter />, href: 'https://twitter.com/Whale_app_com' },
+        ].map(({ icon, href }, idx) => (
+          <Link href={href} key={idx}>
+            {cloneElement(icon, {
               className:
                 'fill-foreground hover:fill-primary transition-colors duration-300 w-6 h-auto',
             })}

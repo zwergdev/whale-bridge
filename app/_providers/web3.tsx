@@ -26,7 +26,7 @@ const RAINBOW_CHAINS = [
 ]
 
 const { connectors } = getDefaultWallets({
-  appName: 'Whale Bridge App',
+  appName: 'Whale',
   projectId: 'c8cb5377bf1b35c1349bb08e2025d352',
   chains,
 })
