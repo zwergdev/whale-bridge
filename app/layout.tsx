@@ -17,13 +17,13 @@ const description =
   'Multifunctional Omnichain Solution | Bridge & RefuelPowered by LayerZero'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://whale-bridge.vercel.app'),
+  metadataBase: new URL('https://whale-app.com'),
   title,
   description,
   openGraph: {
     title,
     description,
-    url: 'https://ragate.vercel.app',
+    url: 'https://whale-app.com',
     siteName: title,
     locale: 'en_US',
     type: 'website',
