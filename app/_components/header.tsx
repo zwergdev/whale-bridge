@@ -6,7 +6,7 @@ import { Separator } from '@/components/ui/separator'
 
 export const Header = () => {
   return (
-    <header className="w-full py-3 md:py-6">
+    <header className="w-full py-3 md:py-6 fixed top-0 bg-black/50 z-50 backdrop-blur-md">
       <nav className="container flex justify-between items-center md:px-10 px-4">
         <Link href="/">
           <Logo />

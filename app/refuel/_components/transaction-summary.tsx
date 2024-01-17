@@ -18,7 +18,6 @@ const fetchPrices = async (): Promise<Prices> => {
   return await fetch(
     'https://api.coingecko.com/api/v3/simple/price?ids=ethereum,binancecoin,matic-network&vs_currencies=usd',
     {
-      cache: 'no-cache',
       referrerPolicy: 'same-origin',
       next: { revalidate: 60 * 6 },
       method: 'GET',
@@ -44,15 +43,15 @@ export const TransactionSummary = ({
   symbol,
 }: TransactionSummaryProps) => {
   const [prices, setPrices] = useState<Prices>({
-    // binancecoin: {
-    //   usd: 315.64,
-    // },
-    // ethereum: {
-    //   usd: 2596.7,
-    // },
-    // 'matic-network': {
-    //   usd: 0.850116,
-    // },
+    binancecoin: {
+      usd: 315.64,
+    },
+    ethereum: {
+      usd: 2596.7,
+    },
+    'matic-network': {
+      usd: 0.850116,
+    },
   })
 
   useEffect(() => {
@@ -71,6 +70,7 @@ export const TransactionSummary = ({
         Estimated Transfer Time:
         <span className="font-semibold">~{time} mins</span>
       </div>
+
       <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary">
         Refuel cost:
         <span className="font-semibold">

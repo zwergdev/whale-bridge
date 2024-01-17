@@ -51,7 +51,7 @@ export default function RootLayout({
             <WhaleBg className="absolute -z-10 left-[-435px] top-28 rotate-[35deg]" />
             <WhaleBg className="absolute -z-10 right-[-247px] top-36 scale-x-[-1] w-[757px] h-auto" />
             <Header />
-            <main className="container flex flex-col w-full items-center justify-center pt-12 pb-52">
+            <main className="container flex flex-col w-full items-center justify-center pt-36 pb-52">
               {children}
               <div className="grow" />
             </main>

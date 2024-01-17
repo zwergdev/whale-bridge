@@ -15,7 +15,7 @@ import {
 import { Popover } from '@/components/ui/popover'
 import { Input } from '@/components/ui/input'
 import { CHAINS } from '../_utils/chains'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAccount, useBalance, useNetwork, useSwitchNetwork } from 'wagmi'
 import { Slider } from '@/components/ui/slider'
 import { SubmitButton } from '../_components/submit-button'
@@ -32,10 +32,12 @@ import {
   estimateRefuelFee,
   getAdapter,
 } from '@/app/_utils/contract-actions'
+import { useDebouncedCallback } from 'use-debounce'
 
 export default function RefuelPage() {
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
   const [popoverToOpen, setPopoverToOpen] = useState(false)
+  const [feeAmount, setFeeAmount] = useState(0)
   const { switchNetwork } = useSwitchNetwork()
   const { chain } = useNetwork()
   const { address, status } = useAccount()
@@ -67,11 +69,19 @@ export default function RefuelPage() {
 
   const fields = watch()
 
-  const {
-    data: feeData,
-    error: feeError,
-    refetch,
-  } = estimateRefuelFee(fields.chainTo, chain?.id ?? 0, address!, fields.amount)
+  const { error: feeError, refetch } = estimateRefuelFee(
+    fields.chainTo,
+    chain?.id ?? 0,
+    address!,
+    fields.amount,
+  )
+
+  useEffect(() => {
+    ;(async () => {
+      const { data: fee }: any = await refetch()
+      setFeeAmount(fee)
+    })()
+  }, [refetch])
 
   const { writeAsync, isLoading } = refuel(chain?.id ?? 0)
 
@@ -95,6 +105,12 @@ export default function RefuelPage() {
       args: [chainTo, address, getAdapter(amount, address!)],
     })
   }
+
+  const debounced = useDebouncedCallback(async (value) => {
+    const { data: fee }: any = await refetch()
+    setFeeAmount(fee)
+    console.log(value)
+  }, 2000)
 
   return (
     <Paper title="REFUEL GAS">
@@ -122,6 +138,7 @@ export default function RefuelPage() {
                         form.setValue('chainFrom', value)
                         setPopoverFromOpen(false)
                         if (chainId !== chain?.id) switchNetwork?.(chainId)
+                        debounced(field.value)
                       }}
                     />
                   </Popover>
@@ -133,6 +150,14 @@ export default function RefuelPage() {
               onClick={() => {
                 form.setValue('chainFrom', fields.chainTo)
                 form.setValue('chainTo', fields.chainFrom)
+                debounced('1')
+
+                const selectedChain = CHAINS.find(
+                  ({ value }) => value === fields.chainTo,
+                )
+
+                if (selectedChain?.value !== chain?.id)
+                  switchNetwork?.(selectedChain?.chainId)
               }}
             />
 
@@ -153,6 +178,7 @@ export default function RefuelPage() {
                       onSelect={(value) => {
                         form.setValue('chainTo', value)
                         setPopoverToOpen(false)
+                        debounced(field.value)
                       }}
                     />
                   </Popover>
@@ -164,7 +190,7 @@ export default function RefuelPage() {
           <FormField
             control={form.control}
             name="amount"
-            render={({ field }) => (
+            render={({ field: { onChange, ...rest } }) => (
               <FormItem>
                 <FormLabel className="flex items-end justify-between">
                   Enter Refuel Amount
@@ -172,7 +198,10 @@ export default function RefuelPage() {
                     type="button"
                     className="text-[10px] opacity-75 cursor-pointer text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4]"
                     disabled={!balance}
-                    onClick={() => setValue('amount', balance)}
+                    onClick={() => {
+                      setValue('amount', balance)
+                      debounced(rest.value)
+                    }}
                   >
                     MAX
                   </button>
@@ -181,7 +210,11 @@ export default function RefuelPage() {
                   <div className="relative flex items-center">
                     <Input
                       placeholder={`0.0001 ${!balance ? 'XXX' : data?.symbol}`}
-                      {...field}
+                      {...rest}
+                      onChange={(e) => {
+                        onChange(e)
+                        debounced(e.target.value)
+                      }}
                       autoComplete="off"
                       type="number"
                       max={balance}
@@ -207,7 +240,10 @@ export default function RefuelPage() {
               max={balance}
               value={[fields.amount]}
               step={0.000001}
-              onValueChange={(v) => setValue('amount', v[0])}
+              onValueChange={(v) => {
+                setValue('amount', v[0])
+                debounced(v[0])
+              }}
             />
             <span className="flex items-center justify-center rounded-md py-3 w-fit min-w-20 px-2 border border-primary">
               {!balance ? '...' : balance.toFixed(5)}
@@ -216,7 +252,7 @@ export default function RefuelPage() {
 
           <TransactionSummary
             time="5"
-            refuelAmount={feeData}
+            refuelAmount={feeAmount}
             amount={fields.amount}
             symbol={data?.symbol}
           />
