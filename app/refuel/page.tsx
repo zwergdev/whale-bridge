@@ -27,14 +27,17 @@ import {
 } from '../_components/chainy/chains-popover'
 import { TransactionSummary } from './_components/transaction-summary'
 import { RepeatButton } from '@/app/_components/chainy/chains-popover'
-import { refuel, estimateRefuelFee } from '@/app/_utils/contract-actions'
-import { parseEther } from 'viem/utils'
+import {
+  refuel,
+  estimateRefuelFee,
+  getAdapter,
+} from '@/app/_utils/contract-actions'
 
 export default function RefuelPage() {
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
   const [popoverToOpen, setPopoverToOpen] = useState(false)
   const { chain } = useNetwork()
-  const { address } = useAccount()
+  const { address, status } = useAccount()
   const { data } = useBalance({
     address,
     onSuccess({ formatted }) {
@@ -46,7 +49,7 @@ export default function RefuelPage() {
   const form = useForm<z.infer<typeof RefuelSchema>>({
     resolver: zodResolver(RefuelSchema),
     defaultValues: {
-      amount: balance ? balance / 3 : 0,
+      amount: balance ? Number((balance / 3).toFixed(5)) : 0,
       balance: balance ?? 0,
       chainFrom:
         CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
@@ -62,13 +65,13 @@ export default function RefuelPage() {
 
   const fields = watch()
 
-  const { data: fee, error: feeError } = estimateRefuelFee(
-    fields.chainTo,
-    chain?.id ?? 0,
-  )
-  console.log(fee, feeError)
+  const {
+    data: feeData,
+    error: feeError,
+    refetch,
+  } = estimateRefuelFee(fields.chainTo, chain?.id ?? 0, address!, fields.amount)
 
-  const { data: refuelingData, writeAsync, isLoading } = refuel(chain?.id ?? 0)
+  const { writeAsync, isLoading } = refuel(chain?.id ?? 0)
 
   async function onFormSubmit({
     amount,
@@ -80,18 +83,15 @@ export default function RefuelPage() {
         'Insufficient balance',
         `Your balance is ${balance} ${data?.symbol}. Please enter amount less than or equal to your balance.`,
       )
-    console.log(data)
+
+    const { data: fee }: any = await refetch()
+
+    if (!fee) return truncatedToaster('Error occurred!', feeError?.message!)
 
     await writeAsync({
-      value: parseEther(amount.toString()),
-      args: [
-        chainTo,
-        address,
-        '0x00020000000000000000000000000000000000000000000000000000000000030d40000000000000000000000000000000000000000000000000000009184e72a000e1ea2a7ff6864aa8555c85b61f506e1f674028ce',
-      ],
+      value: fee[0],
+      args: [chainTo, address, getAdapter(amount, address!)],
     })
-
-    console.log(refuelingData)
   }
 
   return (
@@ -180,6 +180,7 @@ export default function RefuelPage() {
                       placeholder={`0.0001 ${!balance ? 'XXX' : data?.symbol}`}
                       {...field}
                       autoComplete="off"
+                      type="number"
                       max={balance}
                     />
 
@@ -198,7 +199,8 @@ export default function RefuelPage() {
               0
             </span>
             <Slider
-              defaultValue={[balance / 3]}
+              disabled={status !== 'connected'}
+              defaultValue={[Number((balance / 3).toFixed(5))]}
               max={balance}
               value={[fields.amount]}
               step={0.000001}
@@ -211,8 +213,10 @@ export default function RefuelPage() {
 
           <TransactionSummary
             time="5"
-            refuelCost="0.00015 ETH ($0.34)"
-            output="0 MATIC ($0)"
+            // refuelAmount={BigInt(feeData ? (feeData as number[])[0] : 0)}
+            refuelAmount={feeData}
+            amount={fields.amount}
+            symbol={data?.symbol}
           />
 
           <SubmitButton

@@ -100,7 +100,23 @@ function refuel(chainId: number) {
   })
 }
 
-function estimateRefuelFee(chainTo: number, chainId: number) {
+function getAdapter(amount: number, address: string) {
+  const adapter =
+    '0x00020000000000000000000000000000000000000000000000000000000000030d40000000000000000000000000000000000000000000000000000'
+  const refinedAmount = (Number(parseEther(amount.toString())) / 4096).toString(
+    16,
+  )
+  const slicedAddress = `000${address?.slice(2)}`
+
+  return `${adapter}${refinedAmount}${slicedAddress}`
+}
+
+function estimateRefuelFee(
+  chainTo: number,
+  chainId: number,
+  address: string,
+  amount: number,
+) {
   return useContractRead({
     address: CONTRACTS[chainId].refuelAddress,
     abi: refuelABI,
@@ -108,11 +124,18 @@ function estimateRefuelFee(chainTo: number, chainId: number) {
     chainId,
     args: [
       chainTo,
-      '0x00010000000000000000000000000000000000000000000000000000000000030d40', // payload
-      '0x00010000000000000000000000000000000000000000000000000000000000030d40', // adapter
+      address, // payload
+      getAdapter(amount, address), // adapter
     ],
-    enabled: true,
+    enabled: false,
   })
 }
 
-export { mint, bridge, estimateBridgeFee, refuel, estimateRefuelFee }
+export {
+  mint,
+  bridge,
+  estimateBridgeFee,
+  refuel,
+  estimateRefuelFee,
+  getAdapter,
+}
