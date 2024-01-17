@@ -36,7 +36,7 @@ const ChainyTrigger = ({ disabled, selectedValue }: ChainyTriggerProps) => {
 type ChainListProps = {
   selectedValue: number
   fieldValue: number
-  onSelect: (value: number) => void
+  onSelect: (value: number, chainId: number) => void
 }
 const ChainList = ({ selectedValue, fieldValue, onSelect }: ChainListProps) => {
   return (
@@ -45,18 +45,20 @@ const ChainList = ({ selectedValue, fieldValue, onSelect }: ChainListProps) => {
         <CommandInput placeholder="Search chain..." />
         <CommandEmpty>No chain found.</CommandEmpty>
         <CommandGroup>
-          {CHAINS.map(({ label, value, image }) => (
-            <CommandItem
-              value={label}
-              key={value}
-              image={image}
-              disabled={selectedValue === value}
-              checked={value === fieldValue}
-              onSelect={() => onSelect(value)}
-            >
-              {label}
-            </CommandItem>
-          ))}
+          {Array.from(CHAINS)
+            .sort((a) => (a.value === fieldValue ? -1 : 0))
+            .map(({ label, value, image, chainId }) => (
+              <CommandItem
+                key={value}
+                value={label}
+                image={image}
+                disabled={selectedValue === value}
+                checked={value === fieldValue}
+                onSelect={() => onSelect(value, chainId)}
+              >
+                {label}
+              </CommandItem>
+            ))}
         </CommandGroup>
       </Command>
     </PopoverContent>

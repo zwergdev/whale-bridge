@@ -16,7 +16,7 @@ import { Popover } from '@/components/ui/popover'
 import { Input } from '@/components/ui/input'
 import { CHAINS } from '../_utils/chains'
 import { useState } from 'react'
-import { useAccount, useBalance, useNetwork } from 'wagmi'
+import { useAccount, useBalance, useNetwork, useSwitchNetwork } from 'wagmi'
 import { Slider } from '@/components/ui/slider'
 import { SubmitButton } from '../_components/submit-button'
 import { truncatedToaster } from '../_utils/truncatedToaster'
@@ -36,8 +36,10 @@ import {
 export default function RefuelPage() {
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
   const [popoverToOpen, setPopoverToOpen] = useState(false)
+  const { switchNetwork } = useSwitchNetwork()
   const { chain } = useNetwork()
   const { address, status } = useAccount()
+
   const { data } = useBalance({
     address,
     onSuccess({ formatted }) {
@@ -116,9 +118,10 @@ export default function RefuelPage() {
                     <ChainList
                       selectedValue={fields.chainTo}
                       fieldValue={field.value}
-                      onSelect={(value) => {
+                      onSelect={(value, chainId) => {
                         form.setValue('chainFrom', value)
                         setPopoverFromOpen(false)
+                        if (chainId !== chain?.id) switchNetwork?.(chainId)
                       }}
                     />
                   </Popover>
@@ -213,17 +216,12 @@ export default function RefuelPage() {
 
           <TransactionSummary
             time="5"
-            // refuelAmount={BigInt(feeData ? (feeData as number[])[0] : 0)}
             refuelAmount={feeData}
             amount={fields.amount}
             symbol={data?.symbol}
           />
 
-          <SubmitButton
-            disabled={!isValid}
-            loading={isLoading}
-            chainFrom={fields.chainFrom}
-          >
+          <SubmitButton disabled={!isValid} loading={isLoading}>
             Refuel
           </SubmitButton>
         </form>

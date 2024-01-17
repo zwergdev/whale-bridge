@@ -13,7 +13,7 @@ import { LayerZero } from '@/components/ui/icons'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { useAccount, useNetwork } from 'wagmi'
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
 import { BridgeSchema } from '../_utils/schemas'
 import { truncatedToaster } from '../_utils/truncatedToaster'
 import { estimateBridgeFee, bridge } from '../_utils/contract-actions'
@@ -39,6 +39,7 @@ import { ChevronsUpDown } from 'lucide-react'
 export default function BridgePage() {
   const { address } = useAccount()
   const { chain } = useNetwork()
+  const { switchNetwork } = useSwitchNetwork()
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
   const [popoverToOpen, setPopoverToOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -157,9 +158,10 @@ export default function BridgePage() {
                       <ChainList
                         selectedValue={fields.chainTo}
                         fieldValue={field.value}
-                        onSelect={(value) => {
+                        onSelect={(value, chainId) => {
                           form.setValue('chainFrom', value)
                           setPopoverFromOpen(false)
+                          if (chainId !== chain?.id) switchNetwork?.(chainId)
                         }}
                       />
                     </Popover>
@@ -202,11 +204,7 @@ export default function BridgePage() {
               />
             </div>
 
-            <SubmitButton
-              disabled={!isValid}
-              chainFrom={fields.chainFrom}
-              loading={isLoading}
-            >
+            <SubmitButton disabled={!isValid} loading={isLoading}>
               Bridge
             </SubmitButton>
 
