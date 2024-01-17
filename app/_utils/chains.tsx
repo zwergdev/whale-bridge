@@ -19,6 +19,8 @@ export const TX_LINK: { [chainId: number]: string } = {
   56: 'bscscan.com', // bsc
   137: 'polygonscan.com', // polygon
   42161: 'arbiscan.io', // arbitrum
+  534352: 'scrollscan.com', // scroll
+  324: 'explorer.zksync.io', // zk
 }
 
 export const selectedChain = (fieldValue: number) => {
