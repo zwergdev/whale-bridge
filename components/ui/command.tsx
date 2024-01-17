@@ -132,7 +132,13 @@ const CommandItem = React.forwardRef<
       {...props}
     >
       <div className="flex items-center gap-2 text-xl">
-        <Image src={image} width={28} height={28} alt="chain-icon" />
+        <Image
+          src={image}
+          width={28}
+          height={28}
+          alt="chain-icon"
+          className="rounded-full"
+        />
         {children}
       </div>
       {checked && <Check className="mr-2 h-4 w-4" />}

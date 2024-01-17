@@ -10,6 +10,8 @@ export const CHAINS = [
   },
   { label: 'Polygon', value: 109, image: '/polygon.svg', chainId: 137 },
   { label: 'Arbitrum', value: 110, image: '/arb.svg', chainId: 42161 },
+  { label: 'Scroll', value: 214, image: '/scroll.svg', chainId: 534352 },
+  { label: 'zkSync', value: 165, image: '/zk.svg', chainId: 324 },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
@@ -29,7 +31,7 @@ export const selectedChain = (fieldValue: number) => {
         width={48}
         height={48}
         alt="selected-chain-icon"
-        className="md:w-12 md:h-12 w-6 h-6"
+        className="md:w-12 md:h-12 w-6 h-6 rounded-full"
       />
       <p className="w-full text-base text-center font-medium">
         {selectedChain.label}

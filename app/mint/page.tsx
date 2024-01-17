@@ -9,10 +9,11 @@ export default function MintPage() {
         <h2 className="font-semibold text-4xl mb-5">Mint NFT</h2>
         <MintChainPopover />
         <p className="font-medium md:text-2xl text-xl mb-8 max-w-lg">
-          Nisi quam, interdum nunc faucibus. Elit. Aenean platea malesuada ipsum
-          pulvinar amet, vulputate ornare dapibus odio. Mauris risus vestibulum
-          orci, eleifend eleifend integer arcu dolor consectetur quam, sit
-          efficitur est.
+          We want you to understand that you're not just creating an NFT, you're
+          contributing to a revolutionary story, where art takes on a new
+          dimension, and each creation becomes a chapter in the evolving
+          narrative of digital creativity. Welcome to the captivating world of
+          digital art.
         </p>
         <MintButton />
       </div>

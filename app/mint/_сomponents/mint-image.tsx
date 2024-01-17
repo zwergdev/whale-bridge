@@ -14,6 +14,8 @@ const IMAGES: { [key: number]: StaticImageData } = {
   137: polygon,
   42170: arbitrumNova,
   42161: arbitrum,
+  534352: defaultImage,
+  324: defaultImage,
 }
 
 type MintImageProps = {

@@ -30,6 +30,16 @@ const CONTRACTS: {
     refuelAddress: '0x00000',
     mintPrice: '0.0001',
   }, // arbitrum
+  534352: {
+    mintAddress: '0x00000',
+    refuelAddress: '0x00000',
+    mintPrice: '0',
+  }, // scroll
+  324: {
+    mintAddress: '0x00000',
+    refuelAddress: '0x00000',
+    mintPrice: '0',
+  }, // zkSync
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',

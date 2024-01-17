@@ -13,6 +13,8 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
   42170: { chain: 'arbitrum_nova', collection: 'whale-onft-2' },
   137: { chain: 'matic', collection: 'whale-onft' },
   42161: { chain: 'arbitrum', collection: 'whale-onft-5' },
+  534352: { chain: 'scroll', collection: 'whale-onft-3' }, // @TODO: update
+  324: { chain: 'zk', collection: 'whale-onft-6' }, // @TODO: update
 }
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))

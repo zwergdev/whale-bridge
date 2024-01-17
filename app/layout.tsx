@@ -14,7 +14,7 @@ const poppins = Poppins({
 
 const title = 'Whale'
 const description =
-  'Elit. Hac ornare lorem mattis lorem efficitur amet, sed platea cursus vel molestie non dictum.'
+  'Multifunctional Omnichain Solution | Bridge & RefuelPowered by LayerZero'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://whale-bridge.vercel.app'),

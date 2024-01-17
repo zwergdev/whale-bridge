@@ -29,6 +29,7 @@ export const MintChainPopover = () => {
               key={idx}
               src={image}
               alt="chain-picture"
+              className="rounded-full"
               width={30}
               height={30}
             />
@@ -49,7 +50,13 @@ export const MintChainPopover = () => {
             }}
             className="hover:bg-popover p-1 rounded-full transition-colors duration-300"
           >
-            <Image src={image} width={30} height={30} alt="chain-image" />
+            <Image
+              src={image}
+              width={30}
+              height={30}
+              alt="chain-image"
+              className="rounded-full"
+            />
           </button>
         ))}
       </PopoverContent>

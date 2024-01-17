@@ -6,11 +6,18 @@ import {
   midnightTheme,
 } from '@rainbow-me/rainbowkit'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
-import { arbitrumNova, bsc, polygon, arbitrum } from 'wagmi/chains'
+import {
+  arbitrumNova,
+  bsc,
+  polygon,
+  arbitrum,
+  scroll,
+  zkSync,
+} from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, publicClient } = configureChains(
-  [arbitrumNova, bsc, polygon, arbitrum],
+  [arbitrumNova, bsc, polygon, arbitrum, scroll, zkSync],
   [publicProvider()],
 )
 
@@ -23,6 +30,8 @@ const RAINBOW_CHAINS = [
   },
   { name: 'Polygon', id: 137, iconUrl: '/polygon.svg' },
   { name: 'Arbitrum', id: 42161, iconUrl: '/arb.svg' },
+  { name: 'Scroll', id: 534352, iconUrl: '/scroll.svg' },
+  { name: 'zkSync', id: 324, iconUrl: '/zk.svg' },
 ]
 
 const { connectors } = getDefaultWallets({

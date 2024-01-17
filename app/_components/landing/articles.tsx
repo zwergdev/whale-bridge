@@ -60,8 +60,9 @@ export const Articles = () => {
       <Article
         title="Mint NFT"
         bio={[
-          'Elit. Hac ornare lorem mattis lorem efficitur amet, sed platea cursus vel molestie non dictum.',
-          'Elit. Hac ornare lorem mattis lorem effid.',
+          'Experience lightning fast NFT creation without compromising on quality.',
+          'Enjoy competitive pricing and transparent fees, ensuring value for every masterpiece minted.',
+          'Tailor your NFTs with ease, offering a personalized touch to your digital assets.',
         ]}
         button={{ link: '/mint', text: 'Mint NFT' }}
       >
@@ -90,9 +91,9 @@ export const Articles = () => {
         title="Bridge"
         revert
         bio={[
-          'Elit. Hac ornare lorem mattis lorem efficitur amet, sed platea cursus vel molestie non dictum.',
-          'Elit. Hac ornare lorem mattis lorem effid.',
-          'Elit. Hac ornare lorem mattis lorem effid.',
+          'Seamlessly bridge assets across different blockchain networks, expanding your reach and opportunities.',
+          'Benefit from robust security protocols, ensuring the safe passage of your assets during the bridging process.',
+          'Receive dedicated assistance in navigating the complexities of asset bridging, making your journey hassle-free.',
         ]}
         button={{ link: '/bridge', text: 'Bridge' }}
       >
@@ -116,8 +117,9 @@ export const Articles = () => {
       <Article
         title="Gas Refuel"
         bio={[
-          'Elit. Hac ornare lorem mattis lorem efficitur amet, sed platea cursus vel molestie non dictum.',
-          'Elit. Hac ornare lorem mattis lorem effid.',
+          'Refuel your cryptocurrency instantly, eliminating delays in your Web3 activities',
+          'Choose from a range of gas options, optimizing transaction speed and cost to suit your preferences.',
+          'Effortlessly manage your gas funds with our intuitive dashboard, keeping you in control.',
         ]}
         button={{ link: '/refuel', text: 'Refuel' }}
       >
