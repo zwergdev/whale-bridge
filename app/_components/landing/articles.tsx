@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
 import { SectionWrapper } from './misc'
-import { Repeat2 } from 'lucide-react'
 
 type ArticleProps = {
   children: React.ReactNode
@@ -66,24 +65,14 @@ export const Articles = () => {
         ]}
         button={{ link: '/mint', text: 'Mint NFT' }}
       >
-        <div className="relative lg:mt-24 mt-0">
-          <div className="border-2 border-primary rounded-lg">
-            <Image
-              src="/mint-nft.webp"
-              width={350}
-              height={350}
-              alt="mint-picture"
-              className="relative left-2 bottom-2 rounded-lg"
-            />
-          </div>
+        <div className="border-2 border-primary rounded-lg">
           <Image
-            src="/bridge-nft.webp"
-            width={300}
-            height={300}
+            src="/mint-nft.webp"
+            width={440}
+            height={440}
             alt="mint-picture"
-            className="absolute -top-32 -right-32 rounded-lg scale-x-[-1] -z-10 lg:block hidden"
+            className="relative left-2 bottom-2 rounded-lg"
           />
-          <div className="w-56 h-56 -z-10 bg-primary blur-[150px] absolute bottom-0 right-0" />
         </div>
       </Article>
 
@@ -97,7 +86,7 @@ export const Articles = () => {
         ]}
         button={{ link: '/bridge', text: 'Bridge' }}
       >
-        <div className="border-primary rounded-lg border-2 relative">
+        {/* <div className="border-primary rounded-lg border-2 relative">
           <Image
             src="/bridge.webp"
             quality={100}
@@ -111,6 +100,26 @@ export const Articles = () => {
             strokeWidth={1.5}
           />
           <div className="w-56 h-56 -z-10 bg-primary blur-[150px] absolute -bottom-10 opacity-50 left-0" />
+        </div> */}
+        <div className="relative lg:mt-32 mt-0">
+          <div className="border-2 border-primary rounded-lg">
+            <Image
+              src="/bridge.webp"
+              width={500}
+              height={280}
+              quality={100}
+              alt="mint-picture"
+              className="relative right-2 bottom-2 rounded-lg"
+            />
+          </div>
+          <Image
+            src="/bridge-nft.webp"
+            width={300}
+            height={300}
+            alt="mint-picture"
+            className="absolute -top-32 -left-16 rounded-lg scale-x-[-1] -z-10 lg:block hidden"
+          />
+          <div className="w-56 h-56 -z-10 bg-primary blur-[150px] absolute bottom-0 right-0" />
         </div>
       </Article>
 
@@ -127,6 +136,7 @@ export const Articles = () => {
           <div className="border-2 border-primary rounded-lg">
             <Image
               src="/refuel-nft.webp"
+              quality={100}
               width={350}
               height={350}
               alt="mint-picture"
