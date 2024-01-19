@@ -4,10 +4,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { SectionWrapper } from './misc'
 import mintNFT from '../../../public/mint-nft.webp'
-import bridgeNFT from '../../../public/bridge-nft.webp'
-import bridge from '../../../public/bridge.webp'
+import bridgeNFT from '../../../public/nft-bridge.webp'
+import bridge from '../../../public/bridge-menu.webp'
 import refuelNFT from '../../../public/refuel-nft.webp'
-import refuel from '../../../public/refuel.webp'
+import refuel from '../../../public/refuel-menu.webp'
 
 type ArticleProps = {
   children: React.ReactNode
@@ -99,7 +99,7 @@ export const Articles = () => {
               src={bridge}
               placeholder="blur"
               width={500}
-              height={280}
+              height={273}
               quality={100}
               alt="mint-picture"
               className="relative right-2 bottom-2 rounded-lg"
@@ -111,7 +111,7 @@ export const Articles = () => {
             width={300}
             height={300}
             alt="mint-picture"
-            className="absolute -top-32 -left-16 rounded-lg scale-x-[-1] -z-10 lg:block hidden"
+            className="absolute -top-32 -left-16 rounded-lg scale-x-[-1] z-10 lg:block hidden"
           />
           <div className="w-56 h-56 -z-10 bg-primary blur-[150px] absolute bottom-0 right-0" />
         </div>
