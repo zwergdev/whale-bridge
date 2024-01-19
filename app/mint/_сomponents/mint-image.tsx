@@ -6,6 +6,7 @@ import bsc from '@/public/nft-bsc.webp'
 import polygon from '@/public/nft-polygon.webp'
 import arbitrumNova from '@/public/nft-arbitrum-nova.webp'
 import arbitrum from '@/public/nft-arbitrum.webp'
+import scroll from '@/public/nft-scroll.webp'
 import defaultImage from '@/public/mint-nft.webp'
 import { cn } from '@/lib/utils'
 
@@ -14,7 +15,7 @@ const IMAGES: { [key: number]: StaticImageData } = {
   137: polygon,
   42170: arbitrumNova,
   42161: arbitrum,
-  534352: defaultImage,
+  534352: scroll,
   324: defaultImage,
 }
 
