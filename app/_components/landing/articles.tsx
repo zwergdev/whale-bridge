@@ -3,6 +3,11 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
 import { SectionWrapper } from './misc'
+import mintNFT from '../../../public/mint-nft.webp'
+import bridgeNFT from '../../../public/bridge-nft.webp'
+import bridge from '../../../public/bridge.webp'
+import refuelNFT from '../../../public/refuel-nft.webp'
+import refuel from '../../../public/refuel.webp'
 
 type ArticleProps = {
   children: React.ReactNode
@@ -67,7 +72,9 @@ export const Articles = () => {
       >
         <div className="border-2 border-primary rounded-lg">
           <Image
-            src="/mint-nft.webp"
+            src={mintNFT}
+            quality={100}
+            placeholder="blur"
             width={440}
             height={440}
             alt="mint-picture"
@@ -86,25 +93,11 @@ export const Articles = () => {
         ]}
         button={{ link: '/bridge', text: 'Bridge' }}
       >
-        {/* <div className="border-primary rounded-lg border-2 relative">
-          <Image
-            src="/bridge.webp"
-            quality={100}
-            width={600}
-            height={330}
-            alt="bridge-picture"
-            className="relative left-2 top-2 rounded-lg "
-          />
-          <Repeat2
-            className="absolute right-3 md:-bottom-16 -bottom-8 md:w-32 w-16 h-auto"
-            strokeWidth={1.5}
-          />
-          <div className="w-56 h-56 -z-10 bg-primary blur-[150px] absolute -bottom-10 opacity-50 left-0" />
-        </div> */}
         <div className="relative lg:mt-32 mt-0">
           <div className="border-2 border-primary rounded-lg">
             <Image
-              src="/bridge.webp"
+              src={bridge}
+              placeholder="blur"
               width={500}
               height={280}
               quality={100}
@@ -113,7 +106,8 @@ export const Articles = () => {
             />
           </div>
           <Image
-            src="/bridge-nft.webp"
+            src={bridgeNFT}
+            placeholder="blur"
             width={300}
             height={300}
             alt="mint-picture"
@@ -135,7 +129,8 @@ export const Articles = () => {
         <div className="relative lg:mt-24 mt-0">
           <div className="border-2 border-primary rounded-lg">
             <Image
-              src="/refuel-nft.webp"
+              src={refuelNFT}
+              placeholder="blur"
               quality={100}
               width={350}
               height={350}
@@ -144,7 +139,8 @@ export const Articles = () => {
             />
           </div>
           <Image
-            src="/refuel.webp"
+            src={refuel}
+            placeholder="blur"
             width={300}
             height={300}
             alt="mint-picture"

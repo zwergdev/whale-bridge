@@ -45,6 +45,11 @@ const CONTRACTS: {
     refuelAddress: '0x00',
     mintPrice: '0',
   },
+  1: {
+    mintAddress: '0x00',
+    refuelAddress: '0x00',
+    mintPrice: '0',
+  },
 }
 
 function mint(chainId: number) {

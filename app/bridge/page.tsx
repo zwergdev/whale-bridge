@@ -69,6 +69,8 @@ export default function BridgePage() {
 
   const fields = watch()
 
+  console.log(chain?.id ?? 0)
+
   const { data: bridgingData, writeAsync, isLoading } = bridge(chain?.id ?? 0)
 
   const { refetch: refetchFee, error: feeError } = estimateBridgeFee(

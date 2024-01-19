@@ -34,7 +34,7 @@ export const MintChainPopover = () => {
               height={30}
             />
           ))}
-        And {CHAINS.length - 3} More Chain{CHAINS.length - 3 > 1 && 's'}
+        And Other Chains
         <ChevronsUpDown size={20} />
       </PopoverTrigger>
       <PopoverContent

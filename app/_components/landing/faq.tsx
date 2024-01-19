@@ -11,24 +11,29 @@ import { Tail } from '@/components/ui/icons'
 
 const FAQ_ITEMS = [
   {
-    question: 'What is c2e?',
-    answer: 'Yes. It adheres to the WAI-ARIA design pattern.',
+    question: 'Who are we?',
+    answer:
+      "We're a platform that allows NFT Minting, bridging and gas Refuel with commitment to empower users to navigate decentralized landscape with unparalleled ease and efficiency of Layerzero technology.",
   },
   {
-    question: 'What is W3BZ SDK?',
-    answer: 'Yes. It adheres to the WAI-ARIA design pattern.',
+    question: 'What can you do?',
+    answer:
+      "On our platform, users can seamlessly bridge assets across ecosystems, mint unique NFTs effortlessly, and optimize their experience with gas refueling capabilities. Whether you're an artist, collector, or blockchain enthusiast.",
   },
   {
-    question: 'What games are planed in the web3BattleZone ecosystem?',
-    answer: 'Yes. It adheres to the WAI-ARIA design pattern.',
+    question: 'What technology do we work on?',
+    answer:
+      'Whale operates on the power of Layerzero Blockchain, this advanced blockchain technology forms the foundation of our platform, ensuring scalability, efficiency, and a seamless user experience for activities such as bridging assets, minting NFTs, and gas refueling.',
   },
   {
-    question: 'Is it possible to play for free?',
-    answer: 'Yes. It adheres to the WAI-ARIA design pattern.',
+    question: 'What else do you plan to develop?',
+    answer:
+      "According to our roadmap, we're planning to integrate a token bridging feature, sending messages, swap and our own native token.",
   },
   {
-    question: 'Which chain does this game support?',
-    answer: 'Yes. It adheres to the WAI-ARIA design pattern.',
+    question: 'What networks do we support?',
+    answer:
+      'Our platform supports an array of blockchain networks, including Scroll, zkSync, BSC, Arbitrum, Arbitrum Nova, and Polygon. As part of our ongoing commitment to innovation, we have ambitious plans to integrate additional networks in the near future.',
   },
 ]
 

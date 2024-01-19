@@ -42,6 +42,7 @@ export const MintImage = ({
           : defaultImage
       }
       quality={100}
+      placeholder="blur"
       width={size}
       height={size}
       className={cn('rounded-xl', className)}
