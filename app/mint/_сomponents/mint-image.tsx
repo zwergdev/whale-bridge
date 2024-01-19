@@ -39,6 +39,8 @@ export const MintImage = ({
       src={
         definedChain && status === 'connected'
           ? IMAGES[definedChain]
+            ? IMAGES[definedChain]
+            : defaultImage
           : defaultImage
       }
       quality={100}

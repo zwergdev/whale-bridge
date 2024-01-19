@@ -1,4 +1,4 @@
-import { LayerZero, Logo, Twitter } from '@/components/ui/icons'
+import { LayerZero, Logo, Telegram, Twitter } from '@/components/ui/icons'
 import Link from 'next/link'
 import { Separator } from '@/components/ui/separator'
 import { Navigation } from './navigation'
@@ -41,7 +41,7 @@ export const Footer = () => (
     <div className="container flex justify-between items-center">
       <div className="flex items-center gap-4">
         {[
-          // { icon: <Telegram />, href: '#' },
+          { icon: <Telegram />, href: 'https://t.me/whale_app_com' },
           { icon: <Twitter />, href: 'https://twitter.com/Whale_app_com' },
         ].map(({ icon, href }, idx) => (
           <Link href={href} key={idx}>

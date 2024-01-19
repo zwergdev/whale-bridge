@@ -14,7 +14,11 @@ export const MintButton = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const { openConnectModal, connectModalOpen } = useConnectModal()
 
-  const { write, data: signData, isLoading: isSigning } = mint(chain?.id ?? 0)
+  const {
+    write,
+    data: signData,
+    isLoading: isSigning,
+  } = mint(chain?.unsupported ? 0 : chain?.id ?? 0)
   const mintNFT = () => write()
 
   const { isLoading: isWaiting } = useWaitForTransaction({

@@ -71,13 +71,17 @@ export default function BridgePage() {
 
   console.log(chain?.id ?? 0)
 
-  const { data: bridgingData, writeAsync, isLoading } = bridge(chain?.id ?? 0)
+  const {
+    data: bridgingData,
+    writeAsync,
+    isLoading,
+  } = bridge(chain?.unsupported ? 0 : chain?.id ?? 0)
 
   const { refetch: refetchFee, error: feeError } = estimateBridgeFee(
     fields.chainTo,
     address!,
     BigInt(fields.tokenId),
-    chain?.id ?? 0,
+    chain?.unsupported ? 0 : chain?.id ?? 0,
   )
 
   async function bridgeNFT({ chainTo, tokenId }: z.infer<typeof BridgeSchema>) {

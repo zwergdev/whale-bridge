@@ -71,7 +71,7 @@ export default function RefuelPage() {
 
   const { error: feeError, refetch } = estimateRefuelFee(
     fields.chainTo,
-    chain?.id ?? 0,
+    chain?.unsupported ? 0 : chain?.id ?? 0,
     address!,
     fields.amount,
   )
@@ -83,7 +83,9 @@ export default function RefuelPage() {
     })()
   }, [refetch])
 
-  const { writeAsync, isLoading } = refuel(chain?.id ?? 0)
+  const { writeAsync, isLoading } = refuel(
+    chain?.unsupported ? 0 : chain?.id ?? 0,
+  )
 
   async function onFormSubmit({
     amount,
