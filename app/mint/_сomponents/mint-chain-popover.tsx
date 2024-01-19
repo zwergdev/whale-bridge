@@ -43,6 +43,7 @@ export const MintChainPopover = () => {
       >
         {CHAINS.map(({ chainId, image }) => (
           <button
+            key={chainId}
             type="button"
             onClick={() => {
               switchNetwork?.(chainId)

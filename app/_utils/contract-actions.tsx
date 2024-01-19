@@ -31,9 +31,9 @@ const CONTRACTS: {
     mintPrice: '0.0001',
   }, // arbitrum
   534352: {
-    mintAddress: '0x00000',
+    mintAddress: '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08',
     refuelAddress: '0x00000',
-    mintPrice: '0',
+    mintPrice: '0.0001',
   }, // scroll
   324: {
     mintAddress: '0x00000',
