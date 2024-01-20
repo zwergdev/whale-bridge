@@ -7,7 +7,7 @@ import mintNFT from '../../../public/mint-nft.webp'
 import bridgeNFT from '../../../public/nft-bridge.webp'
 import bridge from '../../../public/bridge-menu.webp'
 import refuelNFT from '../../../public/refuel-nft.webp'
-import refuel from '../../../public/refuel-menu.webp'
+import refuel from '../../../public/refuel--menu.webp'
 
 type ArticleProps = {
   children: React.ReactNode
