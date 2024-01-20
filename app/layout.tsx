@@ -14,7 +14,7 @@ const poppins = Poppins({
 
 const title = 'Whale'
 const description =
-  'Multifunctional Omnichain Solution | Bridge & RefuelPowered by LayerZero'
+  'Multifunctional Omnichain Solution | Bridge & Refuel Powered by LayerZero'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://whale-app.com'),
