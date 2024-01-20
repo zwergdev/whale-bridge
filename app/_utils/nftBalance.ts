@@ -15,7 +15,7 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
   42161: { chain: 'arbitrum', collection: 'whale-onft-5' },
   534352: { chain: 'scroll', collection: 'whale-onft-3' }, // @TODO: update
   324: { chain: 'zk', collection: 'whale-onft-6' }, // @TODO: update
-  10: { chain: 'optimism', collection: 'whale-onft-7' }, // @TODO: update
+  10: { chain: 'optimism', collection: 'whale-onft-6' },
 }
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
