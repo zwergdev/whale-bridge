@@ -13,11 +13,12 @@ import {
   arbitrum,
   scroll,
   zkSync,
+  optimism
 } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, publicClient } = configureChains(
-  [arbitrumNova, bsc, polygon, arbitrum, scroll, zkSync],
+  [arbitrumNova, bsc, polygon, arbitrum, scroll, zkSync, optimism],
   [publicProvider()],
 )
 
@@ -32,6 +33,7 @@ const RAINBOW_CHAINS = [
   { name: 'Arbitrum', id: 42161, iconUrl: '/arb.svg' },
   { name: 'Scroll', id: 534352, iconUrl: '/scroll.svg' },
   { name: 'zkSync', id: 324, iconUrl: '/zk.svg' },
+  { name: 'Optimism', id: 10, iconUrl: '/optimism.svg' },
 ]
 
 const { connectors } = getDefaultWallets({

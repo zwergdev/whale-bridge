@@ -36,10 +36,15 @@ const CONTRACTS: {
     mintPrice: '0.0001',
   }, // scroll
   324: {
-    mintAddress: '0x00000',
+    mintAddress: '0xF09A71F6CC8DE983dD58Ca474cBC33de43DDEBa9',
     refuelAddress: '0x00000',
-    mintPrice: '0',
+    mintPrice: '0.0001',
   }, // zkSync
+  10: {
+    mintAddress: '0xe87492ae9151769412F40af251d1D2793271e699',
+    refuelAddress: '0x00000',
+    mintPrice: '0.0001',
+  }, // optimism
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',

@@ -12,6 +12,7 @@ export const CHAINS = [
   { label: 'Arbitrum', value: 110, image: '/arb.svg', chainId: 42161 },
   { label: 'Scroll', value: 214, image: '/scroll.svg', chainId: 534352 },
   { label: 'zkSync', value: 165, image: '/zk.svg', chainId: 324 },
+  { label: 'Optimism', value: 111, image: '/optimism.svg', chainId: 10 },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
@@ -21,6 +22,7 @@ export const TX_LINK: { [chainId: number]: string } = {
   42161: 'arbiscan.io', // arbitrum
   534352: 'scrollscan.com', // scroll
   324: 'explorer.zksync.io', // zk
+  10: 'optimistic.etherscan.io', // optimism
 }
 
 export const selectedChain = (fieldValue: number) => {
