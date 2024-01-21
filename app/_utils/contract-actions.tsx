@@ -119,8 +119,6 @@ function refuel(chainId: number) {
 function getAdapter(amount: bigint, address: string) {
   if (amount === BigInt(0)) return '0'
 
-  console.log('amount OK')
-
   return ethers.utils.solidityPack(
     ['uint16', 'uint256', 'uint256', 'address'],
     [2, 200000, amount, address],
