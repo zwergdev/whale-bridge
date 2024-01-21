@@ -2,6 +2,7 @@ import { useContractWrite, useContractRead } from 'wagmi'
 import { mintABI, refuelABI } from './abi'
 import { parseEther } from 'viem/utils'
 import { truncatedToaster } from './truncatedToaster'
+import { ethers } from 'ethers'
 
 const CONTRACTS: {
   [chainId: number]: {
@@ -27,17 +28,17 @@ const CONTRACTS: {
   }, // polygon
   42161: {
     mintAddress: '0x26E9934024cdC7fcc9f390973d4D9ac1FA954a37',
-    refuelAddress: '0x00000',
+    refuelAddress: '0x218de7fAB4310497C2aCf8523d8701b5F2F4D1C7',
     mintPrice: '0.0001',
   }, // arbitrum
   534352: {
     mintAddress: '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08',
-    refuelAddress: '0x00000',
+    refuelAddress: '0xba800cD922F9C4d935fAb96e4a346538bbf29D8c',
     mintPrice: '0.0001',
   }, // scroll
   324: {
     mintAddress: '0xF09A71F6CC8DE983dD58Ca474cBC33de43DDEBa9',
-    refuelAddress: '0x00000',
+    refuelAddress: '0x06a2ce74Bc6021851157a003A97D9D8f900543D1',
     mintPrice: '0.0001',
   }, // zkSync
   10: {
@@ -126,6 +127,13 @@ function getAdapter(amount: number, address: string) {
   return `${adapter}${refinedAmount}${slicedAddress}`
 }
 
+export function getNewAdapter(amount: bigint, address: string) {
+  return ethers.utils.solidityPack(
+    ['uint16', 'uint256', 'uint256', 'address'],
+    ['2', '200000', amount, address],
+  )
+}
+
 function estimateRefuelFee(
   chainTo: number,
   chainId: number,
@@ -140,7 +148,7 @@ function estimateRefuelFee(
     args: [
       chainTo,
       address, // payload
-      getAdapter(amount, address), // adapter
+      getNewAdapter(parseEther(String(amount)), address), // adapter
     ],
     enabled: false,
   })

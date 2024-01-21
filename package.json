@@ -24,6 +24,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
+    "ethers": "5.7.0",
     "lucide-react": "^0.301.0",
     "next": "^14.0.5-canary.34",
     "next-themes": "^0.2.1",
