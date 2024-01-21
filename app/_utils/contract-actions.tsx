@@ -43,7 +43,7 @@ const CONTRACTS: {
   }, // zkSync
   10: {
     mintAddress: '0xe87492ae9151769412F40af251d1D2793271e699',
-    refuelAddress: '0x00000',
+    refuelAddress: '0x83Ff86c252a41578a7301219Aa23ab6e4F2FdeD3',
     mintPrice: '0.0001',
   }, // optimism
   0: {
@@ -116,21 +116,14 @@ function refuel(chainId: number) {
   })
 }
 
-function getAdapter(amount: number, address: string) {
-  const adapter =
-    '0x00020000000000000000000000000000000000000000000000000000000000030d40000000000000000000000000000000000000000000000000000'
-  const refinedAmount = (Number(parseEther(amount.toString())) / 4096).toString(
-    16,
-  )
-  const slicedAddress = `000${address?.slice(2)}`
+function getAdapter(amount: bigint, address: string) {
+  if (amount === BigInt(0)) return '0'
 
-  return `${adapter}${refinedAmount}${slicedAddress}`
-}
+  console.log('amount OK')
 
-export function getNewAdapter(amount: bigint, address: string) {
   return ethers.utils.solidityPack(
     ['uint16', 'uint256', 'uint256', 'address'],
-    ['2', '200000', amount, address],
+    [2, 200000, amount, address],
   )
 }
 
@@ -148,7 +141,7 @@ function estimateRefuelFee(
     args: [
       chainTo,
       address, // payload
-      getNewAdapter(parseEther(String(amount)), address), // adapter
+      getAdapter(parseEther(amount.toString()), address), // adapter
     ],
     enabled: false,
   })

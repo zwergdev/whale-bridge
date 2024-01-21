@@ -15,7 +15,7 @@ import {
 import { Popover } from '@/components/ui/popover'
 import { Input } from '@/components/ui/input'
 import { CHAINS } from '../_utils/chains'
-import { useEffect, useState } from 'react'
+import {  useState } from 'react'
 import { useAccount, useBalance, useNetwork, useSwitchNetwork } from 'wagmi'
 import { Slider } from '@/components/ui/slider'
 import { SubmitButton } from '../_components/submit-button'
@@ -33,6 +33,7 @@ import {
   getAdapter,
 } from '@/app/_utils/contract-actions'
 import { useDebouncedCallback } from 'use-debounce'
+import { parseEther } from 'viem/utils'
 
 export default function RefuelPage() {
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
@@ -53,7 +54,7 @@ export default function RefuelPage() {
   const form = useForm<z.infer<typeof RefuelSchema>>({
     resolver: zodResolver(RefuelSchema),
     defaultValues: {
-      amount: balance ? Number((balance / 3).toFixed(5)) : 0,
+      amount: 0,
       balance: balance ?? 0,
       chainFrom:
         CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
@@ -76,12 +77,13 @@ export default function RefuelPage() {
     fields.amount,
   )
 
-  useEffect(() => {
-    ;(async () => {
-      const { data: fee }: any = await refetch()
-      setFeeAmount(fee)
-    })()
-  }, [refetch])
+  // useEffect(() => {
+  //   ;(async () => {
+  //     return
+  //     const { data: fee }: any = await refetch()
+  //     setFeeAmount(fee)
+  //   })()
+  // }, [refetch])
 
   const { writeAsync, isLoading } = refuel(
     chain?.unsupported ? 0 : chain?.id ?? 0,
@@ -104,14 +106,18 @@ export default function RefuelPage() {
 
     await writeAsync({
       value: fee[0],
-      args: [chainTo, address, getAdapter(amount, address!)],
+      args: [
+        chainTo,
+        address,
+        getAdapter(parseEther(amount.toString()), address!),
+      ],
     })
   }
 
   const debounced = useDebouncedCallback(async (value) => {
     const { data: fee }: any = await refetch()
     setFeeAmount(fee)
-    console.log(value)
+    console.log('debounded fee:', fee, 'amount:', value)
   }, 2000)
 
   return (
@@ -201,8 +207,8 @@ export default function RefuelPage() {
                     className="text-[10px] opacity-75 cursor-pointer text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4]"
                     disabled={!balance}
                     onClick={() => {
-                      setValue('amount', balance)
-                      debounced(rest.value)
+                      setValue('amount', 0.02)
+                      debounced(0.02)
                     }}
                   >
                     MAX
@@ -211,7 +217,7 @@ export default function RefuelPage() {
                 <FormControl>
                   <div className="relative flex items-center">
                     <Input
-                      placeholder={`0.0001 ${!balance ? 'XXX' : data?.symbol}`}
+                      placeholder={`0.01 ${!balance ? 'XXX' : data?.symbol}`}
                       {...rest}
                       onChange={(e) => {
                         onChange(e)
@@ -219,7 +225,7 @@ export default function RefuelPage() {
                       }}
                       autoComplete="off"
                       type="number"
-                      max={balance}
+                      max={0.02}
                     />
 
                     <span className="absolute text-lg right-3 font-medium">
@@ -238,8 +244,8 @@ export default function RefuelPage() {
             </span>
             <Slider
               disabled={status !== 'connected'}
-              defaultValue={[Number((balance / 3).toFixed(5))]}
-              max={balance}
+              defaultValue={[0.01]}
+              max={0.02}
               value={[fields.amount]}
               step={0.000001}
               onValueChange={(v) => {
@@ -248,7 +254,7 @@ export default function RefuelPage() {
               }}
             />
             <span className="flex items-center justify-center rounded-md py-3 w-fit min-w-20 px-2 border border-primary">
-              {!balance ? '...' : balance.toFixed(5)}
+              {0.02}
             </span>
           </div>
 
