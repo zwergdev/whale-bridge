@@ -119,6 +119,8 @@ export const Transaction = ({
         getAdapter(parseEther(amount.toString()), address!),
       ],
     })
+
+    setIsDialogOpen(true)
   }
 
   return (
