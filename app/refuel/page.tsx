@@ -28,6 +28,16 @@ import { Transaction } from '@/app/refuel/_components/transaction'
 import { estimateRefuelFee } from '@/app/_utils/contract-actions'
 import { useDebouncedCallback } from 'use-debounce'
 
+const MAX_REFUEL: { [chainId: number]: number } = {
+  42170: 0.02, // arbitrum-nova
+  56: 1.23, // bsc
+  137: 610.36, // polygon
+  42161: 0.01, // arbitrum
+  534352: 0.02, // scroll
+  324: 0.02, // zk
+  10: 0.02, // optimism
+}
+
 export default function RefuelPage() {
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
   const [popoverToOpen, setPopoverToOpen] = useState(false)
@@ -155,7 +165,12 @@ export default function RefuelPage() {
                     className="text-[10px] opacity-75 cursor-pointer text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4]"
                     disabled={!balance}
                     onClick={() => {
-                      setValue('amount', 0.02)
+                      setValue(
+                        'amount',
+                        balance > MAX_REFUEL[chain?.id ?? 0]
+                          ? MAX_REFUEL[chain?.id ?? 0]
+                          : balance,
+                      )
                       debounceFee(1)
                     }}
                   >
@@ -173,7 +188,7 @@ export default function RefuelPage() {
                       }}
                       autoComplete="off"
                       type="number"
-                      max={0.02}
+                      max={MAX_REFUEL[chain?.id ?? 0]}
                     />
 
                     <span className="absolute text-lg right-3 font-medium">
@@ -193,7 +208,7 @@ export default function RefuelPage() {
             <Slider
               disabled={status !== 'connected'}
               defaultValue={[0.01]}
-              max={0.02}
+              max={MAX_REFUEL[chain?.id ?? 0]}
               value={[fields.amount]}
               step={0.000001}
               onValueChange={(v) => {
@@ -202,7 +217,7 @@ export default function RefuelPage() {
               }}
             />
             <span className="flex items-center justify-center rounded-md py-3 w-fit min-w-20 px-2 border border-primary">
-              {0.02}
+              {MAX_REFUEL[chain?.id ?? 0]}
             </span>
           </div>
 

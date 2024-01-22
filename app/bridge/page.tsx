@@ -34,7 +34,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from '@/components/ui/select'
-import { ChevronsUpDown } from 'lucide-react'
+import { ChevronsUpDown, Loader } from 'lucide-react'
 
 export default function BridgePage() {
   const { address } = useAccount()
@@ -43,12 +43,15 @@ export default function BridgePage() {
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
   const [popoverToOpen, setPopoverToOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [isLoadingNFT, setIsLoadingNFT] = useState(true)
 
   useEffect(() => {
     ;(async () => {
+      setIsLoadingNFT(true)
       const nfts = await getNFTBalance(address!, chain?.id ?? 0)
       form.setValue('tokenId', nfts?.[0] ?? '0')
       form.setValue('nfts', nfts ?? [])
+      setIsLoadingNFT(false)
     })()
   }, [address, chain])
 
@@ -68,8 +71,6 @@ export default function BridgePage() {
   } = form
 
   const fields = watch()
-
-  console.log(chain?.id ?? 0)
 
   const {
     data: bridgingData,
@@ -131,7 +132,9 @@ export default function BridgePage() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {fields.nfts.length ? (
+                      {isLoadingNFT ? (
+                        <Loader className="my-4 h-5 animate-spin-slow flex justify-center w-full" />
+                      ) : fields.nfts.length ? (
                         fields.nfts.map((token) => (
                           <SelectItem value={token} key={token}>
                             {token}

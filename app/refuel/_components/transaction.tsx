@@ -20,6 +20,7 @@ import { truncatedToaster } from '@/app/_utils/truncatedToaster'
 import { parseEther } from 'viem/utils'
 import { useEffect, useState } from 'react'
 import { formatEther } from 'viem'
+import { RefueledDialog } from './refueled-dialog'
 
 type TransactionProps = {
   amount: number
@@ -65,6 +66,7 @@ export const Transaction = ({
   const { openConnectModal, connectModalOpen } = useConnectModal()
   const { data: balanceData } = useBalance({ address })
   const symbol = balanceData?.symbol
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [prices, setPrices] = useState<Prices>({
     binancecoin: {
       usd: 318.81,
@@ -85,9 +87,11 @@ export const Transaction = ({
     })()
   }, [])
 
-  const { writeAsync, isLoading } = refuel(
-    chain?.unsupported ? 0 : chain?.id ?? 0,
-  )
+  const {
+    data: refueledData,
+    writeAsync,
+    isLoading,
+  } = refuel(chain?.unsupported ? 0 : chain?.id ?? 0)
 
   const { error: feeError, refetch } = estimateRefuelFee(
     chainTo,
@@ -118,78 +122,88 @@ export const Transaction = ({
   }
 
   return (
-    <Dialog>
-      {address ? (
-        <DialogTrigger asChild>
+    <>
+      {' '}
+      <Dialog>
+        {address ? (
+          <DialogTrigger asChild>
+            <Button
+              type="button"
+              className="w-full text-base py-2.5"
+              disabled={!amount || !balance || isLoading || amount > balance}
+            >
+              Refuel
+            </Button>
+          </DialogTrigger>
+        ) : (
           <Button
             type="button"
             className="w-full text-base py-2.5"
-            disabled={!amount || !balance || isLoading || amount > balance}
+            onClick={openConnectModal}
+            disabled={connectModalOpen}
           >
-            Refuel
+            Connect Wallet
           </Button>
-        </DialogTrigger>
-      ) : (
-        <Button
-          type="button"
-          className="w-full text-base py-2.5"
-          onClick={openConnectModal}
-          disabled={connectModalOpen}
-        >
-          Connect Wallet
-        </Button>
-      )}
+        )}
 
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Transaction Summary</DialogTitle>
-        </DialogHeader>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Transaction Summary</DialogTitle>
+          </DialogHeader>
 
-        <div>
-          <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5">
-            Estimated Transfer Time:
-            <span className="font-semibold">~5 mins</span>
+          <div>
+            <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5">
+              Estimated Transfer Time:
+              <span className="font-semibold">~5 mins</span>
+            </div>
+
+            <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary">
+              Refuel cost:
+              <span className="font-semibold">
+                {(async () => {
+                  if (fee && symbol) {
+                    const amount = Number(formatEther(fee)).toFixed(2)
+
+                    return `${amount} ${symbol ?? 'XXX'} ($${(
+                      prices[SYMBOL_TO_CHAIN[symbol]].usd * Number(amount)
+                    ).toFixed(2)})`
+                  }
+                  return '0 XXX ($0.00)'
+                })()}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary md:mb-5 mb-2">
+              Expected Output:
+              <span className="font-semibold">
+                {amount ?? 0} {symbol ?? 'XXX'} ($
+                {symbol && amount && prices && Object.keys(prices).length
+                  ? (prices[SYMBOL_TO_CHAIN[symbol]].usd * amount).toFixed(2)
+                  : '0.00'}
+                )
+              </span>
+            </div>
           </div>
 
-          <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary">
-            Refuel cost:
-            <span className="font-semibold">
-              {(async () => {
-                if (fee && symbol) {
-                  const amount = Number(formatEther(fee)).toFixed(2)
-
-                  return `${amount} ${symbol ?? 'XXX'} ($${(
-                    prices[SYMBOL_TO_CHAIN[symbol]].usd * Number(amount)
-                  ).toFixed(2)})`
-                }
-                return '0 XXX ($0.00)'
-              })()}
-            </span>
-          </div>
-
-          <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary md:mb-5 mb-2">
-            Expected Output:
-            <span className="font-semibold">
-              {amount ?? 0} {symbol ?? 'XXX'} ($
-              {symbol && amount && prices && Object.keys(prices).length
-                ? (prices[SYMBOL_TO_CHAIN[symbol]].usd * amount).toFixed(2)
-                : '0.00'}
-              )
-            </span>
-          </div>
-        </div>
-
-        <DialogFooter>
-          <Button
-            type="button"
-            className="w-full text-base py-2.5"
-            onClick={onConfirm}
-            loading={isLoading}
-          >
-            Confirm
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          <DialogFooter>
+            <Button
+              type="button"
+              className="w-full text-base py-2.5"
+              onClick={onConfirm}
+              loading={isLoading}
+            >
+              Confirm
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <RefueledDialog
+        hash={refueledData?.hash}
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        chainId={chain?.id ?? 0}
+        chainTo={chainTo}
+      />
+    </>
   )
 }
