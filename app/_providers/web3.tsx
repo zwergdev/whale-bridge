@@ -13,7 +13,7 @@ import {
   arbitrum,
   scroll,
   zkSync,
-  optimism
+  optimism,
 } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 

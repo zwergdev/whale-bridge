@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
 
-
 type SubmitButtonProps = {
   disabled: boolean
   loading?: boolean

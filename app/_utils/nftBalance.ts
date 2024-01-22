@@ -40,10 +40,10 @@ const fetchFromOpensea = async (address: string) => {
 }
 
 const extractOpenseaIdentifiers = (nfts: any[]) =>
-  nfts.map(({ identifier }) => identifier)
+  nfts?.map(({ identifier }) => identifier)
 
 const extractElementIdentifiers = (nfts: any[]) =>
-  nfts.map(({ asset }) => asset.tokenId)
+  nfts?.map(({ asset }) => asset.tokenId)
 
 export const getNFTBalance = async (address: string, chainId: number) => {
   if (chainId === 0 || !address) return []

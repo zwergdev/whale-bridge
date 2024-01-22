@@ -19,7 +19,7 @@ import { truncatedToaster } from '../_utils/truncatedToaster'
 import { estimateBridgeFee, bridge } from '../_utils/contract-actions'
 import { SubmitButton } from '../_components/submit-button'
 import { getNFTBalance } from '../_utils/nftBalance'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import {
   ChainList,
@@ -44,7 +44,9 @@ export default function BridgePage() {
   const [popoverToOpen, setPopoverToOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isLoadingNFT, setIsLoadingNFT] = useState(true)
+  const ref = useRef('a')
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     ;(async () => {
       setIsLoadingNFT(true)
@@ -53,7 +55,18 @@ export default function BridgePage() {
       form.setValue('nfts', nfts ?? [])
       setIsLoadingNFT(false)
     })()
-  }, [address, chain])
+  }, [address, chain, ref.current])
+
+  useEffect(() => {
+    form.setValue(
+      'chainFrom',
+      CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
+    )
+    form.setValue(
+      'chainTo',
+      CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value,
+    )
+  }, [chain])
 
   const form = useForm<z.infer<typeof BridgeSchema>>({
     resolver: zodResolver(BridgeSchema),
@@ -182,6 +195,7 @@ export default function BridgePage() {
                 onClick={() => {
                   form.setValue('chainFrom', fields.chainTo)
                   form.setValue('chainTo', fields.chainFrom)
+                  ref.current = Date.now().toString()
                 }}
               />
 
@@ -213,7 +227,10 @@ export default function BridgePage() {
               />
             </div>
 
-            <SubmitButton disabled={!isValid} loading={isLoading}>
+            <SubmitButton
+              disabled={!isValid}
+              loading={isLoading || isLoadingNFT}
+            >
               Bridge
             </SubmitButton>
 

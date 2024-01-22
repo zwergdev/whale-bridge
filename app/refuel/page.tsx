@@ -15,7 +15,7 @@ import {
 import { Popover } from '@/components/ui/popover'
 import { Input } from '@/components/ui/input'
 import { CHAINS } from '../_utils/chains'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAccount, useBalance, useNetwork, useSwitchNetwork } from 'wagmi'
 import { Slider } from '@/components/ui/slider'
 import {
@@ -44,6 +44,18 @@ export default function RefuelPage() {
   const [fee, setFee] = useState(BigInt(1))
   const { switchNetwork } = useSwitchNetwork()
   const { chain } = useNetwork()
+
+  useEffect(() => {
+    form.setValue(
+      'chainFrom',
+      CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
+    )
+    form.setValue(
+      'chainTo',
+      CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value,
+    )
+  }, [chain])
+
   const { address, status } = useAccount()
 
   const { data } = useBalance({
@@ -52,7 +64,7 @@ export default function RefuelPage() {
       form.setValue('balance', Number(formatted))
     },
   })
-  const balance = Number(data?.formatted)
+  const balance = Number(Number(data?.formatted).toFixed(5))
 
   const form = useForm<z.infer<typeof RefuelSchema>>({
     resolver: zodResolver(RefuelSchema),
@@ -160,22 +172,28 @@ export default function RefuelPage() {
               <FormItem>
                 <FormLabel className="flex items-end justify-between">
                   Enter Refuel Amount
-                  <button
-                    type="button"
-                    className="text-[10px] opacity-75 cursor-pointer text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4]"
-                    disabled={!balance}
-                    onClick={() => {
-                      setValue(
-                        'amount',
-                        balance > MAX_REFUEL[chain?.id ?? 0]
-                          ? MAX_REFUEL[chain?.id ?? 0]
-                          : balance,
-                      )
-                      debounceFee(1)
-                    }}
-                  >
-                    MAX
-                  </button>
+                  <div>
+                    <span className="mr-2 text-[10px] opacity-75 text-primary leading-[0.4]">
+                      Bal:
+                      {!balance ? ' XXX' : ` ${balance} ${data?.symbol}`}
+                    </span>
+                    <button
+                      type="button"
+                      className="text-[10px] opacity-75 cursor-pointer text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4]"
+                      disabled={!balance}
+                      onClick={() => {
+                        setValue(
+                          'amount',
+                          balance > MAX_REFUEL[chain?.id ?? 0]
+                            ? MAX_REFUEL[chain?.id ?? 0]
+                            : balance,
+                        )
+                        debounceFee(1)
+                      }}
+                    >
+                      MAX
+                    </button>
+                  </div>
                 </FormLabel>
                 <FormControl>
                   <div className="relative flex items-center">
@@ -217,7 +235,7 @@ export default function RefuelPage() {
               }}
             />
             <span className="flex items-center justify-center rounded-md py-3 w-fit min-w-20 px-2 border border-primary">
-              {MAX_REFUEL[chain?.id ?? 0]}
+              {MAX_REFUEL[chain?.id ?? 0] ?? 0}
             </span>
           </div>
 
