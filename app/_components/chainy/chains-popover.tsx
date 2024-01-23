@@ -10,6 +10,7 @@ import {
   CommandInput,
   CommandItem,
 } from '@/components/ui/command'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 type ChainyTriggerProps = {
   disabled?: boolean
@@ -45,24 +46,26 @@ const ChainList = ({ selectedValue, fieldValue, onSelect }: ChainListProps) => {
         <CommandInput placeholder="Search chain..." />
         <CommandEmpty>No chain found.</CommandEmpty>
         <CommandGroup>
-          {Array.from(CHAINS)
-            .sort((a) => (a.value === fieldValue ? -1 : 0))
-            .map(({ label, value, image, chainId }) => (
-              <CommandItem
-                key={value}
-                value={label}
-                image={image}
-                disabled={
-                  selectedValue === value ||
-                  (selectedValue === 175 && value === 214) ||
-                  (selectedValue === 214 && value === 175)
-                }
-                checked={value === fieldValue}
-                onSelect={() => onSelect(value, chainId)}
-              >
-                {label}
-              </CommandItem>
-            ))}
+          <ScrollArea className="h-[260px]">
+            {Array.from(CHAINS)
+              .sort((a) => (a.value === fieldValue ? -1 : 0))
+              .map(({ label, value, image, chainId }) => (
+                <CommandItem
+                  key={value}
+                  value={label}
+                  image={image}
+                  disabled={
+                    selectedValue === value ||
+                    (selectedValue === 175 && value === 214) ||
+                    (selectedValue === 214 && value === 175)
+                  }
+                  checked={value === fieldValue}
+                  onSelect={() => onSelect(value, chainId)}
+                >
+                  {label}
+                </CommandItem>
+              ))}
+          </ScrollArea>
         </CommandGroup>
       </Command>
     </PopoverContent>

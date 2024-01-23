@@ -47,6 +47,8 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   534352: 0.02, // scroll
   324: 0.02, // zk
   10: 0.02, // optimism
+  8453: 0.02, // base
+  59144: 0.02, // linea
 }
 
 const SYMBOL_TO_CHAIN: { [key: string]: string } = {

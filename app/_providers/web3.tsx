@@ -14,26 +14,30 @@ import {
   scroll,
   zkSync,
   optimism,
+  linea,
+  base,
 } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, publicClient } = configureChains(
-  [arbitrumNova, bsc, polygon, arbitrum, scroll, zkSync, optimism],
+  [arbitrumNova, bsc, polygon, arbitrum, scroll, zkSync, optimism, linea, base],
   [publicProvider()],
 )
 
 const RAINBOW_CHAINS = [
-  { name: 'BSC', id: 56, iconUrl: '/bnb.svg' },
   {
     name: 'Arbitrum Nova',
     id: 42170,
-    iconUrl: '/arb-nova.svg',
+    iconUrl: '/chain-logo/arb-nova.svg',
   },
-  { name: 'Polygon', id: 137, iconUrl: '/polygon.svg' },
-  { name: 'Arbitrum', id: 42161, iconUrl: '/arb.svg' },
-  { name: 'Scroll', id: 534352, iconUrl: '/scroll.svg' },
-  { name: 'zkSync', id: 324, iconUrl: '/zk.svg' },
-  { name: 'Optimism', id: 10, iconUrl: '/optimism.svg' },
+  { name: 'BSC', id: 56, iconUrl: '/chain-logo/bnb.svg' },
+  { name: 'Polygon', id: 137, iconUrl: '/chain-logo/polygon.svg' },
+  { name: 'Arbitrum', id: 42161, iconUrl: '/chain-logo/arb.svg' },
+  { name: 'Scroll', id: 534352, iconUrl: '/chain-logo/scroll.svg' },
+  { name: 'zkSync', id: 324, iconUrl: '/chain-logo/zk.svg' },
+  { name: 'Optimism', id: 10, iconUrl: '/chain-logo/optimism.svg' },
+  { name: 'Linea', id: 59144, iconUrl: '/chain-logo/linea.svg' },
+  { name: 'Base', id: 8453, iconUrl: '/chain-logo/base.svg' },
 ]
 
 const { connectors } = getDefaultWallets({
