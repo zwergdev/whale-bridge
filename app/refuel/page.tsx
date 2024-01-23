@@ -201,10 +201,11 @@ export default function RefuelPage() {
       <Paper
         title="REFUEL GAS"
         subtitle={
-          <div className="flex items-center justify-center gap-1.5 text-xs mt-1 opacity-75">
-            <Fuel size={12} className="mb-0.5" />
-            <span>
-              Free <span className="line-through">(0.01%)</span>
+          <div className="flex items-center justify-center gap-1.5 text-xs opacity-75 border border-primary py-2 px-3 rounded">
+            <Fuel size={14} className="mb-0.5 stroke-yellow-200" />
+            <span className="font-bold">
+              Free{' '}
+              <span className="line-through ml-1 text-yellow-200">(0.01%)</span>
             </span>
           </div>
         }
@@ -364,7 +365,12 @@ export default function RefuelPage() {
                   <div>
                     <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5">
                       Estimated Transfer Time:
-                      <span className="font-semibold">~1 min</span>
+                      <span className="font-semibold">
+                        ~
+                        {fields.chainFrom === 109 || fields.chainTo === 109
+                          ? '18 mins'
+                          : '1 min'}
+                      </span>
                     </div>
 
                     <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary">

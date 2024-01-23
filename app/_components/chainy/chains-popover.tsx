@@ -52,7 +52,11 @@ const ChainList = ({ selectedValue, fieldValue, onSelect }: ChainListProps) => {
                 key={value}
                 value={label}
                 image={image}
-                disabled={selectedValue === value}
+                disabled={
+                  selectedValue === value ||
+                  (selectedValue === 175 && value === 214) ||
+                  (selectedValue === 214 && value === 175)
+                }
                 checked={value === fieldValue}
                 onSelect={() => onSelect(value, chainId)}
               >

@@ -144,8 +144,9 @@ export default function BridgePage() {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className='flex items-center justify-center gap-2'>
-                        Select NFT<ChevronsUpDown />
+                      <SelectTrigger className="flex items-center justify-center gap-2">
+                        Select NFT
+                        <ChevronsUpDown />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
