@@ -13,7 +13,7 @@ const CONTRACTS: {
   42170: {
     mintAddress: '0x1010a05759a0a7Daa665f12Ec677ff5034Ecd35F',
     refuelAddress: '0xBe2E226923641Dc4C77583bC71332ecd99597862',
-    mintPrice: '0',
+    mintPrice: '0.0001',
   }, // arbitrum-nova
   56: {
     mintAddress: '0x006E23eb40eBc1805783e3a6c39283bcF5799368',
