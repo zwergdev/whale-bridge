@@ -200,6 +200,13 @@ export default function BridgePage() {
                   form.setValue('chainFrom', fields.chainTo)
                   form.setValue('chainTo', fields.chainFrom)
                   ref.current = Date.now().toString()
+
+                  const selectedChain = CHAINS.find(
+                    ({ value }) => value === fields.chainTo,
+                  )
+
+                  if (selectedChain?.value !== chain?.id)
+                    switchNetwork?.(selectedChain?.chainId)
                 }}
               />
 
