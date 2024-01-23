@@ -9,11 +9,10 @@ export default function MintPage() {
         <h2 className="font-semibold text-4xl mb-5">Mint NFT</h2>
         <MintChainPopover />
         <p className="font-medium md:text-2xl text-xl mb-8 max-w-lg">
-          We want you to understand that you're not just creating an NFT, you're
-          contributing to a revolutionary story, where art takes on a new
-          dimension, and each creation becomes a chapter in the evolving
-          narrative of digital creativity. Welcome to the captivating world of
-          digital art.
+          Release the whale in you and dive into the exciting ocean of
+          cryptocurrency. You're not just minting an NFT, you're writing history
+          in the ledger of digital art. Don't be a small fish, become a crypto
+          whale and make a splash in the sea of success. This NFT help you!
         </p>
         <MintButton />
       </div>

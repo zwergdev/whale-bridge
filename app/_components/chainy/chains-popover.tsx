@@ -76,12 +76,16 @@ const RepeatButton = ({ onClick }: { onClick: () => void }) => {
 
 type PaperProps = {
   title: string
+  subtitle?: React.ReactNode
   children: React.ReactNode
 }
-const Paper = ({ title, children }: PaperProps) => {
+const Paper = ({ title, children, subtitle }: PaperProps) => {
   return (
     <section className="text-sm text-foreground rounded-md max-w-screen-md w-full px-6 pt-8 pb-10 bg-paper flex flex-col">
-      <h2 className="font-semibold text-2xl mb-5">{title}</h2>
+      <div className="flex justify-between items-start">
+        <h2 className="font-semibold text-2xl mb-5">{title}</h2>
+        {subtitle}
+      </div>
       {children}
     </section>
   )
