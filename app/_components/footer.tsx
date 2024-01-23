@@ -14,6 +14,7 @@ export const Footer = () => (
         <div className="hidden md:flex items-center gap-4 lg:gap-12">
           <Navigation />
           <Link
+            target="_blank"
             href="https://layerzeroscan.com/"
             className="hover:text-primary transition-colors duration-300"
           >
@@ -44,7 +45,7 @@ export const Footer = () => (
           { icon: <Telegram />, href: 'https://t.me/whale_app_com' },
           { icon: <Twitter />, href: 'https://twitter.com/Whale_app_com' },
         ].map(({ icon, href }, idx) => (
-          <Link href={href} key={idx}>
+          <Link href={href} key={idx} target="_blank">
             {cloneElement(icon, {
               className:
                 'fill-foreground hover:fill-primary transition-colors duration-300 w-6 h-auto',

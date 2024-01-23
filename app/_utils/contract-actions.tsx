@@ -1,7 +1,6 @@
 import { useContractWrite, useContractRead } from 'wagmi'
 import { mintABI, refuelABI } from './abi'
 import { parseEther } from 'viem/utils'
-import { truncatedToaster } from './truncatedToaster'
 import { ethers } from 'ethers'
 
 const CONTRACTS: {
@@ -60,10 +59,8 @@ function mint(chainId: number) {
     functionName: 'mint',
     chainId,
     value: parseEther(CONTRACTS[chainId].mintPrice),
-    onError(error, ssad) {
-      console.log(ssad)
-
-      truncatedToaster('Error occurred!', error?.message!)
+    onError(error) {
+      console.error(error.message)
     },
   })
 }
@@ -76,7 +73,7 @@ function bridge(chainId: number) {
     chainId,
     value: parseEther('0.00001'),
     onError(error) {
-      truncatedToaster('Error occurred!', error.message)
+      console.error(error.message)
     },
   })
 }
@@ -111,7 +108,7 @@ function refuel(chainId: number) {
     chainId,
     value: parseEther('0'),
     onError(error) {
-      truncatedToaster('Error occurred!', error.message)
+      console.error(error.message)
     },
   })
 }

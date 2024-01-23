@@ -14,6 +14,3 @@ export const RefuelSchema = z
     amount: z.coerce.number().positive(),
     balance: z.number().positive(),
   })
-  .refine((schema) => schema.amount <= schema.balance, {
-    message: 'Amount must be less than balance',
-  })

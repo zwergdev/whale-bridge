@@ -15,7 +15,6 @@ import {
   MessageStatus,
 } from '@layerzerolabs/scan-client'
 import { cloneElement, useState } from 'react'
-import { MintImage } from '@/app/mint/_сomponents/mint-image'
 
 type RefueledDialogProps = {
   hash?: `0x${string}`
@@ -91,30 +90,28 @@ export const RefueledDialog = ({
             </p>
 
             <div className="flex gap-4 items-center mt-16 w-full">
-              <MintImage
-                className="border border-border"
-                size={100}
-                chainId={chainId}
-              />
               <div className="truncate max-w-96 text-left">
-                <p>Transaction link:</p>
+                <p>
+                  Transaction link:{' '}
+                  <Link
+                    target="_blank"
+                    href={`https://${TX_LINK[chainId]}/tx/${hash}`}
+                    className="text-foreground underline"
+                  >
+                    {`${TX_LINK[chainId]}/tx/${hash}`}
+                  </Link>
+                </p>
 
-                <Link
-                  target="_blank"
-                  href={`https://${TX_LINK[chainId]}/tx/${hash}`}
-                  className="text-foreground underline"
-                >
-                  {`${TX_LINK[chainId]}/tx/${hash}`}
-                </Link>
-                <p className="mt-4">LayerZero link:</p>
-
-                <Link
-                  target="_blank"
-                  href={`https://layerzeroscan.com/tx/${hash}`}
-                  className="text-foreground underline"
-                >
-                  {`layerzeroscan.com/tx/${hash}`}
-                </Link>
+                <p className="mt-4">
+                  LayerZero link:{' '}
+                  <Link
+                    target="_blank"
+                    href={`https://layerzeroscan.com/tx/${hash}`}
+                    className="text-foreground underline"
+                  >
+                    {`layerzeroscan.com/tx/${hash}`}
+                  </Link>
+                </p>
               </div>
             </div>
           </AlertDialogDescription>

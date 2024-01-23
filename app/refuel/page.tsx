@@ -89,6 +89,8 @@ export default function RefuelPage() {
       'chainTo',
       CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value,
     )
+    form.setValue('amount', 0)
+    setFee(BigInt(0))
   }, [chain])
 
   const form = useForm<z.infer<typeof RefuelSchema>>({
@@ -116,7 +118,7 @@ export default function RefuelPage() {
   })
   const balanceTo = Number(Number(_balanceTo?.formatted).toFixed(5))
 
-  const { refetch, error: feeError } = estimateRefuelFee(
+  const { refetch } = estimateRefuelFee(
     fields.chainTo,
     chain?.unsupported ? 0 : chain?.id ?? 0,
     address!,
@@ -147,7 +149,7 @@ export default function RefuelPage() {
 
       const usd = prices[SYMBOL_TO_CHAIN[symbol]].usd
 
-      return `${amount.toFixed(4)} ${symbol} ($${(amount * usd).toFixed(2)})`
+      return `${amount.toFixed(5)} ${symbol} ($${(amount * usd).toFixed(2)})`
     }
     return '...'
   }
@@ -162,20 +164,25 @@ export default function RefuelPage() {
 
       const usd = prices[SYMBOL_TO_CHAIN[symbol]].usd
 
-      return `${Number(amount).toFixed(4)} ${symbol} ($${(amount * usd).toFixed(
+      return `${Number(amount).toFixed(5)} ${symbol} ($${(amount * usd).toFixed(
         2,
       )})`
     }
     return '...'
   }
 
-  const onSubmit = async ({
-    chainTo,
-    amount,
-  }: z.infer<typeof RefuelSchema>) => {
+  async function onSubmit({ chainTo, amount }: z.infer<typeof RefuelSchema>) {
     const { data: fee }: any = await refetch()
 
-    if (!fee) return truncatedToaster('Error occurred!', feeError?.message!)
+    if (!fee)
+      return truncatedToaster('Error occurred!', 'Failed to fetch refuel cost.')
+
+    if (!_balanceFrom)
+      return truncatedToaster('Error occurred!', 'Balance undefined.')
+
+    if (fee[0] > _balanceFrom?.value) {
+      return truncatedToaster('Error occurred!', 'Insufficient balance.')
+    }
 
     await writeAsync({
       value: fee[0],
@@ -271,6 +278,7 @@ export default function RefuelPage() {
                         fieldValue={field.value}
                         onSelect={(value) => {
                           form.setValue('chainTo', value)
+                          form.setValue('amount', 0)
                           setPopoverToOpen(false)
                           debounceFee(1)
                         }}
@@ -313,7 +321,6 @@ export default function RefuelPage() {
                         }}
                         autoComplete="off"
                         type="number"
-                        max={MAX_REFUEL[balanceToChainId ?? 0]}
                         placeholder={`0.01 ${_balanceTo?.symbol ?? 'XXX'}`}
                       />
 
@@ -357,7 +364,7 @@ export default function RefuelPage() {
                   <div>
                     <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5">
                       Estimated Transfer Time:
-                      <span className="font-semibold">~2 mins</span>
+                      <span className="font-semibold">~1 min</span>
                     </div>
 
                     <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary">
@@ -375,10 +382,12 @@ export default function RefuelPage() {
             )}
 
             <SubmitButton
-              disabled={feeAmount() === '...' || expectedOutput() === '...'}
+              disabled={!!_balanceFrom && !!fee && fee > _balanceFrom?.value}
               loading={isFeeLoading || isLoadingRefuel}
             >
-              Refuel
+              {!!_balanceFrom && !!fee && fee > _balanceFrom?.value
+                ? 'Insufficient balance'
+                : 'Refuel'}
             </SubmitButton>
           </form>
         </Form>
