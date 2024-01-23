@@ -24,9 +24,11 @@ import {
   Paper,
 } from '../_components/chainy/chains-popover'
 import { RepeatButton } from '@/app/_components/chainy/chains-popover'
-import { Transaction } from '@/app/refuel/_components/transaction'
-import { estimateRefuelFee } from '@/app/_utils/contract-actions'
+import { Transaction } from './_components/transaction'
+import { Prices, fetchPrices } from './_components/actions'
 import { useDebouncedCallback } from 'use-debounce'
+import { estimateRefuelFee } from '@/app/_utils/contract-actions'
+import { formatEther } from 'viem'
 
 const MAX_REFUEL: { [chainId: number]: number } = {
   42170: 0.02, // arbitrum-nova
@@ -38,12 +40,35 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   10: 0.02, // optimism
 }
 
+const SYMBOL_TO_CHAIN: { [key: string]: string } = {
+  ETH: 'ethereum',
+  BNB: 'binancecoin',
+  MATIC: 'matic-network',
+}
+
 export default function RefuelPage() {
+  const [prices, setPrices] = useState<Prices>()
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
   const [popoverToOpen, setPopoverToOpen] = useState(false)
-  const [fee, setFee] = useState(BigInt(1))
+  const [fee, setFee] = useState<bigint>()
+  const [isFeeLoading, setIsFeeLoading] = useState(false)
   const { switchNetwork } = useSwitchNetwork()
   const { chain } = useNetwork()
+  const { address, status } = useAccount()
+  const { data: _balanceFrom } = useBalance({
+    address,
+    onSuccess({ formatted }) {
+      form.setValue('balance', Number(formatted))
+    },
+  })
+  const balanceFrom = Number(Number(_balanceFrom?.formatted).toFixed(5))
+
+  useEffect(() => {
+    ;(async () => {
+      const prices = await fetchPrices()
+      setPrices(prices)
+    })()
+  }, [])
 
   useEffect(() => {
     form.setValue(
@@ -56,21 +81,11 @@ export default function RefuelPage() {
     )
   }, [chain])
 
-  const { address, status } = useAccount()
-
-  const { data } = useBalance({
-    address,
-    onSuccess({ formatted }) {
-      form.setValue('balance', Number(formatted))
-    },
-  })
-  const balance = Number(Number(data?.formatted).toFixed(5))
-
   const form = useForm<z.infer<typeof RefuelSchema>>({
     resolver: zodResolver(RefuelSchema),
     defaultValues: {
       amount: 0,
-      balance: balance ?? 0,
+      balance: balanceFrom ?? 0,
       chainFrom:
         CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
       chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value, // 102
@@ -81,6 +96,16 @@ export default function RefuelPage() {
 
   const fields = watch()
 
+  const balanceToChainId = CHAINS.find(
+    ({ value }) => value === fields?.chainTo,
+  )?.chainId
+
+  const { data: _balanceTo } = useBalance({
+    chainId: balanceToChainId,
+    address,
+  })
+  const balanceTo = Number(Number(_balanceTo?.formatted).toFixed(5))
+
   const { refetch } = estimateRefuelFee(
     fields.chainTo,
     chain?.unsupported ? 0 : chain?.id ?? 0,
@@ -89,12 +114,42 @@ export default function RefuelPage() {
   )
 
   const debounceFee = useDebouncedCallback(async (value) => {
+    setIsFeeLoading(true)
+    console.log('debounced-amount:', value)
     const { data: fee }: any = await refetch()
-    if (!fee) return
-
-    console.log('fee SET:', fee[0], value)
-    setFee(fee[0])
+    setFee(fee ? fee[0] : BigInt(0))
+    setIsFeeLoading(false)
   }, 500)
+
+  const feeAmount = () => {
+    if (isFeeLoading) return '...'
+
+    const symbol = _balanceFrom?.symbol
+
+    if (fee && symbol && prices) {
+      const amount = Number(formatEther(fee))
+
+      const usd = prices[SYMBOL_TO_CHAIN[symbol]].usd
+
+      return `${amount.toFixed(4)} ${symbol} ($${(amount * usd).toFixed(0)})`
+    }
+    return '...'
+  }
+
+  const expectedOutput = () => {
+    if (isFeeLoading) return '...'
+
+    const symbol = _balanceTo?.symbol
+
+    if (fee && symbol && prices) {
+      const amount = fields.amount
+
+      const usd = prices[SYMBOL_TO_CHAIN[symbol]].usd
+
+      return `${amount.toFixed(4)} ${symbol} ($${(amount * usd).toFixed(0)})`
+    }
+    return '...'
+  }
 
   return (
     <Paper title="REFUEL GAS">
@@ -106,7 +161,15 @@ export default function RefuelPage() {
               name="chainFrom"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Transfer from</FormLabel>
+                  <FormLabel className="flex items-end justify-between">
+                    Transfer from
+                    <span className="mr-2 text-[10px] opacity-75 text-primary leading-[0.4]">
+                      Bal:
+                      {!balanceFrom
+                        ? ` 0 ${_balanceFrom?.symbol ?? 'XXX'}`
+                        : ` ${balanceFrom} ${_balanceFrom?.symbol}`}
+                    </span>
+                  </FormLabel>
                   <Popover
                     open={popoverFromOpen}
                     onOpenChange={setPopoverFromOpen}
@@ -119,7 +182,6 @@ export default function RefuelPage() {
                         form.setValue('chainFrom', value)
                         setPopoverFromOpen(false)
                         if (chainId !== chain?.id) switchNetwork?.(chainId)
-                        debounceFee(1)
                       }}
                     />
                   </Popover>
@@ -137,8 +199,6 @@ export default function RefuelPage() {
 
                 if (selectedChain?.value !== chain?.id)
                   switchNetwork?.(selectedChain?.chainId)
-
-                debounceFee(1)
               }}
             />
 
@@ -147,7 +207,15 @@ export default function RefuelPage() {
               name="chainTo"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel>Transfer to</FormLabel>
+                  <FormLabel className="flex items-end justify-between">
+                    Transfer to
+                    <span className="mr-2 text-[10px] opacity-75 text-primary leading-[0.4]">
+                      Bal:
+                      {!balanceTo
+                        ? ` 0 ${_balanceTo?.symbol ?? 'XXX'}`
+                        : ` ${balanceTo} ${_balanceTo?.symbol}`}
+                    </span>
+                  </FormLabel>
                   <Popover open={popoverToOpen} onOpenChange={setPopoverToOpen}>
                     <ChainyTrigger selectedValue={field.value} />
                     <ChainList
@@ -171,34 +239,26 @@ export default function RefuelPage() {
             render={({ field: { onChange, ...rest } }) => (
               <FormItem>
                 <FormLabel className="flex items-end justify-between">
-                  Enter Refuel Amount
-                  <div>
-                    <span className="mr-2 text-[10px] opacity-75 text-primary leading-[0.4]">
-                      Bal:
-                      {!balance ? ' XXX' : ` ${balance} ${data?.symbol}`}
-                    </span>
-                    <button
-                      type="button"
-                      className="text-[10px] opacity-75 cursor-pointer text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4]"
-                      disabled={!balance}
-                      onClick={() => {
-                        setValue(
-                          'amount',
-                          balance > MAX_REFUEL[chain?.id ?? 0]
-                            ? MAX_REFUEL[chain?.id ?? 0]
-                            : balance,
-                        )
-                        debounceFee(1)
-                      }}
-                    >
-                      MAX
-                    </button>
+                  <div className="flex gap-5 items-end">
+                    <p>Enter Refuel Amount</p>
+                    <p className="text-[10px] opacity-75 mb-1 text-primary leading-[0.4]">
+                      Refuel cost: {feeAmount()}
+                    </p>
                   </div>
+                  <button
+                    type="button"
+                    className="text-[10px] opacity-75 cursor-pointer text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4]"
+                    onClick={() => {
+                      setValue('amount', MAX_REFUEL[balanceToChainId ?? 0])
+                      debounceFee(1)
+                    }}
+                  >
+                    MAX
+                  </button>
                 </FormLabel>
                 <FormControl>
                   <div className="relative flex items-center">
                     <Input
-                      placeholder={`0.01 ${!balance ? 'XXX' : data?.symbol}`}
                       {...rest}
                       onChange={(e) => {
                         onChange(e)
@@ -206,11 +266,12 @@ export default function RefuelPage() {
                       }}
                       autoComplete="off"
                       type="number"
-                      max={MAX_REFUEL[chain?.id ?? 0]}
+                      max={MAX_REFUEL[balanceToChainId ?? 0]}
+                      placeholder={`0.01 ${_balanceTo?.symbol ?? 'XXX'}`}
                     />
 
                     <span className="absolute text-lg right-3 font-medium">
-                      {!balance ? 'XXX' : data?.symbol}
+                      {_balanceTo?.symbol ?? 'XXX'}
                     </span>
                   </div>
                 </FormControl>
@@ -226,7 +287,7 @@ export default function RefuelPage() {
             <Slider
               disabled={status !== 'connected'}
               defaultValue={[0.01]}
-              max={MAX_REFUEL[chain?.id ?? 0]}
+              max={MAX_REFUEL[balanceToChainId ?? 0]}
               value={[fields.amount]}
               step={0.000001}
               onValueChange={(v) => {
@@ -235,7 +296,7 @@ export default function RefuelPage() {
               }}
             />
             <span className="flex items-center justify-center rounded-md py-3 w-fit min-w-20 px-2 border border-primary">
-              {MAX_REFUEL[chain?.id ?? 0] ?? 0}
+              {MAX_REFUEL[balanceToChainId ?? 0] ?? 0}
             </span>
           </div>
 
@@ -243,7 +304,8 @@ export default function RefuelPage() {
             amount={fields.amount}
             balance={fields.balance}
             chainTo={fields.chainTo}
-            fee={fee}
+            fee={feeAmount()}
+            expectedOutput={expectedOutput()}
           />
         </form>
       </Form>

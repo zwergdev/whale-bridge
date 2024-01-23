@@ -123,6 +123,10 @@ export default function BridgePage() {
     })
 
     setIsDialogOpen(true)
+
+    const newNFTs = fields.nfts.filter((nft) => nft !== tokenId)
+    form.setValue('nfts', newNFTs)
+    form.setValue('tokenId', newNFTs[0] ?? '0')
   }
 
   return (

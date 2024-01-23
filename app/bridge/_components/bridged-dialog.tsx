@@ -120,7 +120,7 @@ export const BridgedDialog = ({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogAction>New Transaction</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
