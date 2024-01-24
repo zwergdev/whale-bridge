@@ -36,6 +36,8 @@ import {
 } from '@/components/ui/select'
 import { ChevronsUpDown, Loader } from 'lucide-react'
 
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
+
 export default function BridgePage() {
   const { address } = useAccount()
   const { chain } = useNetwork()
@@ -50,6 +52,7 @@ export default function BridgePage() {
   useEffect(() => {
     ;(async () => {
       setIsLoadingNFT(true)
+      await delay(2500)
       const nfts = await getNFTBalance(address!, chain?.id ?? 0)
       form.setValue('tokenId', nfts?.[0] ?? '0')
       form.setValue('nfts', nfts ?? [])
@@ -91,7 +94,7 @@ export default function BridgePage() {
     isLoading,
   } = bridge(chain?.unsupported ? 0 : chain?.id ?? 0)
 
-  const { refetch: refetchFee, error: feeError } = estimateBridgeFee(
+  const { refetch: refetchFee } = estimateBridgeFee(
     fields.chainTo,
     address!,
     BigInt(fields.tokenId),
@@ -99,15 +102,24 @@ export default function BridgePage() {
   )
 
   async function bridgeNFT({ chainTo, tokenId }: z.infer<typeof BridgeSchema>) {
-    if (tokenId === '0')
-      return truncatedToaster(
-        'Error occurred!',
-        'You do not have any NFTs to bridge.',
-      )
+    if (tokenId === '0') {
+      setIsLoadingNFT(true)
+      const nfts = await getNFTBalance(address!, chain?.id ?? 0)
+      setIsLoadingNFT(false)
+
+      if (!nfts?.length)
+        return truncatedToaster(
+          'Error occurred!',
+          'You do not have any NFTs to bridge.',
+        )
+
+      tokenId = nfts[0]
+    }
 
     const { data: fee }: any = await refetchFee()
 
-    if (!fee) return truncatedToaster('Error occurred!', feeError?.message!)
+    if (!fee)
+      return truncatedToaster('Error occurred!', 'Failed to fetch refuel cost.')
 
     await writeAsync({
       value: fee[0],
@@ -243,7 +255,7 @@ export default function BridgePage() {
               disabled={!isValid}
               loading={isLoading || isLoadingNFT}
             >
-              Bridge
+              {isLoadingNFT ? 'Loading NFT...' : 'Bridge'}
             </SubmitButton>
 
             <Link href="https://layerzero.network/" target="_blank">
