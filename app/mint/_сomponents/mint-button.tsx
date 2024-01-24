@@ -23,6 +23,7 @@ export const MintButton = () => {
 
   const { isLoading: isWaiting } = useWaitForTransaction({
     hash: signData?.hash,
+    confirmations: 2,
     onSuccess() {
       setIsDialogOpen(true)
     },

@@ -50,6 +50,8 @@ const extractElementIdentifiers = (nfts: any[]) =>
 export const getNFTBalance = async (address: string, chainId: number) => {
   if (chainId === 0 || !address) return []
 
+  await delay(2500)
+
   let res =
     chainId === 42170
       ? await fetchFromOpensea(address)
