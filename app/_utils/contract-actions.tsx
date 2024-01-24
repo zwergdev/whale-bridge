@@ -159,4 +159,5 @@ export {
   refuel,
   estimateRefuelFee,
   getAdapter,
+  CONTRACTS,
 }
