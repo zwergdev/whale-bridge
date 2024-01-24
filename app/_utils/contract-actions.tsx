@@ -18,7 +18,7 @@ const CONTRACTS: {
   56: {
     mintAddress: '0x006E23eb40eBc1805783e3a6c39283bcF5799368',
     refuelAddress: '0x6D096d86F1fE43aed8A073DAd9823C987A450f0e',
-    mintPrice: '0.0001',
+    mintPrice: '0.00076824587',
   }, // bsc
   137: {
     mintAddress: '0xE1c907503B8d1545AFD5A89cc44FC1E538A132DA',
