@@ -13,6 +13,8 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
   534352: { chain: 'scroll', collection: 'whale-onft-6fa936' },
   324: { chain: 'zksync', collection: 'whale-onft-4bb3f1' },
   10: { chain: 'optimism', collection: 'whale-onft-6faadf' },
+  59144: { chain: 'linea', collection: 'whale-onft-4bd1ec' },
+  8453: { chain: 'base', collection: 'whale-onft-4bd161' },
 }
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
@@ -47,6 +49,8 @@ const extractElementIdentifiers = (nfts: any[]) =>
 
 export const getNFTBalance = async (address: string, chainId: number) => {
   if (chainId === 0 || !address) return []
+
+  await delay(2500)
 
   let res =
     chainId === 42170

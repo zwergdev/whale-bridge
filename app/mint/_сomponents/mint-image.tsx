@@ -2,14 +2,16 @@
 
 import Image, { StaticImageData } from 'next/image'
 import { useNetwork, useAccount } from 'wagmi'
-import bsc from '@/public/nft-bsc.webp'
-import polygon from '@/public/nft-polygon.webp'
-import arbitrumNova from '@/public/nft-arbitrum-nova.webp'
-import arbitrum from '@/public/nft-arbitrum.webp'
-import scroll from '@/public/nft-scroll.webp'
-import optimism from '@/public/nft-optimism.webp'
-import zk from '@/public/nft-zk.webp'
-import defaultImage from '@/public/mint-nft.webp'
+import bsc from '@/public/nft/nft-bsc.webp'
+import polygon from '@/public/nft/nft-polygon.webp'
+import arbitrumNova from '@/public/nft/nft-arbitrum-nova.webp'
+import arbitrum from '@/public/nft/nft-arbitrum.webp'
+import scroll from '@/public/nft/nft-scroll.webp'
+import optimism from '@/public/nft/nft-optimism.webp'
+import zk from '@/public/nft/nft-zk.webp'
+import linea from '@/public/nft/nft-linea.webp'
+import base from '@/public/nft/nft-base.webp'
+import defaultImage from '@/public/nft/nft-l0.webp'
 import { cn } from '@/lib/utils'
 
 const IMAGES: { [key: number]: StaticImageData } = {
@@ -20,6 +22,8 @@ const IMAGES: { [key: number]: StaticImageData } = {
   534352: scroll,
   10: optimism,
   324: zk,
+  59144: linea,
+  8453: base,
 }
 
 type MintImageProps = {
@@ -35,6 +39,8 @@ export const MintImage = ({
 }: MintImageProps) => {
   const { chain } = useNetwork()
   const { status } = useAccount()
+
+  console.log(chain)
 
   const definedChain = chainId || chain?.id
 

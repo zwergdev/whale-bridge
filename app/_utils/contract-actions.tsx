@@ -18,7 +18,7 @@ const CONTRACTS: {
   56: {
     mintAddress: '0x006E23eb40eBc1805783e3a6c39283bcF5799368',
     refuelAddress: '0x6D096d86F1fE43aed8A073DAd9823C987A450f0e',
-    mintPrice: '0.0001',
+    mintPrice: '0.00076824587',
   }, // bsc
   137: {
     mintAddress: '0xE1c907503B8d1545AFD5A89cc44FC1E538A132DA',
@@ -45,6 +45,16 @@ const CONTRACTS: {
     refuelAddress: '0x83Ff86c252a41578a7301219Aa23ab6e4F2FdeD3',
     mintPrice: '0.0001',
   }, // optimism
+  59144: {
+    mintAddress: '0x84f4c0A290B5607fee0f2A1CDe5348540fecF6A1',
+    refuelAddress: '0x9aeAa45d415fFE75dC4Ba50658584479bAf110Ec',
+    mintPrice: '0.0001',
+  }, // linea
+  8453: {
+    mintAddress: '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08',
+    refuelAddress: '0x72913DeD90F5Bb415bD74cdccfc944E9887E9790',
+    mintPrice: '0.0001',
+  }, // base
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',

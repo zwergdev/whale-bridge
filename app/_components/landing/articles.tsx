@@ -3,11 +3,11 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
 import { SectionWrapper } from './misc'
-import mintNFT from '../../../public/mint-nft.webp'
-import bridgeNFT from '../../../public/nft-bridge.webp'
-import bridge from '../../../public/bridge-menu.webp'
-import refuelNFT from '../../../public/refuel-nft.webp'
-import refuel from '../../../public/refuel--menu.webp'
+import l0NFT from '../../../public/nft/nft-l0.webp'
+import bridgeNFT from '../../../public/nft/nft-bridge.webp'
+import refuelNFT from '../../../public/nft/nft-refuel.webp'
+import bridge from '../../../public/general/bridge-menu.webp'
+import refuel from '../../../public/general/refuel-menu.webp'
 
 type ArticleProps = {
   children: React.ReactNode
@@ -72,7 +72,7 @@ export const Articles = () => {
       >
         <div className="border-2 border-primary rounded-lg">
           <Image
-            src={mintNFT}
+            src={l0NFT}
             quality={100}
             placeholder="blur"
             width={440}

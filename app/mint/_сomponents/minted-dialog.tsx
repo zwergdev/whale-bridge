@@ -12,7 +12,7 @@ import Link from 'next/link'
 import { MintImage } from './mint-image'
 
 type MintedDialogProps = {
-  hash?: `0x${string}`
+  hash?: string
   open: boolean
   chainId: number
 }

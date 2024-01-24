@@ -18,7 +18,6 @@ const description =
   'Multifunctional Omnichain Solution | Bridge & Refuel Powered by LayerZero'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://whale-app.com'),
   title,
   description,
   openGraph: {
@@ -33,9 +32,6 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title,
     description,
-    siteId: '1654564851425869826',
-    creator: '@zwergdev',
-    creatorId: '1654564851425869826',
   },
 }
 

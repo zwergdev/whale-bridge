@@ -1,18 +1,45 @@
 import Image from 'next/image'
 
 export const CHAINS = [
-  { label: 'BSC', value: 102, image: '/bnb.svg', chainId: 56 },
+  { label: 'BSC', value: 102, image: '/chain-logo/bnb.svg', chainId: 56 },
+  { label: 'zkSync', value: 165, image: '/chain-logo/zk.svg', chainId: 324 },
+  { label: 'Base', value: 184, image: '/chain-logo/base.svg', chainId: 8453 },
+  {
+    label: 'Linea',
+    value: 183,
+    image: '/chain-logo/linea.svg',
+    chainId: 59144,
+  },
   {
     label: 'Arbitrum Nova',
     value: 175,
-    image: '/arb-nova.svg',
+    image: '/chain-logo/arb-nova.svg',
     chainId: 42170,
   },
-  { label: 'Polygon', value: 109, image: '/polygon.svg', chainId: 137 },
-  { label: 'Arbitrum', value: 110, image: '/arb.svg', chainId: 42161 },
-  { label: 'Scroll', value: 214, image: '/scroll.svg', chainId: 534352 },
-  { label: 'zkSync', value: 165, image: '/zk.svg', chainId: 324 },
-  { label: 'Optimism', value: 111, image: '/optimism.svg', chainId: 10 },
+  {
+    label: 'Polygon',
+    value: 109,
+    image: '/chain-logo/polygon.svg',
+    chainId: 137,
+  },
+  {
+    label: 'Arbitrum',
+    value: 110,
+    image: '/chain-logo/arb.svg',
+    chainId: 42161,
+  },
+  {
+    label: 'Scroll',
+    value: 214,
+    image: '/chain-logo/scroll.svg',
+    chainId: 534352,
+  },
+  {
+    label: 'Optimism',
+    value: 111,
+    image: '/chain-logo/optimism.svg',
+    chainId: 10,
+  },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
@@ -23,6 +50,8 @@ export const TX_LINK: { [chainId: number]: string } = {
   534352: 'scrollscan.com', // scroll
   324: 'explorer.zksync.io', // zk
   10: 'optimistic.etherscan.io', // optimism
+  8453: 'basescan.org', // base
+  59144: 'lineascan.build', //linea
 }
 
 export const selectedChain = (fieldValue: number) => {
