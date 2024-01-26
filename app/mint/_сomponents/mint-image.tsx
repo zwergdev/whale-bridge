@@ -42,8 +42,6 @@ export const MintImage = ({
   const { chain } = useNetwork()
   const { status } = useAccount()
 
-  console.log(chain)
-
   const definedChain = chainId || chain?.id
 
   return (

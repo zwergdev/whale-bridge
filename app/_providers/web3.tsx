@@ -13,7 +13,7 @@ import {
   base,
   bsc,
   linea,
-  moonbeam,
+  // moonbeam,
   optimism,
   polygon,
   scroll,
@@ -32,7 +32,7 @@ const { chains, publicClient } = configureChains(
     optimism,
     linea,
     base,
-    moonbeam,
+    // moonbeam,
   ],
   [publicProvider()],
 )
@@ -51,7 +51,7 @@ const RAINBOW_CHAINS = [
   { name: 'Optimism', id: 10, iconUrl: '/chain-logo/optimism.svg' },
   { name: 'Linea', id: 59144, iconUrl: '/chain-logo/linea.svg' },
   { name: 'Base', id: 8453, iconUrl: '/chain-logo/base.svg' },
-  { name: 'Moonbeam', id: 1284, iconUrl: '/chain-logo/moonbeam.svg' },
+  // { name: 'Moonbeam', id: 1284, iconUrl: '/chain-logo/moonbeam.svg' },
 ]
 
 const { connectors } = getDefaultWallets({
