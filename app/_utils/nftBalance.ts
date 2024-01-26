@@ -8,7 +8,7 @@ const API_KEYS = {
 const CHAINS: { [key: number]: { chain: string; collection: string } } = {
   56: { chain: 'bsc', collection: 'whale-onft-91e3d9' },
   42170: { chain: 'arbitrum_nova', collection: 'whale-onft-2' },
-  137: { chain: 'polygon', collection: 'whale-onft-1dc1b2' },
+  137: { chain: 'polygon', collection: 'whaletest-onft' },
   42161: { chain: 'arbitrum', collection: 'whale-onft-91e43c' },
   534352: { chain: 'scroll', collection: 'whale-onft-6fa936' },
   324: { chain: 'zksync', collection: 'whale-onft-4bb3f1' },
