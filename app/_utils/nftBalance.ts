@@ -3,6 +3,7 @@
 const API_KEYS = {
   element: '836618cabf89a3313263626025eaa225',
   opensea: '6d680f1285bf452e83c7bcbb11f260cc',
+  nftscan: 'ifwgRnIiWn5MrEkd8ne6797E',
 }
 
 const CHAINS: { [key: number]: { chain: string; collection: string } } = {
@@ -15,6 +16,7 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
   10: { chain: 'optimism', collection: 'whale-onft-6faadf' },
   59144: { chain: 'linea', collection: 'whale-onft-4bd1ec' },
   8453: { chain: 'base', collection: 'whale-onft-4bd161' },
+  1284: { chain: 'moonbeam', collection: 'XXXXXXXXXXXXXXXXXXXX' },
 }
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
@@ -22,7 +24,6 @@ const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
 const fetchFromElement = async (address: string, chainId: number) => {
   const url = `https://api.element.market/openapi/v1/account/assetList?chain=${CHAINS[chainId].chain}&wallet_address=${address}&collection_slug=${CHAINS[chainId].collection}`
   const response = await fetch(url, {
-    method: 'GET',
     cache: 'no-cache',
     headers: { accept: 'application/json', 'x-api-key': API_KEYS.element },
   })
@@ -33,7 +34,6 @@ const fetchFromElement = async (address: string, chainId: number) => {
 const fetchFromOpensea = async (address: string) => {
   const url = `https://api.opensea.io/api/v2/chain/arbitrum_nova/account/${address}/nfts?collection=whale-onft-2`
   const response = await fetch(url, {
-    method: 'GET',
     cache: 'no-cache',
     headers: { accept: 'application/json', 'x-api-key': API_KEYS.opensea },
   })
@@ -41,31 +41,68 @@ const fetchFromOpensea = async (address: string) => {
   return response.json()
 }
 
-const extractOpenseaIdentifiers = (nfts: any[]) =>
-  nfts?.map(({ identifier }) => identifier)
+const fetchFromNFTScan = async (address: string, chainId: number) => {
+  const url =
+    chainId === 137
+      ? `https://polygonapi.nftscan.com/api/v2/account/own/${address}?erc_type=erc721&show_attribute=false&sort_field=mint_time&sort_direction=&contract_address=0xE1c907503B8d1545AFD5A89cc44FC1E538A132DA`
+      : `https://moonbeamapi.nftscan.com/api/v2/account/own/${address}?erc_type=erc721&show_attribute=false&sort_field=&sort_direction=&contract_address=0xd709e73c5213Fd291d0BfA55A7D934B741398d96`
+  const response = await fetch(url, {
+    cache: 'no-cache',
+    headers: { accept: 'application/json', 'x-api-key': API_KEYS.nftscan },
+  })
 
-const extractElementIdentifiers = (nfts: any[]) =>
-  nfts?.map(({ asset }) => asset.tokenId)
+  return response.json()
+}
+
+const extractOpenseaIdentifiers = (res: any) =>
+  res?.nfts?.map(({ identifier }: { identifier: string }) => identifier)
+
+const extractElementIdentifiers = (res: any) =>
+  res?.assetList?.map(({ asset }: { asset: { tokenId: any } }) => asset.tokenId)
+
+const extractNFTScanIdentifiers = (res: any) =>
+  res?.data?.content?.map(({ token_id }: { token_id: any }) => token_id)
+
+const getNFTs = async (address: string, chainId: number) => {
+  switch (chainId) {
+    case 42170:
+      return await fetchFromOpensea(address)
+    case 1284:
+      return await fetchFromNFTScan(address, 1284)
+    case 137:
+      return await fetchFromNFTScan(address, 137)
+    default:
+      return await fetchFromElement(address, chainId)
+  }
+}
+
+const extractIdentifiers = (nfts: any, chainId: number) => {
+  switch (chainId) {
+    case 42170:
+      return extractOpenseaIdentifiers(nfts)
+    case 1284:
+      return extractNFTScanIdentifiers(nfts)
+    case 137:
+      return extractNFTScanIdentifiers(nfts)
+    default:
+      return extractElementIdentifiers(nfts)
+  }
+}
 
 export const getNFTBalance = async (address: string, chainId: number) => {
   if (chainId === 0 || !address) return []
 
-  let res =
-    chainId === 42170
-      ? await fetchFromOpensea(address)
-      : await fetchFromElement(address, chainId)
+  let res = await getNFTs(address, chainId)
 
-  if (chainId === 42170) {
-    if (res?.nfts?.length === 0) {
-      await delay(2500)
-      res = await fetchFromOpensea(address)
-    }
-    return extractOpenseaIdentifiers(res.nfts)
-  }
+  const isNull =
+    res?.nfts?.length === 0 ||
+    res?.data?.assetList?.length === 0 ||
+    res?.data?.content?.length === 0
 
-  if (res?.data?.assetList?.length === 0) {
+  if (isNull) {
     await delay(2500)
-    res = await fetchFromElement(address, chainId)
+    res = await getNFTs(address, chainId)
   }
-  return extractElementIdentifiers(res?.data?.assetList)
+
+  return extractIdentifiers(res, chainId)
 }

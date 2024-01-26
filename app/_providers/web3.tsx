@@ -1,26 +1,39 @@
 'use client'
-import '@rainbow-me/rainbowkit/styles.css'
+
 import {
-  getDefaultWallets,
   RainbowKitProvider,
+  getDefaultWallets,
   midnightTheme,
 } from '@rainbow-me/rainbowkit'
-import { configureChains, createConfig, WagmiConfig } from 'wagmi'
+import '@rainbow-me/rainbowkit/styles.css'
+import { WagmiConfig, configureChains, createConfig } from 'wagmi'
 import {
-  arbitrumNova,
-  bsc,
-  polygon,
   arbitrum,
+  arbitrumNova,
+  base,
+  bsc,
+  linea,
+  // moonbeam,
+  optimism,
+  polygon,
   scroll,
   zkSync,
-  optimism,
-  linea,
-  base,
 } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
 const { chains, publicClient } = configureChains(
-  [arbitrumNova, bsc, polygon, arbitrum, scroll, zkSync, optimism, linea, base],
+  [
+    arbitrumNova,
+    bsc,
+    polygon,
+    arbitrum,
+    scroll,
+    zkSync,
+    optimism,
+    linea,
+    base,
+    // moonbeam,
+  ],
   [publicProvider()],
 )
 
@@ -38,6 +51,7 @@ const RAINBOW_CHAINS = [
   { name: 'Optimism', id: 10, iconUrl: '/chain-logo/optimism.svg' },
   { name: 'Linea', id: 59144, iconUrl: '/chain-logo/linea.svg' },
   { name: 'Base', id: 8453, iconUrl: '/chain-logo/base.svg' },
+  // { name: 'Moonbeam', id: 1284, iconUrl: '/chain-logo/moonbeam.svg' },
 ]
 
 const { connectors } = getDefaultWallets({

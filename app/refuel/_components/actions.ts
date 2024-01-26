@@ -6,7 +6,7 @@ export type Prices = {
 
 export const fetchPrices = async (): Promise<Prices> => {
   const res = await fetch(
-    'https://api.coingecko.com/api/v3/simple/price?ids=ethereum,binancecoin,matic-network&vs_currencies=usd',
+    'https://api.coingecko.com/api/v3/simple/price?ids=ethereum,binancecoin,matic-network,moonbeam&vs_currencies=usd',
     {
       referrerPolicy: 'same-origin',
       next: { revalidate: 3600 * 12 },
@@ -21,13 +21,16 @@ export const fetchPrices = async (): Promise<Prices> => {
 
   return {
     binancecoin: {
-      usd: 305.3,
+      usd: 300.7,
     },
     ethereum: {
-      usd: 2313.7,
+      usd: 2248.79,
     },
     'matic-network': {
-      usd: 0.745,
+      usd: 0.749275,
+    },
+    moonbeam: {
+      usd: 0.372005,
     },
   }
 }
