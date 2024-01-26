@@ -41,8 +41,11 @@ const fetchFromOpensea = async (address: string) => {
   return response.json()
 }
 
-const fetchFromNFTScan = async (address: string) => {
-  const url = `https://moonbeamapi.nftscan.com/api/v2/account/own/${address}?erc_type=erc721&show_attribute=false&sort_field=&sort_direction=&contract_address=0xd709e73c5213Fd291d0BfA55A7D934B741398d96`
+const fetchFromNFTScan = async (address: string, chainId: number) => {
+  const url =
+    chainId === 137
+      ? `https://polygonapi.nftscan.com/api/v2/account/own/${address}?erc_type=erc721&show_attribute=false&sort_field=mint_time&sort_direction=&contract_address=0xE1c907503B8d1545AFD5A89cc44FC1E538A132DA`
+      : `https://moonbeamapi.nftscan.com/api/v2/account/own/${address}?erc_type=erc721&show_attribute=false&sort_field=&sort_direction=&contract_address=0xd709e73c5213Fd291d0BfA55A7D934B741398d96`
   const response = await fetch(url, {
     cache: 'no-cache',
     headers: { accept: 'application/json', 'x-api-key': API_KEYS.nftscan },
@@ -65,7 +68,9 @@ const getNFTs = async (address: string, chainId: number) => {
     case 42170:
       return await fetchFromOpensea(address)
     case 1284:
-      return await fetchFromNFTScan(address)
+      return await fetchFromNFTScan(address, 1284)
+    case 137:
+      return await fetchFromNFTScan(address, 137)
     default:
       return await fetchFromElement(address, chainId)
   }
@@ -76,6 +81,8 @@ const extractIdentifiers = (nfts: any, chainId: number) => {
     case 42170:
       return extractOpenseaIdentifiers(nfts)
     case 1284:
+      return extractNFTScanIdentifiers(nfts)
+    case 137:
       return extractNFTScanIdentifiers(nfts)
     default:
       return extractElementIdentifiers(nfts)
