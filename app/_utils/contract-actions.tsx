@@ -1,7 +1,7 @@
-import { useContractWrite, useContractRead } from 'wagmi'
-import { mintABI, refuelABI } from './abi'
-import { parseEther } from 'viem/utils'
 import { ethers } from 'ethers'
+import { parseEther } from 'viem/utils'
+import { useContractRead, useContractWrite } from 'wagmi'
+import { mintABI, refuelABI } from './abi'
 
 const CONTRACTS: {
   [chainId: number]: {
@@ -55,6 +55,11 @@ const CONTRACTS: {
     refuelAddress: '0x72913DeD90F5Bb415bD74cdccfc944E9887E9790',
     mintPrice: '0.0001',
   }, // base
+  1284: {
+    mintAddress: '0xd709e73c5213Fd291d0BfA55A7D934B741398d96',
+    refuelAddress: '0xb3dd9b6Cd0f14f921E21094c213de746ceE4a2bC',
+    mintPrice: '0.0001',
+  }, // moonbeam
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',

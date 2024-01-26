@@ -1,9 +1,12 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
-import { RefuelSchema } from '../_utils/schemas'
+import { RepeatButton } from '@/app/_components/chainy/chains-popover'
+import {
+  estimateRefuelFee,
+  getAdapter,
+  refuel,
+} from '@/app/_utils/contract-actions'
+import { truncatedToaster } from '@/app/_utils/truncatedToaster'
 import {
   Form,
   FormControl,
@@ -12,32 +15,29 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Popover } from '@/components/ui/popover'
 import { Input } from '@/components/ui/input'
-import { CHAINS } from '../_utils/chains'
-import { useEffect, useState } from 'react'
-import { useAccount, useBalance, useNetwork, useSwitchNetwork } from 'wagmi'
+import { Popover } from '@/components/ui/popover'
 import { Slider } from '@/components/ui/slider'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Fuel, Loader } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { useDebouncedCallback } from 'use-debounce'
+import { formatEther } from 'viem'
+import { parseEther } from 'viem/utils'
+import { useAccount, useBalance, useNetwork, useSwitchNetwork } from 'wagmi'
+import * as z from 'zod'
 import {
   ChainList,
   ChainyTrigger,
   Paper,
 } from '../_components/chainy/chains-popover'
-import { RepeatButton } from '@/app/_components/chainy/chains-popover'
-import { Prices, fetchPrices } from './_components/actions'
-import { useDebouncedCallback } from 'use-debounce'
-import {
-  estimateRefuelFee,
-  refuel,
-  getAdapter,
-} from '@/app/_utils/contract-actions'
-import { formatEther } from 'viem'
-import { Fuel, Loader } from 'lucide-react'
-import { BalanceIndicator } from './_components/balance-indicator'
 import { SubmitButton } from '../_components/submit-button'
+import { CHAINS } from '../_utils/chains'
+import { RefuelSchema } from '../_utils/schemas'
+import { Prices, fetchPrices } from './_components/actions'
+import { BalanceIndicator } from './_components/balance-indicator'
 import { RefueledDialog } from './_components/refueled-dialog'
-import { truncatedToaster } from '@/app/_utils/truncatedToaster'
-import { parseEther } from 'viem/utils'
 
 const MAX_REFUEL: { [chainId: number]: number } = {
   42170: 0.02, // arbitrum-nova
@@ -49,12 +49,14 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   10: 0.02, // optimism
   8453: 0.02, // base
   59144: 0.02, // linea
+  1284: 0.02, // moonbeam
 }
 
 const SYMBOL_TO_CHAIN: { [key: string]: string } = {
   ETH: 'ethereum',
   BNB: 'binancecoin',
   MATIC: 'matic-network',
+  GLMR: 'moonbeam',
 }
 
 export default function RefuelPage() {

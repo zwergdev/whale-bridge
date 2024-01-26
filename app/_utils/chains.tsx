@@ -40,6 +40,12 @@ export const CHAINS = [
     image: '/chain-logo/optimism.svg',
     chainId: 10,
   },
+  {
+    label: 'Moonbeam',
+    value: 126,
+    image: '/chain-logo/moonbeam.svg',
+    chainId: 1284,
+  },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
@@ -52,6 +58,7 @@ export const TX_LINK: { [chainId: number]: string } = {
   10: 'optimistic.etherscan.io', // optimism
   8453: 'basescan.org', // base
   59144: 'lineascan.build', //linea
+  1284: 'moonscan.io', // moonbeam
 }
 
 export const selectedChain = (fieldValue: number) => {
