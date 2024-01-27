@@ -40,12 +40,12 @@ export const CHAINS = [
     image: '/chain-logo/optimism.svg',
     chainId: 10,
   },
-  // {
-  //   label: 'Moonbeam',
-  //   value: 126,
-  //   image: '/chain-logo/moonbeam.svg',
-  //   chainId: 1284,
-  // },
+  {
+    label: 'Moonbeam',
+    value: 126,
+    image: '/chain-logo/moonbeam.svg',
+    chainId: 1284,
+  },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
