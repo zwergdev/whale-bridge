@@ -43,10 +43,6 @@ type ChainListProps = {
 const DISABLED_PAIRS = [
   [175, 214], // nova <-> scroll
   [214, 175], // scroll <-> nova
-  [126, 184], // moonbeam <-> linea
-  [184, 126], // linea <-> moonbeam
-  [126, 110], // moonbeam <-> arbitrum
-  [110, 126], // arbitrum <-> moonbeam
 ]
 
 const ChainList = ({ selectedValue, fieldValue, onSelect }: ChainListProps) => {
