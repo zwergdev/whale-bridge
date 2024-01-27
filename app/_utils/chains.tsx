@@ -46,6 +46,12 @@ export const CHAINS = [
     image: '/chain-logo/moonbeam.svg',
     chainId: 1284,
   },
+  {
+    label: 'Avalanche',
+    value: 106,
+    image: '/chain-logo/avalanche.svg',
+    chainId: 43114,
+  },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
@@ -59,6 +65,7 @@ export const TX_LINK: { [chainId: number]: string } = {
   8453: 'basescan.org', // base
   59144: 'lineascan.build', //linea
   1284: 'moonscan.io', // moonbeam
+  43114: 'subnets.avax.network/c-chain', // avalanche
 }
 
 export const selectedChain = (fieldValue: number) => {

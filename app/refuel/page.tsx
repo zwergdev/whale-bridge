@@ -50,6 +50,7 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   8453: 0.02, // base
   59144: 0.02, // linea
   1284: 6.1, // moonbeam
+  43114: 0.98, // avalanche
 }
 
 const SYMBOL_TO_CHAIN: { [key: string]: string } = {
@@ -57,6 +58,7 @@ const SYMBOL_TO_CHAIN: { [key: string]: string } = {
   BNB: 'binancecoin',
   MATIC: 'matic-network',
   GLMR: 'moonbeam',
+  AVAX: 'avalanche-2',
 }
 
 export default function RefuelPage() {
@@ -142,6 +144,8 @@ export default function RefuelPage() {
     setFee(fee ? fee[0] : BigInt(0))
     setIsFeeLoading(false)
   }, 500)
+
+  console.log(_balanceFrom?.symbol)
 
   const feeAmount = () => {
     if (isFeeLoading) return '...'

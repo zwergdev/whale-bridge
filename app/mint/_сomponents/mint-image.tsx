@@ -3,6 +3,7 @@
 import { cn } from '@/lib/utils'
 import arbitrumNova from '@/public/nft/nft-arbitrum-nova.webp'
 import arbitrum from '@/public/nft/nft-arbitrum.webp'
+import avalanche from '@/public/nft/nft-avalanche.webp'
 import base from '@/public/nft/nft-base.webp'
 import bsc from '@/public/nft/nft-bsc.webp'
 import defaultImage from '@/public/nft/nft-l0.webp'
@@ -26,6 +27,7 @@ const IMAGES: { [key: number]: StaticImageData } = {
   59144: linea,
   8453: base,
   1284: moonbeam,
+  43114: avalanche,
 }
 
 type MintImageProps = {
