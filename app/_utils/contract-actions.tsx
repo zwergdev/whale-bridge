@@ -19,47 +19,47 @@ const CONTRACTS: {
     mintAddress: '0x006E23eb40eBc1805783e3a6c39283bcF5799368',
     refuelAddress: '0x6D096d86F1fE43aed8A073DAd9823C987A450f0e',
     mintPrice: '0.00076824587',
-  }, // bsc scan
+  }, // bsc
   137: {
     mintAddress: '0xE1c907503B8d1545AFD5A89cc44FC1E538A132DA',
     refuelAddress: '0x45265fB77A51e3B4ec70142f993F1654A8f7ab32',
     mintPrice: '0.377511150000000',
-  }, // polygon  scan
+  }, // polygon
   42161: {
     mintAddress: '0x26E9934024cdC7fcc9f390973d4D9ac1FA954a37',
     refuelAddress: '0x218de7fAB4310497C2aCf8523d8701b5F2F4D1C7',
     mintPrice: '0.0001',
-  }, // arbitrum  scan
+  }, // arbitrum
   534352: {
     mintAddress: '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08',
     refuelAddress: '0xba800cD922F9C4d935fAb96e4a346538bbf29D8c',
     mintPrice: '0.0001',
-  }, // scroll  scan
+  }, // scroll
   324: {
     mintAddress: '0xF09A71F6CC8DE983dD58Ca474cBC33de43DDEBa9',
     refuelAddress: '0x06a2ce74Bc6021851157a003A97D9D8f900543D1',
     mintPrice: '0.0001',
-  }, // zkSync scan
+  }, // zkSync
   10: {
     mintAddress: '0xe87492ae9151769412F40af251d1D2793271e699',
     refuelAddress: '0x83Ff86c252a41578a7301219Aa23ab6e4F2FdeD3',
     mintPrice: '0.0001',
-  }, // optimism scan
+  }, // optimism
   59144: {
     mintAddress: '0x84f4c0A290B5607fee0f2A1CDe5348540fecF6A1',
     refuelAddress: '0x9aeAa45d415fFE75dC4Ba50658584479bAf110Ec',
     mintPrice: '0.0001',
-  }, // linea scan
+  }, // linea
   8453: {
     mintAddress: '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08',
     refuelAddress: '0x72913DeD90F5Bb415bD74cdccfc944E9887E9790',
     mintPrice: '0.0001',
-  }, // base scan
+  }, // base
   1284: {
     mintAddress: '0xd709e73c5213Fd291d0BfA55A7D934B741398d96',
     refuelAddress: '0xb3dd9b6Cd0f14f921E21094c213de746ceE4a2bC',
-    mintPrice: '0.0001',
-  }, // moonbeam scan
+    mintPrice: '0.5426824587',
+  }, // moonbeam
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',
