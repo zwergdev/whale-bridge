@@ -60,6 +60,11 @@ const CONTRACTS: {
     refuelAddress: '0xb3dd9b6Cd0f14f921E21094c213de746ceE4a2bC',
     mintPrice: '0.5426824587',
   }, // moonbeam
+  43114: {
+    mintAddress: '0x54C71EBBd27520bCbE3E3973a4B579A27035ACD3',
+    refuelAddress: '0x3Aa96e35525f15cE0a5521ECBc11B2acD23973CF',
+    mintPrice: '0.0001',
+  }, // avalanche
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',

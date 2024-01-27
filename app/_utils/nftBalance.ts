@@ -47,6 +47,10 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
     chain: 'moonbeamapi',
     collection: '0xd709e73c5213Fd291d0BfA55A7D934B741398d96',
   },
+  43114: {
+    chain: 'avaxapi',
+    collection: '0x54C71EBBd27520bCbE3E3973a4B579A27035ACD3',
+  },
 }
 
 // const fetchFromElement = async (address: string, chainId: number) => {

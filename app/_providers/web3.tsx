@@ -18,6 +18,7 @@ import {
   polygon,
   scroll,
   zkSync,
+  avalanche
 } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
@@ -33,6 +34,7 @@ const { chains, publicClient } = configureChains(
     linea,
     base,
     moonbeam,
+    avalanche,
   ],
   [publicProvider()],
 )
@@ -52,6 +54,7 @@ const RAINBOW_CHAINS = [
   { name: 'Linea', id: 59144, iconUrl: '/chain-logo/linea.svg' },
   { name: 'Base', id: 8453, iconUrl: '/chain-logo/base.svg' },
   { name: 'Moonbeam', id: 1284, iconUrl: '/chain-logo/moonbeam.svg' },
+  { name: 'Avalanche', id: 43114, iconUrl: '/chain-logo/avalanche.svg' },
 ]
 
 const { connectors } = getDefaultWallets({
