@@ -1,8 +1,9 @@
 import { LayerZero, Logo, Telegram, Twitter } from '@/components/ui/icons'
-import Link from 'next/link'
+import { GitBook } from '@/components/ui/icons/git-book'
 import { Separator } from '@/components/ui/separator'
-import { Navigation } from './navigation'
+import Link from 'next/link'
 import { cloneElement } from 'react'
+import { Navigation } from './navigation'
 
 export const Footer = () => (
   <footer className="max-w-full mx-auto w-full text-foreground flex flex-col pb-4 md:pb-12">
@@ -44,6 +45,10 @@ export const Footer = () => (
         {[
           { icon: <Telegram />, href: 'https://t.me/whale_app_com' },
           { icon: <Twitter />, href: 'https://twitter.com/Whale_app_com' },
+          {
+            icon: <GitBook style={{ width: '28px' }} />,
+            href: 'https://whale-app.gitbook.io/whale-book/',
+          },
         ].map(({ icon, href }, idx) => (
           <Link href={href} key={idx} target="_blank">
             {cloneElement(icon, {
