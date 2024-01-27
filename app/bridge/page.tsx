@@ -1,5 +1,6 @@
 'use client'
 
+import { RepeatButton } from '@/app/_components/chainy/chains-popover'
 import {
   Form,
   FormControl,
@@ -7,34 +8,33 @@ import {
   FormItem,
   FormLabel,
 } from '@/components/ui/form'
-import { Popover } from '@/components/ui/popover'
-import { CHAINS } from '../_utils/chains'
 import { LayerZero } from '@/components/ui/icons'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
-import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
-import { BridgeSchema } from '../_utils/schemas'
-import { truncatedToaster } from '../_utils/truncatedToaster'
-import { estimateBridgeFee, bridge } from '../_utils/contract-actions'
-import { SubmitButton } from '../_components/submit-button'
-import { getNFTBalance } from '../_utils/nftBalance'
-import { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
-import {
-  ChainList,
-  ChainyTrigger,
-  Paper,
-} from '../_components/chainy/chains-popover'
-import { RepeatButton } from '@/app/_components/chainy/chains-popover'
-import { BridgedDialog } from './_components/bridged-dialog'
+import { Popover } from '@/components/ui/popover'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
 } from '@/components/ui/select'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronsUpDown, Loader } from 'lucide-react'
+import Link from 'next/link'
+import { useEffect, useRef, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
+import * as z from 'zod'
+import {
+  ChainList,
+  ChainyTrigger,
+  Paper,
+} from '../_components/chainy/chains-popover'
+import { SubmitButton } from '../_components/submit-button'
+import { CHAINS } from '../_utils/chains'
+import { bridge, estimateBridgeFee } from '../_utils/contract-actions'
+import { getNFTBalance } from '../_utils/nftBalance'
+import { BridgeSchema } from '../_utils/schemas'
+import { truncatedToaster } from '../_utils/truncatedToaster'
+import { BridgedDialog } from './_components/bridged-dialog'
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
 
@@ -50,14 +50,36 @@ export default function BridgePage() {
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
+    let active = true
     ;(async () => {
       setIsLoadingNFT(true)
       await delay(2500)
-      const nfts = await getNFTBalance(address!, chain?.id ?? 0)
-      form.setValue('tokenId', nfts?.[0] ?? '0')
-      form.setValue('nfts', nfts ?? [])
-      setIsLoadingNFT(false)
+
+      const recursiveFunction = async (attempt = 0): Promise<any[]> => {
+        if (attempt >= 6 || !active) return []
+
+        const nfts = await getNFTBalance(address!, chain?.id ?? 0)
+
+        if (nfts.length === 0) {
+          await delay(2000)
+          return recursiveFunction(attempt + 1)
+        }
+
+        return nfts
+      }
+
+      const nfts = await recursiveFunction()
+
+      if (active) {
+        form.setValue('tokenId', nfts?.[0] ?? '0')
+        form.setValue('nfts', nfts ?? [])
+        setIsLoadingNFT(false)
+      }
     })()
+
+    return () => {
+      active = false
+    }
   }, [address, chain, ref.current])
 
   useEffect(() => {
@@ -102,19 +124,11 @@ export default function BridgePage() {
   )
 
   async function bridgeNFT({ chainTo, tokenId }: z.infer<typeof BridgeSchema>) {
-    if (tokenId === '0') {
-      setIsLoadingNFT(true)
-      const nfts = await getNFTBalance(address!, chain?.id ?? 0)
-      setIsLoadingNFT(false)
-
-      if (!nfts?.length)
-        return truncatedToaster(
-          'Error occurred!',
-          'You do not have any NFTs to bridge.',
-        )
-
-      tokenId = nfts[0]
-    }
+    if (tokenId === '0')
+      return truncatedToaster(
+        'Error occurred!',
+        'You do not have any NFTs to bridge.',
+      )
 
     const { data: fee }: any = await refetchFee()
 

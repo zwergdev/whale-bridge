@@ -1,8 +1,4 @@
 import { Button } from '@/components/ui/button'
-import { ChevronDown, Repeat2 } from 'lucide-react'
-import { FormControl } from '@/components/ui/form'
-import { PopoverTrigger, PopoverContent } from '@/components/ui/popover'
-import { selectedChain, CHAINS } from '../../_utils/chains'
 import {
   Command,
   CommandEmpty,
@@ -10,7 +6,11 @@ import {
   CommandInput,
   CommandItem,
 } from '@/components/ui/command'
+import { FormControl } from '@/components/ui/form'
+import { PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { ChevronDown, Repeat2 } from 'lucide-react'
+import { CHAINS, selectedChain } from '../../_utils/chains'
 
 type ChainyTriggerProps = {
   disabled?: boolean
@@ -39,6 +39,16 @@ type ChainListProps = {
   fieldValue: number
   onSelect: (value: number, chainId: number) => void
 }
+
+const DISABLED_PAIRS = [
+  [175, 214], // nova <-> scroll
+  [214, 175], // scroll <-> nova
+  [126, 184], // moonbeam <-> linea
+  [184, 126], // linea <-> moonbeam
+  [126, 110], // moonbeam <-> arbitrum
+  [110, 126], // arbitrum <-> moonbeam
+]
+
 const ChainList = ({ selectedValue, fieldValue, onSelect }: ChainListProps) => {
   return (
     <PopoverContent className="w-80 p-0">
@@ -49,22 +59,24 @@ const ChainList = ({ selectedValue, fieldValue, onSelect }: ChainListProps) => {
           <ScrollArea className="h-[260px]">
             {Array.from(CHAINS)
               .sort((a) => (a.value === fieldValue ? -1 : 0))
-              .map(({ label, value, image, chainId }) => (
-                <CommandItem
-                  key={value}
-                  value={label}
-                  image={image}
-                  disabled={
-                    selectedValue === value ||
-                    (selectedValue === 175 && value === 214) ||
-                    (selectedValue === 214 && value === 175)
-                  }
-                  checked={value === fieldValue}
-                  onSelect={() => onSelect(value, chainId)}
-                >
-                  {label}
-                </CommandItem>
-              ))}
+              .map(({ label, value, image, chainId }) => {
+                const isDisabled = DISABLED_PAIRS.some(
+                  ([a, b]) => selectedValue === a && value === b,
+                )
+
+                return (
+                  <CommandItem
+                    key={value}
+                    value={label}
+                    image={image}
+                    disabled={selectedValue === value || isDisabled}
+                    checked={value === fieldValue}
+                    onSelect={() => onSelect(value, chainId)}
+                  >
+                    {label}
+                  </CommandItem>
+                )
+              })}
           </ScrollArea>
         </CommandGroup>
       </Command>

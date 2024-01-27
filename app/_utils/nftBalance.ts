@@ -49,8 +49,6 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
   },
 }
 
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
-
 // const fetchFromElement = async (address: string, chainId: number) => {
 //   const url = `https://api.element.market/openapi/v1/account/assetList?chain=${CHAINS[chainId].chain}&wallet_address=${address}&collection_slug=${CHAINS[chainId].collection}`
 //   const response = await fetch(url, {
@@ -108,20 +106,27 @@ const extractIdentifiers = (nfts: any, chainId: number) => {
   }
 }
 
-export const getNFTBalance = async (address: string, chainId: number) => {
+const checkIsNotFound = (res: any, chainId: number) => {
+  switch (chainId) {
+    case 42170:
+      return res?.nfts?.length === 0
+    // res?.data?.assetList?.length === 0 ||
+    default:
+      return res?.data?.content?.length === 0
+  }
+}
+
+export const getNFTBalance = async (
+  address: string,
+  chainId: number,
+): Promise<any[]> => {
   if (chainId === 0 || !address) return []
 
-  let res = await getNFTs(address, chainId)
+  const res = await getNFTs(address, chainId)
 
-  const isNull =
-    res?.nfts?.length === 0 ||
-    // res?.data?.assetList?.length === 0 ||
-    res?.data?.content?.length === 0
+  const isNotFound = checkIsNotFound(res, chainId)
 
-  if (isNull) {
-    await delay(2500)
-    res = await getNFTs(address, chainId)
-  }
+  if (isNotFound) return []
 
   return extractIdentifiers(res, chainId)
 }
