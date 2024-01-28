@@ -279,6 +279,7 @@ export default function BridgePage() {
                         selectedValue={field.value}
                       />
                       <ChainList
+                        disabledChain={165}
                         selectedValue={fields.chainFrom}
                         fieldValue={field.value}
                         onSelect={(value) => {

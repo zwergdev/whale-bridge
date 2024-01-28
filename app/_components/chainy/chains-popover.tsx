@@ -38,6 +38,7 @@ type ChainListProps = {
   selectedValue: number
   fieldValue: number
   onSelect: (value: number, chainId: number) => void
+  disabledChain?: number
 }
 
 const DISABLED_PAIRS = [
@@ -47,7 +48,12 @@ const DISABLED_PAIRS = [
   [126, 165], // moonbeam <-> zk
 ]
 
-const ChainList = ({ selectedValue, fieldValue, onSelect }: ChainListProps) => {
+const ChainList = ({
+  selectedValue,
+  fieldValue,
+  onSelect,
+  disabledChain,
+}: ChainListProps) => {
   return (
     <PopoverContent className="w-80 p-0">
       <Command>
@@ -58,6 +64,7 @@ const ChainList = ({ selectedValue, fieldValue, onSelect }: ChainListProps) => {
             {Array.from(CHAINS)
               .sort((a) => (a.value === fieldValue ? -1 : 0))
               .map(({ label, value, image, chainId }) => {
+                //
                 const isDisabled = DISABLED_PAIRS.some(
                   ([a, b]) => selectedValue === a && value === b,
                 )
@@ -67,7 +74,11 @@ const ChainList = ({ selectedValue, fieldValue, onSelect }: ChainListProps) => {
                     key={value}
                     value={label}
                     image={image}
-                    disabled={selectedValue === value || isDisabled}
+                    disabled={
+                      selectedValue === value ||
+                      isDisabled ||
+                      disabledChain === value
+                    }
                     checked={value === fieldValue}
                     onSelect={() => onSelect(value, chainId)}
                   >
