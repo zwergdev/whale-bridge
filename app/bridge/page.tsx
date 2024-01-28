@@ -19,6 +19,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronsUpDown, Loader } from 'lucide-react'
 import Link from 'next/link'
+import { redirect, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
@@ -47,6 +48,15 @@ export default function BridgePage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isLoadingNFT, setIsLoadingNFT] = useState(true)
   const ref = useRef('a')
+  const params = useSearchParams()
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies:
+  useEffect(() => {
+    const param = params.get('c')
+    if (!param) return
+
+    if (param === '1') return redirect('/bridge')
+  }, [])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
