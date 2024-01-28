@@ -291,6 +291,22 @@ export default function BridgePage() {
               />
             </div>
 
+            {!isLoadingNFT && !fields.nfts.length && (
+              <div className="flex items-center justify-start mb-2">
+                <p className="mx-2 text-lg">No NFTs found!</p>
+                <Button
+                  type="button"
+                  className="text-sm py-2 max-w-40 w-full"
+                  onClick={async () => {
+                    const nfts = await refetchNFT()
+                    form.setValue('nfts', nfts ?? [])
+                  }}
+                >
+                  Retry
+                </Button>
+              </div>
+            )}
+
             <SubmitButton
               disabled={!isValid}
               loading={isLoading || isLoadingNFT}
