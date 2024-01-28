@@ -1,4 +1,3 @@
-import { TX_LINK } from '../../_utils/chains'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,6 +8,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import Link from 'next/link'
+import { TX_LINK } from '../../_utils/chains'
 import { MintImage } from './mint-image'
 
 type MintedDialogProps = {
@@ -45,7 +45,7 @@ export const MintedDialog = ({ open, hash, chainId }: MintedDialogProps) => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <Link href={chainId === 137 ? '/bridge?c=1' : '/bridge'}>
+          <Link href="/bridge">
             <AlertDialogAction>To Bridge</AlertDialogAction>
           </Link>
         </AlertDialogFooter>

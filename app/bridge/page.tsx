@@ -1,6 +1,7 @@
 'use client'
 
 import { RepeatButton } from '@/app/_components/chainy/chains-popover'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -19,7 +20,6 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronsUpDown, Loader } from 'lucide-react'
 import Link from 'next/link'
-import { redirect, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
@@ -48,15 +48,6 @@ export default function BridgePage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isLoadingNFT, setIsLoadingNFT] = useState(true)
   const ref = useRef('a')
-  const params = useSearchParams()
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies:
-  useEffect(() => {
-    const param = params.get('c')
-    if (!param) return
-
-    if (param === '1') return redirect('/bridge')
-  }, [])
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -133,12 +124,25 @@ export default function BridgePage() {
     chain?.unsupported ? 0 : chain?.id ?? 0,
   )
 
+  const refetchNFT = async () => {
+    setIsLoadingNFT(true)
+    const nfts = await getNFTBalance(address!, chain?.id ?? 0)
+    setIsLoadingNFT(false)
+    return nfts
+  }
+
   async function bridgeNFT({ chainTo, tokenId }: z.infer<typeof BridgeSchema>) {
-    if (tokenId === '0')
-      return truncatedToaster(
-        'Error occurred!',
-        'You do not have any NFTs to bridge.',
-      )
+    if (tokenId === '0') {
+      const nfts = await refetchNFT()
+
+      if (!nfts?.length)
+        return truncatedToaster(
+          'Error occurred!',
+          'You do not have any NFTs to bridge.',
+        )
+
+      tokenId = nfts[0]
+    }
 
     const { data: fee }: any = await refetchFee()
 
@@ -180,7 +184,7 @@ export default function BridgePage() {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="flex items-center justify-center gap-2">
+                      <SelectTrigger className="flex items-center justify-center gap-2 pl-2">
                         Select NFT
                         <ChevronsUpDown />
                       </SelectTrigger>
@@ -195,7 +199,19 @@ export default function BridgePage() {
                           </SelectItem>
                         ))
                       ) : (
-                        <p className="mx-2 text-xl">No NFTs found!</p>
+                        <>
+                          <p className="mx-2 text-xl">No NFTs found!</p>
+                          <Button
+                            type="button"
+                            className="w-full text-sm py-2 mt-2"
+                            onClick={async () => {
+                              const nfts = await refetchNFT()
+                              form.setValue('nfts', nfts ?? [])
+                            }}
+                          >
+                            Retry
+                          </Button>
+                        </>
                       )}
                     </SelectContent>
                   </Select>
