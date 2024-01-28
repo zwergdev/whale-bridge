@@ -57,7 +57,8 @@ export default function BridgePage() {
       await delay(3000)
 
       const recursiveFunction = async (attempt = 0): Promise<any[]> => {
-        if (attempt >= 6 || !active) return []
+        const maxAttempts = chain?.id === 137 ? 9 : 6
+        if (attempt >= maxAttempts || !active) return []
 
         const nfts = await getNFTBalance(address!, chain?.id ?? 0)
 
