@@ -51,6 +51,14 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
     chain: 'avaxapi',
     collection: '0x54C71EBBd27520bCbE3E3973a4B579A27035ACD3',
   },
+  250: {
+    chain: 'fantomapi',
+    collection: '0x82d5a068ba58ad31c419275474333B8696B3641d',
+  },
+  42220: {
+    chain: 'celoapi',
+    collection: '',
+  },
 }
 
 // const fetchFromElement = async (address: string, chainId: number) => {

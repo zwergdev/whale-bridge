@@ -52,6 +52,18 @@ export const CHAINS = [
     image: '/chain-logo/avalanche.svg',
     chainId: 43114,
   },
+  {
+    label: 'Fantom',
+    value: 112,
+    image: '/chain-logo/fantom.svg',
+    chainId: 250,
+  },
+  {
+    label: 'Celo',
+    value: 125,
+    image: '/chain-logo/celo.svg',
+    chainId: 42220,
+  },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
@@ -66,6 +78,8 @@ export const TX_LINK: { [chainId: number]: string } = {
   59144: 'lineascan.build', //linea
   1284: 'moonscan.io', // moonbeam
   43114: 'subnets.avax.network/c-chain', // avalanche
+  250: 'ftmscan.com', // fantom
+  42220: 'celoscan.io', // celo
 }
 
 export const selectedChain = (fieldValue: number) => {

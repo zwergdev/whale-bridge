@@ -6,6 +6,8 @@ import arbitrum from '@/public/nft/nft-arbitrum.webp'
 import avalanche from '@/public/nft/nft-avalanche.webp'
 import base from '@/public/nft/nft-base.webp'
 import bsc from '@/public/nft/nft-bsc.webp'
+import celo from '@/public/nft/nft-celo.webp'
+import fantom from '@/public/nft/nft-fantom.webp'
 import defaultImage from '@/public/nft/nft-l0.webp'
 import linea from '@/public/nft/nft-linea.webp'
 import moonbeam from '@/public/nft/nft-moonbeam.webp'
@@ -28,6 +30,8 @@ const IMAGES: { [key: number]: StaticImageData } = {
   8453: base,
   1284: moonbeam,
   43114: avalanche,
+  250: fantom,
+  42220: celo,
 }
 
 type MintImageProps = {

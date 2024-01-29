@@ -51,6 +51,8 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   59144: 0.02, // linea
   1284: 6.1, // moonbeam
   43114: 0.98, // avalanche
+  250: 630, // fantom
+  42220: 10, //celo
 }
 
 const SYMBOL_TO_CHAIN: { [key: string]: string } = {
@@ -59,6 +61,8 @@ const SYMBOL_TO_CHAIN: { [key: string]: string } = {
   MATIC: 'matic-network',
   GLMR: 'moonbeam',
   AVAX: 'avalanche-2',
+  CELO: 'celo',
+  FTM: 'fantom',
 }
 
 export default function RefuelPage() {
@@ -145,7 +149,7 @@ export default function RefuelPage() {
     setIsFeeLoading(false)
   }, 500)
 
-  console.log(_balanceFrom?.symbol)
+  // console.log(_balanceFrom?.symbol)
 
   const feeAmount = () => {
     if (isFeeLoading) return '...'
