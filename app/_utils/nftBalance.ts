@@ -81,6 +81,20 @@ const fetchFromOpensea = async (address: string) => {
   return response.json()
 }
 
+const fetchFromCeloScan = async (address: string) => {
+  const data = await fetch(
+    `https://celoscan.io/token/generic-tokenholder-inventory?m=normal&contractAddress=0x16a490a09437dd007a72d234c1ff7c7ecd27b44d&a=${address}&pUrl=token`,
+    { mode: 'no-cors' },
+  ).then((res) => res.text())
+
+  const regex = /\?a=(\d+)/g
+  const matches = Array.from(data.matchAll(regex))
+
+  const numbers = matches.map((match) => Number(match[1]))
+
+  return numbers
+}
+
 const fetchFromNFTScan = async (address: string, chainId: number) => {
   const url = `https://${CHAINS[chainId].chain}.nftscan.com/api/v2/account/own/${address}?erc_type=erc721&show_attribute=false&sort_field=&sort_direction=&contract_address=${CHAINS[chainId].collection}`
   const response = await fetch(url, {
@@ -104,6 +118,8 @@ const getNFTs = async (address: string, chainId: number) => {
   switch (chainId) {
     case 42170:
       return await fetchFromOpensea(address)
+    case 42220:
+      return await fetchFromCeloScan(address)
     default:
       return await fetchFromNFTScan(address, chainId)
   }
@@ -113,6 +129,8 @@ const extractIdentifiers = (nfts: any, chainId: number) => {
   switch (chainId) {
     case 42170:
       return extractOpenseaIdentifiers(nfts)
+    case 42220:
+      return nfts
     default:
       return extractNFTScanIdentifiers(nfts)
   }
@@ -123,6 +141,8 @@ const checkIsNotFound = (res: any, chainId: number) => {
     case 42170:
       return res?.nfts?.length === 0
     // res?.data?.assetList?.length === 0 ||
+    case 42220:
+      return res.length === 0
     default:
       return res?.data?.content?.length === 0
   }
