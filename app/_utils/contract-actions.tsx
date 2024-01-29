@@ -63,7 +63,7 @@ const CONTRACTS: {
   43114: {
     mintAddress: '0x54C71EBBd27520bCbE3E3973a4B579A27035ACD3',
     refuelAddress: '0x3Aa96e35525f15cE0a5521ECBc11B2acD23973CF',
-    mintPrice: '0.0001',
+    mintPrice: '0.0068824587',
   }, // avalanche
   0: {
     mintAddress: '0x00',
