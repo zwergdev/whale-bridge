@@ -24,7 +24,7 @@ const CONTRACTS: {
   137: {
     mintAddress: '0xE1c907503B8d1545AFD5A89cc44FC1E538A132DA',
     refuelAddress: '0x45265fB77A51e3B4ec70142f993F1654A8f7ab32',
-    mintPrice: '0.377511150000000',
+    mintPrice: '0.29751115000000',
   }, // polygon
   42161: {
     mintAddress: '0x26E9934024cdC7fcc9f390973d4D9ac1FA954a37',
@@ -69,7 +69,7 @@ const CONTRACTS: {
   250: {
     mintAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
     refuelAddress: '0xb30b4ff71d44C544eDb7A06aceb0008ADa040c78',
-    mintPrice: '0.0001',
+    mintPrice: '0.616824587',
   }, // fantom
   42220: {
     mintAddress: '0xb24b54a2013F4Ff5Df2214559CBF1745C1750b2A',
