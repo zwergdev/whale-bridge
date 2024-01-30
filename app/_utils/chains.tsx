@@ -64,6 +64,12 @@ export const CHAINS = [
     image: '/chain-logo/celo.svg',
     chainId: 42220,
   },
+  {
+    label: 'Gnosis',
+    value: 145,
+    image: '/chain-logo/gnosis.svg',
+    chainId: 100,
+  },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
@@ -80,6 +86,7 @@ export const TX_LINK: { [chainId: number]: string } = {
   43114: 'subnets.avax.network/c-chain', // avalanche
   250: 'ftmscan.com', // fantom
   42220: 'celoscan.io', // celo
+  100: 'gnosisscan.io', // gnosis
 }
 
 export const selectedChain = (fieldValue: number) => {

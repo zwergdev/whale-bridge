@@ -76,6 +76,11 @@ const CONTRACTS: {
     refuelAddress: '0xBcEe7fB1B98ea4e38Eb52c2E026134d54273ED44',
     mintPrice: '0.32',
   }, // celo
+  100: {
+    mintAddress: '0xe9EbD35Ea4aCCb97e0F5BF3CDA31fe3Ac90111Cc',
+    refuelAddress: '0x21b3035F2e1C43DF018f2810A321F62f14554209',
+    mintPrice: '0.0001',
+  }, // gnosis
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',

@@ -14,6 +14,7 @@ import moonbeam from '@/public/nft/nft-moonbeam.webp'
 import optimism from '@/public/nft/nft-optimism.webp'
 import polygon from '@/public/nft/nft-polygon.webp'
 import scroll from '@/public/nft/nft-scroll.webp'
+import gnosis from '@/public/nft/nft-gnosis.webp'
 import zk from '@/public/nft/nft-zk.webp'
 import Image, { StaticImageData } from 'next/image'
 import { useAccount, useNetwork } from 'wagmi'
@@ -32,6 +33,7 @@ const IMAGES: { [key: number]: StaticImageData } = {
   43114: avalanche,
   250: fantom,
   42220: celo,
+  100: gnosis,
 }
 
 type MintImageProps = {
