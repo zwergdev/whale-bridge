@@ -55,10 +55,6 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
     chain: 'fantomapi',
     collection: '0x82d5a068ba58ad31c419275474333B8696B3641d',
   },
-  42220: {
-    chain: 'celoapi',
-    collection: '',
-  },
 }
 
 // const fetchFromElement = async (address: string, chainId: number) => {
@@ -79,20 +75,6 @@ const fetchFromOpensea = async (address: string) => {
   })
 
   return response.json()
-}
-
-const fetchFromCeloScan = async (address: string) => {
-  const data = await fetch(
-    `https://celoscan.io/token/generic-tokenholder-inventory?m=normal&contractAddress=0x16a490a09437dd007a72d234c1ff7c7ecd27b44d&a=${address}&pUrl=token`,
-    { mode: 'no-cors' },
-  ).then((res) => res.text())
-
-  const regex = /\?a=(\d+)/g
-  const matches = Array.from(data.matchAll(regex))
-
-  const numbers = matches.map((match) => Number(match[1]))
-
-  return numbers
 }
 
 const fetchFromNFTScan = async (address: string, chainId: number) => {
@@ -118,8 +100,6 @@ const getNFTs = async (address: string, chainId: number) => {
   switch (chainId) {
     case 42170:
       return await fetchFromOpensea(address)
-    case 42220:
-      return await fetchFromCeloScan(address)
     default:
       return await fetchFromNFTScan(address, chainId)
   }
@@ -129,8 +109,6 @@ const extractIdentifiers = (nfts: any, chainId: number) => {
   switch (chainId) {
     case 42170:
       return extractOpenseaIdentifiers(nfts)
-    case 42220:
-      return nfts
     default:
       return extractNFTScanIdentifiers(nfts)
   }
@@ -141,8 +119,6 @@ const checkIsNotFound = (res: any, chainId: number) => {
     case 42170:
       return res?.nfts?.length === 0
     // res?.data?.assetList?.length === 0 ||
-    case 42220:
-      return res.length === 0
     default:
       return res?.data?.content?.length === 0
   }
@@ -152,7 +128,7 @@ export const getNFTBalance = async (
   address: string,
   chainId: number,
 ): Promise<any[]> => {
-  if (chainId === 0 || !address) return []
+  if (chainId === 0 || !address || chainId === 42220) return []
 
   const res = await getNFTs(address, chainId)
 

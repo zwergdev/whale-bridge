@@ -31,7 +31,11 @@ import {
 } from '../_components/chainy/chains-popover'
 import { SubmitButton } from '../_components/submit-button'
 import { CHAINS } from '../_utils/chains'
-import { bridge, estimateBridgeFee } from '../_utils/contract-actions'
+import {
+  bridge,
+  estimateBridgeFee,
+  getUserNFTIds,
+} from '../_utils/contract-actions'
 import { getNFTBalance } from '../_utils/nftBalance'
 import { BridgeSchema } from '../_utils/schemas'
 import { truncatedToaster } from '../_utils/truncatedToaster'
@@ -57,6 +61,11 @@ export default function BridgePage() {
       await delay(3000)
 
       const recursiveFunction = async (attempt = 0): Promise<any[]> => {
+        if (chain?.id === 42220) {
+          const { data: nfts }: any = await refetchUserNFTIds()
+          return nfts.map((nft: any) => nft.toString())
+        }
+
         const maxAttempts = chain?.id === 137 ? 9 : 6
         if (attempt >= maxAttempts || !active) return []
 
@@ -124,6 +133,8 @@ export default function BridgePage() {
     BigInt(fields.tokenId),
     chain?.unsupported ? 0 : chain?.id ?? 0,
   )
+
+  const { refetch: refetchUserNFTIds } = getUserNFTIds(address!)
 
   const refetchNFT = async () => {
     setIsLoadingNFT(true)
@@ -313,7 +324,11 @@ export default function BridgePage() {
               disabled={!isValid}
               loading={isLoading || isLoadingNFT}
             >
-              {isLoadingNFT ? 'Loading NFT...' : 'Bridge'}
+              {isLoadingNFT
+                ? chain?.id === 137
+                  ? 'Loading NFT... [40 sec]'
+                  : 'Loading NFT...'
+                : 'Bridge'}
             </SubmitButton>
 
             <Link href="https://layerzero.network/" target="_blank">
