@@ -1,3 +1,4 @@
+import { celoMintABI } from '@/app/_utils/abi'
 import { ethers } from 'ethers'
 import { parseEther } from 'viem/utils'
 import { useContractRead, useContractWrite } from 'wagmi'
@@ -65,6 +66,16 @@ const CONTRACTS: {
     refuelAddress: '0x3Aa96e35525f15cE0a5521ECBc11B2acD23973CF',
     mintPrice: '0.0068824587',
   }, // avalanche
+  250: {
+    mintAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
+    refuelAddress: '0xb30b4ff71d44C544eDb7A06aceb0008ADa040c78',
+    mintPrice: '0.0001',
+  }, // fantom
+  42220: {
+    mintAddress: '0xb24b54a2013F4Ff5Df2214559CBF1745C1750b2A',
+    refuelAddress: '0xBcEe7fB1B98ea4e38Eb52c2E026134d54273ED44',
+    mintPrice: '0.32',
+  }, // celo
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',
@@ -162,6 +173,17 @@ function estimateRefuelFee(
   })
 }
 
+function getUserNFTIds(address: string) {
+  return useContractRead({
+    address: '0xb24b54a2013F4Ff5Df2214559CBF1745C1750b2A', // celo
+    chainId: 42220, //celo
+    abi: celoMintABI,
+    functionName: 'getUserNFTIds',
+    args: [address],
+    enabled: false,
+  })
+}
+
 export {
   mint,
   bridge,
@@ -169,5 +191,6 @@ export {
   refuel,
   estimateRefuelFee,
   getAdapter,
+  getUserNFTIds,
   CONTRACTS,
 }

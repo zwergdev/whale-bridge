@@ -46,6 +46,14 @@ const DISABLED_PAIRS = [
   [214, 175], // scroll <-> nova
   [165, 126], // zk <-> moonbeam
   [126, 165], // moonbeam <-> zk
+  [125, 165], // celo <-> zk
+  [165, 125], // zk <-> celo
+  [125, 184], // celo <-> base
+  [184, 125], // base <-> celo
+  [125, 175], // celo <-> nova
+  [175, 125], // nova <-> celo
+  [125, 214], // celo <-> scroll
+  [214, 125], // scroll <-> celo
 ]
 
 const ChainList = ({
