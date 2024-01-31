@@ -80,7 +80,7 @@ const CONTRACTS: {
   100: {
     mintAddress: '0xe9EbD35Ea4aCCb97e0F5BF3CDA31fe3Ac90111Cc',
     refuelAddress: '0x21b3035F2e1C43DF018f2810A321F62f14554209',
-    mintPrice: '0.0001',
+    mintPrice: '0.226824587',
   }, // gnosis
   0: {
     mintAddress: '0x00',
