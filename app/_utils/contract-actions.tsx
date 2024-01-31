@@ -3,6 +3,7 @@ import { ethers } from 'ethers'
 import { parseEther } from 'viem/utils'
 import { useContractRead, useContractWrite } from 'wagmi'
 import { mintABI, refuelABI } from './abi'
+import { truncatedToaster } from './truncatedToaster'
 
 const CONTRACTS: {
   [chainId: number]: {
@@ -108,8 +109,10 @@ function bridge(chainId: number) {
     functionName: 'sendFrom',
     chainId,
     value: parseEther('0.00001'),
-    onError(error) {
-      console.error(error.message)
+    onError({ message }) {
+      console.error(message)
+      if (message.includes('The total cost'))
+        truncatedToaster('Error occurred!', 'Insufficient balance.')
     },
   })
 }
