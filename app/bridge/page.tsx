@@ -61,7 +61,7 @@ export default function BridgePage() {
       await delay(3000)
 
       const recursiveFunction = async (attempt = 0): Promise<any[]> => {
-        if (chain?.id === 42220) {
+        if (chain?.id === 42220 || chain?.id === 1101) {
           const { data: nfts }: any = await refetchUserNFTIds()
           return nfts.map((nft: any) => nft.toString())
         }
@@ -134,7 +134,7 @@ export default function BridgePage() {
     chain?.unsupported ? 0 : chain?.id ?? 0,
   )
 
-  const { refetch: refetchUserNFTIds } = getUserNFTIds(address!)
+  const { refetch: refetchUserNFTIds } = getUserNFTIds(address!, chain?.id ?? 0)
 
   const refetchNFT = async () => {
     setIsLoadingNFT(true)

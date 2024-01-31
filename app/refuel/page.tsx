@@ -54,6 +54,7 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   250: 630, // fantom
   42220: 0.05, //celo
   100: 0.05, // gnosis
+  1101: 0.05, // polygon-zk
 }
 
 const SYMBOL_TO_CHAIN: { [key: string]: string } = {

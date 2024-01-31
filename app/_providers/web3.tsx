@@ -22,6 +22,7 @@ import {
   fantom,
   celo,
   gnosis,
+  polygonZkEvm
 } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
@@ -41,6 +42,7 @@ const { chains, publicClient } = configureChains(
     fantom,
     celo,
     gnosis,
+    polygonZkEvm,
   ],
   [publicProvider()],
 )
@@ -64,6 +66,7 @@ const RAINBOW_CHAINS = [
   { name: 'Fantom', id: 250, iconUrl: '/chain-logo/fantom.svg' },
   { name: 'Celo', id: 42220, iconUrl: '/chain-logo/celo.svg' },
   { name: 'Gnosis', id: 100, iconUrl: '/chain-logo/gnosis.svg' },
+  { name: 'Polygon ZkEVM', id: 1101, iconUrl: '/chain-logo/polygon-zk.svg' },
 ]
 
 const { connectors } = getDefaultWallets({

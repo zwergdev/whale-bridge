@@ -132,7 +132,8 @@ export const getNFTBalance = async (
   address: string,
   chainId: number,
 ): Promise<any[]> => {
-  if (chainId === 0 || !address || chainId === 42220) return []
+  if (chainId === 0 || !address || chainId === 42220 || chainId === 1101)
+    return []
 
   const res = await getNFTs(address, chainId)
 
