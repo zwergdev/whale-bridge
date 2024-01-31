@@ -54,6 +54,8 @@ const DISABLED_PAIRS = [
   [175, 125], // nova <-> celo
   [125, 214], // celo <-> scroll
   [214, 125], // scroll <-> celo
+  [145, 175], // gnosis <-> nova
+  [175, 145], // nova <-> gnosis
 ]
 
 const ChainList = ({

@@ -53,6 +53,7 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   43114: 0.98, // avalanche
   250: 630, // fantom
   42220: 0.05, //celo
+  100: 0.05, // gnosis
 }
 
 const SYMBOL_TO_CHAIN: { [key: string]: string } = {
@@ -63,6 +64,7 @@ const SYMBOL_TO_CHAIN: { [key: string]: string } = {
   AVAX: 'avalanche-2',
   CELO: 'celo',
   FTM: 'fantom',
+  xDAI: 'xdai',
 }
 
 export default function RefuelPage() {

@@ -21,6 +21,7 @@ import {
   avalanche,
   fantom,
   celo,
+  gnosis,
 } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
@@ -38,7 +39,8 @@ const { chains, publicClient } = configureChains(
     moonbeam,
     avalanche,
     fantom,
-    celo
+    celo,
+    gnosis,
   ],
   [publicProvider()],
 )
@@ -61,6 +63,7 @@ const RAINBOW_CHAINS = [
   { name: 'Avalanche', id: 43114, iconUrl: '/chain-logo/avalanche.svg' },
   { name: 'Fantom', id: 250, iconUrl: '/chain-logo/fantom.svg' },
   { name: 'Celo', id: 42220, iconUrl: '/chain-logo/celo.svg' },
+  { name: 'Gnosis', id: 100, iconUrl: '/chain-logo/gnosis.svg' },
 ]
 
 const { connectors } = getDefaultWallets({
