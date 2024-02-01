@@ -82,6 +82,11 @@ const CONTRACTS: {
     refuelAddress: '0x21b3035F2e1C43DF018f2810A321F62f14554209',
     mintPrice: '0.226824587',
   }, // gnosis
+  1101: {
+    mintAddress: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
+    refuelAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
+    mintPrice: '0.0001',
+  }, // polygon-zk
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',
@@ -181,10 +186,10 @@ function estimateRefuelFee(
   })
 }
 
-function getUserNFTIds(address: string) {
+function getUserNFTIds(address: string, chainId: number) {
   return useContractRead({
-    address: '0xb24b54a2013F4Ff5Df2214559CBF1745C1750b2A', // celo
-    chainId: 42220, //celo
+    address: CONTRACTS[chainId].mintAddress, // celo & polygon-zk
+    chainId: chainId,
     abi: celoMintABI,
     functionName: 'getUserNFTIds',
     args: [address],

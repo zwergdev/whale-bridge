@@ -70,6 +70,12 @@ export const CHAINS = [
     image: '/chain-logo/gnosis.svg',
     chainId: 100,
   },
+  {
+    label: 'Polygon zkEVM',
+    value: 158,
+    image: '/chain-logo/polygon-zk.svg',
+    chainId: 1101,
+  },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
@@ -87,6 +93,7 @@ export const TX_LINK: { [chainId: number]: string } = {
   250: 'ftmscan.com', // fantom
   42220: 'celoscan.io', // celo
   100: 'gnosisscan.io', // gnosis
+  1101: 'zkevm.polygonscan.com', // polygon-zk
 }
 
 export const selectedChain = (fieldValue: number) => {
