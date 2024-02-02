@@ -1,12 +1,13 @@
+import { WhaleBg } from '@/components/ui/icons'
+import { Toaster } from '@/components/ui/sonner'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata } from 'next'
 import { Poppins } from 'next/font/google'
-import './globals.css'
-import { Header } from './_components/header'
 import { Footer } from './_components/footer'
+import { Header } from './_components/header'
 import { Web3Provider } from './_providers/web3'
-import { Toaster } from '@/components/ui/sonner'
-import { WhaleBg } from '@/components/ui/icons'
-import { Analytics } from '@vercel/analytics/react'
+import './globals.css'
 
 const poppins = Poppins({
   weight: ['100', '300', '400', '500', '600', '700', '800', '900'],
@@ -58,6 +59,7 @@ export default function RootLayout({
         </Web3Provider>
         <Toaster />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
