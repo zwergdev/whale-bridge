@@ -197,6 +197,16 @@ function getUserNFTIds(address: string, chainId: number) {
   })
 }
 
+function getNextMintId(chainId: number) {
+  return useContractRead({
+    address: CONTRACTS[chainId].mintAddress,
+    chainId: chainId,
+    abi: mintABI,
+    functionName: 'nextMintId',
+    enabled: false,
+  })
+}
+
 export {
   mint,
   bridge,
@@ -205,5 +215,6 @@ export {
   estimateRefuelFee,
   getAdapter,
   getUserNFTIds,
+  getNextMintId,
   CONTRACTS,
 }

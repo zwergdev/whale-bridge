@@ -53,9 +53,9 @@ export const MintButton = () => {
 
   return (
     <>
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-5 mb-5">
         <Button
-          className="w-48"
+          className="w-full max-w-lg before:scale-x-[1.01]"
           variant="secondary"
           onClick={address ? mintNFT : openConnectModal}
           loading={isWaiting || isSigning}
