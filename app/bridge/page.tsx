@@ -58,7 +58,7 @@ export default function BridgePage() {
     let active = true
     ;(async () => {
       setIsLoadingNFT(true)
-      await delay(3000)
+      await delay(2000)
 
       const recursiveFunction = async (attempt = 0): Promise<any[]> => {
         if (chain?.id === 42220 || chain?.id === 1101) {
@@ -66,13 +66,13 @@ export default function BridgePage() {
           return nfts.map((nft: any) => nft.toString())
         }
 
-        const maxAttempts = chain?.id === 137 ? 9 : 6
+        const maxAttempts = chain?.id === 137 ? 18 : 12
         if (attempt >= maxAttempts || !active) return []
 
         const nfts = await getNFTBalance(address!, chain?.id ?? 0)
 
         if (nfts.length === 0) {
-          await delay(chain?.id === 137 ? 4000 : 3000)
+          await delay(chain?.id === 137 ? 2000 : 1500)
           return recursiveFunction(attempt + 1)
         }
 
