@@ -324,11 +324,7 @@ export default function BridgePage() {
               disabled={!isValid}
               loading={isLoading || isLoadingNFT}
             >
-              {isLoadingNFT
-                ? chain?.id === 137
-                  ? 'Loading NFT... [40 sec]'
-                  : 'Loading NFT...'
-                : 'Bridge'}
+              {isLoadingNFT ? 'Loading NFT...' : 'Bridge'}
             </SubmitButton>
 
             <Link href="https://layerzero.network/" target="_blank">
