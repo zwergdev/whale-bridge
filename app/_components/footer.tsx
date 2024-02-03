@@ -16,7 +16,7 @@ export const Footer = () => (
           <Navigation />
           <Link
             target="_blank"
-            href="https://layerzeroscan.com/"
+            href="https://layerzeroscan.com/protocol/whale"
             className="hover:text-primary transition-colors duration-300"
           >
             LayerZero.Scan
