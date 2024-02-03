@@ -55,6 +55,8 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   42220: 0.05, //celo
   100: 0.05, // gnosis
   1101: 0.05, // polygon-zk
+  82: 1, // meter
+  1285: 1, // moonriver
 }
 
 const SYMBOL_TO_CHAIN: { [key: string]: string } = {
@@ -66,6 +68,8 @@ const SYMBOL_TO_CHAIN: { [key: string]: string } = {
   CELO: 'celo',
   FTM: 'fantom',
   xDAI: 'xdai',
+  MTR: 'meter',
+  MOVR: 'moonriver',
 }
 
 export default function RefuelPage() {

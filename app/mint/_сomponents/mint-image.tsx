@@ -8,14 +8,16 @@ import base from '@/public/nft/nft-base.webp'
 import bsc from '@/public/nft/nft-bsc.webp'
 import celo from '@/public/nft/nft-celo.webp'
 import fantom from '@/public/nft/nft-fantom.webp'
+import gnosis from '@/public/nft/nft-gnosis.webp'
 import defaultImage from '@/public/nft/nft-l0.webp'
 import linea from '@/public/nft/nft-linea.webp'
+import meter from '@/public/nft/nft-meter.webp'
 import moonbeam from '@/public/nft/nft-moonbeam.webp'
+import moonriver from '@/public/nft/nft-moonriver.webp'
 import optimism from '@/public/nft/nft-optimism.webp'
-import polygon from '@/public/nft/nft-polygon.webp'
 import polygonZk from '@/public/nft/nft-polygon-zk.webp'
+import polygon from '@/public/nft/nft-polygon.webp'
 import scroll from '@/public/nft/nft-scroll.webp'
-import gnosis from '@/public/nft/nft-gnosis.webp'
 import zk from '@/public/nft/nft-zk.webp'
 import Image, { StaticImageData } from 'next/image'
 import { useAccount, useNetwork } from 'wagmi'
@@ -36,6 +38,8 @@ const IMAGES: { [key: number]: StaticImageData } = {
   42220: celo,
   100: gnosis,
   1101: polygonZk,
+  82: meter,
+  1285: moonriver,
 }
 
 type MintImageProps = {

@@ -50,6 +50,10 @@ export const TotalMinted = () => {
         return next - 6500000
       case 1101:
         return next - 7000000
+      case 1285:
+        return next - 8000000
+      case 82:
+        return next - 7500000
       case 137:
         return next
       default:

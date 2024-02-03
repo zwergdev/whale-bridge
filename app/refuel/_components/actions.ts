@@ -21,28 +21,31 @@ export const fetchPrices = async (): Promise<Prices> => {
 
   return {
     'avalanche-2': {
-      usd: 35.9,
+      usd: 36.16,
     },
     binancecoin: {
-      usd: 309.34,
+      usd: 300.1,
     },
     celo: {
-      usd: 0.686965,
+      usd: 0.670646,
     },
     ethereum: {
-      usd: 2313.16,
+      usd: 2301.47,
     },
     fantom: {
-      usd: 0.379509,
+      usd: 0.358464,
     },
     'matic-network': {
-      usd: 0.801981,
+      usd: 0.789069,
     },
     moonbeam: {
-      usd: 0.37868,
+      usd: 0.352367,
+    },
+    moonriver: {
+      usd: 22.06,
     },
     xdai: {
-      usd: 0.998752,
+      usd: 0.998061,
     },
   }
 }

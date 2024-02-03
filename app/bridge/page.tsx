@@ -61,7 +61,12 @@ export default function BridgePage() {
       await delay(2000)
 
       const recursiveFunction = async (attempt = 0): Promise<any[]> => {
-        if (chain?.id === 42220 || chain?.id === 1101) {
+        if (
+          chain?.id === 42220 ||
+          chain?.id === 1101 ||
+          chain?.id === 82 ||
+          chain?.id === 1285
+        ) {
           const { data: nfts }: any = await refetchUserNFTIds()
           return nfts.map((nft: any) => nft.toString())
         }

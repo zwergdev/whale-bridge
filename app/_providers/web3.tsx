@@ -22,7 +22,9 @@ import {
   fantom,
   celo,
   gnosis,
-  polygonZkEvm
+  polygonZkEvm,
+  meter,
+  moonriver
 } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
@@ -43,6 +45,8 @@ const { chains, publicClient } = configureChains(
     celo,
     gnosis,
     polygonZkEvm,
+    meter,
+    moonriver
   ],
   [publicProvider()],
 )
@@ -67,6 +71,8 @@ const RAINBOW_CHAINS = [
   { name: 'Celo', id: 42220, iconUrl: '/chain-logo/celo.svg' },
   { name: 'Gnosis', id: 100, iconUrl: '/chain-logo/gnosis.svg' },
   { name: 'Polygon ZkEVM', id: 1101, iconUrl: '/chain-logo/polygon-zk.svg' },
+  { name: 'Meter', id: 82, iconUrl: '/chain-logo/meter.svg' },
+  { name: 'Moonriver', id: 1285, iconUrl: '/chain-logo/moonriver.svg' },
 ]
 
 const { connectors } = getDefaultWallets({

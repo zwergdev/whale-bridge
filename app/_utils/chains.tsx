@@ -76,6 +76,18 @@ export const CHAINS = [
     image: '/chain-logo/polygon-zk.svg',
     chainId: 1101,
   },
+  {
+    label: 'Meter',
+    value: 176,
+    image: '/chain-logo/meter.svg',
+    chainId: 82,
+  },
+  {
+    label: 'Moonriver',
+    value: 167,
+    image: '/chain-logo/moonriver.svg',
+    chainId: 1285,
+  },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
@@ -94,6 +106,8 @@ export const TX_LINK: { [chainId: number]: string } = {
   42220: 'celoscan.io', // celo
   100: 'gnosisscan.io', // gnosis
   1101: 'zkevm.polygonscan.com', // polygon-zk
+  82: 'scan.meter.io', // meter
+  1285: 'moonriver.moonscan.io', // moonriver
 }
 
 export const selectedChain = (fieldValue: number) => {

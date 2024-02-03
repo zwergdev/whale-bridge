@@ -1,4 +1,9 @@
-'use server'
+import { NextResponse } from 'next/server'
+
+type RequestBody = {
+  address: string
+  chainId: number
+}
 
 const API_KEYS = {
   element: '836618cabf89a3313263626025eaa225',
@@ -61,16 +66,6 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
   },
 }
 
-// const fetchFromElement = async (address: string, chainId: number) => {
-//   const url = `https://api.element.market/openapi/v1/account/assetList?chain=${CHAINS[chainId].chain}&wallet_address=${address}&collection_slug=${CHAINS[chainId].collection}`
-//   const response = await fetch(url, {
-//     cache: 'no-cache',
-//     headers: { accept: 'application/json', 'x-api-key': API_KEYS.element },
-//   })
-
-//   return response.json()
-// }
-
 const fetchFromOpensea = async (address: string) => {
   const url = `https://api.opensea.io/api/v2/chain/arbitrum_nova/account/${address}/nfts?collection=whale-onft-2`
   const response = await fetch(url, {
@@ -93,9 +88,6 @@ const fetchFromNFTScan = async (address: string, chainId: number) => {
 
 const extractOpenseaIdentifiers = (res: any) =>
   res?.nfts?.map(({ identifier }: { identifier: string }) => identifier)
-
-// const extractElementIdentifiers = (res: any) =>
-//   res?.assetList?.map(({ asset }: { asset: { tokenId: any } }) => asset.tokenId)
 
 const extractNFTScanIdentifiers = (res: any) =>
   res?.data?.content?.map(({ token_id }: { token_id: any }) => token_id)
@@ -122,31 +114,21 @@ const checkIsNotFound = (res: any, chainId: number) => {
   switch (chainId) {
     case 42170:
       return res?.nfts?.length === 0
-    // res?.data?.assetList?.length === 0 ||
     default:
       return res?.data?.content?.length === 0
   }
 }
 
-export const getNFTBalance = async (
-  address: string,
-  chainId: number,
-): Promise<any[]> => {
-  if (
-    !address ||
-    chainId === 0 ||
-    chainId === 42220 ||
-    chainId === 1101 ||
-    chainId === 82 ||
-    chainId === 1285
-  )
-    return []
+export async function POST(request: Request) {
+  const { address, chainId }: Partial<RequestBody> = await request.json()
+
+  if (!address || !chainId) return NextResponse.json([])
 
   const res = await getNFTs(address, chainId)
 
   const isNotFound = checkIsNotFound(res, chainId)
 
-  if (isNotFound) return []
+  if (isNotFound) return NextResponse.json([])
 
-  return extractIdentifiers(res, chainId)
+  return NextResponse.json(extractIdentifiers(res, chainId))
 }
