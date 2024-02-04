@@ -98,7 +98,7 @@ const CONTRACTS: {
     mintPrice: '0.0001',
   }, // moonriver
   1666600000: {
-    mintAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
+    mintAddress: '0xb7778a03fDE0fE30d58fb680Ac2e679227eAe21a',
     refuelAddress: '0xedc03c234882fa785e7084b2c7e13bc8b7b6a4e3',
     mintPrice: '0.0001',
   }, // harmony

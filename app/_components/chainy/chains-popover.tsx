@@ -84,6 +84,7 @@ const DISABLED_PAIRS = [
   [116, 145], // harmony <-> gnosis
   [116, 184], // harmony <-> base
   [116, 214], // harmony <-> scroll
+  [116, 165], // harmony <-> zk
   [176, 116], // meter <-> harmony
   [125, 116], // celo <-> harmony
   [158, 116], // polygon-zk <-> harmony
@@ -92,6 +93,7 @@ const DISABLED_PAIRS = [
   [145, 116], // gnosis <-> harmony
   [184, 116], // base <-> harmony
   [214, 116], // scroll <-> harmony
+  [165, 116], // zk <-> harmony
   // moonriver
   [167, 176], // moonriver <-> meter
   [167, 125], // moonriver <-> celo
@@ -100,6 +102,7 @@ const DISABLED_PAIRS = [
   [167, 145], // moonriver <-> gnosis
   [167, 116], // moonriver <-> harmony
   [167, 126], // moonriver <-> moonbeam
+  [167, 165], // moonriver <-> zk
   [176, 167], // meter <-> moonriver
   [125, 167], // celo <-> moonriver
   [158, 167], // polygon-zk <-> moonriver
@@ -107,6 +110,7 @@ const DISABLED_PAIRS = [
   [145, 167], // gnosis <-> moonriver
   [116, 167], // harmony <-> moonriver
   [126, 167], // moonbeam <-> moonriver
+  [165, 166], // zk <-> moonriver
 ]
 
 const ChainList = ({
