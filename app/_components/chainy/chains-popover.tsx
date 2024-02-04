@@ -65,7 +65,6 @@ const DISABLED_PAIRS = [
   [176, 126], // meter <-> moonbeam
   [176, 167], // meter <-> moonriver
   [176, 145], // meter <-> gnosis
-  [176, 184], // meter <-> base
   [176, 214], // meter <-> scroll
   [176, 183], // meter <-> linea
   [125, 176], // celo <-> meter
@@ -74,7 +73,6 @@ const DISABLED_PAIRS = [
   [126, 176], // moonbeam <-> meter
   [167, 176], // moonriver <-> meter
   [145, 176], // gnosis <-> meter
-  [184, 176], // base <-> meter
   [214, 176], // scroll <-> meter
   [183, 176], // linea <-> meter
   //harmony
