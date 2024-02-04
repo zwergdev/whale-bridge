@@ -24,7 +24,8 @@ import {
   gnosis,
   polygonZkEvm,
   meter,
-  moonriver
+  moonriver,
+  harmonyOne
 } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
@@ -46,7 +47,8 @@ const { chains, publicClient } = configureChains(
     gnosis,
     polygonZkEvm,
     meter,
-    moonriver
+    moonriver,
+    harmonyOne,
   ],
   [publicProvider()],
 )
@@ -73,6 +75,7 @@ const RAINBOW_CHAINS = [
   { name: 'Polygon ZkEVM', id: 1101, iconUrl: '/chain-logo/polygon-zk.svg' },
   { name: 'Meter', id: 82, iconUrl: '/chain-logo/meter.svg' },
   { name: 'Moonriver', id: 1285, iconUrl: '/chain-logo/moonriver.svg' },
+  { name: 'Harmony', id: 1666600000, iconUrl: '/chain-logo/harmony.svg' },
 ]
 
 const { connectors } = getDefaultWallets({

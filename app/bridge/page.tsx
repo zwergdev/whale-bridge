@@ -65,7 +65,8 @@ export default function BridgePage() {
           chain?.id === 42220 ||
           chain?.id === 1101 ||
           chain?.id === 82 ||
-          chain?.id === 1285
+          chain?.id === 1285 ||
+          chain?.id === 1666600000
         ) {
           const { data: nfts }: any = await refetchUserNFTIds()
           return nfts.map((nft: any) => nft.toString())

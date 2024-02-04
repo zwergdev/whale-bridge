@@ -54,6 +54,8 @@ export const TotalMinted = () => {
         return next - 8000000
       case 82:
         return next - 7500000
+      case 1666600000:
+        return next - 8000000
       case 137:
         return next
       default:

@@ -9,6 +9,7 @@ import bsc from '@/public/nft/nft-bsc.webp'
 import celo from '@/public/nft/nft-celo.webp'
 import fantom from '@/public/nft/nft-fantom.webp'
 import gnosis from '@/public/nft/nft-gnosis.webp'
+import harmony from '@/public/nft/nft-harmony.webp'
 import defaultImage from '@/public/nft/nft-l0.webp'
 import linea from '@/public/nft/nft-linea.webp'
 import meter from '@/public/nft/nft-meter.webp'
@@ -40,6 +41,7 @@ const IMAGES: { [key: number]: StaticImageData } = {
   1101: polygonZk,
   82: meter,
   1285: moonriver,
+  1666600000: harmony,
 }
 
 type MintImageProps = {

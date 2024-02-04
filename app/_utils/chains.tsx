@@ -88,6 +88,12 @@ export const CHAINS = [
     image: '/chain-logo/moonriver.svg',
     chainId: 1285,
   },
+  {
+    label: 'Harmony',
+    value: 116,
+    image: '/chain-logo/harmony.svg',
+    chainId: 1666600000,
+  },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
@@ -108,6 +114,7 @@ export const TX_LINK: { [chainId: number]: string } = {
   1101: 'zkevm.polygonscan.com', // polygon-zk
   82: 'scan.meter.io', // meter
   1285: 'moonriver.moonscan.io', // moonriver
+  1666600000: 'explorer.harmony.one', // harmony
 }
 
 export const selectedChain = (fieldValue: number) => {
