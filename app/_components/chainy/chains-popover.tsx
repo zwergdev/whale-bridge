@@ -58,6 +58,7 @@ const DISABLED_PAIRS = [
   [175, 145], // nova <-> gnosis
   [175, 158], // nova <-> polygon-zk
   [158, 175], // polygon-zk <-> scroll
+  [165, 145], // zk <-> gnosis
   // meter
   [176, 125], // meter <-> celo
   [176, 116], // meter <-> harmony
