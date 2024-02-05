@@ -88,12 +88,12 @@ export const CHAINS = [
     image: '/chain-logo/moonriver.svg',
     chainId: 1285,
   },
-  {
-    label: 'Harmony',
-    value: 116,
-    image: '/chain-logo/harmony.svg',
-    chainId: 1666600000,
-  },
+  // {
+  //   label: 'Harmony',
+  //   value: 116,
+  //   image: '/chain-logo/harmony.svg',
+  //   chainId: 1666600000,
+  // },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
