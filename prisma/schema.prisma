@@ -28,6 +28,6 @@ model UsedCode {
   id          String @id @default(uuid())
   userAddress String @unique
   codeValue   String @unique
-  user        User   @relation(fields: [userAddress], references: [id], name: "usedCode")
+  user        User   @relation(fields: [userAddress], references: [address], name: "usedCode")
   code        Code   @relation(fields: [codeValue], references: [code])
 }
