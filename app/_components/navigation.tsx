@@ -7,6 +7,7 @@ const NAVIGATION = [
   { href: '/mint', label: 'Mint' },
   { href: '/bridge', label: 'Bridge' },
   { href: '/refuel', label: 'Refuel' },
+  { href: '/profile', label: 'Profile' },
 ]
 
 export const Navigation = () => {
