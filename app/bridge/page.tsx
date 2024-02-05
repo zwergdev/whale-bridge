@@ -1,6 +1,7 @@
 'use client'
 
 import { RepeatButton } from '@/app/_components/chainy/chains-popover'
+import { BalanceIndicator } from '@/app/refuel/_components/balance-indicator'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -22,7 +23,7 @@ import { ChevronsUpDown, Loader } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi'
+import { useAccount, useBalance, useNetwork, useSwitchNetwork } from 'wagmi'
 import * as z from 'zod'
 import {
   ChainList,
@@ -51,6 +52,8 @@ export default function BridgePage() {
   const [popoverToOpen, setPopoverToOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isLoadingNFT, setIsLoadingNFT] = useState(true)
+  const { data: _balanceFrom } = useBalance({ address })
+  const balanceFrom = Number(Number(_balanceFrom?.formatted).toFixed(5))
   const ref = useRef('a')
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
@@ -88,7 +91,7 @@ export default function BridgePage() {
       const nfts = await recursiveFunction()
 
       if (active) {
-        form.setValue('tokenId', nfts?.[0] ?? '0')
+        form.setValue('tokenId', nfts?.[nfts.length - 1] ?? '0')
         form.setValue('nfts', nfts ?? [])
         setIsLoadingNFT(false)
       }
@@ -159,7 +162,7 @@ export default function BridgePage() {
           'You do not have any NFTs to bridge.',
         )
 
-      tokenId = nfts[0]
+      tokenId = nfts[nfts.length - 1]
     }
 
     const { data: fee }: any = await refetchFee()
@@ -184,7 +187,7 @@ export default function BridgePage() {
 
     const newNFTs = fields.nfts.filter((nft) => nft !== tokenId)
     form.setValue('nfts', newNFTs)
-    form.setValue('tokenId', newNFTs[0] ?? '0')
+    form.setValue('tokenId', newNFTs[newNFTs.length - 1] ?? '0')
   }
 
   return (
@@ -243,7 +246,13 @@ export default function BridgePage() {
                 name="chainFrom"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Transfer from</FormLabel>
+                    <FormLabel className="flex items-end justify-between">
+                      Transfer from
+                      <BalanceIndicator
+                        balance={balanceFrom}
+                        symbol={_balanceFrom?.symbol}
+                      />
+                    </FormLabel>
                     <Popover
                       open={popoverFromOpen}
                       onOpenChange={setPopoverFromOpen}
