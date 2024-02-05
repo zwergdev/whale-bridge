@@ -1,7 +1,6 @@
 'use client'
 
 import { truncatedToaster } from '@/app/_utils/truncatedToaster'
-import { redeemCode } from '@/app/profile/actions'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -18,6 +17,7 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSignMessage } from 'wagmi'
 import * as z from 'zod'
+import { redeemCode } from '../actions'
 
 const RedeemSchema = z.object({
   code: z

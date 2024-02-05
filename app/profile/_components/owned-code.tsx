@@ -1,5 +1,6 @@
 import { Copy, CopyCheck } from 'lucide-react'
 import { useState } from 'react'
+import { ReferalsCounter } from './referrals-counter'
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
 
@@ -14,7 +15,7 @@ export const OwnedCode = ({ code }: { code: string }) => {
   }
 
   return (
-    <div className="mb-10 max-w-[440px] w-full mx-auto flex flex-col items-start justify-items-start text-lg font-semibold">
+    <div className="mb-8 max-w-[440px] w-full mx-auto flex flex-col items-start justify-items-start text-lg font-semibold">
       Your code:
       <div className="flex items-center justify-center gap-4">
         <h6 className="px-6 h-12 min-w-72 rounded-xl bg-popover flex items-center justify-center mb-2">
@@ -32,6 +33,7 @@ export const OwnedCode = ({ code }: { code: string }) => {
           )}
         </button>
       </div>
+      <ReferalsCounter code={code} />
     </div>
   )
 }

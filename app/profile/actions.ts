@@ -38,3 +38,9 @@ export async function getUser(address: string) {
     select: { address: true, usedCode: true, ownedCode: true },
   })
 }
+
+export async function getRefferalsCount(code: string) {
+  return await prisma.usedCode.count({
+    where: { codeValue: code },
+  })
+}
