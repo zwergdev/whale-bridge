@@ -97,11 +97,11 @@ const CONTRACTS: {
     refuelAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
     mintPrice: ' 0.010608856088560886',
   }, // moonriver
-  // 1666600000: {
-  //   mintAddress: '0x36314E3fd0Ff6243e971814613fe73A78f29085E',
-  //   refuelAddress: '0xedc03c234882fa785e7084b2c7e13bc8b7b6a4e3',
-  //   mintPrice: '16.546762589928058000',
-  // }, // harmony
+  1666600000: {
+    mintAddress: '0x36314E3fd0Ff6243e971814613fe73A78f29085E',
+    refuelAddress: '0xedc03c234882fa785e7084b2c7e13bc8b7b6a4e3',
+    mintPrice: '16.546762589928058000',
+  }, // harmony
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',
@@ -131,7 +131,10 @@ function bridge(chainId: number) {
     value: parseEther('0.00001'),
     onError({ message }) {
       console.error(message)
-      if (message.includes('The total cost'))
+      if (
+        message.includes('The total cost') ||
+        message.includes('insufficient balance')
+      )
         truncatedToaster('Error occurred!', 'Insufficient balance.')
     },
   })
