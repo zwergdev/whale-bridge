@@ -7,7 +7,7 @@ import { TotalSupply } from './_сomponents/total-supply'
 
 export default function MintPage() {
   return (
-    <section className="flex max-w-screen-xl w-full flex-wrap items-center justify-center gap-16">
+    <section className="flex max-w-screen-xl w-full flex-wrap items-center justify-center gap-16 pt-16">
       <div className="flex flex-col">
         <h2 className="font-semibold text-4xl mb-2.5">Mint NFT</h2>
         <TotalSupply />

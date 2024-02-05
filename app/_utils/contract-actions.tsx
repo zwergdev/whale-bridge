@@ -87,6 +87,21 @@ const CONTRACTS: {
     refuelAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
     mintPrice: '0.0001',
   }, // polygon-zk
+  82: {
+    mintAddress: '0xfdcac2c2091b3ce88203fb2defb8c9f98edcb904',
+    refuelAddress: '0xf9481cc0d342a0d4d533f77d334a24dfbf1d719d',
+    mintPrice: '0.2017543859649123',
+  }, // meter
+  1285: {
+    mintAddress: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
+    refuelAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
+    mintPrice: ' 0.010608856088560886',
+  }, // moonriver
+  // 1666600000: {
+  //   mintAddress: '0x36314E3fd0Ff6243e971814613fe73A78f29085E',
+  //   refuelAddress: '0xedc03c234882fa785e7084b2c7e13bc8b7b6a4e3',
+  //   mintPrice: '16.546762589928058000',
+  // }, // harmony
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',
@@ -188,7 +203,7 @@ function estimateRefuelFee(
 
 function getUserNFTIds(address: string, chainId: number) {
   return useContractRead({
-    address: CONTRACTS[chainId].mintAddress, // celo & polygon-zk
+    address: CONTRACTS[chainId].mintAddress, // celo & polygon-zk & meter & moonriver
     chainId: chainId,
     abi: celoMintABI,
     functionName: 'getUserNFTIds',

@@ -58,6 +58,60 @@ const DISABLED_PAIRS = [
   [175, 145], // nova <-> gnosis
   [175, 158], // nova <-> polygon-zk
   [158, 175], // polygon-zk <-> scroll
+  [165, 145], // zk <-> gnosis
+  // meter
+  [176, 125], // meter <-> celo
+  [176, 116], // meter <-> harmony
+  [176, 158], // meter <-> polygon-zk
+  [176, 126], // meter <-> moonbeam
+  [176, 167], // meter <-> moonriver
+  [176, 145], // meter <-> gnosis
+  [176, 214], // meter <-> scroll
+  [176, 183], // meter <-> linea
+  [125, 176], // celo <-> meter
+  [116, 176], // harmony <-> meter
+  [158, 176], // polygon-zk <-> meter
+  [126, 176], // moonbeam <-> meter
+  [167, 176], // moonriver <-> meter
+  [145, 176], // gnosis <-> meter
+  [214, 176], // scroll <-> meter
+  [183, 176], // linea <-> meter
+  //harmony
+  [116, 176], // harmony <-> meter
+  [116, 125], // harmony <-> celo
+  [116, 158], // harmony <-> polygon-zk
+  [116, 175], // harmony <-> nova
+  [116, 167], // harmony <-> moonriver
+  [116, 145], // harmony <-> gnosis
+  [116, 184], // harmony <-> base
+  [116, 214], // harmony <-> scroll
+  [116, 165], // harmony <-> zk
+  [176, 116], // meter <-> harmony
+  [125, 116], // celo <-> harmony
+  [158, 116], // polygon-zk <-> harmony
+  [175, 116], // nova <-> harmony
+  [167, 116], // moonriver <-> harmony
+  [145, 116], // gnosis <-> harmony
+  [184, 116], // base <-> harmony
+  [214, 116], // scroll <-> harmony
+  [165, 116], // zk <-> harmony
+  // moonriver
+  [167, 176], // moonriver <-> meter
+  [167, 125], // moonriver <-> celo
+  [167, 158], // moonriver <-> polygon-zk
+  [167, 175], // moonriver <-> nova
+  [167, 145], // moonriver <-> gnosis
+  [167, 116], // moonriver <-> harmony
+  [167, 126], // moonriver <-> moonbeam
+  [167, 165], // moonriver <-> zk
+  [176, 167], // meter <-> moonriver
+  [125, 167], // celo <-> moonriver
+  [158, 167], // polygon-zk <-> moonriver
+  [175, 167], // nova <-> moonriver
+  [145, 167], // gnosis <-> moonriver
+  [116, 167], // harmony <-> moonriver
+  [126, 167], // moonbeam <-> moonriver
+  [165, 166], // zk <-> moonriver
 ]
 
 const ChainList = ({
