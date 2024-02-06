@@ -1,8 +1,12 @@
-import Link from 'next/link'
-import { ConnectButton } from './connect-button'
+import { Button } from '@/components/ui/button'
 import { Logo } from '@/components/ui/icons'
-import { Navigation } from './navigation'
 import { Separator } from '@/components/ui/separator'
+import { UserRound } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import mobileLogo from '../icon.png'
+import { ConnectButton } from './connect-button'
+import { Navigation } from './navigation'
 
 export const Header = () => {
   return (
@@ -10,14 +14,33 @@ export const Header = () => {
       <nav className="container flex justify-between items-center md:px-10 px-2">
         <h1 className="hidden">Whale Bridge</h1>
         <Link href="/">
-          <Logo />
+          <Logo className="hidden sm:block" />
+          <Image
+            src={mobileLogo}
+            width={48}
+            height={48}
+            alt="logo"
+            loading="lazy"
+            className="sm:hidden block ml-2"
+          />
         </Link>
 
         <div className="gap-16 font-medium text-xl hidden md:flex">
           <Navigation />
         </div>
 
-        <ConnectButton />
+        <div className="flex items-center gap-4">
+          <Link href="/profile">
+            <Button
+              variant="secondary"
+              className="p-2.5 before:scale-x-[1.1] before:scale-y-[1.1]"
+            >
+              <UserRound size={28} />
+            </Button>
+          </Link>
+
+          <ConnectButton />
+        </div>
       </nav>
 
       <div className="flex flex-col md:hidden">
