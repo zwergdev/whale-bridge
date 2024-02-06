@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+
+model User {
+  id          String     @id @default(uuid())
+  address     String     @unique
+  ownedCode   Code?      @relation("ownedCode")
+  usedCode    UsedCode?  @relation("usedCode")
+}
+
+model Code {
+  id           String     @id @default(uuid())
+  code         String     @unique
+  owner        User?      @relation(fields: [ownerAddress], references: [address], name: "ownedCode")
+  usedByUsers  UsedCode[]
+  ownerAddress String?    @unique
+}
+
+model UsedCode {
+  id          String @id @default(uuid())
+  userAddress String @unique
+  codeValue   String
+  user        User   @relation(fields: [userAddress], references: [address], name: "usedCode")
+  code        Code   @relation(fields: [codeValue], references: [code])
+}

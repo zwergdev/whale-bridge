@@ -6,28 +6,31 @@ import {
   midnightTheme,
 } from '@rainbow-me/rainbowkit'
 import '@rainbow-me/rainbowkit/styles.css'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { WagmiConfig, configureChains, createConfig } from 'wagmi'
 import {
   arbitrum,
   arbitrumNova,
+  avalanche,
   base,
   bsc,
+  celo,
+  fantom,
+  gnosis,
+  harmonyOne,
   linea,
+  meter,
   moonbeam,
+  moonriver,
   optimism,
   polygon,
+  polygonZkEvm,
   scroll,
   zkSync,
-  avalanche,
-  fantom,
-  celo,
-  gnosis,
-  polygonZkEvm,
-  meter,
-  moonriver,
-  harmonyOne
 } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
+
+const queryClient = new QueryClient()
 
 const { chains, publicClient } = configureChains(
   [
@@ -101,7 +104,9 @@ export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
           borderRadius: 'medium',
         })}
       >
-        {children}
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   )
