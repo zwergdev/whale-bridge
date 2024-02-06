@@ -15,10 +15,10 @@ export const OwnedCode = ({ code }: { code: string }) => {
   }
 
   return (
-    <div className="mb-8 max-w-[440px] w-full mx-auto flex flex-col items-start justify-items-start text-lg font-semibold">
+    <div className="mb-8 sm:max-w-[440px] max-w-[320px] w-full mx-auto flex flex-col items-start justify-items-start text-lg font-semibold">
       Your code:
       <div className="flex items-center justify-center gap-4">
-        <h6 className="px-6 h-12 min-w-72 rounded-xl bg-popover flex items-center justify-center mb-2">
+        <h6 className="px-6 h-12 sm:min-w-72 w-auto rounded-xl bg-popover flex items-center justify-center mb-2">
           {code}
         </h6>
         <button

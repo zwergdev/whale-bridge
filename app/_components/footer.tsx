@@ -34,7 +34,7 @@ export const Footer = () => (
 
     <Separator className="md:my-6 my-4 bg-primary" />
     <div className="flex flex-col md:hidden">
-      <div className="flex w-full gap-10 items-center justify-center font-medium text-xl md:hidden">
+      <div className="flex w-full sm:gap-10 gap-5 items-center justify-center font-medium text-xl md:hidden">
         <Navigation />
       </div>
       <Separator className="my-4 bg-primary" />

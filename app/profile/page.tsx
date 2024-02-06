@@ -1,9 +1,10 @@
 'use client'
 
 import { RedeemedCode } from '@/app/profile/_components/redeemed-code'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Loader } from 'lucide-react'
-import { useAccount } from 'wagmi'
+import { useEffect } from 'react'
+import { ConnectorData, useAccount } from 'wagmi'
 import { CreateCode } from './_components/create-code'
 import { NoWalletPage } from './_components/no-wallet-page'
 import { OwnedCode } from './_components/owned-code'
@@ -11,7 +12,18 @@ import { RedeemCode } from './_components/redeem-code'
 import { getUser } from './actions'
 
 export default function ProfilePage() {
-  const { address } = useAccount()
+  const queryClient = useQueryClient()
+  const { address, connector: activeConnector } = useAccount()
+
+  useEffect(() => {
+    const handleConnectorUpdate = ({ account }: ConnectorData) => {
+      if (account) queryClient.invalidateQueries({ queryKey: ['userData'] })
+    }
+
+    if (activeConnector) activeConnector.on('change', handleConnectorUpdate)
+
+    return () => activeConnector?.off('change', handleConnectorUpdate) as any
+  }, [activeConnector, queryClient])
 
   const { data: user, isLoading } = useQuery({
     queryKey: ['userData'],
@@ -25,8 +37,8 @@ export default function ProfilePage() {
 
   return (
     <section className="flex max-w-screen-xl mx-auto w-full flex-col items-center justify-center gap-5 pt-16">
-      <h6 className="py-2 px-6 rounded-xl text-sm bg-popover">
-        Address: {address}
+      <h6 className="py-2 px-6 rounded-xl sm:text-sm text-xs bg-popover">
+        <span className="sm:inline-flex hidden">Address:</span> {address}
       </h6>
 
       {user?.ownedCode ? (

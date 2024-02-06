@@ -75,7 +75,7 @@ export const CreateCode = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="mb-10 max-w-[440px] w-full mx-auto flex items-center justify-items-start"
       >
-        <div className="flex items-end justify-center gap-5">
+        <div className="flex sm:items-end items-center justify-center gap-5 sm:flex-row flex-col">
           <FormField
             control={form.control}
             name="code"

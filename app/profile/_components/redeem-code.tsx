@@ -72,9 +72,9 @@ export const RedeemCode = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="max-w-[440px] w-full mx-auto flex items-center justify-items-start"
+        className="max-w-[440px] w-full mx-auto flex items-center sm:justify-items-start justify-center"
       >
-        <div className="flex items-end justify-center gap-5">
+        <div className="flex sm:items-end items-center justify-center gap-5 sm:flex-row flex-col">
           <FormField
             control={form.control}
             name="code"
