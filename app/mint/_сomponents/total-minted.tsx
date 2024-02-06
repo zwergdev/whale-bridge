@@ -10,7 +10,9 @@ export const TotalMinted = () => {
   const [next, setNext] = useState(0)
   const { chain } = useNetwork()
 
-  const { refetch: refetchNext } = getNextMintId(chain?.id ?? 0)
+  const selectedChainId = chain?.unsupported ? 0 : chain?.id ?? 0
+
+  const { refetch: refetchNext } = getNextMintId(selectedChainId)
 
   // biome-ignore lint/correctness/useExhaustiveDependencies:
   useEffect(() => {

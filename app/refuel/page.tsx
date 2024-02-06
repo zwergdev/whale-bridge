@@ -92,6 +92,8 @@ export default function RefuelPage() {
   })
   const balanceFrom = Number(Number(_balanceFrom?.formatted).toFixed(5))
 
+  const selectedChainId = chain?.unsupported ? 0 : chain?.id ?? 0
+
   useEffect(() => {
     ;(async () => {
       const prices = await fetchPrices()
@@ -139,7 +141,7 @@ export default function RefuelPage() {
 
   const { refetch } = estimateRefuelFee(
     fields.chainTo,
-    chain?.unsupported ? 0 : chain?.id ?? 0,
+    selectedChainId,
     address!,
     fields.amount,
   )
@@ -148,7 +150,7 @@ export default function RefuelPage() {
     data: refueledData,
     writeAsync,
     isLoading: isLoadingRefuel,
-  } = refuel(chain?.unsupported ? 0 : chain?.id ?? 0)
+  } = refuel(selectedChainId)
 
   const debounceFee = useDebouncedCallback(async (value) => {
     setIsFeeLoading(true)
@@ -420,7 +422,7 @@ export default function RefuelPage() {
         hash={refueledData?.hash}
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
-        chainId={chain?.id ?? 0}
+        chainId={selectedChainId}
         chainTo={fields.chainTo}
       />
     </>

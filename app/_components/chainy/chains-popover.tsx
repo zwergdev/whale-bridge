@@ -111,7 +111,7 @@ const DISABLED_PAIRS = [
   [145, 167], // gnosis <-> moonriver
   [116, 167], // harmony <-> moonriver
   [126, 167], // moonbeam <-> moonriver
-  [165, 166], // zk <-> moonriver
+  [165, 167], // zk <-> moonriver
 ]
 
 const ChainList = ({

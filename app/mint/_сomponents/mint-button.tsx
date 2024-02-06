@@ -1,17 +1,17 @@
 'use client'
 
-import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { Button } from '@/components/ui/button'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { useState } from 'react'
 import {
   useAccount,
+  useBalance,
   useNetwork,
   useWaitForTransaction,
-  useBalance,
 } from 'wagmi'
-import { useState } from 'react'
-import { MintedDialog } from './minted-dialog'
-import { truncatedToaster } from '../../_utils/truncatedToaster'
 import { CONTRACTS, mint } from '../../_utils/contract-actions'
+import { truncatedToaster } from '../../_utils/truncatedToaster'
+import { MintedDialog } from './minted-dialog'
 
 export const MintButton = () => {
   const { address, status } = useAccount()
@@ -21,13 +21,11 @@ export const MintButton = () => {
   const { data: _balance } = useBalance({ address })
   const balance = Number(Number(_balance?.formatted).toFixed(5))
 
-  const {
-    write,
-    data: signData,
-    isLoading: isSigning,
-  } = mint(chain?.unsupported ? 0 : chain?.id ?? 0)
+  const selectedChainId = chain?.unsupported ? 0 : chain?.id ?? 0
+
+  const { write, data: signData, isLoading: isSigning } = mint(selectedChainId)
   const mintNFT = () => {
-    if (balance < Number(CONTRACTS[chain?.id ?? 0].mintPrice))
+    if (balance < Number(CONTRACTS[selectedChainId].mintPrice))
       return truncatedToaster('Error occurred!', 'Insufficient balance.')
 
     write()
@@ -68,7 +66,7 @@ export const MintButton = () => {
       <MintedDialog
         hash={signData?.hash}
         open={isDialogOpen}
-        chainId={chain?.id ?? 0}
+        chainId={selectedChainId}
       />
     </>
   )

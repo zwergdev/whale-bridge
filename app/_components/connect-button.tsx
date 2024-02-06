@@ -2,7 +2,19 @@
 
 import { Button } from '@/components/ui/button'
 import { ConnectButton as RainbowButton } from '@rainbow-me/rainbowkit'
+import { useEffect } from 'react'
+import { useNetwork, useSwitchNetwork } from 'wagmi'
+
 export const ConnectButton = () => {
+  const { chain } = useNetwork()
+  const { switchNetwork } = useSwitchNetwork()
+
+  useEffect(() => {
+    if (chain?.unsupported) {
+      switchNetwork?.(324)
+    }
+  }, [chain, switchNetwork])
+
   return (
     <RainbowButton.Custom>
       {({

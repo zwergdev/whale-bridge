@@ -56,6 +56,8 @@ export default function BridgePage() {
   const balanceFrom = Number(Number(_balanceFrom?.formatted).toFixed(5))
   const ref = useRef('a')
 
+  const selectedChainId = chain?.unsupported ? 0 : chain?.id ?? 0
+
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     let active = true
@@ -78,7 +80,7 @@ export default function BridgePage() {
         const maxAttempts = chain?.id === 137 ? 18 : 12
         if (attempt >= maxAttempts || !active) return []
 
-        const nfts = await getNFTBalance(address!, chain?.id ?? 0)
+        const nfts = await getNFTBalance(address!, selectedChainId)
 
         if (nfts.length === 0) {
           await delay(chain?.id === 137 ? 2000 : 1500)
@@ -130,24 +132,23 @@ export default function BridgePage() {
 
   const fields = watch()
 
-  const {
-    data: bridgingData,
-    writeAsync,
-    isLoading,
-  } = bridge(chain?.unsupported ? 0 : chain?.id ?? 0)
+  const { data: bridgingData, writeAsync, isLoading } = bridge(selectedChainId)
 
   const { refetch: refetchFee } = estimateBridgeFee(
     fields.chainTo,
     address!,
     BigInt(fields.tokenId),
-    chain?.unsupported ? 0 : chain?.id ?? 0,
+    selectedChainId,
   )
 
-  const { refetch: refetchUserNFTIds } = getUserNFTIds(address!, chain?.id ?? 0)
+  const { refetch: refetchUserNFTIds } = getUserNFTIds(
+    address!,
+    selectedChainId,
+  )
 
   const refetchNFT = async () => {
     setIsLoadingNFT(true)
-    const nfts = await getNFTBalance(address!, chain?.id ?? 0)
+    const nfts = await getNFTBalance(address!, selectedChainId)
     setIsLoadingNFT(false)
     return nfts
   }
@@ -352,7 +353,7 @@ export default function BridgePage() {
         hash={bridgingData?.hash}
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
-        chainId={chain?.id ?? 0}
+        chainId={selectedChainId}
         chainTo={fields.chainTo}
       />
     </>
