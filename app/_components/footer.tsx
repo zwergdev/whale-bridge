@@ -44,7 +44,7 @@ export const Footer = () => (
       <div className="flex items-center gap-4">
         {[
           { icon: <Telegram />, href: 'https://t.me/whale_app_com' },
-          { icon: <Twitter />, href: 'https://twitter.com/Whale_app_com' },
+          { icon: <Twitter />, href: 'https://twitter.com/Whale_app_' },
           {
             icon: <GitBook style={{ width: '28px' }} />,
             href: 'https://whale-app.gitbook.io/whale-book/',
