@@ -58,6 +58,8 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   82: 1, // meter
   1285: 0.05, // moonriver
   1666600000: 10, // harmony
+  204: 0.05, // opbnb
+  2222: 1, // kava
 }
 
 const SYMBOL_TO_CHAIN: { [key: string]: string } = {
@@ -72,6 +74,7 @@ const SYMBOL_TO_CHAIN: { [key: string]: string } = {
   MTR: 'meter',
   MOVR: 'moonriver',
   ONE: 'harmony',
+  KAVA: 'kava',
 }
 
 export default function RefuelPage() {

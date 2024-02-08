@@ -20,7 +20,6 @@ import {
 } from '@/components/ui/select'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronsUpDown, Loader } from 'lucide-react'
-import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAccount, useBalance, useNetwork, useSwitchNetwork } from 'wagmi'
@@ -35,6 +34,7 @@ import { CHAINS } from '../_utils/chains'
 import {
   bridge,
   estimateBridgeFee,
+  getModernUserNFTIds,
   getUserNFTIds,
 } from '../_utils/contract-actions'
 import { getNFTBalance } from '../_utils/nftBalance'
@@ -74,6 +74,11 @@ export default function BridgePage() {
           chain?.id === 1666600000
         ) {
           const { data: nfts }: any = await refetchUserNFTIds()
+          return nfts.map((nft: any) => nft.toString())
+        }
+
+        if (chain?.id === 204 || chain?.id === 2222) {
+          const { data: nfts }: any = await refetchModernUserNFTIds()
           return nfts.map((nft: any) => nft.toString())
         }
 
@@ -142,6 +147,11 @@ export default function BridgePage() {
   )
 
   const { refetch: refetchUserNFTIds } = getUserNFTIds(
+    address!,
+    selectedChainId,
+  )
+
+  const { refetch: refetchModernUserNFTIds } = getModernUserNFTIds(
     address!,
     selectedChainId,
   )
@@ -343,9 +353,9 @@ export default function BridgePage() {
               {isLoadingNFT ? 'Loading NFT...' : 'Bridge'}
             </SubmitButton>
 
-            <Link href="https://layerzero.network/" target="_blank">
+            <a href="https://layerzero.network/" rel="noreferrer">
               <LayerZero className="text-center w-full mt-10" />
-            </Link>
+            </a>
           </form>
         </Form>
       </Paper>

@@ -1,8 +1,7 @@
-import { celoMintABI } from '@/app/_utils/abi'
 import { ethers } from 'ethers'
 import { parseEther } from 'viem/utils'
 import { useContractRead, useContractWrite } from 'wagmi'
-import { mintABI, refuelABI } from './abi'
+import { mintABI, refuelABI, celoMintABI, modernMintABI } from './abi'
 import { truncatedToaster } from './truncatedToaster'
 
 const CONTRACTS: {
@@ -105,13 +104,13 @@ const CONTRACTS: {
   204: {
     mintAddress: '0x9aeAa45d415fFE75dC4Ba50658584479bAf110Ec',
     refuelAddress: '0x84f4c0A290B5607fee0f2A1CDe5348540fecF6A1',
-    mintPrice: '0.0001'
+    mintPrice: '0.0001',
   }, // op-bnb
   2222: {
     mintAddress: '0xBcEe7fB1B98ea4e38Eb52c2E026134d54273ED44',
     refuelAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
-    mintPrice: '0.0001'
-  }, // hava
+    mintPrice: '0.0001',
+  }, // kava
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',
@@ -225,6 +224,17 @@ function getUserNFTIds(address: string, chainId: number) {
   })
 }
 
+function getModernUserNFTIds(address: string, chainId: number) {
+  return useContractRead({
+    address: CONTRACTS[chainId].mintAddress, // opbnb & kava
+    chainId: chainId,
+    abi: modernMintABI,
+    functionName: 'getOwnedNFTs',
+    args: [address],
+    enabled: false,
+  })
+}
+
 function getNextMintId(chainId: number) {
   return useContractRead({
     address: CONTRACTS[chainId].mintAddress,
@@ -243,6 +253,7 @@ export {
   estimateRefuelFee,
   getAdapter,
   getUserNFTIds,
+  getModernUserNFTIds,
   getNextMintId,
   CONTRACTS,
 }

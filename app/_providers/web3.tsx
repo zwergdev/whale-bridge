@@ -14,17 +14,17 @@ import {
   fantom,
   gnosis,
   harmonyOne,
+  kava,
   linea,
   meter,
   moonbeam,
   moonriver,
+  opBNB,
   optimism,
   polygon,
   polygonZkEvm,
   scroll,
   zkSync,
-  opBNB,
-  kava,
 } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
