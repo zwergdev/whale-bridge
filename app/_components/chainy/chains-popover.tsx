@@ -175,12 +175,14 @@ type PaperProps = {
 }
 const Paper = ({ title, children, subtitle }: PaperProps) => {
   return (
-    <section className="text-sm text-foreground rounded-md max-w-screen-md w-full px-6 pt-8 pb-10 bg-paper flex flex-col">
-      <div className="flex justify-between items-start">
-        <h2 className="font-semibold text-2xl mb-5">{title}</h2>
-        {subtitle}
+    <section className="w-full min-h-[calc(100vh-160px)] flex items-center justify-center pt-40">
+      <div className="text-sm text-foreground rounded-md max-w-screen-md w-full px-6 pt-8 pb-10 bg-paper flex flex-col">
+        <div className="flex justify-between items-start">
+          <h2 className="font-semibold text-2xl mb-5">{title}</h2>
+          {subtitle}
+        </div>
+        {children}
       </div>
-      {children}
     </section>
   )
 }

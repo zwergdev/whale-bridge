@@ -1,4 +1,4 @@
-import { TX_LINK } from '../../_utils/chains'
+import { MintImage } from '@/app/mint/_сomponents/mint-image'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,14 +8,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import Link from 'next/link'
-import { Check, Loader, Plus } from 'lucide-react'
 import {
-  waitForMessageReceived,
   MessageStatus,
+  waitForMessageReceived,
 } from '@layerzerolabs/scan-client'
+import { Check, Loader, Plus } from 'lucide-react'
+import Link from 'next/link'
 import { cloneElement, useState } from 'react'
-import { MintImage } from '@/app/mint/_сomponents/mint-image'
+import { TX_LINK } from '../../_utils/chains'
 
 type BridgedDialogProps = {
   hash?: `0x${string}`
@@ -66,7 +66,7 @@ export const BridgedDialog = ({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Transaction status</AlertDialogTitle>
-          <AlertDialogDescription className="flex flex-col items-center justify-center py-8">
+          <AlertDialogDescription className="flex flex-col items-center justify-center py-8 relative">
             {(() => {
               const { icon, text } = renderStatus()
               return (
@@ -91,11 +91,7 @@ export const BridgedDialog = ({
             </p>
 
             <div className="flex gap-4 items-center mt-16 w-full">
-              <MintImage
-                className="border border-border"
-                size={100}
-                chainId={chainId}
-              />
+              <MintImage size={100} chainId={chainId} />
               <div className="truncate max-w-96 text-left">
                 <p>Transaction link:</p>
 
@@ -117,6 +113,7 @@ export const BridgedDialog = ({
                 </Link>
               </div>
             </div>
+            <div className="w-32 h-32 -z-10 bg-primary blur-[150px] absolute -bottom-20 left-0" />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

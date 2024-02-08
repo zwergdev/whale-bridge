@@ -1,4 +1,3 @@
-import { TX_LINK } from '../../_utils/chains'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,13 +7,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import Link from 'next/link'
-import { Check, Loader, Plus } from 'lucide-react'
 import {
-  waitForMessageReceived,
   MessageStatus,
+  waitForMessageReceived,
 } from '@layerzerolabs/scan-client'
+import { Check, Loader, Plus } from 'lucide-react'
+import Link from 'next/link'
 import { cloneElement, useState } from 'react'
+import { TX_LINK } from '../../_utils/chains'
 
 type RefueledDialogProps = {
   hash?: `0x${string}`
@@ -65,7 +65,7 @@ export const RefueledDialog = ({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Transaction status</AlertDialogTitle>
-          <AlertDialogDescription className="flex flex-col items-center justify-center py-8">
+          <AlertDialogDescription className="flex flex-col items-center justify-center py-8 relative">
             {(() => {
               const { icon, text } = renderStatus()
               return (
@@ -114,6 +114,7 @@ export const RefueledDialog = ({
                 </p>
               </div>
             </div>
+            <div className="w-32 h-32 -z-10 bg-primary blur-[150px] absolute -bottom-20 left-0" />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
