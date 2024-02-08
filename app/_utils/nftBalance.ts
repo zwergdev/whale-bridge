@@ -60,8 +60,12 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
     collection: '0xe9EbD35Ea4aCCb97e0F5BF3CDA31fe3Ac90111Cc',
   },
   204: {
-    chain: 'opBNB',
+    chain: 'opbnb',
     collection: '0x9aeAa45d415fFE75dC4Ba50658584479bAf110Ec'
+  },
+  2222: {
+    chain: 'kava',
+    collection: '0xBcEe7fB1B98ea4e38Eb52c2E026134d54273ED44'
   }
 }
 

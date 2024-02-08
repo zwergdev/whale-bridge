@@ -104,13 +104,13 @@ const CONTRACTS: {
   }, // harmony
   204: {
     mintAddress: '0x9aeAa45d415fFE75dC4Ba50658584479bAf110Ec',
-    refuelAddress: '',
+    refuelAddress: '0x84f4c0A290B5607fee0f2A1CDe5348540fecF6A1',
     mintPrice: '0.0001'
   }, // op-bnb
   2222: {
-    mintAddress: '',
-    refuelAddress: '',
-    mintPrice: ''
+    mintAddress: '0xBcEe7fB1B98ea4e38Eb52c2E026134d54273ED44',
+    refuelAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
+    mintPrice: '0.0001'
   }, // hava
   0: {
     mintAddress: '0x00',
