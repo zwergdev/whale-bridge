@@ -59,6 +59,10 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
     chain: 'gnosisapi',
     collection: '0xe9EbD35Ea4aCCb97e0F5BF3CDA31fe3Ac90111Cc',
   },
+  204: {
+    chain: 'opBNB',
+    collection: '0x9aeAa45d415fFE75dC4Ba50658584479bAf110Ec'
+  }
 }
 
 // const fetchFromElement = async (address: string, chainId: number) => {

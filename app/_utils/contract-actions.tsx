@@ -102,6 +102,16 @@ const CONTRACTS: {
     refuelAddress: '0xedc03c234882fa785e7084b2c7e13bc8b7b6a4e3',
     mintPrice: '16.546762589928058000',
   }, // harmony
+  204: {
+    mintAddress: '0x9aeAa45d415fFE75dC4Ba50658584479bAf110Ec',
+    refuelAddress: '',
+    mintPrice: '0.0001'
+  }, // op-bnb
+  2222: {
+    mintAddress: '',
+    refuelAddress: '',
+    mintPrice: ''
+  }, // hava
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',

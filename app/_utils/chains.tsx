@@ -94,6 +94,18 @@ export const CHAINS = [
     image: '/chain-logo/harmony.svg',
     chainId: 1666600000,
   },
+  {
+    label: 'opBNB',
+    value: 202,
+    image: '/chain-logo/op-bnb.svg',
+    chainId: 204,
+  },
+  {
+    label: 'KAVA',
+    value: 177,
+    image: '/chain-logo/kava.svg',
+    chainId: 2222,
+  },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
@@ -115,6 +127,8 @@ export const TX_LINK: { [chainId: number]: string } = {
   82: 'scan.meter.io', // meter
   1285: 'moonriver.moonscan.io', // moonriver
   1666600000: 'explorer.harmony.one', // harmony
+  204: 'mainnet.opbnbscan.com', // op-bnb
+  2222: 'kavascan.com', // kava
 }
 
 export const selectedChain = (fieldValue: number) => {

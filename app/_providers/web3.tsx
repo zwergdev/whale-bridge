@@ -23,6 +23,8 @@ import {
   polygonZkEvm,
   scroll,
   zkSync,
+  opBNB,
+  kava,
 } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
@@ -48,6 +50,8 @@ const { chains, publicClient } = configureChains(
     meter,
     moonriver,
     harmonyOne,
+    opBNB,
+    kava,
   ],
   [publicProvider()],
 )
@@ -75,6 +79,8 @@ const RAINBOW_CHAINS = [
   { name: 'Meter', id: 82, iconUrl: '/chain-logo/meter.svg' },
   { name: 'Moonriver', id: 1285, iconUrl: '/chain-logo/moonriver.svg' },
   { name: 'Harmony', id: 1666600000, iconUrl: '/chain-logo/harmony.svg' },
+  { name: 'OpBNB', id: 204, iconUrl: '/chain-logo/op-bnb.svg' },
+  { name: 'KAVA', id: 2222, iconUrl: '/chain-logo/kava.svg' },
 ]
 
 const { connectors } = getDefaultWallets({
