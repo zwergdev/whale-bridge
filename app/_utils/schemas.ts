@@ -7,10 +7,16 @@ export const BridgeSchema = z.object({
   nfts: z.array(z.string()),
 })
 
-export const RefuelSchema = z
-  .object({
-    chainFrom: z.number(),
-    chainTo: z.number(),
-    amount: z.coerce.number().positive(),
-    balance: z.number().positive(),
-  })
+export const RefuelSchema = z.object({
+  chainFrom: z.number(),
+  chainTo: z.number(),
+  amount: z.coerce.number().positive(),
+  balance: z.number().positive(),
+})
+
+export const TokenSchema = z.object({
+  chainFrom: z.number(),
+  chainTo: z.number(),
+  amount: z.coerce.number().positive(),
+  balance: z.number().positive(),
+})
