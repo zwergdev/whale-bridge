@@ -1,4 +1,3 @@
-'use client'
 import { Button } from '@/components/ui/button'
 import {
   Command,
@@ -14,7 +13,6 @@ import { ChevronDown, Repeat2 } from 'lucide-react'
 import { CHAINS, selectedChain } from '../../_utils/chains'
 import Image from 'next/image'
 import { DISABLED_PAIRS } from './disabled-pairs'
-import { LayoutIcon } from '@/components/ui/icons'
 
 type ChainyTriggerProps = {
   disabled?: boolean
@@ -58,15 +56,11 @@ const ChainList = ({
   return (
     <PopoverContent className="w-80 p-0">
       <Command>
-        <div className="flex items-center justify-between border-b border-b-primary px-3">
-          <CommandInput placeholder="Search chain..." />
-          <Button
-            size="icon"
-            variant="clean"
-            onClick={() => setIsChainGridView((prev) => !prev)}
-          >
-            <LayoutIcon className="w-5 h-5" />
-          </Button>
+        <div className="">
+          <CommandInput
+            setIsChainGridView={setIsChainGridView}
+            placeholder="Search chain..."
+          />
         </div>
         <CommandEmpty>No chain found.</CommandEmpty>
         <CommandGroup>

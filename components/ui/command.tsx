@@ -8,6 +8,8 @@ import { Search, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import Image from 'next/image'
+import { Button } from './button'
+import { LayoutIcon } from './icons'
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
@@ -40,18 +42,32 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
 
 const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
->(({ className, ...props }, ref) => (
-  <div className="flex items-center" cmdk-input-wrapper="">
-    <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
-    <CommandPrimitive.Input
-      ref={ref}
-      className={cn(
-        'flex h-11 w-full rounded-md bg-transparent py-3 text-base outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50',
-        className,
-      )}
-      {...props}
-    />
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input> & {
+    setIsChainGridView: React.Dispatch<React.SetStateAction<boolean>>
+  }
+>(({ className, setIsChainGridView, ...props }, ref) => (
+  <div
+    className="flex items-center justify-between border-b border-b-primary px-3"
+    cmdk-input-wrapper=""
+  >
+    <div className="flex items-center">
+      <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+      <CommandPrimitive.Input
+        ref={ref}
+        className={cn(
+          'flex h-11 w-full rounded-md bg-transparent py-3 text-base outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50',
+          className,
+        )}
+        {...props}
+      />
+    </div>
+    <Button
+      size="icon"
+      variant="clean"
+      onClick={() => setIsChainGridView((prev) => !prev)}
+    >
+      <LayoutIcon className="w-5 h-5" />
+    </Button>
   </div>
 ))
 
