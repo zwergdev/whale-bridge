@@ -1,4 +1,10 @@
-import { LayerZero, Telegram, Twitter, MobileLogo } from '@/components/ui/icons'
+import {
+  Discord,
+  LayerZero,
+  MobileLogo,
+  Telegram,
+  Twitter,
+} from '@/components/ui/icons'
 import { GitBook } from '@/components/ui/icons/git-book'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
@@ -45,6 +51,7 @@ export const Footer = () => (
         {[
           { icon: <Telegram />, href: 'https://t.me/whale_app_com' },
           { icon: <Twitter />, href: 'https://twitter.com/Whale_app_' },
+          { icon: <Discord />, href: 'https://discord.gg/SPyXDAps' },
           {
             icon: <GitBook style={{ width: '24px' }} />,
             href: 'https://whale-app.gitbook.io/whale-book/',
