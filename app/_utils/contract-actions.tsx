@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 import { parseEther } from 'viem/utils'
 import { useContractRead, useContractWrite } from 'wagmi'
-import { mintABI, refuelABI, celoMintABI, modernMintABI } from './abi'
+import { celoMintABI, mintABI, modernMintABI, refuelABI } from './abi'
 import { truncatedToaster } from './truncatedToaster'
 
 const CONTRACTS: {
@@ -109,6 +109,11 @@ const CONTRACTS: {
   2222: {
     mintAddress: '0xBcEe7fB1B98ea4e38Eb52c2E026134d54273ED44',
     refuelAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
+    mintPrice: '0.0001',
+  }, // kava
+  7777777: {
+    mintAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
+    refuelAddress: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
     mintPrice: '0.0001',
   }, // kava
   0: {
@@ -226,7 +231,7 @@ function getUserNFTIds(address: string, chainId: number) {
 
 function getModernUserNFTIds(address: string, chainId: number) {
   return useContractRead({
-    address: CONTRACTS[chainId].mintAddress, // opbnb & kava
+    address: CONTRACTS[chainId].mintAddress, // opbnb & kava & zora
     chainId: chainId,
     abi: modernMintABI,
     functionName: 'getOwnedNFTs',

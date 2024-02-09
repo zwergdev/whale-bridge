@@ -60,6 +60,7 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   1666600000: 10, // harmony
   204: 0.05, // opbnb
   2222: 1, // kava
+  7777777: 0.05, // zora
 }
 
 const SYMBOL_TO_CHAIN: { [key: string]: string } = {

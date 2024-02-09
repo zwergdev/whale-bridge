@@ -77,7 +77,7 @@ export default function BridgePage() {
           return nfts.map((nft: any) => nft.toString())
         }
 
-        if (chain?.id === 204 || chain?.id === 2222) {
+        if (chain?.id === 204 || chain?.id === 2222 || chain?.id === 7777777) {
           const { data: nfts }: any = await refetchModernUserNFTIds()
           return nfts.map((nft: any) => nft.toString())
         }

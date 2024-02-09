@@ -22,6 +22,7 @@ import polygonZk from '@/public/nft/nft-polygon-zk.webp'
 import polygon from '@/public/nft/nft-polygon.webp'
 import scroll from '@/public/nft/nft-scroll.webp'
 import zk from '@/public/nft/nft-zk.webp'
+import zora from '@/public/nft/nft-zora.webp'
 import Image, { StaticImageData } from 'next/image'
 import { useAccount, useNetwork } from 'wagmi'
 
@@ -46,6 +47,7 @@ const IMAGES: { [key: number]: StaticImageData } = {
   1666600000: harmony,
   204: opbnb,
   2222: kava,
+  7777777: zora,
 }
 
 type MintImageProps = {

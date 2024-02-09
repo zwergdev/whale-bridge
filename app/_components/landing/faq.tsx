@@ -33,7 +33,7 @@ const FAQ_ITEMS = [
   {
     question: 'What networks do we support?',
     answer:
-      'Our platform supports an array of blockchain networks, including Scroll, zkSync, BSC, Arbitrum, Arbitrum Nova, Base, Avalanche, Optimism, Linea, Moonbeam, Moonriver, Harmony, Meter, Gnosis, Celo, Fantom, Kava, opBNB and Polygon. As part of our ongoing commitment to innovation, we have ambitious plans to integrate additional networks in the near future.',
+      'Our platform supports an array of blockchain networks, including Scroll, zkSync, BSC, Arbitrum, Arbitrum Nova, Base, Avalanche, Optimism, Linea, Moonbeam, Moonriver, Harmony, Meter, Gnosis, Celo, Fantom, Kava, opBNB, Zora and Polygon. As part of our ongoing commitment to innovation, we have ambitious plans to integrate additional networks in the near future.',
   },
 ]
 

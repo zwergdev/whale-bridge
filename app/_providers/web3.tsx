@@ -25,6 +25,7 @@ import {
   polygonZkEvm,
   scroll,
   zkSync,
+  zora
 } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
@@ -52,6 +53,7 @@ const { chains, publicClient } = configureChains(
     harmonyOne,
     opBNB,
     kava,
+    zora,
   ],
   [publicProvider()],
 )
@@ -81,6 +83,7 @@ const RAINBOW_CHAINS = [
   { name: 'Harmony', id: 1666600000, iconUrl: '/chain-logo/harmony.svg' },
   { name: 'OpBNB', id: 204, iconUrl: '/chain-logo/op-bnb.svg' },
   { name: 'KAVA', id: 2222, iconUrl: '/chain-logo/kava.svg' },
+  { name: 'Zora', id: 7777777, iconUrl: '/chain-logo/zora.svg' },
 ]
 
 const { connectors } = getDefaultWallets({

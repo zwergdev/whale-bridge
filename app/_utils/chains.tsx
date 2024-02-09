@@ -106,6 +106,12 @@ export const CHAINS = [
     image: '/chain-logo/kava.svg',
     chainId: 2222,
   },
+  {
+    label: 'Zora',
+    value: 195,
+    image: '/chain-logo/zora.svg',
+    chainId: 7777777,
+  },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
@@ -129,6 +135,7 @@ export const TX_LINK: { [chainId: number]: string } = {
   1666600000: 'explorer.harmony.one', // harmony
   204: 'opbnb.bscscan.com', // op-bnb
   2222: 'kavascan.com', // kava
+  7777777: 'explorer.zora.energy', // zora
 }
 
 export const selectedChain = (fieldValue: number) => {
