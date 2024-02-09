@@ -114,7 +114,6 @@ const DISABLED_PAIRS = [
   [165, 167], // zk <-> moonriver
   // opbnb
   [202, 175], // opbnb <-> nova
-  [202, 111], // opbnb <-> optimism
   [202, 126], // opbnb <-> moonbeam
   [202, 125], // opbnb <-> celo
   [202, 145], // opbnb <-> gnosis
@@ -124,7 +123,6 @@ const DISABLED_PAIRS = [
   [202, 177], // opbnb <-> kava
   [202, 195], // opbnb <-> zora
   [175, 202], // nova <-> opbnb
-  [111, 202], // optimism <-> opbnb
   [126, 202], // moonbeam <-> opbnb
   [125, 202], // celo <-> opbnb
   [145, 202], // gnosis <-> opbnb
@@ -134,14 +132,12 @@ const DISABLED_PAIRS = [
   [177, 202], // kava <-> opbnb
   [195, 202], // zora <-> opbnb
   // kava
-  [177, 111], // kava <-> optimism
   [177, 125], // kava <-> celo
   [177, 145], // kava <-> gnosis
   [177, 176], // kava <-> meter
   [177, 116], // kava <-> harmony
   [177, 202], // kava <-> opbnb
   [177, 195], // kava <-> zora
-  [111, 177], // optimism <-> kava
   [125, 177], // celo <-> kava
   [145, 177], // gnosis <-> kava
   [176, 177], // meter <-> kava
@@ -152,7 +148,6 @@ const DISABLED_PAIRS = [
   [195, 165], // zora <-> zk
   [195, 175], // zora <-> nova
   [195, 214], // zora <-> scroll
-  [195, 111], // zora <-> optimism
   [195, 126], // zora <-> moonbeam
   [195, 112], // zora <-> fantom
   [195, 125], // zora <-> celo
@@ -166,7 +161,6 @@ const DISABLED_PAIRS = [
   [165, 195], // zk <-> zora
   [175, 195], // nova <-> zora
   [214, 195], // scroll <-> zora
-  [111, 195], // optimism <-> zora
   [126, 195], // moonbeam <-> zora
   [112, 195], // fantom <-> zora
   [125, 195], // celo <-> zora
