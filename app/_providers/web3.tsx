@@ -14,15 +14,18 @@ import {
   fantom,
   gnosis,
   harmonyOne,
+  kava,
   linea,
   meter,
   moonbeam,
   moonriver,
+  opBNB,
   optimism,
   polygon,
   polygonZkEvm,
   scroll,
   zkSync,
+  zora
 } from 'wagmi/chains'
 import { publicProvider } from 'wagmi/providers/public'
 
@@ -48,6 +51,9 @@ const { chains, publicClient } = configureChains(
     meter,
     moonriver,
     harmonyOne,
+    opBNB,
+    kava,
+    zora,
   ],
   [publicProvider()],
 )
@@ -75,6 +81,9 @@ const RAINBOW_CHAINS = [
   { name: 'Meter', id: 82, iconUrl: '/chain-logo/meter.svg' },
   { name: 'Moonriver', id: 1285, iconUrl: '/chain-logo/moonriver.svg' },
   { name: 'Harmony', id: 1666600000, iconUrl: '/chain-logo/harmony.svg' },
+  { name: 'OpBNB', id: 204, iconUrl: '/chain-logo/op-bnb.svg' },
+  { name: 'KAVA', id: 2222, iconUrl: '/chain-logo/kava.svg' },
+  { name: 'Zora', id: 7777777, iconUrl: '/chain-logo/zora.svg' },
 ]
 
 const { connectors } = getDefaultWallets({
@@ -150,7 +159,11 @@ const customTheme = {
 export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={RAINBOW_CHAINS} theme={customTheme}>
+      <RainbowKitProvider
+        chains={RAINBOW_CHAINS}
+        theme={customTheme}
+        locale="en"
+      >
         <QueryClientProvider client={queryClient}>
           {children}
         </QueryClientProvider>

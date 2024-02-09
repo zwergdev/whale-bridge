@@ -112,6 +112,71 @@ const DISABLED_PAIRS = [
   [116, 167], // harmony <-> moonriver
   [126, 167], // moonbeam <-> moonriver
   [165, 167], // zk <-> moonriver
+  // opbnb
+  [202, 175], // opbnb <-> nova
+  [202, 111], // opbnb <-> optimism
+  [202, 126], // opbnb <-> moonbeam
+  [202, 125], // opbnb <-> celo
+  [202, 145], // opbnb <-> gnosis
+  [202, 176], // opbnb <-> meter
+  [202, 167], // opbnb <-> moonriver
+  [202, 116], // opbnb <-> harmony
+  [202, 177], // opbnb <-> kava
+  [202, 195], // opbnb <-> zora
+  [175, 202], // nova <-> opbnb
+  [111, 202], // optimism <-> opbnb
+  [126, 202], // moonbeam <-> opbnb
+  [125, 202], // celo <-> opbnb
+  [145, 202], // gnosis <-> opbnb
+  [176, 202], // meter <-> opbnb
+  [167, 202], // moonriver <-> opbnb
+  [116, 202], // harmony <-> opbnb
+  [177, 202], // kava <-> opbnb
+  [195, 202], // zora <-> opbnb
+  // kava
+  [177, 111], // kava <-> optimism
+  [177, 125], // kava <-> celo
+  [177, 145], // kava <-> gnosis
+  [177, 176], // kava <-> meter
+  [177, 116], // kava <-> harmony
+  [177, 202], // kava <-> opbnb
+  [177, 195], // kava <-> zora
+  [111, 177], // optimism <-> kava
+  [125, 177], // celo <-> kava
+  [145, 177], // gnosis <-> kava
+  [176, 177], // meter <-> kava
+  [116, 177], // harmony <-> kava
+  [202, 177], // opbnb <-> kava
+  [195, 177], // zora <-> kava
+  // zora
+  [195, 165], // zora <-> zk
+  [195, 175], // zora <-> nova
+  [195, 214], // zora <-> scroll
+  [195, 111], // zora <-> optimism
+  [195, 126], // zora <-> moonbeam
+  [195, 112], // zora <-> fantom
+  [195, 125], // zora <-> celo
+  [195, 145], // zora <-> gnosis
+  [195, 158], // zora <-> polygon-zk
+  [195, 176], // zora <-> meter
+  [195, 167], // zora <-> moonriver
+  [195, 116], // zora <-> harmony
+  [195, 202], // zora <-> opbnb
+  [195, 177], // zora <-> kava
+  [165, 195], // zk <-> zora
+  [175, 195], // nova <-> zora
+  [214, 195], // scroll <-> zora
+  [111, 195], // optimism <-> zora
+  [126, 195], // moonbeam <-> zora
+  [112, 195], // fantom <-> zora
+  [125, 195], // celo <-> zora
+  [145, 195], // gnosis <-> zora
+  [158, 195], // polygon-zk <-> zora
+  [176, 195], // meter <-> zora
+  [167, 195], // moonriver <-> zora
+  [116, 195], // harmony <-> zora
+  [202, 195], // opbnb <-> zora
+  [177, 195], // kava <-> zora
 ]
 
 const ChainList = ({
@@ -176,7 +241,10 @@ type PaperProps = {
 const Paper = ({ title, children, subtitle }: PaperProps) => {
   return (
     <section className="w-full min-h-[calc(100vh-160px)] flex items-center justify-center pt-40">
-      <div className="text-sm text-foreground rounded-md max-w-screen-md w-full px-6 pt-8 pb-10 bg-paper flex flex-col">
+      <div className="text-sm text-foreground rounded-md border-popover border max-w-screen-md overflow-hidden w-full p-6 relative bg-[#011e37]/30 backdrop-blur-md flex flex-col">
+        <div className="w-32 h-32 -z-10 bg-primary blur-[150px] absolute -bottom-20 left-0" />
+        <div className="w-32 h-32 -z-10 bg-primary blur-[200px] absolute -top-20 right-20" />
+
         <div className="flex justify-between items-start">
           <h2 className="font-semibold text-2xl mb-5">{title}</h2>
           {subtitle}

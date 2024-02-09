@@ -31,7 +31,7 @@ const Article = ({
   return (
     <article
       className={cn(
-        'flex md:items-start items-center flex-col justify-center gap-10 mb-20 last:mb-12',
+        'flex md:items-start items-center flex-col justify-center gap-10 mb-28 last-of-type:mb-4',
         revert ? 'md:flex-row-reverse' : 'md:flex-row',
       )}
     >

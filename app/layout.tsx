@@ -5,7 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata } from 'next'
 import { Space_Grotesk } from 'next/font/google'
 import { Footer } from './_components/footer'
-import { Header } from './_components/header'
+import { Header } from './_components/header/header'
 import { Web3Provider } from './_providers/web3'
 import './globals.css'
 
@@ -47,9 +47,9 @@ export default function RootLayout({
         <Web3Provider>
           <div className="flex flex-col w-full items-center justify-center min-h-screen relative overflow-hidden">
             <WhaleBg className="absolute -z-10 left-[-435px] top-28 rotate-[35deg]" />
-            <WhaleBg className="absolute -z-10 right-[-247px] top-36 scale-x-[-1] w-[757px] h-auto" />
+            <WhaleBg className="absolute -z-10 right-[-247px] top-36 scale-x-[-1] w-[757px] h-auto sm:block hidden" />
             <Header />
-            <main className="container flex flex-col w-full items-center justify-center pb-52">
+            <main className="container flex flex-col w-full items-center justify-center pb-52 sm:px-8 px-4">
               {children}
               <div className="grow" />
             </main>

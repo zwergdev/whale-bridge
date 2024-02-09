@@ -5,22 +5,23 @@ import { Typing } from './typing'
 
 export const Hero = () => {
   return (
-    <section className="flex flex-col items-center justify-center relative w-full pt-40 min-h-[calc(100vh-100px)]">
-      <div className="relative w-full max-w-screen-sm">
-        <Logo className="w-full max-w-screen-sm h-auto md:mb-20 mb-10" />
+    <section className="flex flex-col items-center justify-center relative w-full sm:pt-40 pt-40 min-h-[calc(100vh-100px)]">
+      <div className="w-full max-w-screen-sm relative mx-auto">
         <Link
           href="https://layerzeroscan.com/protocol/whale"
           target="_blank"
-          className="absolute flex items-center animate-pulse -top-20 left-1/2 -translate-x-1/2 bg-background border border-popover px-4 py-1.5 text-sm rounded-lg"
+          className="absolute flex items-center animate-pulse -top-20 w-52 left-1/2 -translate-x-1/2 bg-background border border-popover px-4 py-1.5 text-sm rounded-lg"
           style={{ boxShadow: '0 0 20px 1px #0d3b63' }}
         >
           Powered by <LayerZeroLogo className="w-4 h-4 mx-1" /> LayerZero
         </Link>
+
+        <Logo className="w-full max-w-screen-sm h-auto md:mb-20 mb-10" />
       </div>
 
       <Typing />
 
-      <Link href="/mint">
+      <Link href="/mint" className="mt:mb-16 mt-10">
         <Button>Launch App</Button>
       </Link>
 

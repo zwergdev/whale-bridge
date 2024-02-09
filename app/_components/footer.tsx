@@ -1,4 +1,10 @@
-import { LayerZero, Telegram, Twitter, MobileLogo } from '@/components/ui/icons'
+import {
+  Discord,
+  LayerZero,
+  MobileLogo,
+  Telegram,
+  Twitter,
+} from '@/components/ui/icons'
 import { GitBook } from '@/components/ui/icons/git-book'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
@@ -34,10 +40,10 @@ export const Footer = () => (
 
     <Separator className="md:my-4 my-4 bg-popover" />
     <div className="flex flex-col md:hidden">
-      <div className="flex w-full sm:gap-10 gap-5 items-center justify-center font-medium text-xl md:hidden">
+      <div className="flex w-full sm:gap-10 gap-5 items-center justify-center font-medium  md:hidden">
         <Navigation isFooter />
       </div>
-      <Separator className="my-4 bg-primary" />
+      <Separator className="my-4 bg-popover" />
     </div>
 
     <div className="container flex justify-between items-center">
@@ -45,6 +51,7 @@ export const Footer = () => (
         {[
           { icon: <Telegram />, href: 'https://t.me/whale_app_com' },
           { icon: <Twitter />, href: 'https://twitter.com/Whale_app_' },
+          { icon: <Discord />, href: 'https://discord.gg/SPyXDAps' },
           {
             icon: <GitBook style={{ width: '24px' }} />,
             href: 'https://whale-app.gitbook.io/whale-book/',
