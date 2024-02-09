@@ -24,7 +24,7 @@ const ChainyTrigger = ({ disabled, selectedValue }: ChainyTriggerProps) => {
           disabled={disabled}
           role="combobox"
           variant="clean"
-          className="flex justify-between md:w-80 w-60 pl-3 md:pr-5 pr-2 bg-popover hover:bg-popover-light transition-colors duration-300"
+          className="flex justify-between md:w-80 w-60 pl-3 md:pr-5 pr-2 border border-[#0d3b63]/50 bg-paper hover:bg-popover transition-colors duration-300"
         >
           {selectedChain(selectedValue)}
           <ChevronDown className="h-4 w-4" />

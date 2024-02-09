@@ -231,19 +231,7 @@ export default function BridgePage() {
                           </SelectItem>
                         ))
                       ) : (
-                        <>
-                          <p className="mx-2 text-xl">No NFTs found!</p>
-                          <Button
-                            type="button"
-                            className="w-full text-sm py-2 mt-2"
-                            onClick={async () => {
-                              const nfts = await refetchNFT()
-                              form.setValue('nfts', nfts ?? [])
-                            }}
-                          >
-                            Retry
-                          </Button>
-                        </>
+                        <p className="mx-2 text-xl">No NFTs found!</p>
                       )}
                     </SelectContent>
                   </Select>
