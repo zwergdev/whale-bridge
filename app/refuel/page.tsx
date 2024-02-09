@@ -347,6 +347,7 @@ export default function RefuelPage() {
                           onChange(e)
                           debounceFee(1)
                         }}
+                        disabled={status !== 'connected'}
                         autoComplete="off"
                         type="number"
                         placeholder={`0.01 ${_balanceTo?.symbol ?? 'XXX'}`}
