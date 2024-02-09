@@ -9,7 +9,7 @@ const ROADMAP = [
     done: true,
   },
   {
-    title: '15+ Chains',
+    title: '20+ Chains',
     done: true,
   },
   {
@@ -21,11 +21,11 @@ const ROADMAP = [
     done: false,
   },
   {
-    title: 'Swap',
+    title: 'Messenger',
     done: false,
   },
   {
-    title: 'Messenger',
+    title: 'Gas Station',
     done: false,
   },
 ]
@@ -34,14 +34,18 @@ export const Roadmap = () => {
   return (
     <SectionWrapper
       title="Roadmap"
-      description="Our plans and goals for the future."
+      description="Our plans and goals for Q1 - Q2."
     >
       <div className="pt-14 pb-44">
-        <div className="flex items-center justify-between relative">
+        <div className="flex md:items-center items-start md:gap-0 gap-7 justify-between relative md:flex-row flex-col">
           {ROADMAP.map((item, i) => (
             <RoadmapItem key={i} {...item} />
           ))}
-          <Separator className="absolute bottom-3.5 left-5 -z-10 w-screen" />
+          <Separator className="absolute bottom-3.5 left-5 -z-10 w-screen md:block hidden" />
+          <Separator
+            className="absolute top-0 left-3.5 -z-10 md:hidden block h-[115%]"
+            orientation="vertical"
+          />
         </div>
       </div>
     </SectionWrapper>
@@ -53,7 +57,7 @@ const RoadmapItem = ({
   done,
   now,
 }: Partial<{ title: string; done: boolean; now: boolean }>) => (
-  <div className="flex items-center flex-col justify-center gap-4">
+  <div className="flex items-center md:flex-col flex-row-reverse justify-center gap-4">
     <h3
       className={cn(
         'text-lg font-semibold',

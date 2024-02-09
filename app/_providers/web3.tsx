@@ -156,7 +156,11 @@ const customTheme = {
 export const Web3Provider = ({ children }: { children: React.ReactNode }) => {
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={RAINBOW_CHAINS} theme={customTheme}>
+      <RainbowKitProvider
+        chains={RAINBOW_CHAINS}
+        theme={customTheme}
+        locale="en"
+      >
         <QueryClientProvider client={queryClient}>
           {children}
         </QueryClientProvider>
