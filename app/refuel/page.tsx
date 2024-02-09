@@ -40,6 +40,7 @@ import { BalanceIndicator } from './_components/balance-indicator'
 import { RefueledDialog } from './_components/refueled-dialog'
 
 const MAX_REFUEL: { [chainId: number]: number } = {
+  0: 0,
   42170: 0.02, // arbitrum-nova
   56: 1.23, // bsc
   137: 610.36, // polygon
@@ -61,6 +62,7 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   204: 0.05, // opbnb
   2222: 1, // kava
   7777777: 0.05, // zora
+  10042220: 1, // gnosis --> celo
 }
 
 const SYMBOL_TO_CHAIN: { [key: string]: string } = {
@@ -142,6 +144,11 @@ export default function RefuelPage() {
     address,
   })
   const balanceTo = Number(Number(_balanceTo?.formatted).toFixed(5))
+
+  const maxRefuelValue =
+    fields.chainFrom === 145 && fields.chainTo === 125
+      ? 1 // gnosis --> celo
+      : MAX_REFUEL[balanceToChainId ?? 0]
 
   const { refetch } = estimateRefuelFee(
     fields.chainTo,
@@ -328,7 +335,7 @@ export default function RefuelPage() {
                       type="button"
                       className="text-[10px] opacity-75 cursor-pointer text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4]"
                       onClick={() => {
-                        setValue('amount', MAX_REFUEL[balanceToChainId ?? 0])
+                        setValue('amount', maxRefuelValue)
                         debounceFee(1)
                       }}
                     >
@@ -370,7 +377,7 @@ export default function RefuelPage() {
               <Slider
                 disabled={status !== 'connected'}
                 defaultValue={[0.01]}
-                max={MAX_REFUEL[balanceToChainId ?? 0]}
+                max={maxRefuelValue}
                 value={[fields.amount]}
                 step={0.000001}
                 onValueChange={(v) => {
@@ -379,7 +386,7 @@ export default function RefuelPage() {
                 }}
               />
               <span className="flex items-center justify-center rounded-md py-3 w-fit min-w-20 px-2 border border-primary">
-                {MAX_REFUEL[balanceToChainId ?? 0] ?? 0}
+                {maxRefuelValue ?? 0}
               </span>
             </div>
 
