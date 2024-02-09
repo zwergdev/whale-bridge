@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button-new'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useState } from 'react'
 import {
@@ -24,6 +24,7 @@ export const MintButton = () => {
   const selectedChainId = chain?.unsupported ? 0 : chain?.id ?? 0
 
   const { write, data: signData, isLoading: isSigning } = mint(selectedChainId)
+
   const mintNFT = () => {
     if (balance < Number(CONTRACTS[selectedChainId].mintPrice))
       return truncatedToaster('Error occurred!', 'Insufficient balance.')
@@ -44,7 +45,7 @@ export const MintButton = () => {
 
   if (status === 'reconnecting' || status === 'connecting')
     return (
-      <Button className="w-48" variant="secondary" loading>
+      <Button className="w-full" loading>
         Loading...
       </Button>
     )
@@ -54,7 +55,6 @@ export const MintButton = () => {
       <div className="flex items-center gap-5 mb-5">
         <Button
           className="w-full max-w-lg before:scale-x-[1.01]"
-          variant="secondary"
           onClick={address ? mintNFT : openConnectModal}
           loading={isWaiting || isSigning}
           disabled={connectModalOpen}

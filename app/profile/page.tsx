@@ -33,11 +33,12 @@ export default function ProfilePage() {
 
   if (!address) return <NoWalletPage />
 
-  if (isLoading) return <Loader className="mb-4 h-8 w-8 animate-spin-slow" />
+  if (isLoading)
+    return <Loader className="mb-4 h-8 mt-60 w-8 animate-spin-slow" />
 
   return (
-    <section className="flex max-w-screen-xl mx-auto w-full flex-col items-center justify-center gap-5 pt-8">
-      <h6 className="font-medium text-xl text-muted-foreground mb-8 cursor-not-allowed">
+    <section className="flex max-w-screen-xl mx-auto w-full flex-col items-center justify-center pt-40 gap-5 min-h-[calc(100vh-160px)]">
+      <h6 className="font-medium text-xl text-muted-foreground mb-6 cursor-not-allowed">
         Leaderboard
       </h6>
 

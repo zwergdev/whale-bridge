@@ -1,5 +1,5 @@
+import { type VariantProps, cva } from 'class-variance-authority'
 import * as React from 'react'
-import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/lib/utils'
 import { Loader } from 'lucide-react'
@@ -10,7 +10,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'text-foreground bg-gradient-to-b from-primary to-[#035D79] hover:brightness-125 rounded-[10px] transition-all duration-300',
+          'text-foreground bg-primary hover:brightness-125 rounded-[10px] transition-all duration-300',
         clean: '',
         secondary:
           'bg-background hover:bg-paper relative before:w-full before:h-full before:scale-x-[1.05] before:scale-y-[1.08] before:absolute before:top-[50%] before:left-[50%] before:-z-10 before:translate-x-[-50%] before:translate-y-[-50%] before:from-primary before:to-[#035D79] before:bg-gradient-to-b before:rounded-md transition-all duration-300',
@@ -35,7 +35,7 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, variant, disabled,children, loading, size, ...props },
+    { className, variant, disabled, children, loading, size, ...props },
     ref,
   ) => {
 

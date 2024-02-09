@@ -8,7 +8,6 @@ export const Typing = () => (
       'Welcome to Whale, your multifunctional omnichain solution platform for seamless Web3 experiences. Mint NFTs in a Flash, Top Up Crypto Gas Instantly, and Bridge Assets Seamlessly.',
     ]}
     wrapper="h2"
-    cursor={true}
-    className="text-foreground md:mb-16 mb-10 md:text-2xl md:h-24 h-40 text-xl font-light max-w-screen-md text-center"
+    className="text-foreground md:text-2xl md:h-24 sm:h-40 h-40 text-xl font-semibold max-w-screen-md text-center"
   />
 )

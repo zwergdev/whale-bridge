@@ -1,13 +1,14 @@
+import { Button } from '@/components/ui/button-new'
+import { CheckPending } from '@/components/ui/icons'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
 import Image from 'next/image'
-import { SectionWrapper } from './misc'
-import l0NFT from '../../../public/nft/nft-l0.webp'
-import bridgeNFT from '../../../public/nft/nft-bridge.webp'
-import refuelNFT from '../../../public/nft/nft-refuel.webp'
+import Link from 'next/link'
 import bridge from '../../../public/general/bridge-menu.webp'
 import refuel from '../../../public/general/refuel-menu.webp'
+import bridgeNFT from '../../../public/nft/nft-bridge.webp'
+import l0NFT from '../../../public/nft/nft-l0.webp'
+import refuelNFT from '../../../public/nft/nft-refuel.webp'
+import { SectionWrapper } from './misc'
 
 type ArticleProps = {
   children: React.ReactNode
@@ -30,27 +31,30 @@ const Article = ({
   return (
     <article
       className={cn(
-        'flex md:items-start items-center flex-col justify-center gap-10 mb-20 last:mb-12',
+        'flex md:items-start items-center flex-col justify-center gap-10 mb-28 last-of-type:mb-4',
         revert ? 'md:flex-row-reverse' : 'md:flex-row',
       )}
     >
-      <div className="flex flex-col gap-4">
-        <h3 className="text-primary md:text-4xl text-2xl font-semibold md:mb-10 mb-5">
+      <div className="flex flex-col">
+        <h3 className="bg-gradient-to-r from-primary to-foreground bg-clip-text text-transparent md:text-4xl text-2xl uppercase font-bold tracking-wide mb-9">
           {title}
         </h3>
         {bio.map((text, idx) => (
           <p
             key={idx}
-            className="before:content-[''] before:w-full before:max-w-5 before:h-5 before:rounded-full before:bg-primary before:block before:relative before:top-1 before:drop-shadow-[0_0_4px_#30DDF4] flex items-start gap-5 md:text-2xl text-base sm:text-xl font-medium mb-5 max-w-[500px]"
+            className="flex items-start gap-5 md:text-xl text-base sm:text-lg font-medium mb-7 max-w-[500px]"
           >
+            <CheckPending
+              bgColor="#09bffb"
+              centerColor="#FFFFFF"
+              className="min-w-5 grow min-h-5 top-0.5"
+            />
             {text}
           </p>
         ))}
 
         <Link href={button.link}>
-          <Button className="w-32 md:mt-10 mt-0" variant="secondary">
-            {button.text}
-          </Button>
+          <Button className="w-38 md:mt-2 mt-0">{button.text}</Button>
         </Link>
       </div>
       {children}
@@ -60,7 +64,12 @@ const Article = ({
 
 export const Articles = () => {
   return (
-    <SectionWrapper titleClassName="mb-14" title="What Our Product Does">
+    <SectionWrapper
+      className="mt-28"
+      title="What Our Product Does"
+      description="Explore the features of our platform and how it can benefit you."
+    >
+      <div className="mb-20 h-px" />
       <Article
         title="Mint NFT"
         bio={[
@@ -70,7 +79,7 @@ export const Articles = () => {
         ]}
         button={{ link: '/mint', text: 'Mint NFT' }}
       >
-        <div className="border-2 border-primary rounded-lg">
+        <div className="border border-primary rounded-lg">
           <Image
             src={l0NFT}
             quality={100}
@@ -94,7 +103,7 @@ export const Articles = () => {
         button={{ link: '/bridge', text: 'Bridge' }}
       >
         <div className="relative lg:mt-32 mt-0">
-          <div className="border-2 border-primary rounded-lg">
+          <div className="border border-primary rounded-lg">
             <Image
               src={bridge}
               placeholder="blur"
@@ -113,7 +122,7 @@ export const Articles = () => {
             alt="mint-picture"
             className="absolute -top-32 -left-16 rounded-lg scale-x-[-1] z-10 lg:block hidden"
           />
-          <div className="w-56 h-56 -z-10 bg-primary blur-[150px] absolute bottom-0 right-0" />
+          <div className="w-56 h-56 -z-10 bg-primary blur-[250px] absolute bottom-0 right-0" />
         </div>
       </Article>
 
@@ -127,7 +136,7 @@ export const Articles = () => {
         button={{ link: '/refuel', text: 'Refuel' }}
       >
         <div className="relative lg:mt-24 mt-0">
-          <div className="border-2 border-primary rounded-lg">
+          <div className="border border-primary rounded-lg">
             <Image
               src={refuelNFT}
               placeholder="blur"
@@ -146,9 +155,10 @@ export const Articles = () => {
             alt="mint-picture"
             className="absolute -top-32 -right-32 rounded-lg -z-10 lg:block hidden"
           />
-          <div className="w-56 h-56 -z-10 bg-primary blur-[150px] absolute bottom-0 right-0" />
+          <div className="w-56 h-56 -z-10 bg-primary blur-[200px] absolute bottom-0 right-0" />
         </div>
       </Article>
+      <div className="mb-32 h-px" />
     </SectionWrapper>
   )
 }

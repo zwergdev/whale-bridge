@@ -24,22 +24,24 @@ export const TotalMinted = () => {
 
   const newNext = () => {
     switch (chain?.id) {
-      case 56:
-        return next - 1000000
-      case 324:
-        return next - 2500000
-      case 8453:
-        return next - 3500000
-      case 59144:
-        return next - 4000000
+      case 137:
+        return next
       case 42170:
         return next - 500000
+      case 56:
+        return next - 1000000
       case 42161:
         return next - 1500000
       case 534352:
         return next - 2000000
+      case 324:
+        return next - 2500000
       case 10:
         return next - 3000000
+      case 8453:
+        return next - 3500000
+      case 59144:
+        return next - 4000000
       case 1284:
         return next - 4500000
       case 43114:
@@ -52,14 +54,18 @@ export const TotalMinted = () => {
         return next - 6500000
       case 1101:
         return next - 7000000
-      case 1285:
-        return next - 8000000
       case 82:
         return next - 7500000
+      case 1285:
+        return next - 8000000
       case 1666600000:
         return next - 8500000
-      case 137:
-        return next
+      case 204:
+        return next - 9000000
+      case 2222:
+        return next - 9500000
+      case 7777777:
+        return next - 10000000
       default:
         return 0
     }

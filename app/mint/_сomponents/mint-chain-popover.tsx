@@ -17,7 +17,7 @@ export const MintChainPopover = () => {
 
   return (
     <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-      <PopoverTrigger className="mb-10 rounded-full w-fit border border-primary flex items-center gap-2.5 justify-start p-2.5 hover:bg-paper transition-colors duration-300">
+      <PopoverTrigger className="mb-10 rounded-full w-fit border border-primary bg-[#011e37]/30 backdrop-blur-md flex items-center gap-2.5 justify-start p-2.5 hover:bg-[#011e37]/60 transition-colors duration-300">
         {Array.from(CHAINS)
           .splice(0, 3)
           .map(({ image }, idx) => (
@@ -35,7 +35,7 @@ export const MintChainPopover = () => {
       </PopoverTrigger>
       <PopoverContent
         align="start"
-        className="flex gap-3 flex-wrap p-1.5 w-[312px] border-primary bg-paper rounded-[22px] items-center sm:justify-center justify-start"
+        className="flex gap-3 flex-wrap p-1.5 w-[312px] border-popover bg-[#011e37]/70 backdrop-blur-md rounded-[22px] items-center sm:justify-center justify-start"
       >
         {CHAINS.map(({ chainId, image }) => (
           <button

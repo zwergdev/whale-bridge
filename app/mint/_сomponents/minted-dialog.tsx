@@ -23,13 +23,9 @@ export const MintedDialog = ({ open, hash, chainId }: MintedDialogProps) => {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>You've successfully minted WHL!</AlertDialogTitle>
-          <AlertDialogDescription>
+          <AlertDialogDescription className="relative">
             <div className="flex gap-4 items-center">
-              <MintImage
-                className="border border-border"
-                size={100}
-                chainId={chainId}
-              />
+              <MintImage size={100} chainId={chainId} />
               <div className="truncate max-w-96 text-left">
                 <p className="mb-2">Now you're able to bridge your WHL.</p>
                 Transaction link:{' '}
@@ -42,6 +38,7 @@ export const MintedDialog = ({ open, hash, chainId }: MintedDialogProps) => {
                 </Link>
               </div>
             </div>
+            <div className="w-32 h-32 -z-10 bg-primary blur-[150px] absolute -bottom-20 left-0" />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

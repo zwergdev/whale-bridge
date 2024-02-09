@@ -59,6 +59,14 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
     chain: 'gnosisapi',
     collection: '0xe9EbD35Ea4aCCb97e0F5BF3CDA31fe3Ac90111Cc',
   },
+  204: {
+    chain: 'opbnb',
+    collection: '0x9aeAa45d415fFE75dC4Ba50658584479bAf110Ec'
+  },
+  2222: {
+    chain: 'kava',
+    collection: '0xBcEe7fB1B98ea4e38Eb52c2E026134d54273ED44'
+  }
 }
 
 // const fetchFromElement = async (address: string, chainId: number) => {
@@ -139,7 +147,10 @@ export const getNFTBalance = async (
     chainId === 1101 ||
     chainId === 82 ||
     chainId === 1285 ||
-    chainId === 1666600000
+    chainId === 1666600000 ||
+    chainId === 204 ||
+    chainId === 2222 ||
+    chainId === 7777777
   )
     return []
 

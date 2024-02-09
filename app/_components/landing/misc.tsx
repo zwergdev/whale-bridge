@@ -2,27 +2,29 @@ import { cn } from '@/lib/utils'
 
 type SectionWrapperProps = {
   children: React.ReactNode
-  titleClassName?: string
-  sectionClassName?: string
+  className?: string
   title: string
+  description?: string
 }
 
 export const SectionWrapper = ({
   children,
-  titleClassName,
-  sectionClassName,
+  className,
   title,
+  description,
 }: SectionWrapperProps) => {
   return (
-    <section className={cn('max-w-screen-xl mx-auto relative w-full', sectionClassName)}>
-      <h2
-        className={cn(
-          'md:text-4xl text-2xl text-foreground text-center font-semibold',
-          titleClassName,
-        )}
-      >
-        {title}
-      </h2>
+    <section
+      className={cn('max-w-screen-xl mx-auto relative w-full', className)}
+    >
+      <div>
+        <h2 className="md:text-6xl text-5xl bg-gradient-to-r from-primary to-foreground bg-clip-text text-transparent text-center font-bold">
+          {title}
+        </h2>
+        <p className="ml-2 mt-1 text-muted-foreground text-center">
+          {description}
+        </p>
+      </div>
       {children}
     </section>
   )

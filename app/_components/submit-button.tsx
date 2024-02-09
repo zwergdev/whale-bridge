@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button-new'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
 
@@ -20,7 +20,11 @@ export const SubmitButton = ({
 
   if (status === 'reconnecting' || status === 'connecting')
     return (
-      <Button type="button" className="w-full text-base py-2.5" loading>
+      <Button
+        type="button"
+        className="w-full py-2.5 hover:scale-[1.025]"
+        loading
+      >
         Loading...
       </Button>
     )
@@ -29,7 +33,7 @@ export const SubmitButton = ({
     return (
       <Button
         type="button"
-        className="w-full text-base py-2.5"
+        className="w-full py-2.5 hover:scale-[1.025]"
         onClick={openConnectModal}
         disabled={connectModalOpen}
       >
@@ -42,7 +46,7 @@ export const SubmitButton = ({
       type="submit"
       disabled={disabled}
       loading={loading}
-      className="w-full text-base py-2.5"
+      className="w-full py-2.5 hover:scale-[1.025]"
     >
       {children}
     </Button>
