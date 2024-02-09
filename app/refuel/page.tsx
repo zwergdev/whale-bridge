@@ -87,6 +87,7 @@ export default function RefuelPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [fee, setFee] = useState<bigint>()
   const [isFeeLoading, setIsFeeLoading] = useState(false)
+  const [isChainGridView, setIsChainGridView] = useState(false)
   const { switchNetwork } = useSwitchNetwork()
   const { chain } = useNetwork()
   const { address, status } = useAccount()
@@ -265,6 +266,8 @@ export default function RefuelPage() {
                     >
                       <ChainyTrigger selectedValue={field.value} />
                       <ChainList
+                        isChainGridView={isChainGridView}
+                        setIsChainGridView={setIsChainGridView}
                         selectedValue={fields.chainTo}
                         fieldValue={field.value}
                         onSelect={(value, chainId) => {
@@ -309,6 +312,8 @@ export default function RefuelPage() {
                     >
                       <ChainyTrigger selectedValue={field.value} />
                       <ChainList
+                        isChainGridView={isChainGridView}
+                        setIsChainGridView={setIsChainGridView}
                         selectedValue={fields.chainFrom}
                         fieldValue={field.value}
                         onSelect={(value) => {

@@ -42,10 +42,7 @@ const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
-  <div
-    className="flex items-center border-b border-b-primary px-3"
-    cmdk-input-wrapper=""
-  >
+  <div className="flex items-center" cmdk-input-wrapper="">
     <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
     <CommandPrimitive.Input
       ref={ref}
@@ -118,33 +115,40 @@ const CommandItem = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item> & {
     checked?: boolean
+    isChainGridView?: boolean
     image: string
   }
->(({ className, children, checked, image, ...props }, ref) => (
-  <>
-    <CommandPrimitive.Item
-      ref={ref}
-      className={cn(
-        'relative flex justify-between cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-paper aria-selected:text-accent-foreground data-[disabled]:pointer-events-none',
-        props.disabled && 'opacity-50 cursor-not-allowed',
-        className,
-      )}
-      {...props}
-    >
-      <div className="flex items-center gap-2 text-xl">
-        <Image
-          src={image}
-          width={28}
-          height={28}
-          alt="chain-icon"
-          className="rounded-full"
-        />
-        {children}
-      </div>
-      {checked && <Check className="mr-2 h-4 w-4" />}
-    </CommandPrimitive.Item>
-  </>
-))
+>(
+  (
+    { className, children, checked, image, isChainGridView = false, ...props },
+    ref,
+  ) => (
+    <>
+      <CommandPrimitive.Item
+        ref={ref}
+        className={cn(
+          'relative flex justify-between cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-paper aria-selected:text-accent-foreground data-[disabled]:pointer-events-none',
+          props.disabled && 'opacity-50 cursor-not-allowed',
+          className,
+        )}
+        {...props}
+      >
+        <div className="flex items-center gap-2 text-xl">
+          {!isChainGridView && 
+          (<Image
+            src={image}
+            width={28}
+            height={28}
+            alt="chain-icon"
+            className="rounded-full"
+          />)}
+          {children}
+        </div>
+        {!isChainGridView && checked && <Check className="mr-2 h-4 w-4" />}
+      </CommandPrimitive.Item>
+    </>
+  ),
+)
 
 CommandItem.displayName = CommandPrimitive.Item.displayName
 

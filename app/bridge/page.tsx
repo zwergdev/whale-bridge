@@ -52,6 +52,7 @@ export default function BridgePage() {
   const [popoverToOpen, setPopoverToOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isLoadingNFT, setIsLoadingNFT] = useState(true)
+  const [isChainGridView, setIsChainGridView] = useState(false)
   const { data: _balanceFrom } = useBalance({ address })
   const balanceFrom = Number(Number(_balanceFrom?.formatted).toFixed(5))
   const ref = useRef('a')
@@ -261,6 +262,8 @@ export default function BridgePage() {
                         selectedValue={field.value}
                       />
                       <ChainList
+                        isChainGridView={isChainGridView}
+                        setIsChainGridView={setIsChainGridView}
                         selectedValue={fields.chainTo}
                         fieldValue={field.value}
                         onSelect={(value, chainId) => {
@@ -304,6 +307,8 @@ export default function BridgePage() {
                         selectedValue={field.value}
                       />
                       <ChainList
+                        isChainGridView={isChainGridView}
+                        setIsChainGridView={setIsChainGridView}
                         disabledChain={165}
                         selectedValue={fields.chainFrom}
                         fieldValue={field.value}
