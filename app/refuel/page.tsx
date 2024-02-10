@@ -85,7 +85,7 @@ const SYMBOL_TO_CHAIN: { [key: string]: string } = {
   MOVR: 'moonriver',
   ONE: 'harmony',
   KAVA: 'kava',
-  KLAYTN: 'klaytn'
+  KLAYTN: 'klay-token'
 }
 
 export default function RefuelPage() {
