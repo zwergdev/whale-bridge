@@ -24,7 +24,7 @@ import scroll from '@/public/nft/nft-scroll.webp'
 import zk from '@/public/nft/nft-zk.webp'
 import zora from '@/public/nft/nft-zora.webp'
 import Image, { StaticImageData } from 'next/image'
-import { useAccount, useNetwork } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 const IMAGES: { [key: number]: StaticImageData } = {
   56: bsc,
@@ -51,27 +51,19 @@ const IMAGES: { [key: number]: StaticImageData } = {
 }
 
 type MintImageProps = {
-  chainId?: number
   size?: number
   className?: string
 }
 
-export const MintImage = ({
-  chainId,
-  className,
-  size = 440,
-}: MintImageProps) => {
-  const { chain } = useNetwork()
-  const { status } = useAccount()
-
-  const definedChain = chainId || chain?.id
+export const MintImage = ({ className, size = 440 }: MintImageProps) => {
+  const { status, chainId } = useAccount()
 
   return (
     <Image
       src={
-        definedChain && status === 'connected'
-          ? IMAGES[definedChain]
-            ? IMAGES[definedChain]
+        chainId && status === 'connected'
+          ? IMAGES[chainId]
+            ? IMAGES[chainId]
             : defaultImage
           : defaultImage
       }

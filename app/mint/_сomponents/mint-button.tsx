@@ -1,51 +1,48 @@
 'use client'
 
 import { Button } from '@/components/ui/button-new'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { useState } from 'react'
+import { useWeb3Modal, useWeb3ModalState } from '@web3modal/wagmi/react'
 import {
   useAccount,
   useBalance,
-  useNetwork,
-  useWaitForTransaction,
+  useWaitForTransactionReceipt,
+  useWriteContract,
 } from 'wagmi'
 import { CONTRACTS, mint } from '../../_utils/contract-actions'
 import { truncatedToaster } from '../../_utils/truncatedToaster'
 import { MintedDialog } from './minted-dialog'
 
 export const MintButton = () => {
-  const { address, status } = useAccount()
-  const { chain } = useNetwork()
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const { openConnectModal, connectModalOpen } = useConnectModal()
+  const { address, status, chainId } = useAccount()
+  const { open } = useWeb3Modal()
+  const { open: isOpen } = useWeb3ModalState()
   const { data: _balance } = useBalance({ address })
   const balance = Number(Number(_balance?.formatted).toFixed(5))
 
-  const selectedChainId = chain?.unsupported ? 0 : chain?.id ?? 0
+  const selectedChainId = chainId ?? 0
 
-  const { write, data: signData, isLoading: isSigning } = mint(selectedChainId)
+  const mintData = mint(selectedChainId)
+  const { data: hash, writeContract, isPending: isSigning } = useWriteContract()
 
   const mintNFT = () => {
     if (balance < Number(CONTRACTS[selectedChainId].mintPrice))
       return truncatedToaster('Error occurred!', 'Insufficient balance.')
 
-    write()
+    writeContract(mintData)
   }
 
-  const { isLoading: isWaiting } = useWaitForTransaction({
-    hash: signData?.hash,
-    confirmations: 2,
-    onSuccess() {
-      setIsDialogOpen(true)
-    },
-    onError(error) {
-      truncatedToaster('Error occurred!', error?.message!)
-    },
-  })
+  const handleClick = () => {
+    if (address) return mintNFT()
+    open({ view: 'Connect' })
+  }
+
+  const { isLoading: isWaiting, data: waitData } = useWaitForTransactionReceipt(
+    { hash, confirmations: 2 },
+  )
 
   if (status === 'reconnecting' || status === 'connecting')
     return (
-      <Button className="w-full" loading>
+      <Button className="w-full mb-5" loading>
         Loading...
       </Button>
     )
@@ -54,20 +51,16 @@ export const MintButton = () => {
     <>
       <div className="flex items-center gap-5 mb-5">
         <Button
-          className="w-full max-w-lg before:scale-x-[1.01]"
-          onClick={address ? mintNFT : openConnectModal}
+          className="w-full max-w-lg "
+          onClick={handleClick}
           loading={isWaiting || isSigning}
-          disabled={connectModalOpen}
+          disabled={isOpen}
         >
           {address ? 'Mint' : 'Connect wallet'}
         </Button>
       </div>
 
-      <MintedDialog
-        hash={signData?.hash}
-        open={isDialogOpen}
-        chainId={selectedChainId}
-      />
+      <MintedDialog hash={hash} open={!!waitData} chainId={selectedChainId} />
     </>
   )
 }

@@ -4,15 +4,16 @@ import { getNextMintId } from '@/app/_utils/contract-actions'
 import { Progress } from '@/components/ui/progress'
 import { cn } from '@/lib/utils'
 import { useEffect, useState } from 'react'
-import { useNetwork } from 'wagmi'
+import { useAccount, useReadContract } from 'wagmi'
 
 export const TotalMinted = () => {
   const [next, setNext] = useState(0)
-  const { chain } = useNetwork()
+  const { chainId } = useAccount()
 
-  const selectedChainId = chain?.unsupported ? 0 : chain?.id ?? 0
+  const selectedChainId = chainId ?? 0
 
-  const { refetch: refetchNext } = getNextMintId(selectedChainId)
+  const readData = getNextMintId(selectedChainId)
+  const { refetch: refetchNext } = useReadContract(readData)
 
   // biome-ignore lint/correctness/useExhaustiveDependencies:
   useEffect(() => {
@@ -20,10 +21,10 @@ export const TotalMinted = () => {
       const { data: next }: any = await refetchNext()
       if (next) setNext(Number(next) - 1)
     })()
-  }, [chain])
+  }, [chainId])
 
   const newNext = () => {
-    switch (chain?.id) {
+    switch (chainId) {
       case 137:
         return next
       case 42170:
