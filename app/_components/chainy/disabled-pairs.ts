@@ -128,4 +128,23 @@ export const DISABLED_PAIRS = [
   [116, 195], // harmony <-> zora
   [202, 195], // opbnb <-> zora
   [177, 195], // kava <-> zora
+  // klaytn
+  [150, 125], // klaytn <-> celo
+  [150, 195], // klaytn <-> zora
+  [150, 116], // klaytn <-> harmony
+  [150, 175], // klaytn <-> nova
+  [150, 202], // klaytn <-> opbnb
+  [150, 158], // klaytn <-> polygon-zk
+  [150, 167], // klaytn <-> moonriver
+  [150, 112], // klaytn <-> phantom
+  [150, 176], // klaytn <-> meter
+  [195, 150], // zors <-> klaytn
+  [202, 150], // opbnb <-> klaytn
+  [116, 150], // harmony <-> klaytn
+  [176, 150], // meter <-> klaytn
+  [158, 150], // polygon-zk <-> klaytn
+  [112, 150], // phantom <-> klaytn
+  [125, 150], // celo <-> klaytn
+  [175, 150], // nova <-> klaytn
+  [167, 150], // moonriver <-> klaytn
 ]

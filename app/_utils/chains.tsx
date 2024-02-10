@@ -112,6 +112,12 @@ export const CHAINS = [
     image: '/chain-logo/zora.svg',
     chainId: 7777777,
   },
+  {
+    label: 'Klaytn',
+    value: 150,
+    image: '/chain-logo/klaytn.svg',
+    chainId: 8217
+  }
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
@@ -136,6 +142,7 @@ export const TX_LINK: { [chainId: number]: string } = {
   204: 'opbnb.bscscan.com', // op-bnb
   2222: 'kavascan.com', // kava
   7777777: 'explorer.zora.energy', // zora
+  8217: 'scope.klaytn.com' //klaytn
 }
 
 export const selectedChain = (fieldValue: number) => {

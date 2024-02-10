@@ -86,7 +86,12 @@ export default function BridgePage() {
           return nfts.map((nft: any) => nft.toString())
         }
 
-        if (chain?.id === 204 || chain?.id === 2222 || chain?.id === 7777777) {
+        if (
+          chain?.id === 204 ||
+          chain?.id === 2222 ||
+          chain?.id === 7777777 ||
+          chain?.id === 8217
+        ) {
           const { data: nfts }: any = await refetchModernUserNFTIds()
           return nfts.map((nft: any) => nft.toString())
         }
@@ -169,7 +174,7 @@ export default function BridgePage() {
     getModernUserNFTIds(address!, selectedChainId),
   )
 
-const refetchNFT = async () => {
+  const refetchNFT = async () => {
     setIsLoadingNFT(true)
     const nfts = await getNFTBalance(address!, selectedChainId)
     setIsLoadingNFT(false)
