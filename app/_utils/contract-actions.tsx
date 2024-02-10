@@ -1,11 +1,13 @@
 import { ethers } from 'ethers'
 import { parseEther } from 'viem/utils'
-import { celoMintABI, mintABI, modernMintABI, refuelABI } from './abi'
+import { celoMintABI, mintABI, modernMintABI, refuelABI, tokenABI } from './abi'
 
 const CONTRACTS: {
   [chainId: number]: {
     mintAddress: `0x${string}`
     refuelAddress: `0x${string}`
+    tokenAddress?: `0x${string}`
+    tokenPrice?: string
     mintPrice: string
   }
 } = {
@@ -17,6 +19,8 @@ const CONTRACTS: {
   56: {
     mintAddress: '0x006E23eb40eBc1805783e3a6c39283bcF5799368',
     refuelAddress: '0x6D096d86F1fE43aed8A073DAd9823C987A450f0e',
+    tokenAddress: '0x408bE6A5C550913B46B8FA9196c122083811Be96',
+    tokenPrice: '0.0000025',
     mintPrice: '0.00076824587',
   }, // bsc
   137: {
@@ -102,6 +106,8 @@ const CONTRACTS: {
   204: {
     mintAddress: '0x9aeAa45d415fFE75dC4Ba50658584479bAf110Ec',
     refuelAddress: '0x84f4c0A290B5607fee0f2A1CDe5348540fecF6A1',
+    tokenAddress: '0xb9F2BEE223C9c7BEAc8d7517d950DBdC19Bf8680',
+    tokenPrice: '0.0000025',
     mintPrice: '0.0007191320',
   }, // op-bnb
   2222: {
@@ -121,6 +127,12 @@ const CONTRACTS: {
   },
 }
 
+/*
+
+      MINT
+
+*/
+
 function mint(chainId: number) {
   return {
     address: CONTRACTS[chainId].mintAddress,
@@ -130,6 +142,12 @@ function mint(chainId: number) {
     value: parseEther(CONTRACTS[chainId].mintPrice),
   }
 }
+
+/*
+
+      BRIDGE
+
+*/
 
 function bridge(chainId: number) {
   return {
@@ -162,6 +180,44 @@ function estimateBridgeFee(
     enabled: false,
   }
 }
+
+function getUserNFTIds(address: string, chainId: number) {
+  return {
+    address: CONTRACTS[chainId].mintAddress, // celo & polygon-zk & meter & moonriver
+    chainId: chainId,
+    abi: celoMintABI,
+    functionName: 'getUserNFTIds',
+    args: [address],
+    enabled: false,
+  }
+}
+
+function getModernUserNFTIds(address: string, chainId: number) {
+  return {
+    address: CONTRACTS[chainId].mintAddress, // opbnb & kava & zora
+    chainId: chainId,
+    abi: modernMintABI,
+    functionName: 'getOwnedNFTs',
+    args: [address],
+    enabled: false,
+  }
+}
+
+function getNextMintId(chainId: number) {
+  return {
+    address: CONTRACTS[chainId].mintAddress,
+    chainId: chainId,
+    abi: mintABI,
+    functionName: 'nextMintId',
+    enabled: false,
+  }
+}
+
+/*
+
+      REFUEL
+
+*/
 
 function refuel(chainId: number) {
   return {
@@ -203,34 +259,40 @@ function estimateRefuelFee(
   }
 }
 
-function getUserNFTIds(address: string, chainId: number) {
-  return {
-    address: CONTRACTS[chainId].mintAddress, // celo & polygon-zk & meter & moonriver
-    chainId: chainId,
-    abi: celoMintABI,
-    functionName: 'getUserNFTIds',
-    args: [address],
-    enabled: false,
-  }
-}
+/*
 
-function getModernUserNFTIds(address: string, chainId: number) {
-  return {
-    address: CONTRACTS[chainId].mintAddress, // opbnb & kava & zora
-    chainId: chainId,
-    abi: modernMintABI,
-    functionName: 'getOwnedNFTs',
-    args: [address],
-    enabled: false,
-  }
-}
+      TOKEN
 
-function getNextMintId(chainId: number) {
+*/
+
+function claimToken(chainId: number) {
   return {
     address: CONTRACTS[chainId].mintAddress,
-    chainId: chainId,
-    abi: mintABI,
-    functionName: 'nextMintId',
+    abi: tokenABI,
+    functionName: 'mint',
+    chainId,
+    value: parseEther('0'),
+  }
+}
+
+function estimateClaimFee(
+  chainTo: number,
+  chainId: number,
+  address: string,
+  amount: number,
+) {
+  return {
+    address: CONTRACTS[chainId].mintAddress,
+    abi: tokenABI,
+    functionName: 'estimateSendFee',
+    chainId,
+    args: [
+      chainTo,
+      address,
+      amount,
+      false,
+      '0x00010000000000000000000000000000000000000000000000000000000000030d40',
+    ],
     enabled: false,
   }
 }
@@ -245,5 +307,7 @@ export {
   getUserNFTIds,
   getModernUserNFTIds,
   getNextMintId,
+  claimToken,
+  estimateClaimFee,
   CONTRACTS,
 }
