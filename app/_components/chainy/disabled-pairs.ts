@@ -25,6 +25,7 @@ export const DISABLED_PAIRS = [
   [176, 145], // meter <-> gnosis
   [176, 214], // meter <-> scroll
   [176, 183], // meter <-> linea
+  [176, 150], // meter <-> klaytn
   [125, 176], // celo <-> meter
   [116, 176], // harmony <-> meter
   [158, 176], // polygon-zk <-> meter
@@ -33,6 +34,7 @@ export const DISABLED_PAIRS = [
   [145, 176], // gnosis <-> meter
   [214, 176], // scroll <-> meter
   [183, 176], // linea <-> meter
+  [150, 176], // klaytn <-> meter
   //harmony
   [116, 176], // harmony <-> meter
   [116, 125], // harmony <-> celo
@@ -43,6 +45,7 @@ export const DISABLED_PAIRS = [
   [116, 184], // harmony <-> base
   [116, 214], // harmony <-> scroll
   [116, 165], // harmony <-> zk
+  [116, 150], // harmony <-> klaytn
   [176, 116], // meter <-> harmony
   [125, 116], // celo <-> harmony
   [158, 116], // polygon-zk <-> harmony
@@ -52,6 +55,7 @@ export const DISABLED_PAIRS = [
   [184, 116], // base <-> harmony
   [214, 116], // scroll <-> harmony
   [165, 116], // zk <-> harmony
+  [150, 116], // klaytn <-> harmony
   // moonriver
   [167, 176], // moonriver <-> meter
   [167, 125], // moonriver <-> celo
@@ -61,6 +65,7 @@ export const DISABLED_PAIRS = [
   [167, 116], // moonriver <-> harmony
   [167, 126], // moonriver <-> moonbeam
   [167, 165], // moonriver <-> zk
+  [167, 150], // moonriver <-> klaytn
   [176, 167], // meter <-> moonriver
   [125, 167], // celo <-> moonriver
   [158, 167], // polygon-zk <-> moonriver
@@ -69,6 +74,7 @@ export const DISABLED_PAIRS = [
   [116, 167], // harmony <-> moonriver
   [126, 167], // moonbeam <-> moonriver
   [165, 167], // zk <-> moonriver
+  [150, 167], //klaytn <-> moonriver
   // opbnb
   [202, 175], // opbnb <-> nova
   [202, 126], // opbnb <-> moonbeam
@@ -79,6 +85,7 @@ export const DISABLED_PAIRS = [
   [202, 116], // opbnb <-> harmony
   [202, 177], // opbnb <-> kava
   [202, 195], // opbnb <-> zora
+  [202, 150], // opbnb <-> klaytn
   [175, 202], // nova <-> opbnb
   [126, 202], // moonbeam <-> opbnb
   [125, 202], // celo <-> opbnb
@@ -88,6 +95,7 @@ export const DISABLED_PAIRS = [
   [116, 202], // harmony <-> opbnb
   [177, 202], // kava <-> opbnb
   [195, 202], // zora <-> opbnb
+  [150, 202], // kaytn <-> opbnb
   // kava
   [177, 125], // kava <-> celo
   [177, 145], // kava <-> gnosis
@@ -115,6 +123,7 @@ export const DISABLED_PAIRS = [
   [195, 116], // zora <-> harmony
   [195, 202], // zora <-> opbnb
   [195, 177], // zora <-> kava
+  [195, 150], // zors <-> kaytn
   [165, 195], // zk <-> zora
   [175, 195], // nova <-> zora
   [214, 195], // scroll <-> zora
@@ -128,4 +137,5 @@ export const DISABLED_PAIRS = [
   [116, 195], // harmony <-> zora
   [202, 195], // opbnb <-> zora
   [177, 195], // kava <-> zora
+  [150, 195]  // klaytn <-> zora
 ]
