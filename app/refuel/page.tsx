@@ -68,6 +68,7 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   204: 0.05, // opbnb
   2222: 1, // kava
   7777777: 0.05, // zora
+  8217: 0.05, // klaytn
   10042220: 1, // gnosis --> celo
 }
 
