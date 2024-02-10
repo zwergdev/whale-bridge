@@ -117,7 +117,7 @@ const CONTRACTS: {
   8217: {
     mintAddress: '0xa0d013b84fbaeff5abfc92a412a44572382dca08',
     refuelAddress: '0xbcb4bc8fe7faba16c8a06186ab1703709a24c6bf',
-    mintPrice: '0.0001'
+    mintPrice: '1.05'
   }, // klaytn
   0: {
     mintAddress: '0x00',
