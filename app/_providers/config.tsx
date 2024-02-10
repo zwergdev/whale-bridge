@@ -29,7 +29,7 @@ export const projectId = 'c8cb5377bf1b35c1349bb08e2025d352'
 if (!projectId) throw new Error('Project ID is not defined')
 
 const metadata = {
-  name: 'Web3Modal',
+  name: 'Whale',
   description:
     'Multifunctional Omnichain Solution | Bridge & Refuel Powered by LayerZero',
   url: 'https://whale-app.com', // origin must match your domain & subdomain
@@ -66,8 +66,8 @@ export const config = defaultWagmiConfig({
   storage: createStorage({
     storage: cookieStorage,
   }),
-  enableWalletConnect: true, // Optional - true by default
+  enableWalletConnect: false, // Optional - true by default
   enableInjected: true, // Optional - true by default
   enableEIP6963: true, // Optional - true by default
-  enableCoinbase: true, // Optional - true by default
+  enableCoinbase: false, // Optional - true by default
 })
