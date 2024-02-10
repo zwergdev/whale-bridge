@@ -2,8 +2,6 @@ export const DISABLED_PAIRS = [
   [175, 214], // nova <-> scroll
   [214, 175], // scroll <-> nova
   [165, 126], // zk <-> moonbeam
-  [126, 165], // moonbeam <-> zk
-  [125, 165], // celo <-> zk
   [165, 125], // zk <-> celo
   [125, 184], // celo <-> base
   [184, 125], // base <-> celo
@@ -42,7 +40,6 @@ export const DISABLED_PAIRS = [
   [116, 145], // harmony <-> gnosis
   [116, 184], // harmony <-> base
   [116, 214], // harmony <-> scroll
-  [116, 165], // harmony <-> zk
   [176, 116], // meter <-> harmony
   [125, 116], // celo <-> harmony
   [158, 116], // polygon-zk <-> harmony
@@ -60,7 +57,6 @@ export const DISABLED_PAIRS = [
   [167, 145], // moonriver <-> gnosis
   [167, 116], // moonriver <-> harmony
   [167, 126], // moonriver <-> moonbeam
-  [167, 165], // moonriver <-> zk
   [176, 167], // meter <-> moonriver
   [125, 167], // celo <-> moonriver
   [158, 167], // polygon-zk <-> moonriver
@@ -102,7 +98,6 @@ export const DISABLED_PAIRS = [
   [202, 177], // opbnb <-> kava
   [195, 177], // zora <-> kava
   // zora
-  [195, 165], // zora <-> zk
   [195, 175], // zora <-> nova
   [195, 214], // zora <-> scroll
   [195, 126], // zora <-> moonbeam
@@ -138,7 +133,6 @@ export const DISABLED_PAIRS = [
   [150, 167], // klaytn <-> moonriver
   [150, 112], // klaytn <-> phantom
   [150, 176], // klaytn <-> meter
-  [150, 165], // klaytn <-> zk
   [195, 150], // zors <-> klaytn
   [202, 150], // opbnb <-> klaytn
   [116, 150], // harmony <-> klaytn
@@ -149,4 +143,40 @@ export const DISABLED_PAIRS = [
   [175, 150], // nova <-> klaytn
   [167, 150], // moonriver <-> klaytn
   [165, 150], // zk <-> klaytn
+  // Mantle
+  [181, 176], // mantle <-> meter
+  [182, 125], // mantle <-> celo
+  [182, 175], // mantle <-> nova 
+  [182, 116], // mantle <-> harmony
+  [182, 167], // mantle <-> moonriver
+  [182, 202], // mantle <-> op-bnb
+  [176, 182], // meter <-> mantle
+  [125, 182], // celo <-> mantle
+  [175, 182], // nova <-> mantle
+  [116, 182], // harmony <-> mantle
+  [167, 182], // moonriver <-> mantle
+  [202, 182], // op-bnb <-> mantle 
+  //ZkSync
+  [102, 165], // bsc <-> zk
+  [182, 165], // base <-> zk
+  [183, 165], // linea <-> zk
+  [175, 165], // nova <-> zk
+  [109, 165], // polygon <-> zk
+  [110, 165], // arbitrum <-> zk
+  [214, 165], // scroll <-> zk
+  [111, 165], // optimism <-> zk
+  [126, 165], // moonbeam <-> zk
+  [106, 165], // avalanche <-> zk
+  [112, 165], // fantom <-> zk
+  [125, 165], // celo <-> zk
+  [125, 165], // gnosis <-> zk
+  [158, 165], // polygon-zk <-> zk
+  [176, 165], // meter <-> zk 
+  [167, 165], // moonriver <-> zk
+  [116, 165], // harmony <-> zk
+  [202, 165], // op-bnb <-> zk
+  [177, 165], // kava <-> zk 
+  [195, 165], // zora <-> zk
+  [150, 165], // klaytn <-> zk
+  [182, 165], // mantle <-> zk
 ]
