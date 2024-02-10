@@ -117,6 +117,12 @@ export const CHAINS = [
     value: 150,
     image: '/chain-logo/klaytn.svg',
     chainId: 8217
+  },
+  {
+    label: 'Mantle',
+    value: 181,
+    image: '/chain-logo/mantle.svg',
+    chainId: 5000
   }
 ]
 
@@ -142,7 +148,8 @@ export const TX_LINK: { [chainId: number]: string } = {
   204: 'opbnb.bscscan.com', // op-bnb
   2222: 'kavascan.com', // kava
   7777777: 'explorer.zora.energy', // zora
-  8217: 'scope.klaytn.com' //klaytn
+  8217: 'scope.klaytn.com', //klaytn
+  5000: 'explorer.mantle.xyz' // mantle
 }
 
 export const selectedChain = (fieldValue: number) => {

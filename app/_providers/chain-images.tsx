@@ -20,6 +20,7 @@ import scroll from '@/public/chain-logo/scroll.svg'
 import zk from '@/public/chain-logo/zk.svg'
 import zora from '@/public/chain-logo/zora.svg'
 import klaytn from '@/public/chain-logo/klaytn.svg'
+import mantle from '@/public/chain-logo/mantle.svg'
 
 export const chainImages = {
   324: zk.src,
@@ -43,5 +44,6 @@ export const chainImages = {
   204: opBnb.src,
   2222: kava.src,
   7777777: zora.src,
-  8217: klaytn.src
+  8217: klaytn.src,
+  5000: mantle.src,
 }

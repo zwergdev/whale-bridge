@@ -24,6 +24,7 @@ import scroll from '@/public/nft/nft-scroll.webp'
 import zk from '@/public/nft/nft-zk.webp'
 import zora from '@/public/nft/nft-zora.webp'
 import klaytn from '@/public/nft/nft-klaytn.webp'
+import mantle from '@/public/nft/nft-mantle.webp'
 import Image, { StaticImageData } from 'next/image'
 import { useAccount } from 'wagmi'
 
@@ -50,7 +51,8 @@ const IMAGES: { [key: number]: StaticImageData } = {
   204: opbnb,
   2222: kava,
   7777777: zora,
-  8217: klaytn
+  8217: klaytn,
+  5000: mantle
 }
 
 type MintImageProps = {
