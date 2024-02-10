@@ -8,9 +8,9 @@ import { useAccount, useReadContract } from 'wagmi'
 
 export const TotalMinted = () => {
   const [next, setNext] = useState(0)
-  const { chainId } = useAccount()
+  const { chain } = useAccount()
 
-  const selectedChainId = chainId ?? 0
+  const selectedChainId = chain?.id ?? 0
 
   const readData = getNextMintId(selectedChainId)
   const { refetch: refetchNext } = useReadContract(readData)
@@ -21,10 +21,10 @@ export const TotalMinted = () => {
       const { data: next }: any = await refetchNext()
       if (next) setNext(Number(next) - 1)
     })()
-  }, [chainId])
+  }, [chain])
 
   const newNext = () => {
-    switch (chainId) {
+    switch (chain?.id) {
       case 137:
         return next
       case 42170:

@@ -12,10 +12,9 @@ import {
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
-import { utils } from 'ethers'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useSignMessage } from 'wagmi'
+import { useAccount, useSignMessage, useVerifyMessage } from 'wagmi'
 import * as z from 'zod'
 import { redeemCode } from '../actions'
 
@@ -27,6 +26,7 @@ const RedeemSchema = z.object({
 })
 
 export const RedeemCode = () => {
+  const { address } = useAccount()
   const queryClient = useQueryClient()
 
   const form = useForm<z.infer<typeof RedeemSchema>>({
@@ -40,22 +40,32 @@ export const RedeemCode = () => {
   const {
     data: signature,
     signMessageAsync,
-    isLoading,
+    isPending: isLoading,
   } = useSignMessage({
-    onError: ({ message }) => truncatedToaster('Error!', message),
+    mutation: {
+      onError: ({ message }) => truncatedToaster('Error!', message),
+    },
   })
 
   // biome-ignore lint/correctness/useExhaustiveDependencies:
   useEffect(() => {
     ;(async () => {
       if (signature) {
+        if (!address) return
+
         const code = form.getValues('code')
 
-        const messageToSign = `Redeemed code is ${code}`
+        const message = `Redeemed code is ${code}`
 
-        const signerAddress = utils.verifyMessage(messageToSign, signature)
+        const isVerified = useVerifyMessage({
+          address,
+          message,
+          signature,
+        })
 
-        const isCodeValid = await redeemCode(signerAddress, code)
+        if (!isVerified) return truncatedToaster('Error!', 'Invalid signature.')
+
+        const isCodeValid = await redeemCode(address, code)
 
         if (!isCodeValid) return truncatedToaster('Error!', 'Invalid code.')
 

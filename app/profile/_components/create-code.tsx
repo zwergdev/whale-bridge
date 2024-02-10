@@ -12,10 +12,9 @@ import {
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useQueryClient } from '@tanstack/react-query'
-import { utils } from 'ethers'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useSignMessage } from 'wagmi'
+import { useAccount, useSignMessage, useVerifyMessage } from 'wagmi'
 import * as z from 'zod'
 import { createCode } from '../actions'
 
@@ -27,6 +26,7 @@ const CreateSchema = z.object({
 })
 
 export const CreateCode = () => {
+  const { address } = useAccount()
   const queryClient = useQueryClient()
 
   const form = useForm<z.infer<typeof CreateSchema>>({
@@ -41,24 +41,35 @@ export const CreateCode = () => {
   const {
     data: signature,
     signMessageAsync,
-    isLoading,
+    isPending: isLoading,
   } = useSignMessage({
-    onError: ({ message }) => truncatedToaster('Error!', message),
+    mutation: {
+      onError: ({ message }) => truncatedToaster('Error!', message),
+    },
   })
 
   // biome-ignore lint/correctness/useExhaustiveDependencies:
   useEffect(() => {
     ;(async () => {
       if (signature) {
+        if (!address) return
+
         const code = form.getValues('code')
 
-        const messageToSign = `My code is ${code}`
+        const message = `My code is ${code}`
 
-        const signerAddress = utils.verifyMessage(messageToSign, signature)
+        const isVerified = useVerifyMessage({
+          address,
+          message,
+          signature,
+        })
 
-        const isCodeValid = await createCode(signerAddress, code)
+        if (!isVerified) return truncatedToaster('Error!', 'Invalid signature.')
 
-        if (!isCodeValid) return truncatedToaster('Error!', 'Code already exists.')
+        const isCodeValid = await createCode(address, code)
+
+        if (!isCodeValid)
+          return truncatedToaster('Error!', 'Code already exists.')
 
         queryClient.invalidateQueries({ queryKey: ['userData'] })
       }

@@ -13,22 +13,30 @@ import { truncatedToaster } from '../../_utils/truncatedToaster'
 import { MintedDialog } from './minted-dialog'
 
 export const MintButton = () => {
-  const { address, status, chainId } = useAccount()
+  const { address, status, chain } = useAccount()
   const { open } = useWeb3Modal()
   const { open: isOpen } = useWeb3ModalState()
   const { data: _balance } = useBalance({ address })
   const balance = Number(Number(_balance?.formatted).toFixed(5))
 
-  const selectedChainId = chainId ?? 0
+  const selectedChainId = chain?.id ?? 0
 
-  const mintData = mint(selectedChainId)
-  const { data: hash, writeContract, isPending: isSigning } = useWriteContract()
+  const {
+    data: hash,
+    writeContract,
+    isPending: isSigning,
+    error,
+  } = useWriteContract()
 
   const mintNFT = () => {
-    if (balance < Number(CONTRACTS[selectedChainId].mintPrice))
+    if (
+      error?.message.includes('insufficient balance') ||
+      error?.message.includes('The total cost') ||
+      balance < Number(CONTRACTS[selectedChainId].mintPrice)
+    )
       return truncatedToaster('Error occurred!', 'Insufficient balance.')
 
-    writeContract(mintData)
+    writeContract(mint(selectedChainId))
   }
 
   const handleClick = () => {
@@ -49,16 +57,14 @@ export const MintButton = () => {
 
   return (
     <>
-      <div className="flex items-center gap-5 mb-5">
-        <Button
-          className="w-full max-w-lg "
-          onClick={handleClick}
-          loading={isWaiting || isSigning}
-          disabled={isOpen}
-        >
-          {address ? 'Mint' : 'Connect wallet'}
-        </Button>
-      </div>
+      <Button
+        className="w-full mb-5"
+        onClick={handleClick}
+        loading={isWaiting || isSigning}
+        disabled={isOpen}
+      >
+        {address ? 'Mint' : 'Connect wallet'}
+      </Button>
 
       <MintedDialog hash={hash} open={!!waitData} chainId={selectedChainId} />
     </>

@@ -9,7 +9,7 @@ export const MobileLogo = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
-    <g clip-path="url(#clip0_343_2)">
+    <g clipPath="url(#clip0_343_2)">
       <path
         d="M433.106 262.896L470.312 100H368.694L346.571 254.449C355.217 256.089 361.133 258.494 370.548 263.84C381.656 270.124 386.847 271.212 403.447 271.226C413.904 271.162 417.558 270.398 425.596 266.852C427.698 265.951 430.342 264.542 433.106 262.896Z"
         fill="url(#paint0_linear_343_2)"

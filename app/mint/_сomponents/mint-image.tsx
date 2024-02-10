@@ -27,6 +27,7 @@ import Image, { StaticImageData } from 'next/image'
 import { useAccount } from 'wagmi'
 
 const IMAGES: { [key: number]: StaticImageData } = {
+  0: defaultImage,
   56: bsc,
   137: polygon,
   42170: arbitrumNova,
@@ -56,17 +57,13 @@ type MintImageProps = {
 }
 
 export const MintImage = ({ className, size = 440 }: MintImageProps) => {
-  const { status, chainId } = useAccount()
+  const { status, chain } = useAccount()
+
+  const chainId = chain?.id ?? 0
 
   return (
     <Image
-      src={
-        chainId && status === 'connected'
-          ? IMAGES[chainId]
-            ? IMAGES[chainId]
-            : defaultImage
-          : defaultImage
-      }
+      src={chainId && status === 'connected' ? IMAGES[chainId] : defaultImage}
       quality={100}
       placeholder="blur"
       width={size}
