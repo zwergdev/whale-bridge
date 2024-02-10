@@ -1,8 +1,6 @@
 import { ethers } from 'ethers'
 import { parseEther } from 'viem/utils'
-import { useContractRead, useContractWrite } from 'wagmi'
 import { celoMintABI, mintABI, modernMintABI, refuelABI } from './abi'
-import { truncatedToaster } from './truncatedToaster'
 
 const CONTRACTS: {
   [chainId: number]: {
@@ -124,34 +122,23 @@ const CONTRACTS: {
 }
 
 function mint(chainId: number) {
-  return useContractWrite({
+  return {
     address: CONTRACTS[chainId].mintAddress,
     abi: mintABI,
     functionName: 'mint',
     chainId,
     value: parseEther(CONTRACTS[chainId].mintPrice),
-    onError(error) {
-      console.error(error.message)
-    },
-  })
+  }
 }
 
 function bridge(chainId: number) {
-  return useContractWrite({
+  return {
     address: CONTRACTS[chainId].mintAddress,
     abi: mintABI,
     functionName: 'sendFrom',
     chainId,
     value: parseEther('0.00001'),
-    onError({ message }) {
-      console.error(message)
-      if (
-        message.includes('The total cost') ||
-        message.includes('insufficient balance')
-      )
-        truncatedToaster('Error occurred!', 'Insufficient balance.')
-    },
-  })
+  }
 }
 
 function estimateBridgeFee(
@@ -160,7 +147,7 @@ function estimateBridgeFee(
   tokenId: bigint,
   chainId: number,
 ) {
-  return useContractRead({
+  return {
     address: CONTRACTS[chainId].mintAddress,
     abi: mintABI,
     functionName: 'estimateSendFee',
@@ -173,23 +160,21 @@ function estimateBridgeFee(
       '0x00010000000000000000000000000000000000000000000000000000000000030d40',
     ],
     enabled: false,
-  })
+  }
 }
 
 function refuel(chainId: number) {
-  return useContractWrite({
+  return {
     address: CONTRACTS[chainId].refuelAddress,
     abi: refuelABI,
     functionName: 'bridgeGas',
     chainId,
     value: parseEther('0'),
-    onError(error) {
-      console.error(error.message)
-    },
-  })
+  }
 }
 
 function getAdapter(amount: bigint, address: string) {
+  if (amount === BigInt(0) || !address) return '0'
   if (amount === BigInt(0) || !address) return '0'
 
   return ethers.utils.solidityPack(
@@ -204,7 +189,7 @@ function estimateRefuelFee(
   address: string,
   amount: number,
 ) {
-  return useContractRead({
+  return {
     address: CONTRACTS[chainId].refuelAddress,
     abi: refuelABI,
     functionName: 'estimateSendFee',
@@ -215,39 +200,39 @@ function estimateRefuelFee(
       getAdapter(parseEther(amount.toString()), address), // adapter
     ],
     enabled: false,
-  })
+  }
 }
 
 function getUserNFTIds(address: string, chainId: number) {
-  return useContractRead({
+  return {
     address: CONTRACTS[chainId].mintAddress, // celo & polygon-zk & meter & moonriver
     chainId: chainId,
     abi: celoMintABI,
     functionName: 'getUserNFTIds',
     args: [address],
     enabled: false,
-  })
+  }
 }
 
 function getModernUserNFTIds(address: string, chainId: number) {
-  return useContractRead({
+  return {
     address: CONTRACTS[chainId].mintAddress, // opbnb & kava & zora
     chainId: chainId,
     abi: modernMintABI,
     functionName: 'getOwnedNFTs',
     args: [address],
     enabled: false,
-  })
+  }
 }
 
 function getNextMintId(chainId: number) {
-  return useContractRead({
+  return {
     address: CONTRACTS[chainId].mintAddress,
     chainId: chainId,
     abi: mintABI,
     functionName: 'nextMintId',
     enabled: false,
-  })
+  }
 }
 
 export {

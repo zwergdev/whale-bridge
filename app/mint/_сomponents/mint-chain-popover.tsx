@@ -1,19 +1,19 @@
 'use client'
 
 import { CHAINS } from '@/app/_utils/chains'
-import Image from 'next/image'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { useState } from 'react'
-import { useSwitchNetwork } from 'wagmi'
 import { ChevronsUpDown } from 'lucide-react'
+import Image from 'next/image'
+import { useState } from 'react'
+import { useSwitchChain } from 'wagmi'
 
 export const MintChainPopover = () => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
-  const { switchNetwork } = useSwitchNetwork()
+  const { switchChain } = useSwitchChain()
 
   return (
     <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
@@ -42,7 +42,7 @@ export const MintChainPopover = () => {
             key={chainId}
             type="button"
             onClick={() => {
-              switchNetwork?.(chainId)
+              switchChain({ chainId })
               setIsPopoverOpen(false)
             }}
             className="hover:bg-popover p-1 rounded-full transition-colors duration-300"

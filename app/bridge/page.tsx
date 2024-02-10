@@ -22,7 +22,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronsUpDown, Loader } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useAccount, useBalance, useNetwork, useSwitchNetwork } from 'wagmi'
+import {
+  useAccount,
+  useBalance,
+  useReadContract,
+  useSwitchChain,
+  useWriteContract,
+} from 'wagmi'
 import * as z from 'zod'
 import {
   ChainList,
@@ -45,18 +51,21 @@ import { BridgedDialog } from './_components/bridged-dialog'
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
 
 export default function BridgePage() {
-  const { address } = useAccount()
-  const { chain } = useNetwork()
-  const { switchNetwork } = useSwitchNetwork()
+  const { address, chain } = useAccount()
+  const { switchChain } = useSwitchChain()
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
   const [popoverToOpen, setPopoverToOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isLoadingNFT, setIsLoadingNFT] = useState(true)
-  const { data: _balanceFrom } = useBalance({ address })
+  const [isChainGridView, setIsChainGridView] = useState(false)
+  const { data: _balanceFrom } = useBalance({
+    address,
+    query: { enabled: !!address },
+  })
   const balanceFrom = Number(Number(_balanceFrom?.formatted).toFixed(5))
   const ref = useRef('a')
 
-  const selectedChainId = chain?.unsupported ? 0 : chain?.id ?? 0
+  const selectedChainId = chain?.id ?? 0
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
@@ -137,26 +146,30 @@ export default function BridgePage() {
 
   const fields = watch()
 
-  const { data: bridgingData, writeAsync, isLoading } = bridge(selectedChainId)
+  const {
+    data: bridgingData,
+    writeContractAsync,
+    isPending: isLoading,
+  } = useWriteContract()
 
-  const { refetch: refetchFee } = estimateBridgeFee(
-    fields.chainTo,
-    address!,
-    BigInt(fields.tokenId),
-    selectedChainId,
+  const { refetch: refetchFee } = useReadContract(
+    estimateBridgeFee(
+      fields.chainTo,
+      address!,
+      BigInt(fields.tokenId),
+      selectedChainId,
+    ),
   )
 
-  const { refetch: refetchUserNFTIds } = getUserNFTIds(
-    address!,
-    selectedChainId,
+  const { refetch: refetchUserNFTIds } = useReadContract(
+    getUserNFTIds(address!, selectedChainId),
   )
 
-  const { refetch: refetchModernUserNFTIds } = getModernUserNFTIds(
-    address!,
-    selectedChainId,
+  const { refetch: refetchModernUserNFTIds } = useReadContract(
+    getModernUserNFTIds(address!, selectedChainId),
   )
 
-  const refetchNFT = async () => {
+const refetchNFT = async () => {
     setIsLoadingNFT(true)
     const nfts = await getNFTBalance(address!, selectedChainId)
     setIsLoadingNFT(false)
@@ -181,7 +194,8 @@ export default function BridgePage() {
     if (!fee)
       return truncatedToaster('Error occurred!', 'Failed to fetch refuel cost.')
 
-    await writeAsync({
+    await writeContractAsync({
+      ...bridge(selectedChainId),
       value: fee[0],
       args: [
         address!,
@@ -261,12 +275,14 @@ export default function BridgePage() {
                         selectedValue={field.value}
                       />
                       <ChainList
+                        isChainGridView={isChainGridView}
+                        setIsChainGridView={setIsChainGridView}
                         selectedValue={fields.chainTo}
                         fieldValue={field.value}
                         onSelect={(value, chainId) => {
                           form.setValue('chainFrom', value)
                           setPopoverFromOpen(false)
-                          if (chainId !== chain?.id) switchNetwork?.(chainId)
+                          if (chainId !== chain?.id) switchChain({ chainId })
                         }}
                       />
                     </Popover>
@@ -284,8 +300,8 @@ export default function BridgePage() {
                     ({ value }) => value === fields.chainTo,
                   )
 
-                  if (selectedChain?.value !== chain?.id)
-                    switchNetwork?.(selectedChain?.chainId)
+                  if (selectedChain?.chainId)
+                    switchChain({ chainId: selectedChain.chainId })
                 }}
               />
 
@@ -304,6 +320,8 @@ export default function BridgePage() {
                         selectedValue={field.value}
                       />
                       <ChainList
+                        isChainGridView={isChainGridView}
+                        setIsChainGridView={setIsChainGridView}
                         disabledChain={165}
                         selectedValue={fields.chainFrom}
                         fieldValue={field.value}
@@ -348,7 +366,7 @@ export default function BridgePage() {
         </Form>
       </Paper>
       <BridgedDialog
-        hash={bridgingData?.hash}
+        hash={bridgingData}
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
         chainId={selectedChainId}

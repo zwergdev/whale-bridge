@@ -91,7 +91,7 @@ export const BridgedDialog = ({
             </p>
 
             <div className="flex gap-4 items-center mt-16 w-full">
-              <MintImage size={100} chainId={chainId} />
+              <MintImage size={100} />
               <div className="truncate max-w-96 text-left">
                 <p>Transaction link:</p>
 

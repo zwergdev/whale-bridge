@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button-new'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
+import { useWeb3Modal, useWeb3ModalState } from '@web3modal/wagmi/react'
 import { useAccount } from 'wagmi'
 
 type SubmitButtonProps = {
@@ -16,15 +16,12 @@ export const SubmitButton = ({
   loading,
 }: SubmitButtonProps) => {
   const { address, status } = useAccount()
-  const { openConnectModal, connectModalOpen } = useConnectModal()
+  const { open } = useWeb3Modal()
+  const { open: isOpen } = useWeb3ModalState()
 
   if (status === 'reconnecting' || status === 'connecting')
     return (
-      <Button
-        type="button"
-        className="w-full py-2.5 hover:scale-[1.025]"
-        loading
-      >
+      <Button type="button" className="w-full py-2.5" loading>
         Loading...
       </Button>
     )
@@ -33,9 +30,9 @@ export const SubmitButton = ({
     return (
       <Button
         type="button"
-        className="w-full py-2.5 hover:scale-[1.025]"
-        onClick={openConnectModal}
-        disabled={connectModalOpen}
+        className="w-full py-2.5 hover:scale-[1.04]"
+        onClick={() => open()}
+        disabled={isOpen}
       >
         Connect Wallet
       </Button>
@@ -46,7 +43,7 @@ export const SubmitButton = ({
       type="submit"
       disabled={disabled}
       loading={loading}
-      className="w-full py-2.5 hover:scale-[1.025]"
+      className="w-full py-2.5 hover:scale-[1.04]"
     >
       {children}
     </Button>

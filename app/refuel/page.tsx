@@ -25,7 +25,13 @@ import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
 import { formatEther } from 'viem'
 import { parseEther } from 'viem/utils'
-import { useAccount, useBalance, useNetwork, useSwitchNetwork } from 'wagmi'
+import {
+  useAccount,
+  useBalance,
+  useReadContract,
+  useSwitchChain,
+  useWriteContract,
+} from 'wagmi'
 import * as z from 'zod'
 import {
   ChainList,
@@ -82,23 +88,23 @@ const SYMBOL_TO_CHAIN: { [key: string]: string } = {
 
 export default function RefuelPage() {
   const [prices, setPrices] = useState<Prices>()
+  const [fee, setFee] = useState<bigint>()
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
   const [popoverToOpen, setPopoverToOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [fee, setFee] = useState<bigint>()
   const [isFeeLoading, setIsFeeLoading] = useState(false)
-  const { switchNetwork } = useSwitchNetwork()
-  const { chain } = useNetwork()
-  const { address, status } = useAccount()
+  const [isChainGridView, setIsChainGridView] = useState(false)
+  const { switchChain } = useSwitchChain()
+  const { address, status, chain } = useAccount()
   const { data: _balanceFrom } = useBalance({
     address,
-    onSuccess({ formatted }) {
-      form.setValue('balance', Number(formatted))
+    query: {
+      enabled: !!address,
     },
   })
   const balanceFrom = Number(Number(_balanceFrom?.formatted).toFixed(5))
 
-  const selectedChainId = chain?.unsupported ? 0 : chain?.id ?? 0
+  const selectedChainId = chain?.id ?? 0
 
   useEffect(() => {
     ;(async () => {
@@ -124,7 +130,6 @@ export default function RefuelPage() {
     resolver: zodResolver(RefuelSchema),
     defaultValues: {
       amount: 0,
-      balance: balanceFrom ?? 0,
       chainFrom:
         CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
       chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value, // 102
@@ -142,6 +147,9 @@ export default function RefuelPage() {
   const { data: _balanceTo } = useBalance({
     chainId: balanceToChainId,
     address,
+    query: {
+      enabled: !!address,
+    },
   })
   const balanceTo = Number(Number(_balanceTo?.formatted).toFixed(5))
 
@@ -150,18 +158,15 @@ export default function RefuelPage() {
       ? 1 // gnosis --> celo
       : MAX_REFUEL[balanceToChainId ?? 0]
 
-  const { refetch } = estimateRefuelFee(
-    fields.chainTo,
-    selectedChainId,
-    address!,
-    fields.amount,
+  const { refetch } = useReadContract(
+    estimateRefuelFee(fields.chainTo, selectedChainId, address!, fields.amount),
   )
 
   const {
     data: refueledData,
-    writeAsync,
-    isLoading: isLoadingRefuel,
-  } = refuel(selectedChainId)
+    writeContractAsync,
+    isPending: isLoadingRefuel,
+  } = useWriteContract()
 
   const debounceFee = useDebouncedCallback(async (value) => {
     setIsFeeLoading(true)
@@ -170,8 +175,6 @@ export default function RefuelPage() {
     setFee(fee ? fee[0] : BigInt(0))
     setIsFeeLoading(false)
   }, 500)
-
-  // console.log(_balanceFrom?.symbol)
 
   const feeAmount = () => {
     if (isFeeLoading) return '...'
@@ -218,7 +221,8 @@ export default function RefuelPage() {
       return truncatedToaster('Error occurred!', 'Insufficient balance.')
     }
 
-    await writeAsync({
+    await writeContractAsync({
+      ...refuel(selectedChainId),
       value: fee[0],
       args: [
         chainTo,
@@ -265,12 +269,14 @@ export default function RefuelPage() {
                     >
                       <ChainyTrigger selectedValue={field.value} />
                       <ChainList
+                        isChainGridView={isChainGridView}
+                        setIsChainGridView={setIsChainGridView}
                         selectedValue={fields.chainTo}
                         fieldValue={field.value}
                         onSelect={(value, chainId) => {
                           form.setValue('chainFrom', value)
                           setPopoverFromOpen(false)
-                          if (chainId !== chain?.id) switchNetwork?.(chainId)
+                          if (chainId !== chain?.id) switchChain({ chainId })
                         }}
                       />
                     </Popover>
@@ -286,8 +292,8 @@ export default function RefuelPage() {
                     ({ value }) => value === fields.chainTo,
                   )
 
-                  if (selectedChain?.value !== chain?.id)
-                    switchNetwork?.(selectedChain?.chainId)
+                  if (selectedChain?.chainId)
+                    switchChain({ chainId: selectedChain.chainId })
                 }}
               />
 
@@ -309,6 +315,8 @@ export default function RefuelPage() {
                     >
                       <ChainyTrigger selectedValue={field.value} />
                       <ChainList
+                        isChainGridView={isChainGridView}
+                        setIsChainGridView={setIsChainGridView}
                         selectedValue={fields.chainFrom}
                         fieldValue={field.value}
                         onSelect={(value) => {
@@ -431,7 +439,7 @@ export default function RefuelPage() {
         </Form>
       </Paper>
       <RefueledDialog
-        hash={refueledData?.hash}
+        hash={refueledData}
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
         chainId={selectedChainId}
