@@ -20,44 +20,18 @@ export const fetchPrices = async (): Promise<Prices> => {
   if (res.ok) return await res.json()
 
   return {
-    'avalanche-2': {
-      usd: 35.41,
-    },
-    binancecoin: {
-      usd: 319.38,
-    },
-    celo: {
-      usd: 0.719841,
-    },
-    ethereum: {
-      usd: 2424.06,
-    },
-    fantom: {
-      usd: 0.375265,
-    },
-    harmony: {
-      usd: 0.014392,
-    },
-    kava: {
-      usd: 0.711215,
-    },
-    'matic-network': {
-      usd: 0.84409,
-    },
-    meter: {
-      usd: 2.59,
-    },
-    moonbeam: {
-      usd: 0.385482,
-    },
-    moonriver: {
-      usd: 22.02,
-    },
-    xdai: {
-      usd: 1.003,
-    },
-    'klay-token': {
-      usd: 0.216894,
-    },
+    'avalanche-2': { usd: 39.06 },
+    binancecoin: { usd: 321.23 },
+    celo: { usd: 0.713664 },
+    ethereum: { usd: 2485.29 },
+    fantom: { usd: 0.391561 },
+    harmony: { usd: 0.01528527 },
+    kava: { usd: 0.720289 },
+    'klay-token': { usd: 0.217367 },
+    'matic-network': { usd: 0.842662 },
+    meter: { usd: 2.72 },
+    moonbeam: { usd: 0.382244 },
+    moonriver: { usd: 22.71 },
+    xdai: { usd: 1.007 },
   }
 }
