@@ -115,7 +115,7 @@ export const CHAINS = [
   {
     label: 'Klaytn',
     value: 150,
-    image: '/chain-logo/klaytn',
+    image: '/chain-logo/klaytn.svg',
     chainId: 8217
   }
 ]
