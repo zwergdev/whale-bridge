@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import Image from 'next/image'
 import { Button } from './button'
-import { LayoutIcon } from './icons'
+import { LayoutGrid, LayoutList } from './icons'
 
 const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
@@ -44,8 +44,9 @@ const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input> & {
     setIsChainGridView: React.Dispatch<React.SetStateAction<boolean>>
+    isChainGridView: boolean
   }
->(({ className, setIsChainGridView, ...props }, ref) => (
+>(({ className, setIsChainGridView, isChainGridView, ...props }, ref) => (
   <div
     className="flex items-center justify-between border-b border-b-primary px-3"
     cmdk-input-wrapper=""
@@ -66,7 +67,11 @@ const CommandInput = React.forwardRef<
       variant="clean"
       onClick={() => setIsChainGridView((prev) => !prev)}
     >
-      <LayoutIcon className="w-5 h-5" />
+      {isChainGridView ? (
+        <LayoutGrid className="w-5 h-5" />
+      ) : (
+        <LayoutList className="w-5 h-5" />
+      )}
     </Button>
   </div>
 ))
@@ -143,7 +148,7 @@ const CommandItem = React.forwardRef<
       <CommandPrimitive.Item
         ref={ref}
         className={cn(
-          'relative flex justify-between cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-paper aria-selected:text-accent-foreground data-[disabled]:pointer-events-none',
+          `relative flex justify-between cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none ${checked ? 'bg-paper' : ''} aria-selected:bg-paper aria-selected:text-accent-foreground data-[disabled]:pointer-events-none`,
           props.disabled && 'opacity-50 cursor-not-allowed',
           className,
         )}

@@ -59,13 +59,20 @@ const ChainList = ({
         <div className="">
           <CommandInput
             setIsChainGridView={setIsChainGridView}
+            isChainGridView={isChainGridView}
             placeholder="Search chain..."
           />
         </div>
         <CommandEmpty>No chain found.</CommandEmpty>
         <CommandGroup>
-          <ScrollArea className="h-[260px]">
-            <div className={isChainGridView ? 'w-full flex flex-wrap' : ''}>
+          <ScrollArea className={`${isChainGridView ? 'h-auto' : 'h-[260px]'}`}>
+            <div
+              className={
+                isChainGridView
+                  ? 'w-full flex flex-wrap py-1 gap-3 items-center sm:justify-center justify-start'
+                  : ''
+              }
+            >
               {Array.from(CHAINS)
                 .sort((a) => (a.value === fieldValue ? -1 : 0))
                 .map(({ label, value, image, chainId }) => {
