@@ -64,6 +64,10 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
     chain: 'gnosisapi',
     collection: '0xe9EbD35Ea4aCCb97e0F5BF3CDA31fe3Ac90111Cc',
   },
+  8217: {
+    chain: 'klaytn',
+    collection: '0xa0d013b84fbaeff5abfc92a412a44572382dca08'
+  }
 }
 
 const fetchFromOpensea = async (address: string) => {
