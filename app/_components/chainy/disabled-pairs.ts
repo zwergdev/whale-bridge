@@ -138,6 +138,7 @@ export const DISABLED_PAIRS = [
   [150, 167], // klaytn <-> moonriver
   [150, 112], // klaytn <-> phantom
   [150, 176], // klaytn <-> meter
+  [150, 165], // klaytn <-> zk
   [195, 150], // zors <-> klaytn
   [202, 150], // opbnb <-> klaytn
   [116, 150], // harmony <-> klaytn
@@ -147,4 +148,5 @@ export const DISABLED_PAIRS = [
   [125, 150], // celo <-> klaytn
   [175, 150], // nova <-> klaytn
   [167, 150], // moonriver <-> klaytn
+  [165, 150], // zk <-> klaytn
 ]
