@@ -102,18 +102,18 @@ const CONTRACTS: {
   204: {
     mintAddress: '0x9aeAa45d415fFE75dC4Ba50658584479bAf110Ec',
     refuelAddress: '0x84f4c0A290B5607fee0f2A1CDe5348540fecF6A1',
-    mintPrice: '0.0001',
+    mintPrice: '0.0007191320',
   }, // op-bnb
   2222: {
     mintAddress: '0xBcEe7fB1B98ea4e38Eb52c2E026134d54273ED44',
     refuelAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
-    mintPrice: '0.0001',
+    mintPrice: '0.31',
   }, // kava
   7777777: {
     mintAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
     refuelAddress: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
     mintPrice: '0.0001',
-  }, // kava
+  }, // zora
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',
@@ -174,6 +174,7 @@ function refuel(chainId: number) {
 }
 
 function getAdapter(amount: bigint, address: string) {
+  if (amount === BigInt(0) || !address) return '0'
   if (amount === BigInt(0) || !address) return '0'
 
   return ethers.utils.solidityPack(

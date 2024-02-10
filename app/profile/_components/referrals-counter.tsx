@@ -5,7 +5,7 @@ export const ReferalsCounter = ({ code }: { code: string }) => {
   const { data: referals, isLoading } = useQuery({
     queryKey: ['referalsCount'],
     queryFn: () => getRefferalsCount(code),
-    cacheTime: 1000 * 30,
+    gcTime: 1000 * 30,
   })
 
   return (

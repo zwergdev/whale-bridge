@@ -168,7 +168,7 @@ export default function BridgePage() {
     getModernUserNFTIds(address!, selectedChainId),
   )
 
-  const refetchNFT = async () => {
+const refetchNFT = async () => {
     setIsLoadingNFT(true)
     const nfts = await getNFTBalance(address!, selectedChainId)
     setIsLoadingNFT(false)
