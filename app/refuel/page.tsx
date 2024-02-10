@@ -88,11 +88,12 @@ const SYMBOL_TO_CHAIN: { [key: string]: string } = {
 
 export default function RefuelPage() {
   const [prices, setPrices] = useState<Prices>()
+  const [fee, setFee] = useState<bigint>()
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
   const [popoverToOpen, setPopoverToOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [fee, setFee] = useState<bigint>()
   const [isFeeLoading, setIsFeeLoading] = useState(false)
+  const [isChainGridView, setIsChainGridView] = useState(false)
   const { switchChain } = useSwitchChain()
   const { address, status, chain } = useAccount()
   const { data: _balanceFrom } = useBalance({
@@ -268,6 +269,8 @@ export default function RefuelPage() {
                     >
                       <ChainyTrigger selectedValue={field.value} />
                       <ChainList
+                        isChainGridView={isChainGridView}
+                        setIsChainGridView={setIsChainGridView}
                         selectedValue={fields.chainTo}
                         fieldValue={field.value}
                         onSelect={(value, chainId) => {
@@ -312,6 +315,8 @@ export default function RefuelPage() {
                     >
                       <ChainyTrigger selectedValue={field.value} />
                       <ChainList
+                        isChainGridView={isChainGridView}
+                        setIsChainGridView={setIsChainGridView}
                         selectedValue={fields.chainFrom}
                         fieldValue={field.value}
                         onSelect={(value) => {

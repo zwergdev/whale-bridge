@@ -30,7 +30,7 @@ export const SubmitButton = ({
     return (
       <Button
         type="button"
-        className="w-full py-2.5"
+        className="w-full py-2.5 hover:scale-[1.04]"
         onClick={() => open()}
         disabled={isOpen}
       >
@@ -43,7 +43,7 @@ export const SubmitButton = ({
       type="submit"
       disabled={disabled}
       loading={loading}
-      className="w-full py-2.5"
+      className="w-full py-2.5 hover:scale-[1.04]"
     >
       {children}
     </Button>
