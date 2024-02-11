@@ -12,7 +12,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { ChevronDown, Repeat2 } from 'lucide-react'
 import Image from 'next/image'
 import { CHAINS, selectedChain } from '../../_utils/chains'
-import { DISABLED_PAIRS } from './disabled-pairs'
+import { DISABLED_PAIRS, DisabledPairs } from './disabled-pairs'
 
 type ChainyTriggerProps = {
   disabled?: boolean
@@ -37,7 +37,7 @@ const ChainyTrigger = ({ disabled, selectedValue }: ChainyTriggerProps) => {
 }
 
 type ChainListProps = {
-  selectedValue: number
+  selectedValue: keyof DisabledPairs
   fieldValue: number
   onSelect: (value: number, chainId: number) => void
   disabledChain?: number
@@ -75,11 +75,31 @@ const ChainList = ({
               }
             >
               {Array.from(CHAINS)
-                .sort((a) => (a.value === fieldValue ? -1 : 0))
+                .sort((a, b) => {
+                  const isADisabled =
+                    DISABLED_PAIRS[selectedValue]?.includes(a.value) ?? false
+                  const isBDisabled =
+                    DISABLED_PAIRS[selectedValue]?.includes(b.value) ?? false
+
+                  if (
+                    (isADisabled && !isBDisabled) ||
+                    selectedValue === a.value ||
+                    disabledChain === a.value
+                  ) {
+                    return 1 // Move chain A to the end
+                  }
+                  if (
+                    (!isADisabled && isBDisabled) ||
+                    selectedValue === b.value ||
+                    disabledChain === b.value
+                  ) {
+                    return -1 // Move chain B to the end
+                  }
+                  return a.value === fieldValue ? -1 : 0
+                })
                 .map(({ label, value, image, chainId }) => {
-                  const isDisabled = DISABLED_PAIRS.some(
-                    ([a, b]) => selectedValue === a && value === b,
-                  )
+                  const isDisabled =
+                    DISABLED_PAIRS[selectedValue]?.includes(value) ?? false
 
                   return (
                     <CommandItem

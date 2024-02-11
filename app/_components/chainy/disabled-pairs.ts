@@ -1,227 +1,52 @@
-export const DISABLED_PAIRS = [
-  [175, 214], // nova <-> scroll
-  [214, 175], // scroll <-> nova
-  [165, 126], // zk <-> moonbeam
-  [165, 125], // zk <-> celo
-  [125, 184], // celo <-> base
-  [184, 125], // base <-> celo
-  [125, 175], // celo <-> nova
-  [175, 125], // nova <-> celo
-  [125, 214], // celo <-> scroll
-  [214, 125], // scroll <-> celo
-  [145, 175], // gnosis <-> nova
-  [175, 145], // nova <-> gnosis
-  [175, 158], // nova <-> polygon-zk
-  [158, 175], // polygon-zk <-> scroll
-  [165, 145], // zk <-> gnosis
-  // meter
-  [176, 125], // meter <-> celo
-  [176, 116], // meter <-> harmony
-  [176, 158], // meter <-> polygon-zk
-  [176, 126], // meter <-> moonbeam
-  [176, 167], // meter <-> moonriver
-  [176, 145], // meter <-> gnosis
-  [176, 214], // meter <-> scroll
-  [176, 183], // meter <-> linea
-  [125, 176], // celo <-> meter
-  [116, 176], // harmony <-> meter
-  [158, 176], // polygon-zk <-> meter
-  [126, 176], // moonbeam <-> meter
-  [167, 176], // moonriver <-> meter
-  [145, 176], // gnosis <-> meter
-  [214, 176], // scroll <-> meter
-  [183, 176], // linea <-> meter
-  //harmony
-  [116, 176], // harmony <-> meter
-  [116, 125], // harmony <-> celo
-  [116, 158], // harmony <-> polygon-zk
-  [116, 175], // harmony <-> nova
-  [116, 167], // harmony <-> moonriver
-  [116, 145], // harmony <-> gnosis
-  [116, 184], // harmony <-> base
-  [116, 214], // harmony <-> scroll
-  [176, 116], // meter <-> harmony
-  [125, 116], // celo <-> harmony
-  [158, 116], // polygon-zk <-> harmony
-  [175, 116], // nova <-> harmony
-  [167, 116], // moonriver <-> harmony
-  [145, 116], // gnosis <-> harmony
-  [184, 116], // base <-> harmony
-  [214, 116], // scroll <-> harmony
-  [165, 116], // zk <-> harmony
-  // moonriver
-  [167, 176], // moonriver <-> meter
-  [167, 125], // moonriver <-> celo
-  [167, 158], // moonriver <-> polygon-zk
-  [167, 175], // moonriver <-> nova
-  [167, 145], // moonriver <-> gnosis
-  [167, 116], // moonriver <-> harmony
-  [167, 126], // moonriver <-> moonbeam
-  [176, 167], // meter <-> moonriver
-  [125, 167], // celo <-> moonriver
-  [158, 167], // polygon-zk <-> moonriver
-  [175, 167], // nova <-> moonriver
-  [145, 167], // gnosis <-> moonriver
-  [116, 167], // harmony <-> moonriver
-  [126, 167], // moonbeam <-> moonriver
-  [165, 167], // zk <-> moonriver
-  // opbnb
-  [202, 175], // opbnb <-> nova
-  [202, 126], // opbnb <-> moonbeam
-  [202, 125], // opbnb <-> celo
-  [202, 145], // opbnb <-> gnosis
-  [202, 176], // opbnb <-> meter
-  [202, 167], // opbnb <-> moonriver
-  [202, 116], // opbnb <-> harmony
-  [202, 177], // opbnb <-> kava
-  [202, 195], // opbnb <-> zora
-  [175, 202], // nova <-> opbnb
-  [126, 202], // moonbeam <-> opbnb
-  [125, 202], // celo <-> opbnb
-  [145, 202], // gnosis <-> opbnb
-  [176, 202], // meter <-> opbnb
-  [167, 202], // moonriver <-> opbnb
-  [116, 202], // harmony <-> opbnb
-  [177, 202], // kava <-> opbnb
-  [195, 202], // zora <-> opbnb
-  // kava
-  [177, 125], // kava <-> celo
-  [177, 145], // kava <-> gnosis
-  [177, 176], // kava <-> meter
-  [177, 116], // kava <-> harmony
-  [177, 202], // kava <-> opbnb
-  [177, 195], // kava <-> zora
-  [125, 177], // celo <-> kava
-  [145, 177], // gnosis <-> kava
-  [176, 177], // meter <-> kava
-  [116, 177], // harmony <-> kava
-  [202, 177], // opbnb <-> kava
-  [195, 177], // zora <-> kava
-  // zora
-  [195, 175], // zora <-> nova
-  [195, 214], // zora <-> scroll
-  [195, 126], // zora <-> moonbeam
-  [195, 112], // zora <-> fantom
-  [195, 125], // zora <-> celo
-  [195, 145], // zora <-> gnosis
-  [195, 158], // zora <-> polygon-zk
-  [195, 176], // zora <-> meter
-  [195, 167], // zora <-> moonriver
-  [195, 116], // zora <-> harmony
-  [195, 202], // zora <-> opbnb
-  [195, 177], // zora <-> kava
-  [165, 195], // zk <-> zora
-  [175, 195], // nova <-> zora
-  [214, 195], // scroll <-> zora
-  [126, 195], // moonbeam <-> zora
-  [112, 195], // fantom <-> zora
-  [125, 195], // celo <-> zora
-  [145, 195], // gnosis <-> zora
-  [158, 195], // polygon-zk <-> zora
-  [176, 195], // meter <-> zora
-  [167, 195], // moonriver <-> zora
-  [116, 195], // harmony <-> zora
-  [202, 195], // opbnb <-> zora
-  [177, 195], // kava <-> zora
-  // klaytn
-  [150, 125], // klaytn <-> celo
-  [150, 195], // klaytn <-> zora
-  [150, 116], // klaytn <-> harmony
-  [150, 175], // klaytn <-> nova
-  [150, 202], // klaytn <-> opbnb
-  [150, 158], // klaytn <-> polygon-zk
-  [150, 167], // klaytn <-> moonriver
-  [150, 112], // klaytn <-> phantom
-  [150, 176], // klaytn <-> meter
-  [195, 150], // zors <-> klaytn
-  [202, 150], // opbnb <-> klaytn
-  [116, 150], // harmony <-> klaytn
-  [176, 150], // meter <-> klaytn
-  [158, 150], // polygon-zk <-> klaytn
-  [112, 150], // phantom <-> klaytn
-  [125, 150], // celo <-> klaytn
-  [175, 150], // nova <-> klaytn
-  [167, 150], // moonriver <-> klaytn
-  [165, 150], // zk <-> klaytn
-  // Mantle
-  [181, 176], // mantle <-> meter
-  [181, 125], // mantle <-> celo
-  [181, 175], // mantle <-> nova
-  [181, 116], // mantle <-> harmony
-  [181, 153], // mantle <-> core-dao
-  [181, 167], // mantle <-> moonriver
-  [181, 202], // mantle <-> op-bnb
-  [181, 138], // mantle <-> fuse
-  [176, 181], // meter <-> mantle
-  [125, 181], // celo <-> mantle
-  [153, 181], // core-dao <-> mantle
-  [175, 181], // nova <-> mantle
-  [202, 181], // op-bnb <-> mantle
-  [116, 181], // harmony <-> mantle
-  [167, 181], // moonriver <-> mantle
-  [138, 181], // fuse <-> mantle
-  // CoreDao
-  [184, 153], // base <-> core-dao
-  [183, 153], // linea <-> core-dao
-  [175, 153], // nova <-> core-dao
-  [214, 153], // scroll <-> core-dao
-  [111, 153], // optimism <-> core-dao
-  [126, 153], // moonbeam <-> core-dao
-  [112, 153], // fantom <-> core-dao
-  [125, 153], // celo <-> core-dao
-  [145, 153], // gnosis <-> core-dao
-  [158, 153], // polygon-zk <-> core-dao
-  [176, 153], // meter <-> core-dao
-  [167, 153], // moonriver <-> core-dao
-  [116, 153], // harmony <-> core-dao
-  [202, 153], // op-bnb <-> core-dao
-  [177, 153], // kava <-> core-dao
-  [195, 153], // zora <-> core-dao
-  [150, 153], // klaytn <-> core-dao
-  [165, 153], // zk <-> core-dao
-  [153, 184], // core-dao <-> base
-  [153, 183], // core-dao <-> linea
-  [153, 175], // core-dao <-> nova
-  [153, 214], // core-dao <-> scroll
-  [153, 111], // core-dao <-> optimism
-  [153, 126], // core-dao <-> moonbeam
-  [153, 112], // core-dao <-> fantom
-  [153, 125], // core-dao <-> celo
-  [153, 145], // core-dao <-> gnosis
-  [153, 158], // core-dao <-> polygon-zk
-  [153, 176], // core-dao <-> meter
-  [153, 167], // core-dao <-> moonriver
-  [153, 116], // core-dao <-> harmony
-  [153, 202], // core-dao <-> op-bnb
-  [153, 177], // core-dao <-> kava
-  [153, 195], // core-dao <-> zora
-  [153, 150], // core-dao <-> klaytn
-  // Fuse
-  [138, 165], // fuse <-> zk
-  [138, 184], // fuse <-> base
-  [138, 183], // fuse <-> linea
-  [138, 175], // fuse <-> nova
-  [138, 214], // fuse <-> scroll
-  [138, 126], // fuse <-> moonbeam
-  [138, 158], // fuse <-> polygon-zk
-  [138, 176], // fuse <-> meter
-  [138, 167], // fuse <-> moonriver
-  [138, 116], // fuse <-> harmony
-  [138, 202], // fuse <-> op-bnb
-  [138, 177], // fuse <-> kava
-  [138, 195], // fuse <-> zora
-  [138, 153], // fuse <-> core-dao
-  [184, 138], // base <-> fuse
-  [183, 138], // linea <-> fuse
-  [175, 138], // nova <-> fuse
-  [214, 138], // scroll <-> fuse
-  [126, 138], // moonbeam <-> fuse
-  [158, 138], // polygon-zk <-> fuse
-  [176, 138], // meter <-> fuse
-  [167, 138], // moonriver <-> fuse
-  [116, 138], // harmony <-> fuse
-  [202, 138], // op-bnb <-> fuse
-  [177, 138], // kava <-> fuse
-  [195, 138], // zora <-> fuse
-  [153, 138], // core-dao <-> fuse
-]
+export type DisabledPairs = {
+  176: number[]
+  116: number[]
+  167: number[]
+  202: number[]
+  177: number[]
+  195: number[]
+  150: number[]
+  181: number[]
+  153: number[]
+  138: number[]
+  165: number[]
+  175: number[]
+  214: number[]
+  125: number[]
+  184: number[]
+  145: number[]
+  158: number[]
+  126: number[]
+  112: number[]
+  183: number[]
+  111: number[]
+}
+
+export const DISABLED_PAIRS: DisabledPairs = {
+  176: [125, 116, 158, 126, 167, 145, 214, 183, 195], // meter
+  116: [176, 125, 158, 175, 167, 145, 184, 214], // harmony
+  167: [176, 125, 158, 175, 145, 116, 126], // moonriver
+  202: [175, 126, 125, 145, 176, 167, 116, 177, 195], // op-bnb
+  177: [125, 145, 176, 116, 202, 195], // kava
+  195: [175, 214, 126, 112, 125, 145, 158, 176, 167, 116, 202, 177], // zora
+  150: [125, 195, 116, 175, 202, 158, 167, 112, 176], // klaytn
+  181: [176, 125, 175, 116, 153, 167, 202, 138], // mantle
+  153: [
+    184, 183, 175, 214, 111, 126, 112, 125, 145, 158, 176, 167, 116, 202, 177,
+    195, 150, 181, 138,
+  ], // core-dao
+  138: [
+    165, 184, 183, 175, 214, 126, 158, 176, 167, 116, 202, 177, 195, 153, 181,
+  ], // fuse
+  165: [116, 167, 195, 150, 153, 145, 125, 126], // zk
+  175: [214, 125, 145, 158, 202, 167, 175, 202, 195, 150, 181, 153, 138], // nova
+  214: [175, 125, 176, 116, 195, 153, 138], // scroll
+  125: [184, 175, 214, 176, 116, 167, 202, 177, 195, 150, 181, 153], // celo
+  184: [125, 116, 153], // base
+  145: [175, 176, 116, 167, 202, 177, 195, 153], // gnosis
+  158: [175, 176, 116, 167, 195, 150, 153, 138], // polygon-zk
+  126: [176, 167, 202, 195, 153, 138], // moonbeam
+  112: [150], // phantom
+  183: [176, 138, 153], // linea
+  111: [153], // optimism
+}
