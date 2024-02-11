@@ -2,8 +2,6 @@ export const DISABLED_PAIRS = [
   [175, 214], // nova <-> scroll
   [214, 175], // scroll <-> nova
   [165, 126], // zk <-> moonbeam
-  [126, 165], // moonbeam <-> zk
-  [125, 165], // celo <-> zk
   [165, 125], // zk <-> celo
   [125, 184], // celo <-> base
   [184, 125], // base <-> celo
@@ -42,7 +40,6 @@ export const DISABLED_PAIRS = [
   [116, 145], // harmony <-> gnosis
   [116, 184], // harmony <-> base
   [116, 214], // harmony <-> scroll
-  [116, 165], // harmony <-> zk
   [176, 116], // meter <-> harmony
   [125, 116], // celo <-> harmony
   [158, 116], // polygon-zk <-> harmony
@@ -60,7 +57,6 @@ export const DISABLED_PAIRS = [
   [167, 145], // moonriver <-> gnosis
   [167, 116], // moonriver <-> harmony
   [167, 126], // moonriver <-> moonbeam
-  [167, 165], // moonriver <-> zk
   [176, 167], // meter <-> moonriver
   [125, 167], // celo <-> moonriver
   [158, 167], // polygon-zk <-> moonriver
@@ -102,7 +98,6 @@ export const DISABLED_PAIRS = [
   [202, 177], // opbnb <-> kava
   [195, 177], // zora <-> kava
   // zora
-  [195, 165], // zora <-> zk
   [195, 175], // zora <-> nova
   [195, 214], // zora <-> scroll
   [195, 126], // zora <-> moonbeam
@@ -138,7 +133,6 @@ export const DISABLED_PAIRS = [
   [150, 167], // klaytn <-> moonriver
   [150, 112], // klaytn <-> phantom
   [150, 176], // klaytn <-> meter
-  [150, 165], // klaytn <-> zk
   [195, 150], // zors <-> klaytn
   [202, 150], // opbnb <-> klaytn
   [116, 150], // harmony <-> klaytn
@@ -149,4 +143,55 @@ export const DISABLED_PAIRS = [
   [175, 150], // nova <-> klaytn
   [167, 150], // moonriver <-> klaytn
   [165, 150], // zk <-> klaytn
+  // Mantle
+  [181, 176], // mantle <-> meter
+  [181, 125], // mantle <-> celo
+  [181, 175], // mantle <-> nova
+  [181, 116], // mantle <-> harmony
+  [181, 167], // mantle <-> moonriver
+  [181, 202], // mantle <-> op-bnb
+  [176, 181], // meter <-> mantle
+  [125, 181], // celo <-> mantle
+  [175, 181], // nova <-> mantle
+  [116, 181], // harmony <-> mantle
+  [167, 181], // moonriver <-> mantle
+  [202, 181], // op-bnb <-> mantle
+  // CoreDao
+  [184, 153], // base <-> core-dao
+  [183, 153], // linea <-> core-dao
+  [175, 153], // nova <-> core-dao
+  [214, 153], // scroll <-> core-dao
+  [111, 153], // optimism <-> core-dao
+  [126, 153], // moonbeam <-> core-dao
+  [112, 153], // fantom <-> core-dao
+  [125, 153], // celo <-> core-dao
+  [145, 153], // gnosis <-> core-dao
+  [158, 153], // polygon-zk <-> core-dao
+  [176, 153], // meter <-> core-dao
+  [167, 153], // moonriver <-> core-dao
+  [116, 153], // harmony <-> core-dao
+  [202, 153], // op-bnb <-> core-dao
+  [177, 153], // kava <-> core-dao
+  [195, 153], // zora <-> core-dao
+  [150, 153], // klaytn <-> core-dao
+  [181, 153], // mantle <-> core-dao
+  [165, 153], // zk <-> core-dao
+  [153, 184], // core-dao <-> base
+  [153, 183], // core-dao <-> linea
+  [153, 175], // core-dao <-> nova
+  [153, 214], // core-dao <-> scroll
+  [153, 111], // core-dao <-> optimism
+  [153, 126], // core-dao <-> moonbeam
+  [153, 112], // core-dao <-> fantom
+  [153, 125], // core-dao <-> celo
+  [153, 145], // core-dao <-> gnosis
+  [153, 158], // core-dao <-> polygon-zk
+  [153, 176], // core-dao <-> meter
+  [153, 167], // core-dao <-> moonriver
+  [153, 116], // core-dao <-> harmony
+  [153, 202], // core-dao <-> op-bnb
+  [153, 177], // core-dao <-> kava
+  [153, 195], // core-dao <-> zora
+  [153, 150], // core-dao <-> klaytn
+  [153, 181], // core-dao <-> mantle
 ]

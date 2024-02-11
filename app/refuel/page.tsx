@@ -69,6 +69,9 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   2222: 1, // kava
   7777777: 0.05, // zora
   8217: 0.05, // klaytn
+  // 5000: 10, // mantle
+  1116: 0.25, // core-dao
+  122: 0.05, // fuse
   10042220: 1, // gnosis --> celo
 }
 
@@ -85,7 +88,9 @@ const SYMBOL_TO_CHAIN: { [key: string]: string } = {
   MOVR: 'moonriver',
   ONE: 'harmony',
   KAVA: 'kava',
-  KLAY: 'klay-token'
+  KLAY: 'klay-token',
+  CORE: 'coredaoorg',
+  FUSE: 'fuse-network-token',
 }
 
 export default function RefuelPage() {
@@ -320,6 +325,7 @@ export default function RefuelPage() {
                         isChainGridView={isChainGridView}
                         setIsChainGridView={setIsChainGridView}
                         selectedValue={fields.chainFrom}
+                        disabledChain={165}
                         fieldValue={field.value}
                         onSelect={(value) => {
                           form.setValue('chainTo', value)
