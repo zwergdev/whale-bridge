@@ -71,6 +71,7 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   8217: 0.05, // klaytn
   // 5000: 10, // mantle
   1116: 0.25, // core-dao
+  122: 0.05, // fuse
   10042220: 1, // gnosis --> celo
 }
 
@@ -88,7 +89,8 @@ const SYMBOL_TO_CHAIN: { [key: string]: string } = {
   ONE: 'harmony',
   KAVA: 'kava',
   KLAY: 'klay-token',
-  CORE:  'coredaoorg'
+  CORE: 'coredaoorg',
+  FUSE: 'fuse-network-token',
 }
 
 export default function RefuelPage() {

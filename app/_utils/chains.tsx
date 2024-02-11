@@ -116,7 +116,7 @@ export const CHAINS = [
     label: 'Klaytn',
     value: 150,
     image: '/chain-logo/klaytn.svg',
-    chainId: 8217
+    chainId: 8217,
   },
   // {
   //   label: 'Mantle',
@@ -128,8 +128,14 @@ export const CHAINS = [
     label: 'CoreDAO',
     value: 153,
     image: '/chain-logo/core-dao.svg',
-    chainId: 1116
-  }
+    chainId: 1116,
+  },
+  // {
+  //   label: 'Fuse',
+  //   value: 138,
+  //   image: 'chain-logo/fuse.svg',
+  //   chainId: 122
+  // },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
@@ -155,8 +161,9 @@ export const TX_LINK: { [chainId: number]: string } = {
   2222: 'kavascan.com', // kava
   7777777: 'explorer.zora.energy', // zora
   8217: 'scope.klaytn.com', //klaytn
-  // 5000: 'explorer.mantle.xyz', mantle
+  5000: 'explorer.mantle.xyz', // mantle
   1116: 'scan.coredao.org', // core-dao
+  122: 'explorer.fuse.io', // fuse
 }
 
 export const selectedChain = (fieldValue: number) => {
