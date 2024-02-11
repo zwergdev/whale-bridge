@@ -1,10 +1,12 @@
 'use client'
 
 import {
-  estimateClaimFee,
-  estimateRefuelFee,
+  CONTRACTS,
+  bridgeToken,
+  claimToken,
+  estimateBridgeTokenFee,
 } from '@/app/_utils/contract-actions'
-import { RefuelSchema } from '@/app/_utils/schemas'
+import { truncatedToaster } from '@/app/_utils/truncatedToaster'
 import { Button } from '@/components/ui/button-new'
 import {
   Form,
@@ -19,6 +21,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
+import { parseEther } from 'viem'
 import {
   useAccount,
   useBalance,
@@ -39,7 +42,7 @@ import { BalanceIndicator } from '../refuel/_components/balance-indicator'
 
 export default function TokenPage() {
   const [fee, setFee] = useState<bigint>()
-  const { address, chain } = useAccount()
+  const { address, chain, status } = useAccount()
   const { switchChain } = useSwitchChain()
   const [isFeeLoading, setIsFeeLoading] = useState(false)
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
@@ -90,10 +93,18 @@ export default function TokenPage() {
   const balanceTo = Number(Number(_balanceTo?.formatted).toFixed(5))
 
   const { refetch } = useReadContract(
-    estimateClaimFee(fields.chainTo, selectedChainId, address!, fields.amount),
+    estimateBridgeTokenFee(
+      fields.chainTo,
+      selectedChainId,
+      address!,
+      fields.amount,
+    ),
   )
 
-  const { writeContractAsync, isPending: isClaiming } = useWriteContract()
+  const { writeContractAsync: claim, isPending: isClaiming } =
+    useWriteContract()
+  const { writeContractAsync: bridge, isPending: isBridging } =
+    useWriteContract()
 
   const debounceFee = useDebouncedCallback(async (value) => {
     setIsFeeLoading(true)
@@ -103,15 +114,47 @@ export default function TokenPage() {
     setIsFeeLoading(false)
   }, 500)
 
-  async function onSubmit({ chainTo, amount }: z.infer<typeof TokenSchema>) {
-    console.log('onSubmit:', chainTo, amount)
+  async function onSubmitBridge({
+    chainTo,
+    amount,
+  }: z.infer<typeof TokenSchema>) {
+    const { data: fee }: any = await refetch()
+
+    if (!fee)
+      return truncatedToaster('Error occurred!', 'Failed to fetch refuel cost.')
+
+    await bridge({
+      ...bridgeToken(selectedChainId),
+      value: fee[0],
+      args: [
+        address,
+        chainTo,
+        address,
+        amount,
+        '0x000', // refund address
+        '0x000', // zero payment address
+        '0x000', // adapter
+      ],
+    })
+  }
+
+  async function onSubmitClaim({ amount }: z.infer<typeof TokenSchema>) {
+    const amou = amount * CONTRACTS[selectedChainId].tokenPrice!
+
+    const value = parseEther(amou.toString())
+
+    await claim({
+      ...claimToken(selectedChainId),
+      value,
+      args: [address, amount],
+    })
   }
 
   return (
     <>
       <Paper title="TOKEN">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={form.handleSubmit(onSubmitBridge)}>
             <div className="w-full flex justify-between items-center md:mb-5 mb-7 gap-5 md:gap-0 md:flex-row flex-col">
               <FormField
                 control={form.control}
@@ -199,8 +242,20 @@ export default function TokenPage() {
               <FormLabel>Claim tokens</FormLabel>
               <FormControl>
                 <div className="flex items-center gap-3">
-                  <Input type="number" placeholder="Amount to claim" />
-                  <Button className="w-20 hover:scale-100">CLAIM</Button>
+                  <Input
+                    type="number"
+                    placeholder="Amount to claim"
+                    autoComplete="off"
+                    disabled={status !== 'connected'}
+                  />
+                  <Button
+                    type="button"
+                    className="w-20 hover:scale-100"
+                    loading={isClaiming || isBridging}
+                    onClick={form.handleSubmit(onSubmitClaim)}
+                  >
+                    CLAIM
+                  </Button>
                 </div>
               </FormControl>
             </FormItem>
@@ -225,7 +280,11 @@ export default function TokenPage() {
               </FormControl>
             </FormItem>
 
-            <Button className="w-full mt-3" type="submit">
+            <Button
+              className="w-full mt-3"
+              type="submit"
+              loading={isClaiming || isBridging}
+            >
               BRIDGE
             </Button>
           </form>
