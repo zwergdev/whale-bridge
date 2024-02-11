@@ -21,6 +21,7 @@ import zk from '@/public/chain-logo/zk.svg'
 import zora from '@/public/chain-logo/zora.svg'
 import klaytn from '@/public/chain-logo/klaytn.svg'
 import mantle from '@/public/chain-logo/mantle.svg'
+import core from '@/public/chain-logo/core-dao.svg'
 
 export const chainImages = {
   324: zk.src,
@@ -46,4 +47,5 @@ export const chainImages = {
   7777777: zora.src,
   8217: klaytn.src,
   5000: mantle.src,
+  1116: core.src
 }

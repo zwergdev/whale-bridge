@@ -123,6 +123,12 @@ export const CHAINS = [
     value: 181,
     image: '/chain-logo/mantle.svg',
     chainId: 5000
+  },
+  {
+    label: 'CoreDAO',
+    value: 153,
+    image: '/chain-logo/core-dao.svg',
+    chainId: 1116
   }
 ]
 
@@ -149,7 +155,8 @@ export const TX_LINK: { [chainId: number]: string } = {
   2222: 'kavascan.com', // kava
   7777777: 'explorer.zora.energy', // zora
   8217: 'scope.klaytn.com', //klaytn
-  5000: 'explorer.mantle.xyz' // mantle
+  5000: 'explorer.mantle.xyz', // mantle
+  1116: 'scan.coredao.org', // core-dao
 }
 
 export const selectedChain = (fieldValue: number) => {
