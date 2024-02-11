@@ -19,6 +19,10 @@ import polygon from '@/public/chain-logo/polygon.svg'
 import scroll from '@/public/chain-logo/scroll.svg'
 import zk from '@/public/chain-logo/zk.svg'
 import zora from '@/public/chain-logo/zora.svg'
+import klaytn from '@/public/chain-logo/klaytn.svg'
+import mantle from '@/public/chain-logo/mantle.svg'
+import core from '@/public/chain-logo/core-dao.svg'
+import fuse from '@/public/chain-logo/fuse.svg'
 
 export const chainImages = {
   324: zk.src,
@@ -42,4 +46,8 @@ export const chainImages = {
   204: opBnb.src,
   2222: kava.src,
   7777777: zora.src,
+  8217: klaytn.src,
+  1116: core.src,
+  5000: mantle.src,
+  122: fuse.src
 }
