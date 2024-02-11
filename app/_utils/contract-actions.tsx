@@ -132,7 +132,7 @@ const CONTRACTS: {
   122: {
     mintAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
     refuelAddress: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
-    mintPrice: '0.0001',
+    mintPrice: '3.70866',
   }, // fuse
   0: {
     mintAddress: '0x00',
