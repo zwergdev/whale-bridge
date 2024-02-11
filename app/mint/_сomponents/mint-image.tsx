@@ -24,7 +24,7 @@ import scroll from '@/public/nft/nft-scroll.webp'
 import zk from '@/public/nft/nft-zk.webp'
 import zora from '@/public/nft/nft-zora.webp'
 import klaytn from '@/public/nft/nft-klaytn.webp'
-// import mantle from '@/public/nft/nft-mantle.webp'
+import mantle from '@/public/nft/nft-mantle.webp'
 import core from '@/public/nft/nft-core-dao.webp'
 import fuse from '@/public/nft/nft-fuse.webp'
 import Image, { StaticImageData } from 'next/image'
@@ -54,7 +54,7 @@ const IMAGES: { [key: number]: StaticImageData } = {
   2222: kava,
   7777777: zora,
   8217: klaytn,
-  // 5000: mantle,
+  5000: mantle,
   1116: core,
   122: fuse
 }

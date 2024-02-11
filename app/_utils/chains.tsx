@@ -130,12 +130,12 @@ export const CHAINS = [
     image: '/chain-logo/core-dao.svg',
     chainId: 1116,
   },
-  // {
-  //   label: 'Fuse',
-  //   value: 138,
-  //   image: 'chain-logo/fuse.svg',
-  //   chainId: 122
-  // },
+  {
+    label: 'Fuse',
+    value: 138,
+    image: 'chain-logo/fuse.svg',
+    chainId: 122
+  },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {

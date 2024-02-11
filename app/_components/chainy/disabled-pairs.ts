@@ -194,4 +194,32 @@ export const DISABLED_PAIRS = [
   [153, 195], // core-dao <-> zora
   [153, 150], // core-dao <-> klaytn
   [153, 181], // core-dao <-> mantle
+  // Fuse
+  [138, 165], // zk <-> fuse
+  [138, 184], // fuse <-> base
+  [138, 183], // fuse <-> linea
+  [138, 175], // fuse <-> nova
+  [138, 214], // fuse <-> scroll
+  [138, 126], // fuse <-> moonbeam
+  [138, 158], // fuse <-> polygon-zk
+  [138, 176], // fuse <-> meter
+  [138, 167], // fuse <-> moonriver
+  [138, 116], // fuse <-> harmony
+  [138, 202], // fuse <-> op-bnb
+  [138, 177], // fuse <-> kava
+  [138, 195], // fuse <-> zora
+  [138, 153], // fuse <-> core-dao
+  [184, 138], // base <-> fuse
+  [183, 138], // linea <-> fuse
+  [175, 138], // nova <-> fuse
+  [214, 138], // scroll <-> fuse
+  [126, 138], // moonbeam <-> fuse
+  [158, 138], // polygon-zk <-> fuse
+  [176, 138], // meter <-> fuse
+  [167, 138], // moonriver <-> fuse
+  [116, 138], // harmony <-> fuse
+  [202, 138], // op-bnb <-> fuse
+  [177, 138], // kava <-> fuse
+  [195, 138], // zora <-> fuse
+  [153, 138], // core-dao <-> fuse
 ]
