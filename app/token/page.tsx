@@ -16,15 +16,14 @@ import {
   FormItem,
   FormLabel,
 } from '@/components/ui/form'
-import { formatEther } from 'viem'
-
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { Popover } from '@/components/ui/popover'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
-import { parseEther } from 'viem'
+import { formatEther, parseEther } from 'viem'
 import {
   useAccount,
   useBalance,
@@ -89,7 +88,7 @@ export default function TokenPage() {
       chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value, // 102
     },
   })
-  const { watch, setValue } = form
+  const { watch, setValue, register } = form
   const fields = watch()
 
   const { refetch: refetchFee } = useReadContract(
@@ -173,7 +172,7 @@ export default function TokenPage() {
     <>
       <Paper title="TOKEN">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmitBridge)}>
+          <form>
             <div className="w-full flex justify-between items-center md:mb-5 mb-7 gap-5 md:gap-0 md:flex-row flex-col">
               <FormField
                 control={form.control}
@@ -250,97 +249,66 @@ export default function TokenPage() {
               />
             </div>
 
-            <FormField
-              control={form.control}
-              name="amount"
-              render={({ field: { onChange, ...rest } }) => (
-                <FormItem>
-                  <FormLabel>Claim tokens</FormLabel>
-                  <FormControl>
-                    <div className="flex items-center gap-3">
-                      <Input
-                        type="number"
-                        placeholder="Amount to claim"
-                        autoComplete="off"
-                        {...rest}
-                        onChange={(e) => {
-                          const isError = Number.isNaN(Number(e.target.value))
-                          if (isError) return
+            <Label className="leading-10">Claim tokens</Label>
+            <div className="flex items-center gap-3">
+              <Input
+                type="number"
+                placeholder="Amount to claim"
+                autoComplete="off"
+                {...register('amount')}
+              />
+              <Button
+                type="button"
+                className="w-32 min-w-32 hover:scale-100 h-12"
+                disabled={status !== 'connected' || !fields.amount || isPending}
+                onClick={form.handleSubmit(onSubmitClaim)}
+              >
+                CLAIM
+              </Button>
+            </div>
 
-                          onChange(e)
-                        }}
-                      />
-                      <Button
-                        type="button"
-                        className="w-32 min-w-32 hover:scale-100 h-12"
-                        disabled={
-                          status !== 'connected' || !rest.value || isPending
-                        }
-                        onClick={form.handleSubmit(onSubmitClaim)}
-                      >
-                        CLAIM
-                      </Button>
-                    </div>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+            <div className="mt-5">
+              <Label className="flex items-end justify-between mb-2">
+                <div className="flex items-end justify-start gap-5">
+                  Bridge tokens
+                  {!!fields.tokenBalance && (
+                    <BalanceIndicator
+                      balance={Number(fields.tokenBalance)}
+                      symbol="BWHL"
+                    />
+                  )}
+                </div>
 
-            <FormField
-              control={form.control}
-              name="bridgeAmount"
-              render={({ field: { onChange, ...rest } }) => (
-                <FormItem className="mt-5">
-                  <FormLabel className="flex items-end justify-between">
-                    <div className="flex items-end justify-start gap-5">
-                      Bridge tokens
-                      {!!fields.tokenBalance && (
-                        <BalanceIndicator
-                          balance={Number(fields.tokenBalance)}
-                          symbol="BWHL"
-                        />
-                      )}
-                    </div>
-
-                    <button
-                      type="button"
-                      className="text-[10px] opacity-75 cursor-pointer text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4] disabled:hover:opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
-                      disabled={!fields.tokenBalance}
-                      onClick={() => {
-                        setValue('bridgeAmount', fields.tokenBalance.toString())
-                      }}
-                    >
-                      MAX
-                    </button>
-                  </FormLabel>
-                  <FormControl>
-                    <div className="flex gap-3">
-                      <div className="inline-flex bg-popover items-center rounded px-3">
-                        BWHL
-                      </div>
-                      <Input
-                        placeholder="Amount to bridge"
-                        autoComplete="off"
-                        type="number"
-                        {...rest}
-                        disabled={!fields.tokenBalance}
-                        onChange={(e) => {
-                          const isError = Number.isNaN(Number(e.target.value))
-                          if (isError) return
-
-                          onChange(e)
-                        }}
-                      />
-                    </div>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+                <button
+                  type="button"
+                  className="text-[10px] opacity-75 cursor-pointer text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4] disabled:hover:opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={!fields.tokenBalance}
+                  onClick={() => {
+                    setValue('bridgeAmount', fields.tokenBalance.toString())
+                  }}
+                >
+                  MAX
+                </button>
+              </Label>
+              <div className="flex gap-3">
+                <div className="inline-flex bg-popover items-center rounded px-3">
+                  BWHL
+                </div>
+                <Input
+                  placeholder="Amount to bridge"
+                  autoComplete="off"
+                  type="number"
+                  {...register('bridgeAmount')}
+                  disabled={!fields.tokenBalance}
+                />
+              </div>
+            </div>
 
             <Button
               className="w-full mt-5 hover:scale-[1.05]"
               type="submit"
               disabled={!fields.tokenBalance || !fields.bridgeAmount}
+              onClick={form.handleSubmit(onSubmitBridge)}
               loading={isPending || status !== 'connected'}
             >
               {status === 'disconnected' ? 'CONNECT WALLET' : 'BRIDGE'}

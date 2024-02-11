@@ -1,4 +1,4 @@
-import { ethers } from 'ethers'
+import { utils } from 'ethers'
 import { parseEther } from 'viem/utils'
 import { celoMintABI, mintABI, modernMintABI, refuelABI, tokenABI } from './abi'
 
@@ -133,7 +133,7 @@ const CONTRACTS: {
   5000: {
     mintAddress: '0x84f4c0A290B5607fee0f2A1CDe5348540fecF6A1',
     refuelAddress: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
-    mintPrice: '0.3499'
+    mintPrice: '0.3499',
   }, // mantle
   122: {
     mintAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
@@ -255,7 +255,7 @@ function getAdapter(amount: bigint, address: string) {
   if (amount === BigInt(0) || !address) return '0'
   if (amount === BigInt(0) || !address) return '0'
 
-  return ethers.utils.solidityPack(
+  return utils.solidityPack(
     ['uint16', 'uint256', 'uint256', 'address'],
     [2, 200000, amount, address],
   )
