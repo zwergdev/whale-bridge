@@ -1,8 +1,7 @@
+import { delay } from '@/lib/utils'
 import { Copy, CopyCheck } from 'lucide-react'
 import { useState } from 'react'
 import { ReferalsCounter } from './referrals-counter'
-
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
 
 export const OwnedCode = ({ code }: { code: string }) => {
   const [copied, setCopied] = useState(false)

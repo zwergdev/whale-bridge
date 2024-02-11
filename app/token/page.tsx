@@ -23,6 +23,7 @@ import { Popover } from '@/components/ui/popover'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useDebouncedCallback } from 'use-debounce'
 import { parseEther } from 'viem'
 import {
   useAccount,
@@ -69,13 +70,15 @@ export default function TokenPage() {
       'chainTo',
       CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value,
     )
-    ;(async () => {
-      setValue('tokenBalance', 0)
-      const { data }: any = await refetchBalance()
-      if (!data) return
-      setValue('tokenBalance', Number(formatEther(data)))
-    })()
+    debounceTokenBalance(1)
   }, [chain])
+
+  const debounceTokenBalance = useDebouncedCallback(async (v) => {
+    setValue('tokenBalance', 0)
+    const { data }: any = await refetchBalance()
+    if (!data || !v) return
+    setValue('tokenBalance', Number(formatEther(data)))
+  }, 500)
 
   const form = useForm<z.infer<typeof TokenSchema>>({
     resolver: zodResolver(TokenSchema),
@@ -270,8 +273,9 @@ export default function TokenPage() {
                       <Button
                         type="button"
                         className="w-32 min-w-32 hover:scale-100 h-12"
-                        disabled={status !== 'connected' || !rest.value}
-                        loading={isPending}
+                        disabled={
+                          status !== 'connected' || !rest.value || isPending
+                        }
                         onClick={form.handleSubmit(onSubmitClaim)}
                       >
                         CLAIM
@@ -339,7 +343,7 @@ export default function TokenPage() {
               disabled={!fields.tokenBalance || !fields.bridgeAmount}
               loading={isPending || status !== 'connected'}
             >
-              BRIDGE
+              {status === 'disconnected' ? 'CONNECT WALLET' : 'BRIDGE'}
             </Button>
           </form>
         </Form>
