@@ -80,7 +80,6 @@ const ChainList = ({
                   const isDisabled = DISABLED_PAIRS.some(
                     ([a, b]) => selectedValue === a && value === b,
                   )
-                  console.log('zk', value === 165 && isDisabled)
 
                   return (
                     <CommandItem

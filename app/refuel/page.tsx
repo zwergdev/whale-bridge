@@ -325,6 +325,7 @@ export default function RefuelPage() {
                         isChainGridView={isChainGridView}
                         setIsChainGridView={setIsChainGridView}
                         selectedValue={fields.chainFrom}
+                        disabledChain={165}
                         fieldValue={field.value}
                         onSelect={(value) => {
                           form.setValue('chainTo', value)

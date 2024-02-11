@@ -194,29 +194,4 @@ export const DISABLED_PAIRS = [
   [153, 195], // core-dao <-> zora
   [153, 150], // core-dao <-> klaytn
   [153, 181], // core-dao <-> mantle
-
-  //ZkSync
-  [102, 165], // bsc <-> zk
-  [184, 165], // base <-> zk
-  [183, 165], // linea <-> zk
-  [175, 165], // nova <-> zk
-  [109, 165], // polygon <-> zk
-  [110, 165], // arbitrum <-> zk
-  [214, 165], // scroll <-> zk
-  [153, 165], // core-dap <-> zk
-  [111, 165], // optimism <-> zk
-  [126, 165], // moonbeam <-> zk
-  [106, 165], // avalanche <-> zk
-  [112, 165], // fantom <-> zk
-  [125, 165], // celo <-> zk
-  [145, 165], // gnosis <-> zk
-  [158, 165], // polygon-zk <-> zk
-  [176, 165], // meter <-> zk
-  [167, 165], // moonriver <-> zk
-  [116, 165], // harmony <-> zk
-  [202, 165], // op-bnb <-> zk
-  [177, 165], // kava <-> zk
-  [195, 165], // zora <-> zk
-  [150, 165], // klaytn <-> zk
-  [181, 165], // mantle <-> zk
 ]
