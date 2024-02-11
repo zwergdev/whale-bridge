@@ -69,7 +69,7 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   2222: 1, // kava
   7777777: 0.05, // zora
   8217: 0.05, // klaytn
-  // 5000: 10, // mantle
+  5000: 10, // mantle
   1116: 0.25, // core-dao
   122: 0.05, // fuse
   10042220: 1, // gnosis --> celo

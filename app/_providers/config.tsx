@@ -24,7 +24,7 @@ import {
   zora,
   klaytn,
   coreDao,
-  // fuse,
+  fuse,
   // mantle
 } from 'wagmi/chains'
 
@@ -65,7 +65,7 @@ export const config = defaultWagmiConfig({
     zora,
     klaytn,
     coreDao,
-    // fuse,
+    fuse,
     // mantle
   ], // required
   projectId, // required

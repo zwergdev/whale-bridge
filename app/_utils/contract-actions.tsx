@@ -124,10 +124,15 @@ const CONTRACTS: {
     refuelAddress: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
     mintPrice: '0.4273',
   }, // core-dao
+  // 5000: {
+  //   mintAddress: '0x84f4c0A290B5607fee0f2A1CDe5348540fecF6A1',
+  //   refuelAddress: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
+  //   mintPrice: '0.0001'
+  // }, // mantle
   122: {
     mintAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
     refuelAddress: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
-    mintPrice: '0.0001'
+    mintPrice: '3.70866',
   }, // fuse
   0: {
     mintAddress: '0x00',
