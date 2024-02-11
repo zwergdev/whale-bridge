@@ -69,7 +69,7 @@ const MAX_REFUEL: { [chainId: number]: number } = {
   2222: 1, // kava
   7777777: 0.05, // zora
   8217: 0.05, // klaytn
-  5000: 10, // mantle
+  // 5000: 10, // mantle
   1116: 0.25, // core-dao
   10042220: 1, // gnosis --> celo
 }
@@ -87,7 +87,8 @@ const SYMBOL_TO_CHAIN: { [key: string]: string } = {
   MOVR: 'moonriver',
   ONE: 'harmony',
   KAVA: 'kava',
-  KLAY: 'klay-token'
+  KLAY: 'klay-token',
+  CORE:  'coredaoorg'
 }
 
 export default function RefuelPage() {

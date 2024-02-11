@@ -144,18 +144,18 @@ export const DISABLED_PAIRS = [
   [167, 150], // moonriver <-> klaytn
   [165, 150], // zk <-> klaytn
   // Mantle
-  [181, 176], // mantle <-> meter
-  [181, 125], // mantle <-> celo
-  [181, 175], // mantle <-> nova
-  [181, 116], // mantle <-> harmony
-  [181, 167], // mantle <-> moonriver
-  [181, 202], // mantle <-> op-bnb
-  [176, 181], // meter <-> mantle
-  [125, 181], // celo <-> mantle
-  [175, 181], // nova <-> mantle
-  [116, 181], // harmony <-> mantle
-  [167, 181], // moonriver <-> mantle
-  [202, 181], // op-bnb <-> mantle
+  // [181, 176], // mantle <-> meter
+  // [181, 125], // mantle <-> celo
+  // [181, 175], // mantle <-> nova
+  // [181, 116], // mantle <-> harmony
+  // [181, 167], // mantle <-> moonriver
+  // [181, 202], // mantle <-> op-bnb
+  // [176, 181], // meter <-> mantle
+  // [125, 181], // celo <-> mantle
+  // [175, 181], // nova <-> mantle
+  // [116, 181], // harmony <-> mantle
+  // [167, 181], // moonriver <-> mantle
+  // [202, 181], // op-bnb <-> mantle
   // CoreDao
   [184, 153], // base <-> core-dao
   [183, 153], // linea <-> core-dao
@@ -174,7 +174,7 @@ export const DISABLED_PAIRS = [
   [177, 153], // kava <-> core-dao
   [195, 153], // zora <-> core-dao
   [150, 153], // klaytn <-> core-dao
-  [181, 153], // mantle <-> core-dao
+  // [181, 153], // mantle <-> core-dao
   [165, 153], // zk <-> core-dao
   [153, 184], // core-dao <-> base 
   [153, 183], // core-dao <-> linea
@@ -193,7 +193,7 @@ export const DISABLED_PAIRS = [
   [153, 177], // core-dao <-> kava 
   [153, 195], // core-dao <-> zora
   [153, 150], // core-dao <-> klaytn
-  [153, 181], // core-dao <-> mantle
+  // [153, 181], // core-dao <-> mantle
 
   //ZkSync
   [102, 165], // bsc <-> zk
@@ -218,5 +218,5 @@ export const DISABLED_PAIRS = [
   [177, 165], // kava <-> zk
   [195, 165], // zora <-> zk
   [150, 165], // klaytn <-> zk
-  [181, 165], // mantle <-> zk
+  // [181, 165], // mantle <-> zk
 ]

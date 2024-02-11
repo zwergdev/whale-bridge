@@ -118,12 +118,12 @@ export const CHAINS = [
     image: '/chain-logo/klaytn.svg',
     chainId: 8217
   },
-  {
-    label: 'Mantle',
-    value: 181,
-    image: '/chain-logo/mantle.svg',
-    chainId: 5000
-  },
+  // {
+  //   label: 'Mantle',
+  //   value: 181,
+  //   image: '/chain-logo/mantle.svg',
+  //   chainId: 5000
+  // },
   {
     label: 'CoreDAO',
     value: 153,
@@ -155,7 +155,7 @@ export const TX_LINK: { [chainId: number]: string } = {
   2222: 'kavascan.com', // kava
   7777777: 'explorer.zora.energy', // zora
   8217: 'scope.klaytn.com', //klaytn
-  5000: 'explorer.mantle.xyz', // mantle
+  // 5000: 'explorer.mantle.xyz', mantle
   1116: 'scan.coredao.org', // core-dao
 }
 

@@ -119,16 +119,16 @@ const CONTRACTS: {
     refuelAddress: '0xbcb4bc8fe7faba16c8a06186ab1703709a24c6bf',
     mintPrice: '1.05',
   }, // klaytn
-  5000: {
-    mintAddress: '0x84f4c0A290B5607fee0f2A1CDe5348540fecF6A1',
-    refuelAddress: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
-    mintPrice: '0.0001',
-  }, // mantle
+  // 5000: {
+  //   mintAddress: '0x84f4c0A290B5607fee0f2A1CDe5348540fecF6A1',
+  //   refuelAddress: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
+  //   mintPrice: '0.0001',
+  // },
   1116: {
     mintAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
     refuelAddress: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
-    mintPrice: '0.0001'
-  },
+    mintPrice: '0.4273'
+  }, // core-dao
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',

@@ -23,7 +23,6 @@ import {
   zkSync,
   zora,
   klaytn,
-  mantle,
   coreDao
 } from 'wagmi/chains'
 
@@ -63,7 +62,6 @@ export const config = defaultWagmiConfig({
     kava,
     zora,
     klaytn,
-    mantle,
     coreDao
   ], // required
   projectId, // required
