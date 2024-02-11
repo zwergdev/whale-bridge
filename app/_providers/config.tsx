@@ -25,7 +25,7 @@ import {
   klaytn,
   coreDao,
   fuse,
-  // mantle
+  mantle
 } from 'wagmi/chains'
 
 export const projectId = 'c8cb5377bf1b35c1349bb08e2025d352'
@@ -66,7 +66,7 @@ export const config = defaultWagmiConfig({
     klaytn,
     coreDao,
     fuse,
-    // mantle
+    mantle
   ], // required
   projectId, // required
   metadata, // required
