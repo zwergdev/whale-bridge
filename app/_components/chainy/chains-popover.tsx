@@ -37,7 +37,7 @@ const ChainyTrigger = ({ disabled, selectedValue }: ChainyTriggerProps) => {
 }
 
 type ChainListProps = {
-  selectedValue: keyof DisabledPairs
+  selectedValue: number
   fieldValue: number
   onSelect: (value: number, chainId: number) => void
   disabledChain?: number
@@ -77,9 +77,11 @@ const ChainList = ({
               {Array.from(CHAINS)
                 .sort((a, b) => {
                   const isADisabled =
-                    DISABLED_PAIRS[selectedValue]?.includes(a.value) ?? false
+                    DISABLED_PAIRS[selectedValue as keyof DisabledPairs]?.includes(a.value) ?? false
                   const isBDisabled =
-                    DISABLED_PAIRS[selectedValue]?.includes(b.value) ?? false
+                    DISABLED_PAIRS[
+                      selectedValue as keyof DisabledPairs
+                    ]?.includes(b.value) ?? false
 
                   if (
                     (isADisabled && !isBDisabled) ||
@@ -99,7 +101,9 @@ const ChainList = ({
                 })
                 .map(({ label, value, image, chainId }) => {
                   const isDisabled =
-                    DISABLED_PAIRS[selectedValue]?.includes(value) ?? false
+                    DISABLED_PAIRS[
+                      selectedValue as keyof DisabledPairs
+                    ]?.includes(value) ?? false
 
                   return (
                     <CommandItem
