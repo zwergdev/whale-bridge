@@ -7,3 +7,15 @@ export const truncatedToaster = (message: string, description: string) => {
     }`,
   })
 }
+
+export const errorToaster = (error: Error) => {
+  console.error(error)
+
+  if (
+    error?.message.includes('insufficient balance') ||
+    error?.message.includes('The total cost')
+  )
+    return toast('Error occurred!', {
+      description: 'Insufficient balance.',
+    })
+}

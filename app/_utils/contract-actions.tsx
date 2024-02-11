@@ -269,16 +269,27 @@ function estimateRefuelFee(
 
 function claimToken(chainId: number) {
   return {
-    address: CONTRACTS[chainId].mintAddress,
+    address: CONTRACTS[chainId].tokenAddress,
     abi: tokenABI,
     functionName: 'mint',
     chainId,
   }
 }
 
+function getTokenBalance(chainId: number, address: string) {
+  return {
+    address: CONTRACTS[chainId].tokenAddress,
+    abi: tokenABI,
+    functionName: 'balanceOf',
+    chainId,
+    args: [address],
+    enabled: false,
+  }
+}
+
 function bridgeToken(chainId: number) {
   return {
-    address: CONTRACTS[chainId].mintAddress,
+    address: CONTRACTS[chainId].tokenAddress,
     abi: tokenABI,
     functionName: 'sendFrom',
     chainId,
@@ -289,10 +300,10 @@ function estimateBridgeTokenFee(
   chainTo: number,
   chainId: number,
   address: string,
-  amount: number,
+  amount: bigint,
 ) {
   return {
-    address: CONTRACTS[chainId].mintAddress,
+    address: CONTRACTS[chainId].tokenAddress,
     abi: tokenABI,
     functionName: 'estimateSendFee',
     chainId,
@@ -318,6 +329,7 @@ export {
   getModernUserNFTIds,
   getNextMintId,
   claimToken,
+  getTokenBalance,
   bridgeToken,
   estimateBridgeTokenFee,
   CONTRACTS,

@@ -8,6 +8,7 @@ const NAVIGATION = [
   { href: '/mint', label: 'Mint' },
   { href: '/bridge', label: 'Bridge' },
   { href: '/refuel', label: 'Refuel' },
+  { href: '/token', label: 'Token' },
   { href: '/profile', label: 'Profile' },
 ]
 

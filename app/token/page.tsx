@@ -5,8 +5,9 @@ import {
   bridgeToken,
   claimToken,
   estimateBridgeTokenFee,
+  getTokenBalance,
 } from '@/app/_utils/contract-actions'
-import { truncatedToaster } from '@/app/_utils/truncatedToaster'
+import { errorToaster, truncatedToaster } from '@/app/_utils/truncatedToaster'
 import { Button } from '@/components/ui/button-new'
 import {
   Form,
@@ -15,12 +16,13 @@ import {
   FormItem,
   FormLabel,
 } from '@/components/ui/form'
+import { formatEther } from 'viem'
+
 import { Input } from '@/components/ui/input'
 import { Popover } from '@/components/ui/popover'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useDebouncedCallback } from 'use-debounce'
 import { parseEther } from 'viem'
 import {
   useAccount,
@@ -39,15 +41,16 @@ import {
 import { CHAINS } from '../_utils/chains'
 import { TokenSchema } from '../_utils/schemas'
 import { BalanceIndicator } from '../refuel/_components/balance-indicator'
+import { TokenDialog } from './_components/token-dialog'
 
 export default function TokenPage() {
-  const [fee, setFee] = useState<bigint>()
   const { address, chain, status } = useAccount()
   const { switchChain } = useSwitchChain()
-  const [isFeeLoading, setIsFeeLoading] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
   const [isChainGridView, setIsChainGridView] = useState(false)
   const [popoverToOpen, setPopoverToOpen] = useState(false)
+  const [isLayerZeroTx, setIsLayerZeroTx] = useState(false)
 
   const { data: _balanceFrom } = useBalance({
     address,
@@ -64,90 +67,103 @@ export default function TokenPage() {
     )
     form.setValue(
       'chainTo',
-      CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value,
+      CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value,
     )
-    form.setValue('amount', 0)
-    setFee(BigInt(0))
+    ;(async () => {
+      setValue('tokenBalance', 0)
+      const { data }: any = await refetchBalance()
+      if (!data) return
+      setValue('tokenBalance', Number(formatEther(data)))
+    })()
   }, [chain])
 
   const form = useForm<z.infer<typeof TokenSchema>>({
     resolver: zodResolver(TokenSchema),
     defaultValues: {
-      amount: 0,
+      tokenBalance: 0,
       chainFrom:
         CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
-      chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value, // 102
+      chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value, // 102
     },
   })
-
-  const { watch } = form
+  const { watch, setValue } = form
   const fields = watch()
-  const balanceToChainId = CHAINS.find(
-    ({ value }) => value === fields?.chainTo,
-  )?.chainId
 
-  const { data: _balanceTo } = useBalance({
-    chainId: balanceToChainId,
-    address,
-  })
-  const balanceTo = Number(Number(_balanceTo?.formatted).toFixed(5))
-
-  const { refetch } = useReadContract(
+  const { refetch: refetchFee } = useReadContract(
     estimateBridgeTokenFee(
       fields.chainTo,
       selectedChainId,
       address!,
-      fields.amount,
+      parseEther(fields.bridgeAmount?.toString() ?? '0'),
     ),
   )
 
-  const { writeContractAsync: claim, isPending: isClaiming } =
-    useWriteContract()
-  const { writeContractAsync: bridge, isPending: isBridging } =
-    useWriteContract()
+  const { refetch: refetchBalance } = useReadContract(
+    getTokenBalance(selectedChainId, address!),
+  )
 
-  const debounceFee = useDebouncedCallback(async (value) => {
-    setIsFeeLoading(true)
-    console.log('debounced-amount:', value)
-    const { data: fee }: any = await refetch()
-    setFee(fee ? fee[0] : BigInt(0))
-    setIsFeeLoading(false)
-  }, 500)
+  const {
+    writeContractAsync,
+    isPending,
+    data: hash,
+  } = useWriteContract({
+    mutation: {
+      onError(error) {
+        errorToaster(error)
+      },
+    },
+  })
 
   async function onSubmitBridge({
     chainTo,
-    amount,
+    bridgeAmount,
+    tokenBalance,
   }: z.infer<typeof TokenSchema>) {
-    const { data: fee }: any = await refetch()
+    if (!bridgeAmount)
+      return truncatedToaster('Error occurred!', 'Invalid amount.')
+    if (Number(bridgeAmount) > tokenBalance)
+      return truncatedToaster('Error occurred!', 'Insufficient BWHL balance.')
+
+    const { data: fee }: any = await refetchFee()
 
     if (!fee)
       return truncatedToaster('Error occurred!', 'Failed to fetch refuel cost.')
 
-    await bridge({
-      ...bridgeToken(selectedChainId),
+    const opts = bridgeToken(selectedChainId)
+
+    await writeContractAsync({
+      ...opts,
+      address: opts.address!,
       value: fee[0],
       args: [
         address,
         chainTo,
         address,
-        amount,
-        '0x000', // refund address
-        '0x000', // zero payment address
-        '0x000', // adapter
+        parseEther(bridgeAmount),
+        address,
+        '0x0000000000000000000000000000000000000000',
+        '',
       ],
     })
+    setIsLayerZeroTx(true)
+    setIsDialogOpen(true)
   }
 
   async function onSubmitClaim({ amount }: z.infer<typeof TokenSchema>) {
-    const amou = amount * CONTRACTS[selectedChainId].tokenPrice!
+    const amou = Number(amount) * CONTRACTS[selectedChainId].tokenPrice!
 
     const value = parseEther(amou.toString())
 
-    await claim({
-      ...claimToken(selectedChainId),
+    const opts = claimToken(selectedChainId)
+
+    await writeContractAsync({
+      ...opts,
+      address: opts.address!,
       value,
       args: [address, amount],
     })
+    setIsLayerZeroTx(false)
+    setIsDialogOpen(true)
   }
 
   return (
@@ -208,13 +224,7 @@ export default function TokenPage() {
                 name="chainTo"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="flex items-end justify-between">
-                      Transfer to
-                      <BalanceIndicator
-                        balance={balanceTo}
-                        symbol={_balanceTo?.symbol}
-                      />
-                    </FormLabel>
+                    <FormLabel>Transfer to</FormLabel>
                     <Popover
                       open={popoverToOpen}
                       onOpenChange={setPopoverToOpen}
@@ -227,9 +237,8 @@ export default function TokenPage() {
                         fieldValue={field.value}
                         onSelect={(value) => {
                           form.setValue('chainTo', value)
-                          form.setValue('amount', 0)
+                          form.setValue('amount', '')
                           setPopoverToOpen(false)
-                          debounceFee(1)
                         }}
                       />
                     </Popover>
@@ -238,58 +247,111 @@ export default function TokenPage() {
               />
             </div>
 
-            <FormItem>
-              <FormLabel>Claim tokens</FormLabel>
-              <FormControl>
-                <div className="flex items-center gap-3">
-                  <Input
-                    type="number"
-                    placeholder="Amount to claim"
-                    autoComplete="off"
-                    disabled={status !== 'connected'}
-                  />
-                  <Button
-                    type="button"
-                    className="w-20 hover:scale-100"
-                    loading={isClaiming || isBridging}
-                    onClick={form.handleSubmit(onSubmitClaim)}
-                  >
-                    CLAIM
-                  </Button>
-                </div>
-              </FormControl>
-            </FormItem>
+            <FormField
+              control={form.control}
+              name="amount"
+              render={({ field: { onChange, ...rest } }) => (
+                <FormItem>
+                  <FormLabel>Claim tokens</FormLabel>
+                  <FormControl>
+                    <div className="flex items-center gap-3">
+                      <Input
+                        type="number"
+                        placeholder="Amount to claim"
+                        autoComplete="off"
+                        {...rest}
+                        onChange={(e) => {
+                          const isError = Number.isNaN(Number(e.target.value))
+                          if (isError) return
 
-            <FormItem className="mt-5">
-              <FormLabel className="flex items-end justify-between">
-                Token to bridge
-                <button
-                  type="button"
-                  className="text-[10px] opacity-75 cursor-pointer text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4]"
-                >
-                  MAX
-                </button>
-              </FormLabel>
-              <FormControl>
-                <div className="flex gap-3">
-                  <div className="inline-flex bg-popover items-center rounded px-3">
-                    COIN
-                  </div>
-                  <Input placeholder="Enter amount of COIN to bridge" />
-                </div>
-              </FormControl>
-            </FormItem>
+                          onChange(e)
+                        }}
+                      />
+                      <Button
+                        type="button"
+                        className="w-32 min-w-32 hover:scale-100 h-12"
+                        disabled={status !== 'connected' || !rest.value}
+                        loading={isPending}
+                        onClick={form.handleSubmit(onSubmitClaim)}
+                      >
+                        CLAIM
+                      </Button>
+                    </div>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="bridgeAmount"
+              render={({ field: { onChange, ...rest } }) => (
+                <FormItem className="mt-5">
+                  <FormLabel className="flex items-end justify-between">
+                    <div className="flex items-end justify-start gap-5">
+                      Bridge tokens
+                      {!!fields.tokenBalance && (
+                        <BalanceIndicator
+                          balance={Number(fields.tokenBalance)}
+                          symbol="BWHL"
+                        />
+                      )}
+                    </div>
+
+                    <button
+                      type="button"
+                      className="text-[10px] opacity-75 cursor-pointer text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4] disabled:hover:opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                      disabled={!fields.tokenBalance}
+                      onClick={() => {
+                        setValue('bridgeAmount', fields.tokenBalance.toString())
+                      }}
+                    >
+                      MAX
+                    </button>
+                  </FormLabel>
+                  <FormControl>
+                    <div className="flex gap-3">
+                      <div className="inline-flex bg-popover items-center rounded px-3">
+                        BWHL
+                      </div>
+                      <Input
+                        placeholder="Amount to bridge"
+                        autoComplete="off"
+                        type="number"
+                        {...rest}
+                        disabled={!fields.tokenBalance}
+                        onChange={(e) => {
+                          const isError = Number.isNaN(Number(e.target.value))
+                          if (isError) return
+
+                          onChange(e)
+                        }}
+                      />
+                    </div>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
 
             <Button
-              className="w-full mt-3"
+              className="w-full mt-5 hover:scale-[1.05]"
               type="submit"
-              loading={isClaiming || isBridging}
+              disabled={!fields.tokenBalance || !fields.bridgeAmount}
+              loading={isPending || status !== 'connected'}
             >
               BRIDGE
             </Button>
           </form>
         </Form>
       </Paper>
+      <TokenDialog
+        isLayerZero={isLayerZeroTx}
+        hash={hash}
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        chainId={selectedChainId}
+        chainTo={fields.chainTo}
+      />
     </>
   )
 }
