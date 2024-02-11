@@ -172,7 +172,7 @@ export default function TokenPage() {
     <>
       <Paper title="TOKEN">
         <Form {...form}>
-          <form>
+          <form onSubmit={form.handleSubmit(onSubmitBridge)}>
             <div className="w-full flex justify-between items-center md:mb-5 mb-7 gap-5 md:gap-0 md:flex-row flex-col">
               <FormField
                 control={form.control}
@@ -261,7 +261,10 @@ export default function TokenPage() {
                 type="button"
                 className="w-32 min-w-32 hover:scale-100 h-12"
                 disabled={status !== 'connected' || !fields.amount || isPending}
-                onClick={form.handleSubmit(onSubmitClaim)}
+                onClick={() => {
+                  console.log('clicked')
+                  form.handleSubmit(onSubmitClaim, (e) => console.error(e))
+                }}
               >
                 CLAIM
               </Button>
@@ -308,7 +311,6 @@ export default function TokenPage() {
               className="w-full mt-5 hover:scale-[1.05]"
               type="submit"
               disabled={!fields.tokenBalance || !fields.bridgeAmount}
-              onClick={form.handleSubmit(onSubmitBridge)}
               loading={isPending || status !== 'connected'}
             >
               {status === 'disconnected' ? 'CONNECT WALLET' : 'BRIDGE'}
