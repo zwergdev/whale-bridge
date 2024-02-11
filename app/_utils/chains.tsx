@@ -118,12 +118,12 @@ export const CHAINS = [
     image: '/chain-logo/klaytn.svg',
     chainId: 8217,
   },
-  // {
-  //   label: 'Mantle',
-  //   value: 181,
-  //   image: '/chain-logo/mantle.svg',
-  //   chainId: 5000
-  // },
+  {
+    label: 'Mantle',
+    value: 181,
+    image: '/chain-logo/mantle.svg',
+    chainId: 5000
+  },
   {
     label: 'CoreDAO',
     value: 153,

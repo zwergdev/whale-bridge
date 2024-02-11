@@ -91,6 +91,7 @@ const SYMBOL_TO_CHAIN: { [key: string]: string } = {
   KLAY: 'klay-token',
   CORE: 'coredaoorg',
   FUSE: 'fuse-network-token',
+  MNT: 'mantle',
 }
 
 export default function RefuelPage() {
