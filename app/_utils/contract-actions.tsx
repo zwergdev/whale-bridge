@@ -1,13 +1,11 @@
 import { utils } from 'ethers'
 import { parseEther } from 'viem/utils'
-import { celoMintABI, mintABI, modernMintABI, refuelABI, tokenABI } from './abi'
+import { celoMintABI, mintABI, modernMintABI, refuelABI } from './abi'
 
 const CONTRACTS: {
   [chainId: number]: {
     mintAddress: `0x${string}`
     refuelAddress: `0x${string}`
-    tokenAddress?: `0x${string}`
-    tokenPrice?: number
     mintPrice: string
   }
 } = {
@@ -19,8 +17,6 @@ const CONTRACTS: {
   56: {
     mintAddress: '0x006E23eb40eBc1805783e3a6c39283bcF5799368',
     refuelAddress: '0x6D096d86F1fE43aed8A073DAd9823C987A450f0e',
-    tokenAddress: '0x408bE6A5C550913B46B8FA9196c122083811Be96',
-    tokenPrice: 0.0000025,
     mintPrice: '0.00076824587',
   }, // bsc
   137: {
@@ -106,8 +102,6 @@ const CONTRACTS: {
   204: {
     mintAddress: '0x9aeAa45d415fFE75dC4Ba50658584479bAf110Ec',
     refuelAddress: '0x84f4c0A290B5607fee0f2A1CDe5348540fecF6A1',
-    tokenAddress: '0xb9F2BEE223C9c7BEAc8d7517d950DBdC19Bf8680',
-    tokenPrice: 0.0000025,
     mintPrice: '0.0007191320',
   }, // op-bnb
   2222: {
@@ -143,8 +137,6 @@ const CONTRACTS: {
   0: {
     mintAddress: '0x00',
     refuelAddress: '0x00',
-    tokenAddress: '0x00',
-    tokenPrice: 1,
     mintPrice: '0',
   },
 }
@@ -281,63 +273,6 @@ function estimateRefuelFee(
   }
 }
 
-/*
-
-      TOKEN
-
-*/
-
-function claimToken(chainId: number) {
-  return {
-    address: CONTRACTS[chainId].tokenAddress,
-    abi: tokenABI,
-    functionName: 'mint',
-    chainId,
-  }
-}
-
-function getTokenBalance(chainId: number, address: string) {
-  return {
-    address: CONTRACTS[chainId].tokenAddress,
-    abi: tokenABI,
-    functionName: 'balanceOf',
-    chainId,
-    args: [address],
-    enabled: false,
-  }
-}
-
-function bridgeToken(chainId: number) {
-  return {
-    address: CONTRACTS[chainId].tokenAddress,
-    abi: tokenABI,
-    functionName: 'sendFrom',
-    chainId,
-  }
-}
-
-function estimateBridgeTokenFee(
-  chainTo: number,
-  chainId: number,
-  address: string,
-  amount: bigint,
-) {
-  return {
-    address: CONTRACTS[chainId].tokenAddress,
-    abi: tokenABI,
-    functionName: 'estimateSendFee',
-    chainId,
-    args: [
-      chainTo,
-      address,
-      amount,
-      false,
-      '0x00010000000000000000000000000000000000000000000000000000000000030d40',
-    ],
-    enabled: false,
-  }
-}
-
 export {
   mint,
   bridge,
@@ -348,9 +283,5 @@ export {
   getUserNFTIds,
   getModernUserNFTIds,
   getNextMintId,
-  claimToken,
-  getTokenBalance,
-  bridgeToken,
-  estimateBridgeTokenFee,
   CONTRACTS,
 }

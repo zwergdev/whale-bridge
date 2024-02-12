@@ -1,13 +1,6 @@
 'use client'
 
-import {
-  CONTRACTS,
-  bridgeToken,
-  claimToken,
-  estimateBridgeTokenFee,
-  getTokenBalance,
-} from '@/app/_utils/contract-actions'
-import { errorToaster, truncatedToaster } from '@/app/_utils/truncatedToaster'
+import { truncatedToaster } from '@/app/_utils/truncatedToaster'
 import { Button } from '@/components/ui/button-new'
 import {
   Form,
@@ -20,17 +13,12 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Popover } from '@/components/ui/popover'
 import { zodResolver } from '@hookform/resolvers/zod'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
 import { formatEther, parseEther } from 'viem'
-import {
-  useAccount,
-  useBalance,
-  useReadContract,
-  useSwitchChain,
-  useWriteContract,
-} from 'wagmi'
+import { useAccount, useSwitchChain } from 'wagmi'
 import { z } from 'zod'
 import {
   ChainList,
@@ -41,7 +29,20 @@ import {
 import { CHAINS } from '../_utils/chains'
 import { TokenSchema } from '../_utils/schemas'
 import { BalanceIndicator } from '../refuel/_components/balance-indicator'
+import tokenImage from './_assets/token.webp'
+import { InfoHover } from './_components/info-hover'
 import { TokenDialog } from './_components/token-dialog'
+import {
+  TOKEN_CONTRACTS,
+  bridgeToken,
+  claimToken,
+} from './_contracts/token-contracts'
+import {
+  useGetBalance,
+  useGetTokenBalance,
+  useGetTokenFee,
+  useWriteContract,
+} from './_hooks/actions'
 
 export default function TokenPage() {
   const { address, chain, status } = useAccount()
@@ -52,11 +53,7 @@ export default function TokenPage() {
   const [popoverToOpen, setPopoverToOpen] = useState(false)
   const [isLayerZeroTx, setIsLayerZeroTx] = useState(false)
 
-  const { data: _balanceFrom } = useBalance({
-    address,
-    query: { enabled: !!address },
-  })
-  const balanceFrom = Number(Number(_balanceFrom?.formatted).toFixed(5))
+  const { balance, symbol } = useGetBalance()
 
   const selectedChainId = chain?.id ?? 0
 
@@ -91,30 +88,15 @@ export default function TokenPage() {
   const { watch, setValue, register } = form
   const fields = watch()
 
-  const { refetch: refetchFee } = useReadContract(
-    estimateBridgeTokenFee(
-      fields.chainTo,
-      selectedChainId,
-      address!,
-      parseEther(fields.bridgeAmount?.toString() ?? '0'),
-    ),
+  const { refetchFee } = useGetTokenFee(
+    fields.chainTo,
+    selectedChainId,
+    fields.bridgeAmount,
   )
 
-  const { refetch: refetchBalance } = useReadContract(
-    getTokenBalance(selectedChainId, address!),
-  )
+  const { refetchBalance } = useGetTokenBalance(selectedChainId)
 
-  const {
-    writeContractAsync,
-    isPending,
-    data: hash,
-  } = useWriteContract({
-    mutation: {
-      onError(error) {
-        errorToaster(error)
-      },
-    },
-  })
+  const { writeContractAsync, isPending, data: hash } = useWriteContract()
 
   async function onSubmitBridge({
     chainTo,
@@ -149,12 +131,14 @@ export default function TokenPage() {
     })
     setIsLayerZeroTx(true)
     setIsDialogOpen(true)
+
+    setValue('tokenBalance', fields.tokenBalance - Number(bridgeAmount))
   }
 
   async function onSubmitClaim() {
     const amount = fields.amount
 
-    const amou = Number(amount) * CONTRACTS[selectedChainId].tokenPrice!
+    const amou = Number(amount) * TOKEN_CONTRACTS[selectedChainId].price!
 
     const value = parseEther(amou.toString())
 
@@ -168,6 +152,8 @@ export default function TokenPage() {
     })
     setIsLayerZeroTx(false)
     setIsDialogOpen(true)
+
+    setValue('tokenBalance', fields.tokenBalance + Number(amount))
   }
 
   return (
@@ -183,10 +169,7 @@ export default function TokenPage() {
                   <FormItem>
                     <FormLabel className="flex items-end justify-between">
                       Transfer from
-                      <BalanceIndicator
-                        balance={balanceFrom}
-                        symbol={_balanceFrom?.symbol}
-                      />
+                      <BalanceIndicator balance={balance} symbol={symbol} />
                     </FormLabel>
                     <FormControl>
                       <Popover
@@ -251,28 +234,47 @@ export default function TokenPage() {
               />
             </div>
 
-            <Label className="leading-10">Claim tokens</Label>
-            <div className="flex items-center gap-3">
+            <Label className="leading-10 flex items-center">
+              Claim BWHL
+              <InfoHover desc="$BWHL has an unlimited supply, the token is not intended for trading." />
+            </Label>
+            <div className="flex items-center justify-between w-full gap-3 sm:flex-row flex-col">
               <Input
                 type="number"
                 placeholder="Amount to claim"
                 autoComplete="off"
                 {...register('amount')}
               />
-              <Button
-                type="button"
-                className="w-32 min-w-32 hover:scale-100 h-12"
-                disabled={status !== 'connected' || !fields.amount || isPending}
-                onClick={onSubmitClaim}
-              >
-                CLAIM
-              </Button>
+              <div className="flex items-center gap-3 sm:w-auto w-full">
+                <Image
+                  src={tokenImage}
+                  alt="token-image"
+                  width={32}
+                  height={32}
+                />
+                <Button
+                  type="button"
+                  className="min-w-32 sm:w-auto w-full hover:scale-100 h-12"
+                  disabled={
+                    status !== 'connected' || !fields.amount || isPending
+                  }
+                  onClick={onSubmitClaim}
+                >
+                  CLAIM
+                </Button>
+              </div>
             </div>
+
+            <p className="w-full text-center mt-6 text-lg font-semibold">AND</p>
 
             <div className="mt-5">
               <Label className="flex items-end justify-between mb-2">
                 <div className="flex items-end justify-start gap-5">
-                  Bridge tokens
+                  <div className="flex items-center">
+                    Bridge BWHL
+                    <InfoHover desc="Bridge $BWHL to other chain." />
+                  </div>
+
                   {!!fields.tokenBalance && (
                     <BalanceIndicator
                       balance={Number(fields.tokenBalance)}
@@ -293,8 +295,13 @@ export default function TokenPage() {
                 </button>
               </Label>
               <div className="flex gap-3">
-                <div className="inline-flex bg-popover items-center rounded px-3">
-                  BWHL
+                <div className="flex justify-center bg-popover items-center rounded px-2">
+                  <Image
+                    src={tokenImage}
+                    alt="token-image"
+                    width={36}
+                    height={36}
+                  />
                 </div>
                 <Input
                   placeholder="Amount to bridge"
