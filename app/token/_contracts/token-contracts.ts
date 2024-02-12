@@ -23,15 +23,15 @@ export const TOKEN_CONTRACTS: {
     price: 0.0000035,
   }, // polygon
   42161: {
-    address: '0x00',
+    address: '0xD0f6733564BaE9aB83aE4FFC4a07073110aA9D21',
     price: 0.0000035,
   }, // arbitrum
   534352: {
-    address: '0x00',
+    address: '0x96930eD766Bb09C222A68c305Bfe1cA68228343b',
     price: 0.0000035,
   }, // scroll
   324: {
-    address: '0x00',
+    address: '0x323C5bC6EC6F4f1Db31061eA463085B6495E4888',
     price: 0.0000035,
   }, // zkSync
   10: {
@@ -43,11 +43,11 @@ export const TOKEN_CONTRACTS: {
     price: 0.0000035,
   }, // linea
   8453: {
-    address: '0x00',
+    address: '0x0b16d7aDf25799bD06489fe529541CB671979259',
     price: 0.0000035,
   }, // base
   1284: {
-    address: '0x00',
+    address: '0x4c95919db6a972bca8f6c1962f01fe703cc81b04',
     price: 0.0000035,
   }, // moonbeam
   43114: {
@@ -59,15 +59,15 @@ export const TOKEN_CONTRACTS: {
     price: 0.0000035,
   }, // fantom
   42220: {
-    address: '0x5ddE994d4ce669572F38875C9fb0A318030b85b0',
+    address: '0xE86B177C6464bA905F95ff82F1fD00a23465D86F',
     price: 0.0000035,
   }, // celo
   100: {
-    address: '0x00',
+    address: '0xFE932de33e031dCa67899aE611cA1E6eb3061c6D',
     price: 0.0000035,
   }, // gnosis
   1101: {
-    address: '0x00',
+    address: '0xe8902CCd6ed53a11351A026Cf4D190D2e079FbBE',
     price: 0.0000035,
   }, // polygon-zk
   82: {
@@ -75,7 +75,7 @@ export const TOKEN_CONTRACTS: {
     price: 0.0000035,
   }, // meter
   1285: {
-    address: '0x00',
+    address: '0x67b9d86a5e80ba2400122e94c46c8694f2e30b46',
     price: 0.0000035,
   }, // moonriver
   1666600000: {
@@ -83,11 +83,11 @@ export const TOKEN_CONTRACTS: {
     price: 0.0000035,
   }, // harmony
   2222: {
-    address: '0x00',
+    address: '0x9C59217728FE8F03bA72388208C736B11FD5e1E1',
     price: 0.0000035,
   }, // kava
   7777777: {
-    address: '0x00',
+    address: '0x20141dbca66f247c04AF4D0E30184fD20BDB73B5',
     price: 0.0000035,
   }, // zora
   8217: {
@@ -95,11 +95,11 @@ export const TOKEN_CONTRACTS: {
     price: 0.0000035,
   }, // klaytn
   1116: {
-    address: '0x00',
+    address: '0x6C0805dfdBdC36866cb86b8Ae78419D8fc60139e',
     price: 0.0000035,
   }, // core-dao
   5000: {
-    address: '0x00',
+    address: '0x1010a05759a0a7Daa665f12Ec677ff5034Ecd35F',
     price: 0.0000035,
   }, // mantle
   122: {

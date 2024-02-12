@@ -69,7 +69,7 @@ export const TokenDialog = ({
         <AlertDialogHeader>
           <AlertDialogTitle>Transaction status</AlertDialogTitle>
           <AlertDialogDescription className="flex flex-col items-center justify-center py-8 relative">
-            {isLayerZero && (
+            {isLayerZero ? (
               <>
                 {(() => {
                   const { icon, text } = renderStatus()
@@ -94,6 +94,8 @@ export const TokenDialog = ({
                   explorer.
                 </p>
               </>
+            ) : (
+              <Check className="stroke-green-600 mb-16" size={52} />
             )}
 
             <div
