@@ -151,7 +151,9 @@ export default function TokenPage() {
     setIsDialogOpen(true)
   }
 
-  async function onSubmitClaim({ amount }: z.infer<typeof TokenSchema>) {
+  async function onSubmitClaim() {
+    const amount = fields.amount
+
     const amou = Number(amount) * CONTRACTS[selectedChainId].tokenPrice!
 
     const value = parseEther(amou.toString())
@@ -261,10 +263,7 @@ export default function TokenPage() {
                 type="button"
                 className="w-32 min-w-32 hover:scale-100 h-12"
                 disabled={status !== 'connected' || !fields.amount || isPending}
-                onClick={() => {
-                  console.log('clicked')
-                  form.handleSubmit(onSubmitClaim, (e) => console.error(e))
-                }}
+                onClick={onSubmitClaim}
               >
                 CLAIM
               </Button>
