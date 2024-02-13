@@ -3,20 +3,19 @@
 import { CHAINS } from '@/app/_utils/chains'
 import {
   Popover,
+  PopoverClose,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { ChevronsUpDown } from 'lucide-react'
 import Image from 'next/image'
-import { useState } from 'react'
 import { useSwitchChain } from 'wagmi'
 
 export const MintChainPopover = () => {
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const { switchChain } = useSwitchChain()
 
   return (
-    <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+    <Popover modal>
       <PopoverTrigger className="mb-10 rounded-full w-fit border border-primary bg-[#011e37]/30 backdrop-blur-md flex items-center gap-2.5 justify-start p-2.5 hover:bg-[#011e37]/60 transition-colors duration-300">
         {Array.from(CHAINS)
           .splice(0, 3)
@@ -38,23 +37,23 @@ export const MintChainPopover = () => {
         className="flex gap-3 flex-wrap p-1.5 w-[312px] border-popover bg-[#011e37]/70 backdrop-blur-md rounded-[22px] items-center sm:justify-center justify-start"
       >
         {CHAINS.map(({ chainId, image }) => (
-          <button
-            key={chainId}
-            type="button"
-            onClick={() => {
-              switchChain({ chainId })
-              setIsPopoverOpen(false)
-            }}
-            className="hover:bg-popover p-1 rounded-full transition-colors duration-300"
-          >
-            <Image
-              src={image}
-              width={30}
-              height={30}
-              alt="chain-image"
-              className="rounded-full"
-            />
-          </button>
+          <PopoverClose asChild key={chainId}>
+            <button
+              type="button"
+              onClick={() => {
+                switchChain({ chainId })
+              }}
+              className="hover:bg-popover p-1 rounded-full transition-colors duration-300"
+            >
+              <Image
+                src={image}
+                width={30}
+                height={30}
+                alt="chain-image"
+                className="rounded-full"
+              />
+            </button>
+          </PopoverClose>
         ))}
       </PopoverContent>
     </Popover>

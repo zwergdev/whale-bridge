@@ -11,8 +11,27 @@ import { PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { ChevronDown, Repeat2 } from 'lucide-react'
 import Image from 'next/image'
-import { CHAINS, selectedChain } from '../../_utils/chains'
+import { CHAINS } from '../../_utils/chains'
 import { DISABLED_PAIRS } from './disabled-pairs'
+
+const selectedChain = (fieldValue: number) => {
+  const selectedChain = CHAINS.find(({ value }) => value === fieldValue)
+  if (!selectedChain) return 'Select chain'
+  return (
+    <div className="flex items-center w-full">
+      <Image
+        src={selectedChain.image}
+        width={48}
+        height={48}
+        alt="selected-chain-icon"
+        className="md:w-12 md:h-12 w-6 h-6 rounded-full"
+      />
+      <p className="w-full text-base text-center font-medium">
+        {selectedChain.label}
+      </p>
+    </div>
+  )
+}
 
 type ChainyTriggerProps = {
   disabled?: boolean
@@ -40,7 +59,7 @@ type ChainListProps = {
   selectedValue: number
   fieldValue: number
   onSelect: (value: number, chainId: number) => void
-  disabledChain?: number
+  disabledChains?: number[]
   isChainGridView: boolean
   setIsChainGridView: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -49,7 +68,7 @@ const ChainList = ({
   selectedValue,
   fieldValue,
   onSelect,
-  disabledChain,
+  disabledChains,
   setIsChainGridView,
   isChainGridView,
 }: ChainListProps) => {
@@ -84,14 +103,14 @@ const ChainList = ({
                   if (
                     (isADisabled && !isBDisabled) ||
                     selectedValue === a.value ||
-                    disabledChain === a.value
+                    disabledChains?.some((chain) => chain === a.value)
                   ) {
                     return 1 // Move chain A to the end
                   }
                   if (
                     (!isADisabled && isBDisabled) ||
                     selectedValue === b.value ||
-                    disabledChain === b.value
+                    disabledChains?.some((chain) => chain === b.value)
                   ) {
                     return -1 // Move chain B to the end
                   }
@@ -113,7 +132,7 @@ const ChainList = ({
                       disabled={
                         selectedValue === value ||
                         isDisabled ||
-                        disabledChain === value
+                        disabledChains?.some((chain) => chain === value)
                       }
                       checked={value === fieldValue}
                       onSelect={() => onSelect(value, chainId)}
