@@ -9,7 +9,7 @@ import { GitBook } from '@/components/ui/icons/git-book'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { cloneElement } from 'react'
-import { Navigation } from './navigation'
+import { Navigation } from '../header/navigation'
 
 export const Footer = () => (
   <footer className="max-w-full mx-auto w-full text-foreground flex flex-col pb-4">

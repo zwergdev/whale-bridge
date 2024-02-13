@@ -5,11 +5,11 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const NAVIGATION = [
-  { href: '/mint', label: 'Mint' },
-  { href: '/bridge', label: 'Bridge' },
-  { href: '/refuel', label: 'Refuel' },
-  { href: '/token', label: 'Token' },
-  { href: '/profile', label: 'Profile' },
+  { href: '/mint', label: 'Mint', isNew: false },
+  { href: '/bridge', label: 'Bridge', isNew: false },
+  { href: '/refuel', label: 'Refuel', isNew: false },
+  { href: '/token', label: 'Token', isNew: true },
+  { href: '/profile', label: 'Profile', isNew: false },
 ]
 
 type NavigationProps = {
@@ -20,7 +20,7 @@ type NavigationProps = {
 export const Navigation = ({ isFooter, onClick }: NavigationProps) => {
   const pathname = usePathname()
 
-  return NAVIGATION.map(({ href, label }) => (
+  return NAVIGATION.map(({ href, label, isNew }) => (
     <Link
       key={href}
       href={href}
@@ -33,6 +33,14 @@ export const Navigation = ({ isFooter, onClick }: NavigationProps) => {
         isFooter && 'before:hidden',
       )}
     >
+      {isNew && !isFooter && (
+        <div
+          className="absolute -right-3.5 -top-3.5 text-[10px] leading-none bg-yellow-500 animate-pulse px-1.5 py-0.5 rounded hover:text-foreground text-foreground font-bold"
+          style={{ boxShadow: '0 0 8px yellow' }}
+        >
+          NEW
+        </div>
+      )}
       {label}
     </Link>
   ))

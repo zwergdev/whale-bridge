@@ -67,6 +67,7 @@ export default function TokenPage() {
       CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value,
     )
     debounceTokenBalance(1)
+    setValue('bridgeAmount', undefined)
   }, [chain])
 
   const debounceTokenBalance = useDebouncedCallback(async (v) => {
