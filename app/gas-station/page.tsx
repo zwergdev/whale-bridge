@@ -1,6 +1,6 @@
 'use client'
 import { Popover } from '@/components/ui/popover'
-import { ChainList, ChainyTrigger } from '../_components/chainy/chains-popover'
+import { ChainyTrigger } from '../_components/chainy/chains-popover'
 import { useState } from 'react'
 import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { useForm } from 'react-hook-form'
@@ -9,9 +9,17 @@ import { GasStationSchema } from '../_utils/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CHAINS } from '../_utils/chains'
 import { useAccount, useSwitchChain } from 'wagmi'
-import { PaperAmount } from './_components/paper-amount'
+import { PaperAmount, PaperSelectedChain } from './_components/papers-information'
 import { SubmitButton } from '../_components/submit-button'
 import { PaperGasStation } from './_components/paper-gas-station'
+import { ChainListGas } from './_components/chain-popover-gas-station'
+import {
+  Select,
+  SelectItem,
+  SelectContent,
+  SelectTrigger,
+} from '@/components/ui/select'
+import Image from 'next/image'
 
 export default function GasStationPage() {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
@@ -24,10 +32,11 @@ export default function GasStationPage() {
     defaultValues: {
       chainFrom:
         CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
+      selectChain: [],
     },
   })
-  // const { watch } = form
-  // const fields = watch()
+
+  const { watch, setValue } = form
 
   return (
     <section className="w-full max-w-screen-xl min-h-[calc(100vh-150px)] flex flex-col justify-center">
@@ -49,14 +58,13 @@ export default function GasStationPage() {
                       onOpenChange={setIsPopoverOpen}
                     >
                       <ChainyTrigger selectedValue={field.value} />
-                      <ChainList
+                      <ChainListGas
                         isChainGridView={isChainGridView}
                         setIsChainGridView={setIsChainGridView}
-                        // MOCK
-                        selectedValue={202}
+                        selectedValue={field.value}
                         fieldValue={field.value}
                         onSelect={(value, chainId) => {
-                          form.setValue('chainFrom', value)
+                          setValue('chainFrom', value)
                           setIsPopoverOpen(false)
                           if (chainId !== chain?.id) switchChain({ chainId })
                         }}
@@ -65,15 +73,58 @@ export default function GasStationPage() {
                   </FormItem>
                 )}
               />
+              <PaperSelectedChain selectedChain={watch('selectChain')} />
               <PaperAmount totalAmount={0} />
               <SubmitButton disabled={false} loading={false}>
                 Gas
               </SubmitButton>
             </PaperGasStation>
-            <div className="text-sm text-foreground rounded-md border-popover border overflow-hidden w-max p-6 relative bg-[#011e37]/30 backdrop-blur-md flex flex-col">
-              <div className="w-36 h-32 -z-10 bg-primary blur-[150px] absolute -bottom-20 left-0" />
-              <div className="w-26 h-32 -z-10 bg-primary blur-[200px] absolute -top-20 right-20" />
-            </div>
+            <PaperGasStation width="w-1/2">
+              <FormField
+                control={form.control}
+                name="selectChain"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <Select open={true}>
+                      <SelectTrigger className="w-full text-2xl text-white text-start">
+                        Out Bound Chain
+                      </SelectTrigger>
+                      <SelectContent className="w-full">
+                        {CHAINS.map(({ label, image, value }, index) => (
+                          <SelectItem
+                            key={index}
+                            value={label}
+                            className="w-full"
+                            onClick={() => {
+                              if(!watch('selectChain').includes(value)){
+                              return setValue('selectChain', [
+                                ...watch('selectChain'),
+                                value,
+                              ])
+                            }
+                              setValue('selectChain', [
+                                ...watch('selectChain').filter((v) => v !== value)
+                              ])
+                            }}
+                          >
+                            <div className="flex w-full justify-between items-center">
+                              <Image
+                                src={image}
+                                width={30}
+                                height={30}
+                                alt="chain-image"
+                                className="rounded-full mr-2"
+                              />
+                              <span>{label}</span>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+            </PaperGasStation>
           </div>
         </form>
       </Form>
