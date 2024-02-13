@@ -7,12 +7,16 @@ import avalanche from '@/public/nft/nft-avalanche.webp'
 import base from '@/public/nft/nft-base.webp'
 import bsc from '@/public/nft/nft-bsc.webp'
 import celo from '@/public/nft/nft-celo.webp'
+import core from '@/public/nft/nft-core-dao.webp'
 import fantom from '@/public/nft/nft-fantom.webp'
+import fuse from '@/public/nft/nft-fuse.webp'
 import gnosis from '@/public/nft/nft-gnosis.webp'
 import harmony from '@/public/nft/nft-harmony.webp'
 import kava from '@/public/nft/nft-kava.webp'
+import klaytn from '@/public/nft/nft-klaytn.webp'
 import defaultImage from '@/public/nft/nft-l0.webp'
 import linea from '@/public/nft/nft-linea.webp'
+import mantle from '@/public/nft/nft-mantle.webp'
 import meter from '@/public/nft/nft-meter.webp'
 import moonbeam from '@/public/nft/nft-moonbeam.webp'
 import moonriver from '@/public/nft/nft-moonriver.webp'
@@ -23,10 +27,6 @@ import polygon from '@/public/nft/nft-polygon.webp'
 import scroll from '@/public/nft/nft-scroll.webp'
 import zk from '@/public/nft/nft-zk.webp'
 import zora from '@/public/nft/nft-zora.webp'
-import klaytn from '@/public/nft/nft-klaytn.webp'
-import mantle from '@/public/nft/nft-mantle.webp'
-import core from '@/public/nft/nft-core-dao.webp'
-import fuse from '@/public/nft/nft-fuse.webp'
 import Image, { StaticImageData } from 'next/image'
 import { useAccount } from 'wagmi'
 
@@ -56,7 +56,7 @@ const IMAGES: { [key: number]: StaticImageData } = {
   8217: klaytn,
   5000: mantle,
   1116: core,
-  122: fuse
+  122: fuse,
 }
 
 type MintImageProps = {

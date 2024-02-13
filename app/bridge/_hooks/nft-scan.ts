@@ -1,7 +1,6 @@
 'use server'
 
 const API_KEYS = {
-  element: '836618cabf89a3313263626025eaa225',
   opensea: '6d680f1285bf452e83c7bcbb11f260cc',
   nftscan: 'ifwgRnIiWn5MrEkd8ne6797E',
 }
@@ -61,23 +60,13 @@ const CHAINS: { [key: number]: { chain: string; collection: string } } = {
   },
   204: {
     chain: 'opbnb',
-    collection: '0x9aeAa45d415fFE75dC4Ba50658584479bAf110Ec'
+    collection: '0x9aeAa45d415fFE75dC4Ba50658584479bAf110Ec',
   },
   2222: {
     chain: 'kava',
-    collection: '0xBcEe7fB1B98ea4e38Eb52c2E026134d54273ED44'
-  }
+    collection: '0xBcEe7fB1B98ea4e38Eb52c2E026134d54273ED44',
+  },
 }
-
-// const fetchFromElement = async (address: string, chainId: number) => {
-//   const url = `https://api.element.market/openapi/v1/account/assetList?chain=${CHAINS[chainId].chain}&wallet_address=${address}&collection_slug=${CHAINS[chainId].collection}`
-//   const response = await fetch(url, {
-//     cache: 'no-cache',
-//     headers: { accept: 'application/json', 'x-api-key': API_KEYS.element },
-//   })
-
-//   return response.json()
-// }
 
 const fetchFromOpensea = async (address: string) => {
   const url = `https://api.opensea.io/api/v2/chain/arbitrum_nova/account/${address}/nfts?collection=whale-onft-2`
@@ -101,9 +90,6 @@ const fetchFromNFTScan = async (address: string, chainId: number) => {
 
 const extractOpenseaIdentifiers = (res: any) =>
   res?.nfts?.map(({ identifier }: { identifier: string }) => identifier)
-
-// const extractElementIdentifiers = (res: any) =>
-//   res?.assetList?.map(({ asset }: { asset: { tokenId: any } }) => asset.tokenId)
 
 const extractNFTScanIdentifiers = (res: any) =>
   res?.data?.content?.map(({ token_id }: { token_id: any }) => token_id)
@@ -130,7 +116,6 @@ const checkIsNotFound = (res: any, chainId: number) => {
   switch (chainId) {
     case 42170:
       return res?.nfts?.length === 0
-    // res?.data?.assetList?.length === 0 ||
     default:
       return res?.data?.content?.length === 0
   }

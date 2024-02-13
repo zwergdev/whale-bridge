@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 export const CHAINS = [
   { label: 'BSC', value: 102, image: '/chain-logo/bnb.svg', chainId: 56 },
   { label: 'zkSync', value: 165, image: '/chain-logo/zk.svg', chainId: 324 },
@@ -122,7 +120,7 @@ export const CHAINS = [
     label: 'Mantle',
     value: 181,
     image: '/chain-logo/mantle.svg',
-    chainId: 5000
+    chainId: 5000,
   },
   {
     label: 'CoreDAO',
@@ -134,7 +132,7 @@ export const CHAINS = [
     label: 'Fuse',
     value: 138,
     image: 'chain-logo/fuse.svg',
-    chainId: 122
+    chainId: 122,
   },
 ]
 
@@ -164,23 +162,4 @@ export const TX_LINK: { [chainId: number]: string } = {
   5000: 'explorer.mantle.xyz', // mantle
   1116: 'scan.coredao.org', // core-dao
   122: 'explorer.fuse.io', // fuse
-}
-
-export const selectedChain = (fieldValue: number) => {
-  const selectedChain = CHAINS.find(({ value }) => value === fieldValue)
-  if (!selectedChain) return 'Select chain'
-  return (
-    <div className="flex items-center w-full">
-      <Image
-        src={selectedChain.image}
-        width={48}
-        height={48}
-        alt="selected-chain-icon"
-        className="md:w-12 md:h-12 w-6 h-6 rounded-full"
-      />
-      <p className="w-full text-base text-center font-medium">
-        {selectedChain.label}
-      </p>
-    </div>
-  )
 }
