@@ -59,7 +59,7 @@ type ChainListProps = {
   selectedValue: number
   fieldValue: number
   onSelect: (value: number, chainId: number) => void
-  disabledChain?: number
+  disabledChains?: number[]
   isChainGridView: boolean
   setIsChainGridView: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -68,7 +68,7 @@ const ChainList = ({
   selectedValue,
   fieldValue,
   onSelect,
-  disabledChain,
+  disabledChains,
   setIsChainGridView,
   isChainGridView,
 }: ChainListProps) => {
@@ -103,14 +103,14 @@ const ChainList = ({
                   if (
                     (isADisabled && !isBDisabled) ||
                     selectedValue === a.value ||
-                    disabledChain === a.value
+                    disabledChains?.some((chain) => chain === a.value)
                   ) {
                     return 1 // Move chain A to the end
                   }
                   if (
                     (!isADisabled && isBDisabled) ||
                     selectedValue === b.value ||
-                    disabledChain === b.value
+                    disabledChains?.some((chain) => chain === b.value)
                   ) {
                     return -1 // Move chain B to the end
                   }
@@ -132,7 +132,7 @@ const ChainList = ({
                       disabled={
                         selectedValue === value ||
                         isDisabled ||
-                        disabledChain === value
+                        disabledChains?.some((chain) => chain === value)
                       }
                       checked={value === fieldValue}
                       onSelect={() => onSelect(value, chainId)}

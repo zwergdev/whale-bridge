@@ -312,7 +312,7 @@ export default function BridgePage() {
                       <ChainList
                         isChainGridView={isChainGridView}
                         setIsChainGridView={setIsChainGridView}
-                        disabledChain={165}
+                        disabledChains={[165]}
                         selectedValue={fields.chainFrom}
                         fieldValue={field.value}
                         onSelect={(value) => {

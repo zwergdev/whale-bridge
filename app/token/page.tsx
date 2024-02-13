@@ -182,6 +182,7 @@ export default function TokenPage() {
                           isChainGridView={isChainGridView}
                           setIsChainGridView={setIsChainGridView}
                           selectedValue={fields.chainTo}
+                          disabledChains={[176, 150]}
                           fieldValue={field.value}
                           onSelect={(value, chainId) => {
                             form.setValue('chainFrom', value)
@@ -222,6 +223,7 @@ export default function TokenPage() {
                         isChainGridView={isChainGridView}
                         setIsChainGridView={setIsChainGridView}
                         selectedValue={fields.chainFrom}
+                        disabledChains={[176, 150]}
                         fieldValue={field.value}
                         onSelect={(value) => {
                           form.setValue('chainTo', value)
