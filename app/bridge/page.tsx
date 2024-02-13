@@ -23,13 +23,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronsUpDown, Loader } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import {
-  useAccount,
-  useBalance,
-  useReadContract,
-  useSwitchChain,
-  useWriteContract,
-} from 'wagmi'
+import { useAccount, useBalance, useSwitchChain } from 'wagmi'
 import * as z from 'zod'
 import {
   ChainList,
@@ -38,16 +32,17 @@ import {
 } from '../_components/chainy/chains-popover'
 import { SubmitButton } from '../_components/submit-button'
 import { CHAINS } from '../_utils/chains'
-import {
-  bridge,
-  estimateBridgeFee,
-  getModernUserNFTIds,
-  getUserNFTIds,
-} from '../_utils/contract-actions'
-import { getNFTBalance } from '../_utils/nftBalance'
 import { BridgeSchema } from '../_utils/schemas'
 import { truncatedToaster } from '../_utils/truncatedToaster'
 import { BridgedDialog } from './_components/bridged-dialog'
+import { bridgeOpts } from './_contracts/bridge-contracts'
+import {
+  useEstimateBridgeFee,
+  useGetModernUserNFTIds,
+  useGetUserNFTIds,
+  useWriteContract,
+} from './_hooks/actions'
+import { getNFTBalance } from './_hooks/nft-scan'
 
 export default function BridgePage() {
   const { address, chain } = useAccount()
@@ -81,7 +76,7 @@ export default function BridgePage() {
           chain?.id === 1285 ||
           chain?.id === 1666600000
         ) {
-          const { data: nfts }: any = await refetchUserNFTIds()
+          const { data: nfts }: any = await refetchUserNFT()
           return nfts.map((nft: any) => nft.toString())
         }
 
@@ -94,7 +89,7 @@ export default function BridgePage() {
           chain?.id === 5000 ||
           chain?.id === 122
         ) {
-          const { data: nfts }: any = await refetchModernUserNFTIds()
+          const { data: nfts }: any = await refetchModernUserNFT()
           return nfts.map((nft: any) => nft.toString())
         }
 
@@ -153,28 +148,16 @@ export default function BridgePage() {
 
   const fields = watch()
 
-  const {
-    data: bridgingData,
-    writeContractAsync,
-    isPending: isLoading,
-  } = useWriteContract()
+  const { data: hash, writeContractAsync, isPending } = useWriteContract()
 
-  const { refetch: refetchFee } = useReadContract(
-    estimateBridgeFee(
-      fields.chainTo,
-      address!,
-      BigInt(fields.tokenId),
-      selectedChainId,
-    ),
+  const { refetchFee } = useEstimateBridgeFee(
+    fields.chainTo,
+    BigInt(fields.tokenId),
+    selectedChainId,
   )
 
-  const { refetch: refetchUserNFTIds } = useReadContract(
-    getUserNFTIds(address!, selectedChainId),
-  )
-
-  const { refetch: refetchModernUserNFTIds } = useReadContract(
-    getModernUserNFTIds(address!, selectedChainId),
-  )
+  const { refetchUserNFT } = useGetUserNFTIds(selectedChainId)
+  const { refetchModernUserNFT } = useGetModernUserNFTIds(selectedChainId)
 
   const refetchNFT = async () => {
     setIsLoadingNFT(true)
@@ -202,7 +185,7 @@ export default function BridgePage() {
       return truncatedToaster('Error occurred!', 'Failed to fetch refuel cost.')
 
     await writeContractAsync({
-      ...bridge(selectedChainId),
+      ...bridgeOpts(selectedChainId),
       value: fee[0],
       args: [
         address!,
@@ -278,7 +261,7 @@ export default function BridgePage() {
                       onOpenChange={setPopoverFromOpen}
                     >
                       <ChainyTrigger
-                        disabled={isLoading}
+                        disabled={isPending}
                         selectedValue={field.value}
                       />
                       <ChainList
@@ -323,7 +306,7 @@ export default function BridgePage() {
                       onOpenChange={setPopoverToOpen}
                     >
                       <ChainyTrigger
-                        disabled={isLoading}
+                        disabled={isPending}
                         selectedValue={field.value}
                       />
                       <ChainList
@@ -361,7 +344,7 @@ export default function BridgePage() {
 
             <SubmitButton
               disabled={!isValid}
-              loading={isLoading || isLoadingNFT}
+              loading={isPending || isLoadingNFT}
             >
               {isLoadingNFT ? 'Loading NFT...' : 'Bridge'}
             </SubmitButton>
@@ -373,7 +356,7 @@ export default function BridgePage() {
         </Form>
       </Paper>
       <BridgedDialog
-        hash={bridgingData}
+        hash={hash}
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
         chainId={selectedChainId}

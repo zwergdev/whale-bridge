@@ -1,11 +1,6 @@
 'use client'
 
 import { RepeatButton } from '@/app/_components/chainy/chains-popover'
-import {
-  estimateRefuelFee,
-  getAdapter,
-  refuel,
-} from '@/app/_utils/contract-actions'
 import { truncatedToaster } from '@/app/_utils/truncatedToaster'
 import {
   Form,
@@ -25,13 +20,7 @@ import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
 import { formatEther } from 'viem'
 import { parseEther } from 'viem/utils'
-import {
-  useAccount,
-  useBalance,
-  useReadContract,
-  useSwitchChain,
-  useWriteContract,
-} from 'wagmi'
+import { useAccount, useBalance, useSwitchChain } from 'wagmi'
 import * as z from 'zod'
 import {
   ChainList,
@@ -41,58 +30,12 @@ import {
 import { SubmitButton } from '../_components/submit-button'
 import { CHAINS } from '../_utils/chains'
 import { RefuelSchema } from '../_utils/schemas'
-import { Prices, fetchPrices } from './_components/actions'
 import { BalanceIndicator } from './_components/balance-indicator'
 import { RefueledDialog } from './_components/refueled-dialog'
-
-const MAX_REFUEL: { [chainId: number]: number } = {
-  0: 0,
-  42170: 0.02, // arbitrum-nova
-  56: 1.23, // bsc
-  137: 610.36, // polygon
-  42161: 0.01, // arbitrum
-  534352: 0.02, // scroll
-  324: 0.02, // zk
-  10: 0.02, // optimism
-  8453: 0.02, // base
-  59144: 0.02, // linea
-  1284: 6.1, // moonbeam
-  43114: 0.98, // avalanche
-  250: 630, // fantom
-  42220: 0.05, //celo
-  100: 0.05, // gnosis
-  1101: 0.05, // polygon-zk
-  82: 1, // meter
-  1285: 0.05, // moonriver
-  1666600000: 10, // harmony
-  204: 0.05, // opbnb
-  2222: 1, // kava
-  7777777: 0.05, // zora
-  8217: 0.05, // klaytn
-  5000: 10, // mantle
-  1116: 0.25, // core-dao
-  122: 0.05, // fuse
-  10042220: 1, // gnosis --> celo
-}
-
-const SYMBOL_TO_CHAIN: { [key: string]: string } = {
-  ETH: 'ethereum',
-  BNB: 'binancecoin',
-  MATIC: 'matic-network',
-  GLMR: 'moonbeam',
-  AVAX: 'avalanche-2',
-  CELO: 'celo',
-  FTM: 'fantom',
-  xDAI: 'xdai',
-  MTR: 'meter',
-  MOVR: 'moonriver',
-  ONE: 'harmony',
-  KAVA: 'kava',
-  KLAY: 'klay-token',
-  CORE: 'coredaoorg',
-  FUSE: 'fuse-network-token',
-  MNT: 'mantle',
-}
+import { MAX_REFUEL, SYMBOL_TO_CHAIN } from './_constants'
+import { getRefuelAdapter, refuelOpts } from './_contracts/refuel-contracts'
+import { useEstimateRefuelFee, useWriteContract } from './_hooks/actions'
+import { Prices, fetchPrices } from './_hooks/fetch-prices'
 
 export default function RefuelPage() {
   const [prices, setPrices] = useState<Prices>()
@@ -166,12 +109,14 @@ export default function RefuelPage() {
       ? 1 // gnosis --> celo
       : MAX_REFUEL[balanceToChainId ?? 0]
 
-  const { refetch } = useReadContract(
-    estimateRefuelFee(fields.chainTo, selectedChainId, address!, fields.amount),
+  const { refetchFee } = useEstimateRefuelFee(
+    fields.chainTo,
+    selectedChainId,
+    fields.amount,
   )
 
   const {
-    data: refueledData,
+    data: hash,
     writeContractAsync,
     isPending: isLoadingRefuel,
   } = useWriteContract()
@@ -179,7 +124,7 @@ export default function RefuelPage() {
   const debounceFee = useDebouncedCallback(async (value) => {
     setIsFeeLoading(true)
     console.log('debounced-amount:', value)
-    const { data: fee }: any = await refetch()
+    const { data: fee }: any = await refetchFee()
     setFee(fee ? fee[0] : BigInt(0))
     setIsFeeLoading(false)
   }, 500)
@@ -217,7 +162,7 @@ export default function RefuelPage() {
   }
 
   async function onSubmit({ chainTo, amount }: z.infer<typeof RefuelSchema>) {
-    const { data: fee }: any = await refetch()
+    const { data: fee }: any = await refetchFee()
 
     if (!fee)
       return truncatedToaster('Error occurred!', 'Failed to fetch refuel cost.')
@@ -230,12 +175,12 @@ export default function RefuelPage() {
     }
 
     await writeContractAsync({
-      ...refuel(selectedChainId),
+      ...refuelOpts(selectedChainId),
       value: fee[0],
       args: [
         chainTo,
         address,
-        getAdapter(parseEther(amount.toString()), address!),
+        getRefuelAdapter(parseEther(amount.toString()), address!),
       ],
     })
 
@@ -448,7 +393,7 @@ export default function RefuelPage() {
         </Form>
       </Paper>
       <RefueledDialog
-        hash={refueledData}
+        hash={hash}
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
         chainId={selectedChainId}
