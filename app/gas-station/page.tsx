@@ -11,6 +11,7 @@ import { CHAINS } from '../_utils/chains'
 import { useAccount, useSwitchChain } from 'wagmi'
 import { PaperAmount } from './_components/paper-amount'
 import { SubmitButton } from '../_components/submit-button'
+import { PaperGasStation } from './_components/paper-gas-station'
 
 export default function GasStationPage() {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
@@ -34,9 +35,7 @@ export default function GasStationPage() {
       <Form {...form}>
         <form className="flex w-full">
           <div className="flex w-full gap-5">
-            <div className="gap-5 text-sm text-foreground rounded-md border-popover border overflow-hidden w-max p-6 relative bg-[#011e37]/30 backdrop-blur-md flex flex-col">
-              <div className="w-20 h-32 -z-10 bg-primary blur-[150px] absolute -bottom-20 left-0" />
-              <div className="w-20 h-32 -z-10 bg-primary blur-[200px] absolute -top-20 right-20" />
+            <PaperGasStation>
               <FormField
                 control={form.control}
                 name="chainFrom"
@@ -70,8 +69,8 @@ export default function GasStationPage() {
               <SubmitButton disabled={false} loading={false}>
                 Gas
               </SubmitButton>
-            </div>
-            <div className="text-sm text-foreground rounded-md border-popover border overflow-hidden w-3/5 p-6 relative bg-[#011e37]/30 backdrop-blur-md flex flex-col">
+            </PaperGasStation>
+            <div className="text-sm text-foreground rounded-md border-popover border overflow-hidden w-max p-6 relative bg-[#011e37]/30 backdrop-blur-md flex flex-col">
               <div className="w-36 h-32 -z-10 bg-primary blur-[150px] absolute -bottom-20 left-0" />
               <div className="w-26 h-32 -z-10 bg-primary blur-[200px] absolute -top-20 right-20" />
             </div>
