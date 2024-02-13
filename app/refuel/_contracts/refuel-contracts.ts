@@ -1,4 +1,4 @@
-import { utils } from 'ethers'
+import { pack } from '@ethersproject/solidity'
 import { parseEther } from 'viem/utils'
 import { refuelABI } from './refuel-abi'
 
@@ -100,7 +100,7 @@ export function refuelOpts(chainId: number) {
 export function getRefuelAdapter(amount: bigint, address: string) {
   if (amount === BigInt(0) || !address) return '0'
 
-  return utils.solidityPack(
+  return pack(
     ['uint16', 'uint256', 'uint256', 'address'],
     [2, 200000, amount, address],
   )
