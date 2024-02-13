@@ -37,7 +37,7 @@ export const Hero = () => {
           src={heroImage}
           alt="hero-image"
           priority
-          className="w-full lg:ml-10 ml-0"
+          className="w-full lg:ml-10 ml-0 lg:w-1/2"
         />
       </div>
 
