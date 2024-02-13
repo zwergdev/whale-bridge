@@ -18,6 +18,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from '@/components/ui/select'
+import { delay } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronsUpDown, Loader } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
@@ -47,8 +48,6 @@ import { getNFTBalance } from '../_utils/nftBalance'
 import { BridgeSchema } from '../_utils/schemas'
 import { truncatedToaster } from '../_utils/truncatedToaster'
 import { BridgedDialog } from './_components/bridged-dialog'
-
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms))
 
 export default function BridgePage() {
   const { address, chain } = useAccount()

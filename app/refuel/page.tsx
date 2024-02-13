@@ -332,7 +332,7 @@ export default function RefuelPage() {
                           form.setValue('chainTo', value)
                           form.setValue('amount', 0)
                           setPopoverToOpen(false)
-                          debounceFee(1)
+                          setFee(BigInt(0))
                         }}
                       />
                     </Popover>

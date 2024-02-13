@@ -1,4 +1,4 @@
-import { ethers } from 'ethers'
+import { utils } from 'ethers'
 import { parseEther } from 'viem/utils'
 import { celoMintABI, mintABI, modernMintABI, refuelABI } from './abi'
 
@@ -127,7 +127,7 @@ const CONTRACTS: {
   5000: {
     mintAddress: '0x84f4c0A290B5607fee0f2A1CDe5348540fecF6A1',
     refuelAddress: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
-    mintPrice: '0.3499'
+    mintPrice: '0.3499',
   }, // mantle
   122: {
     mintAddress: '0x82d5a068ba58ad31c419275474333B8696B3641d',
@@ -141,6 +141,12 @@ const CONTRACTS: {
   },
 }
 
+/*
+
+      MINT
+
+*/
+
 function mint(chainId: number) {
   return {
     address: CONTRACTS[chainId].mintAddress,
@@ -150,6 +156,12 @@ function mint(chainId: number) {
     value: parseEther(CONTRACTS[chainId].mintPrice),
   }
 }
+
+/*
+
+      BRIDGE
+
+*/
 
 function bridge(chainId: number) {
   return {
@@ -183,46 +195,6 @@ function estimateBridgeFee(
   }
 }
 
-function refuel(chainId: number) {
-  return {
-    address: CONTRACTS[chainId].refuelAddress,
-    abi: refuelABI,
-    functionName: 'bridgeGas',
-    chainId,
-    value: parseEther('0'),
-  }
-}
-
-function getAdapter(amount: bigint, address: string) {
-  if (amount === BigInt(0) || !address) return '0'
-  if (amount === BigInt(0) || !address) return '0'
-
-  return ethers.utils.solidityPack(
-    ['uint16', 'uint256', 'uint256', 'address'],
-    [2, 200000, amount, address],
-  )
-}
-
-function estimateRefuelFee(
-  chainTo: number,
-  chainId: number,
-  address: string,
-  amount: number,
-) {
-  return {
-    address: CONTRACTS[chainId].refuelAddress,
-    abi: refuelABI,
-    functionName: 'estimateSendFee',
-    chainId,
-    args: [
-      chainTo,
-      address, // payload
-      getAdapter(parseEther(amount.toString()), address), // adapter
-    ],
-    enabled: false,
-  }
-}
-
 function getUserNFTIds(address: string, chainId: number) {
   return {
     address: CONTRACTS[chainId].mintAddress, // celo & polygon-zk & meter & moonriver
@@ -251,6 +223,52 @@ function getNextMintId(chainId: number) {
     chainId: chainId,
     abi: mintABI,
     functionName: 'nextMintId',
+    enabled: false,
+  }
+}
+
+/*
+
+      REFUEL
+
+*/
+
+function refuel(chainId: number) {
+  return {
+    address: CONTRACTS[chainId].refuelAddress,
+    abi: refuelABI,
+    functionName: 'bridgeGas',
+    chainId,
+    value: parseEther('0'),
+  }
+}
+
+function getAdapter(amount: bigint, address: string) {
+  if (amount === BigInt(0) || !address) return '0'
+  if (amount === BigInt(0) || !address) return '0'
+
+  return utils.solidityPack(
+    ['uint16', 'uint256', 'uint256', 'address'],
+    [2, 200000, amount, address],
+  )
+}
+
+function estimateRefuelFee(
+  chainTo: number,
+  chainId: number,
+  address: string,
+  amount: number,
+) {
+  return {
+    address: CONTRACTS[chainId].refuelAddress,
+    abi: refuelABI,
+    functionName: 'estimateSendFee',
+    chainId,
+    args: [
+      chainTo,
+      address, // payload
+      getAdapter(parseEther(amount.toString()), address), // adapter
+    ],
     enabled: false,
   }
 }

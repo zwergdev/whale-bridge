@@ -1,6 +1,6 @@
 import { MobileLogo } from '@/components/ui/icons'
 import Link from 'next/link'
-import { Navigation } from '../navigation'
+import { Navigation } from './navigation'
 import { MobileMenu } from './mobile-menu'
 
 export const Header = () => {

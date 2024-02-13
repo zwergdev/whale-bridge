@@ -5,7 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Menu } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
-import { Navigation } from '../navigation'
+import { Navigation } from './navigation'
 
 export const MobileMenu = () => {
   const [open, setOpen] = useState(false)

@@ -12,7 +12,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { ChevronDown, Repeat2 } from 'lucide-react'
 import Image from 'next/image'
 import { CHAINS, selectedChain } from '../../_utils/chains'
-import { DISABLED_PAIRS, DisabledPairs } from './disabled-pairs'
+import { DISABLED_PAIRS } from './disabled-pairs'
 
 type ChainyTriggerProps = {
   disabled?: boolean
@@ -77,11 +77,9 @@ const ChainList = ({
               {Array.from(CHAINS)
                 .sort((a, b) => {
                   const isADisabled =
-                    DISABLED_PAIRS[selectedValue as keyof DisabledPairs]?.includes(a.value) ?? false
+                    DISABLED_PAIRS[selectedValue]?.includes(a.value) ?? false
                   const isBDisabled =
-                    DISABLED_PAIRS[
-                      selectedValue as keyof DisabledPairs
-                    ]?.includes(b.value) ?? false
+                    DISABLED_PAIRS[selectedValue]?.includes(b.value) ?? false
 
                   if (
                     (isADisabled && !isBDisabled) ||
@@ -101,9 +99,7 @@ const ChainList = ({
                 })
                 .map(({ label, value, image, chainId }) => {
                   const isDisabled =
-                    DISABLED_PAIRS[
-                      selectedValue as keyof DisabledPairs
-                    ]?.includes(value) ?? false
+                    DISABLED_PAIRS[selectedValue]?.includes(value) ?? false
 
                   return (
                     <CommandItem
