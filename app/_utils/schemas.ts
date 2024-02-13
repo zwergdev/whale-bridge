@@ -12,3 +12,11 @@ export const RefuelSchema = z.object({
   chainTo: z.number(),
   amount: z.coerce.number().positive(),
 })
+
+export const TokenSchema = z.object({
+  chainFrom: z.number(),
+  chainTo: z.number(),
+  tokenBalance: z.coerce.number().positive(),
+  amount: z.string().optional(),
+  bridgeAmount: z.string().optional(),
+})

@@ -1,13 +1,12 @@
 import { WhaleBg } from '@/components/ui/icons'
 import { Toaster } from '@/components/ui/sonner'
+import { Footer } from '@/app/_widgets/footer'
+import { Header } from '@/app/_widgets/header'
 import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
 import type { Metadata } from 'next'
 import { Space_Grotesk } from 'next/font/google'
 import { headers } from 'next/headers'
 import { cookieToInitialState } from 'wagmi'
-import { Footer } from './_components/footer'
-import { Header } from './_components/header/header'
 import { config } from './_providers/config'
 import { ContextProvider } from './_providers/web3'
 import './globals.css'
@@ -65,7 +64,6 @@ export default function RootLayout({
         </ContextProvider>
         <Toaster />
         <Analytics />
-        <SpeedInsights />
       </body>
     </html>
   )

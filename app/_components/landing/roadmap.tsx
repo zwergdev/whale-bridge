@@ -13,12 +13,12 @@ const ROADMAP = [
     done: true,
   },
   {
-    title: 'Now',
-    now: true,
+    title: 'Bridge Tokens',
+    done: true,
   },
   {
-    title: 'Bridge Tokens',
-    done: false,
+    title: 'Now',
+    now: true,
   },
   {
     title: 'Messenger',
