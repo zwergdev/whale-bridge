@@ -55,7 +55,7 @@ export const TOKEN_CONTRACTS: {
     price: 0.0000035,
   }, // avalanche
   250: {
-    address: '0x0b16d7aDf25799bD06489fe529541CB671979259',
+    address: '0x1471cfF942D7EF8bf5c8597A2d8313C211C3F22b',
     price: 0.0000035,
   }, // fantom
   42220: {
