@@ -105,14 +105,14 @@ const ChainList = ({
                     selectedValue === a.value ||
                     disabledChains?.some((chain) => chain === a.value)
                   ) {
-                    return 1 // Move chain A to the end
+                    return 1
                   }
                   if (
                     (!isADisabled && isBDisabled) ||
                     selectedValue === b.value ||
                     disabledChains?.some((chain) => chain === b.value)
                   ) {
-                    return -1 // Move chain B to the end
+                    return -1
                   }
                   return a.value === fieldValue ? -1 : 0
                 })

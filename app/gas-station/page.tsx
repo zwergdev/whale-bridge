@@ -9,17 +9,19 @@ import { GasStationSchema } from '../_utils/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CHAINS } from '../_utils/chains'
 import { useAccount, useSwitchChain } from 'wagmi'
-import { PaperAmount, PaperSelectedChain } from './_components/papers-information'
+import {
+  PaperAmount,
+  PaperSelectedChain,
+} from './_components/papers-information'
 import { SubmitButton } from '../_components/submit-button'
 import { PaperGasStation } from './_components/paper-gas-station'
 import { ChainListGas } from './_components/chain-popover-gas-station'
-import {
-  Select,
-  SelectItem,
-  SelectContent,
-  SelectTrigger,
-} from '@/components/ui/select'
 import Image from 'next/image'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@/components/ui/input'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Separator } from '@/components/ui/separator'
+import { Button } from '@/components/ui/button'
 
 export default function GasStationPage() {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
@@ -44,13 +46,13 @@ export default function GasStationPage() {
       <Form {...form}>
         <form className="flex w-full">
           <div className="flex w-full gap-5">
-            <PaperGasStation>
+            <PaperGasStation width="w-[400px]">
               <FormField
                 control={form.control}
                 name="chainFrom"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="flex items-end justify-between">
+                    <FormLabel className="flex items-end">
                       Source Chain
                     </FormLabel>
                     <Popover
@@ -79,48 +81,56 @@ export default function GasStationPage() {
                 Gas
               </SubmitButton>
             </PaperGasStation>
-            <PaperGasStation width="w-1/2">
+            <PaperGasStation width="w-9/12">
               <FormField
                 control={form.control}
                 name="selectChain"
                 render={({ field }) => (
-                  <FormItem className="w-full">
-                    <Select open={true}>
-                      <SelectTrigger className="w-full text-2xl text-white text-start">
-                        Out Bound Chain
-                      </SelectTrigger>
-                      <SelectContent className="w-full">
+                  <FormItem>
+                    <ScrollArea className="h-96">
+                      <div className="w-full h-auto flex flex-col gap-4 px-5 pt-3">
                         {CHAINS.map(({ label, image, value }, index) => (
-                          <SelectItem
-                            key={index}
-                            value={label}
-                            className="w-full"
-                            onClick={() => {
-                              if(!watch('selectChain').includes(value)){
-                              return setValue('selectChain', [
-                                ...watch('selectChain'),
-                                value,
-                              ])
-                            }
-                              setValue('selectChain', [
-                                ...watch('selectChain').filter((v) => v !== value)
-                              ])
-                            }}
-                          >
-                            <div className="flex w-full justify-between items-center">
-                              <Image
-                                src={image}
-                                width={30}
-                                height={30}
-                                alt="chain-image"
-                                className="rounded-full mr-2"
-                              />
-                              <span>{label}</span>
+                          <>
+                            <div
+                              className="flex w-full justify-between items-center"
+                              key={index}
+                            >
+                              <div className="w-max flex items-center">
+                                <Checkbox
+                                  checked={watch('selectChain').includes(value)}
+                                  onCheckedChange={() => {
+                                    if (!watch('selectChain').includes(value)) {
+                                      return setValue('selectChain', [
+                                        ...watch('selectChain'),
+                                        value,
+                                      ])
+                                    }
+                                    setValue('selectChain', [
+                                      ...watch('selectChain').filter(
+                                        (v) => v !== value,
+                                      ),
+                                    ])
+                                  }}
+                                />
+                                <Image
+                                  src={image}
+                                  width={35}
+                                  height={35}
+                                  alt="chain-image"
+                                  className="rounded-full mx-2"
+                                />
+                                <span className="text-lg">{label}</span>
+                              </div>
+                              <div className="flex items-center">
+                                <Input className="h-3 max-w-36 mr-3" placeholder="Amount" />
+                                <Button size="sm">MAX</Button>
+                              </div>
                             </div>
-                          </SelectItem>
+                            <Separator />
+                          </>
                         ))}
-                      </SelectContent>
-                    </Select>
+                      </div>
+                    </ScrollArea>
                   </FormItem>
                 )}
               />

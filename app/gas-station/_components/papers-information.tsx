@@ -27,11 +27,13 @@ export const PaperSelectedChain = ({
       <h2 className="text-xl">Selected Chains:</h2>
       <div className="bg-popover w-full h-px" />
       <div className="w-full">
-        {Array.from(CHAINS)
-          .filter(({ value }) => selectedChain.includes(value))
-          .map(({ label }, index) => (
-            <div key={index}>{label}</div>
-          ))}
+        {selectedChain.length === 0 ? (
+          <span>None</span>
+        ) : (
+          Array.from(CHAINS)
+            .filter(({ value }) => selectedChain.includes(value))
+            .map(({ label }, index) => <div key={index}>{label}</div>)
+        )}
       </div>
     </article>
   )

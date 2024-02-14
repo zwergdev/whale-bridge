@@ -4,7 +4,7 @@ export const PaperGasStation = ({
 }: { children: React.ReactNode; width?: string }) => {
   return (
     <div
-      className={`gap-5 text-sm text-foreground rounded-md border-popover border overflow-hidden ${
+      className={`gap-5 text-sm text-foreground rounded-md h-max border-popover border overflow-hidden ${
         width ?? 'w-max'
       } p-6 relative bg-[#011e37]/30 backdrop-blur-md flex flex-col`}
     >
