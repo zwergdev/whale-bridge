@@ -20,7 +20,10 @@ export const PaperAmount = ({
 export const PaperSelectedChain = ({
   selectedChain,
 }: {
-  selectedChain: number[]
+  selectedChain: {
+    chain: number
+    amount?: number
+  }[]
 }) => {
   return (
     <article className="p-5 w-full flex flex-col gap-4 bg-paper rounded-xl">
@@ -31,7 +34,9 @@ export const PaperSelectedChain = ({
           <span>None</span>
         ) : (
           Array.from(CHAINS)
-            .filter(({ value }) => selectedChain.includes(value))
+            .filter(({ value }) =>
+              selectedChain.find(({ chain }) => chain === value),
+            )
             .map(({ label }, index) => <div key={index}>{label}</div>)
         )}
       </div>

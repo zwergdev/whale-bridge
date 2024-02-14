@@ -40,6 +40,8 @@ export default function GasStationPage() {
 
   const { watch, setValue } = form
 
+  console.log(watch('selectChain'))
+
   return (
     <section className="w-full max-w-screen-xl min-h-[calc(100vh-150px)] flex flex-col justify-center">
       <h1 className="text-4xl">Gas Station</h1>
@@ -97,19 +99,35 @@ export default function GasStationPage() {
                             >
                               <div className="w-max flex items-center">
                                 <Checkbox
-                                  checked={watch('selectChain').includes(value)}
+                                  checked={
+                                    !!watch('selectChain').find(
+                                      ({ chain }) => chain === value,
+                                    )
+                                  }
                                   onCheckedChange={() => {
-                                    if (!watch('selectChain').includes(value)) {
+                                    if (
+                                      !watch('selectChain').find(
+                                        ({ chain }) => chain === value,
+                                      )
+                                    ) {
                                       return setValue('selectChain', [
                                         ...watch('selectChain'),
-                                        value,
+                                        {
+                                          chain: value,
+                                        },
                                       ])
                                     }
-                                    setValue('selectChain', [
-                                      ...watch('selectChain').filter(
-                                        (v) => v !== value,
-                                      ),
-                                    ])
+                                    if (
+                                      watch('selectChain').find(
+                                        ({ chain }) => chain === value,
+                                      )
+                                    ) {
+                                      return setValue('selectChain', [
+                                        ...watch('selectChain').filter(
+                                          ({ chain }) => chain !== value,
+                                        ),
+                                      ])
+                                    }
                                   }}
                                 />
                                 <Image
@@ -122,7 +140,11 @@ export default function GasStationPage() {
                                 <span className="text-lg">{label}</span>
                               </div>
                               <div className="flex items-center">
-                                <Input className="h-3 max-w-36 mr-3" placeholder="Amount" />
+                                <Input
+                                  className="h-3 max-w-36 mr-3"
+                                  placeholder="Amount"
+                                  type='number'
+                                />
                                 <Button size="sm">MAX</Button>
                               </div>
                             </div>

@@ -23,11 +23,11 @@ export const TokenSchema = z.object({
 
 export const GasStationSchema = z.object({
   chainFrom: z.number(),
-  selectChain: z.array(z.number())
-  // selectChain: z.array(
-  //   z.object({
-  //     chain: z.number(),
-  //     amount: z.number().optional(),
-  //   }),
-  // ),
+  // selectChain: z.array(z.number())
+  selectChain: z.array(
+    z.object({
+      chain: z.number(),
+      amount: z.number().optional(),
+    }),
+  ),
 })
