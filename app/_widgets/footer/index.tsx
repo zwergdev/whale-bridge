@@ -18,7 +18,7 @@ export const Footer = () => (
         <Link href="/">
           <MobileLogo className="w-11 h-11" />
         </Link>
-        <div className="hidden md:flex items-center gap-4 lg:gap-12">
+        <div className="hidden lg:flex items-center gap-4 lg:gap-12">
           <Navigation isFooter />
           <Link
             target="_blank"
@@ -38,9 +38,9 @@ export const Footer = () => (
       </Link>
     </div>
 
-    <Separator className="md:my-4 my-4 bg-popover" />
-    <div className="flex flex-col md:hidden">
-      <div className="flex w-full sm:gap-10 gap-5 items-center justify-center font-medium  md:hidden">
+    <Separator className="lg:my-4 my-4 bg-popover" />
+    <div className="flex flex-col lg:hidden">
+      <div className="flex w-full sm:gap-10 gap-5 items-center justify-center font-medium flex-wrap lg:hidden">
         <Navigation isFooter />
       </div>
       <Separator className="my-4 bg-popover" />

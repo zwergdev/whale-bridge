@@ -5,9 +5,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const NAVIGATION = [
-  { href: '/mint', label: 'Mint', isNew: false },
-  { href: '/bridge', label: 'Bridge', isNew: false },
-  { href: '/refuel', label: 'Refuel', isNew: false },
+  { href: '/mint', label: 'Mint NFT', isNew: false },
+  { href: '/bridge', label: 'Bridge NFT', isNew: false },
+  { href: '/refuel', label: 'Gas Refuel', isNew: false },
   { href: '/token', label: 'OFT Bridge', isNew: true },
   { href: '/profile', label: 'Profile', isNew: false },
 ]
