@@ -8,7 +8,8 @@ const NAVIGATION = [
   { href: '/mint', label: 'Mint NFT', isNew: false },
   { href: '/bridge', label: 'Bridge NFT', isNew: false },
   { href: '/refuel', label: 'Gas Refuel', isNew: false },
-  { href: '/token', label: 'OFT Bridge', isNew: true },
+  { href: '/token', label: 'OFT Bridge', isNew: false },
+  { href: '/messenger', label: 'Messenger', isNew: true },
   { href: '/profile', label: 'Profile', isNew: false },
 ]
 

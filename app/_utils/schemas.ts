@@ -20,3 +20,10 @@ export const TokenSchema = z.object({
   amount: z.string().optional(),
   bridgeAmount: z.string().optional(),
 })
+
+export const MessengerSchema = z.object({
+  chainFrom: z.number(),
+  chainTo: z.number(),
+  recipient: z.string().regex(/^0x[a-fA-F0-9]{40}$/),
+  message: z.string().min(10).max(1000),
+})

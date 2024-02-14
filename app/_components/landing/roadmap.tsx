@@ -17,12 +17,12 @@ const ROADMAP = [
     done: true,
   },
   {
-    title: 'Now',
-    now: true,
+    title: 'Messenger',
+    done: true,
   },
   {
-    title: 'Messenger',
-    done: false,
+    title: 'Now',
+    now: true,
   },
   {
     title: 'Gas Station',
