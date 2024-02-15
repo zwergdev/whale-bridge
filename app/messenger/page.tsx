@@ -71,7 +71,6 @@ export default function MessengerPage() {
   async function handleSendMessage({
     message,
     chainTo,
-    chainFrom,
   }: MessengerForm) {
     const { data: fee }: any = await refetchFee()
 
@@ -83,7 +82,7 @@ export default function MessengerPage() {
 
     const opts = sendMessageOpts(selectedChainId)
 
-    const srcChain = CHAINS.find(({ value }) => value === chainFrom)?.chainId
+    const dstChain = CHAINS.find(({ value }) => value === chainTo)?.chainId
 
     await writeContractAsync({
       ...opts,
@@ -92,7 +91,7 @@ export default function MessengerPage() {
       args: [
         message,
         chainTo,
-        getMessageDestination(srcChain!, selectedChainId),
+        getMessageDestination(dstChain!, selectedChainId),
       ],
     })
 
