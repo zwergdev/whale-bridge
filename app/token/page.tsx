@@ -155,9 +155,11 @@ export default function TokenPage() {
 
     const amount = fields.amount
 
-    const amou = Number(amount) * TOKEN_CONTRACTS[selectedChainId].price!
+    const sum = (
+      Number(amount) * TOKEN_CONTRACTS[selectedChainId].price!
+    ).toFixed(10)
 
-    const value = parseEther(amou.toString())
+    const value = parseEther(sum)
 
     const opts = claimToken(selectedChainId)
 
