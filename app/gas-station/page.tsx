@@ -34,13 +34,12 @@ export default function GasStationPage() {
     defaultValues: {
       chainFrom:
         CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
-      selectChain: [],
+      selectedChain: [],
     },
   })
 
   const { watch, setValue } = form
-
-  console.log(watch('selectChain'))
+  const arraySelectedChains = watch('selectedChain')
 
   return (
     <section className="w-full max-w-screen-xl min-h-[calc(100vh-150px)] flex flex-col justify-center">
@@ -77,7 +76,7 @@ export default function GasStationPage() {
                   </FormItem>
                 )}
               />
-              <PaperSelectedChain selectedChain={watch('selectChain')} />
+              <PaperSelectedChain selectedChain={arraySelectedChains} />
               <PaperAmount totalAmount={0} />
               <SubmitButton disabled={false} loading={false}>
                 Gas
@@ -86,7 +85,7 @@ export default function GasStationPage() {
             <PaperGasStation width="w-9/12">
               <FormField
                 control={form.control}
-                name="selectChain"
+                name="selectedChain"
                 render={({ field }) => (
                   <FormItem>
                     <ScrollArea className="h-96">
@@ -100,31 +99,32 @@ export default function GasStationPage() {
                               <div className="w-max flex items-center">
                                 <Checkbox
                                   checked={
-                                    !!watch('selectChain').find(
-                                      ({ chain }) => chain === value,
+                                    !!arraySelectedChains.find(
+                                      ({ chainId }) => chainId === value,
                                     )
                                   }
                                   onCheckedChange={() => {
                                     if (
-                                      !watch('selectChain').find(
-                                        ({ chain }) => chain === value,
+                                      !arraySelectedChains.find(
+                                        ({ chainId }) => chainId === value,
                                       )
                                     ) {
-                                      return setValue('selectChain', [
-                                        ...watch('selectChain'),
+                                      return setValue('selectedChain', [
+                                        ...arraySelectedChains,
                                         {
-                                          chain: value,
+                                          chainId: value,
+                                          chain: label,
                                         },
                                       ])
                                     }
                                     if (
-                                      watch('selectChain').find(
-                                        ({ chain }) => chain === value,
+                                      arraySelectedChains.find(
+                                        ({ chainId }) => chainId === value,
                                       )
                                     ) {
-                                      return setValue('selectChain', [
-                                        ...watch('selectChain').filter(
-                                          ({ chain }) => chain !== value,
+                                      return setValue('selectedChain', [
+                                        ...arraySelectedChains.filter(
+                                          ({ chainId }) => chainId !== value,
                                         ),
                                       ])
                                     }
@@ -143,9 +143,39 @@ export default function GasStationPage() {
                                 <Input
                                   className="h-3 max-w-36 mr-3"
                                   placeholder="Amount"
-                                  type='number'
+                                  type="number"
+                                  onChange={(e) => {
+                                    setValue(
+                                      'selectedChain',
+                                      arraySelectedChains.map((obj) =>
+                                        obj.chainId === value
+                                          ? {
+                                              ...obj,
+                                              amount: Number(e.target.value),
+                                            }
+                                          : obj,
+                                      ),
+                                    )
+                                  }}
                                 />
-                                <Button size="sm">MAX</Button>
+                                <Button
+                                  size="sm"
+                                  onClick={() => {
+                                    setValue(
+                                      'selectedChain',
+                                      arraySelectedChains.map((obj) =>
+                                        obj.chainId === value
+                                          ? {
+                                              ...obj,
+                                              amount: 10000,
+                                            }
+                                          : obj,
+                                      ),
+                                    )
+                                  }}
+                                >
+                                  MAX
+                                </Button>
                               </div>
                             </div>
                             <Separator />

@@ -1,5 +1,3 @@
-import { CHAINS } from '@/app/_utils/chains'
-
 export const PaperAmount = ({
   totalAmount,
 }: {
@@ -21,7 +19,8 @@ export const PaperSelectedChain = ({
   selectedChain,
 }: {
   selectedChain: {
-    chain: number
+    chain: string
+    chainId: number
     amount?: number
   }[]
 }) => {
@@ -33,11 +32,12 @@ export const PaperSelectedChain = ({
         {selectedChain.length === 0 ? (
           <span>None</span>
         ) : (
-          Array.from(CHAINS)
-            .filter(({ value }) =>
-              selectedChain.find(({ chain }) => chain === value),
-            )
-            .map(({ label }, index) => <div key={index}>{label}</div>)
+          selectedChain.map(({ chain, amount }, index) => (
+            <div key={index} className="flex items-center justify-between">
+              <span>{chain}</span>
+              <span>{amount ? amount : '0'}</span>
+            </div>
+          ))
         )}
       </div>
     </article>
