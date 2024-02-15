@@ -9,11 +9,11 @@ export const MESSENGER_CONTRACTS: {
   }
 } = {
   56: {
-    address: '0x00',
+    address: '0x508DC38DdC611d2225318C2E0Cb19189bE6235C2',
     price: '0.00025',
   }, // bsc
   204: {
-    address: '0x00',
+    address: '0x2B9769f2c054084B1916E14144C894718e88B460',
     price: '0.00025',
   }, // op-bnb
   42170: {
@@ -25,7 +25,7 @@ export const MESSENGER_CONTRACTS: {
     price: '0.00025',
   }, // polygon
   42161: {
-    address: '0x00',
+    address: '0xA911fc39cB3d057c053918a8B042425d4B9cB6a4',
     price: '0.00025',
   }, // arbitrum
   534352: {
@@ -45,11 +45,11 @@ export const MESSENGER_CONTRACTS: {
     price: '0.00025',
   }, // linea
   8453: {
-    address: '0x00',
+    address: '0xf7B1f6Cb5c79c002b16a46f4879bDb5EF512A033',
     price: '0.00025',
   }, // base
   1284: {
-    address: '0x00',
+    address: '0x32756fa5e963Ae1E6F506579fc2867aDA7a73121',
     price: '0.00025',
   }, // moonbeam
   43114: {
@@ -57,7 +57,7 @@ export const MESSENGER_CONTRACTS: {
     price: '0.00025',
   }, // avalanche
   250: {
-    address: '0x00',
+    address: '0xf7B1f6Cb5c79c002b16a46f4879bDb5EF512A033',
     price: '0.00025',
   }, // fantom
   42220: {
@@ -65,11 +65,11 @@ export const MESSENGER_CONTRACTS: {
     price: '0.00025',
   }, // celo
   100: {
-    address: '0x00',
+    address: '0x964C0108e4bF9459D900CBf91035183851A7Af55',
     price: '0.00025',
   }, // gnosis
   1101: {
-    address: '0x00',
+    address: '0x0b16d7aDf25799bD06489fe529541CB671979259',
     price: '0.00025',
   }, // polygon-zk
   82: {
@@ -77,7 +77,7 @@ export const MESSENGER_CONTRACTS: {
     price: '0.00025',
   }, // meter
   1285: {
-    address: '0x00',
+    address: '0x51e1cdA8313AA908fC7a324D7059f48Cb21181A5',
     price: '0.00025',
   }, // moonriver
   1666600000: {
@@ -97,11 +97,11 @@ export const MESSENGER_CONTRACTS: {
     price: '0.00025',
   }, // klaytn
   1116: {
-    address: '0x00',
+    address: '0xFC1a815f02B560827f16Cbdb71beF409163B8249',
     price: '0.00025',
   }, // core-dao
   5000: {
-    address: '0x00',
+    address: '0xAb8C2E9c01803798D9CA53D1f46682809dA107DA',
     price: '0.00025',
   }, // mantle
   122: {

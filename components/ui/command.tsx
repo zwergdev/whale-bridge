@@ -43,8 +43,8 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
 const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input> & {
-    setIsChainGridView: React.Dispatch<React.SetStateAction<boolean>>
-    isChainGridView: boolean
+    setIsChainGridView?: React.Dispatch<React.SetStateAction<boolean>>
+    isChainGridView?: boolean
   }
 >(({ className, setIsChainGridView, isChainGridView, ...props }, ref) => (
   <div
@@ -65,13 +65,14 @@ const CommandInput = React.forwardRef<
     <Button
       size="icon"
       variant="clean"
-      onClick={() => setIsChainGridView((prev) => !prev)}
+      onClick={() => setIsChainGridView?.((prev) => !prev)}
     >
-      {isChainGridView ? (
-        <LayoutGrid className="w-5 h-5" />
-      ) : (
-        <LayoutList className="w-5 h-5" />
-      )}
+      {!!setIsChainGridView &&
+        (isChainGridView ? (
+          <LayoutGrid className="w-5 h-5" />
+        ) : (
+          <LayoutList className="w-5 h-5" />
+        ))}
     </Button>
   </div>
 ))

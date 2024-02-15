@@ -27,7 +27,6 @@ export type TokenForm = z.infer<typeof TokenSchema>
 export const MessengerSchema = z.object({
   chainFrom: z.number(),
   chainTo: z.number(),
-  recipient: z.string().regex(/^0x[a-fA-F0-9]{40}$/), // ETH address
   message: z.string().min(10).max(140),
 })
 export type MessengerForm = z.infer<typeof MessengerSchema>

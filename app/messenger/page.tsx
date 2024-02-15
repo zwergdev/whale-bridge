@@ -1,32 +1,21 @@
 'use client'
 
+import { ChainList } from '@/app/_components/chainy/chains-popover'
 import { CHAINS } from '@/app/_utils/chains'
 import { MessengerForm, MessengerSchema } from '@/app/_utils/schemas'
 import { truncatedToaster } from '@/app/_utils/truncatedToaster'
 import { InfoHover } from '@/app/token/_components/info-hover'
 import { Button } from '@/components/ui/button-new'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { Label } from '@/components/ui/label'
-import { Popover } from '@/components/ui/popover'
 import { Textarea } from '@/components/ui/textarea'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAccount, useSwitchChain } from 'wagmi'
-import {
-  ChainList,
-  ChainyTrigger,
-  RepeatButton,
-} from '../_components/chainy/chains-popover'
 import { Paper } from '../_components/chainy/chains-popover'
 import { useWriteContract } from '../_hooks'
+import { AddressNetwork } from './_components/address-network'
 import { MessengerDialog } from './_components/messenger-dialog'
 import {
   getMessageDestination,
@@ -35,12 +24,12 @@ import {
 import { useEstimateRefuelFee } from './_hooks/actions'
 
 export default function MessengerPage() {
-  const { chain, status } = useAccount()
   const { switchChain } = useSwitchChain()
+  const { chain, status, address } = useAccount()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [popoverFromOpen, setPopoverFromOpen] = useState(false)
-  const [isChainGridView, setIsChainGridView] = useState(false)
   const [popoverToOpen, setPopoverToOpen] = useState(false)
+  const [isChainGridView, setIsChainGridView] = useState(false)
 
   const selectedChainId = chain?.id ?? 0
 
@@ -68,10 +57,7 @@ export default function MessengerPage() {
 
   const { writeContractAsync, isPending, data: hash } = useWriteContract()
 
-  async function handleSendMessage({
-    message,
-    chainTo,
-  }: MessengerForm) {
+  async function handleSendMessage({ message, chainTo }: MessengerForm) {
     const { data: fee }: any = await refetchFee()
 
     if (!fee)
@@ -104,21 +90,20 @@ export default function MessengerPage() {
       <Paper title="MESSENGER">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSendMessage)}>
-            <div className="w-full flex justify-between items-center md:mb-5 mb-7 gap-5 md:gap-0 md:flex-row flex-col">
+            <div className="w-full flex flex-col justify-between items-center md:mb-5 mb-7 gap-5">
               <FormField
                 control={form.control}
                 name="chainFrom"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="flex items-end justify-between">
-                      Send from
-                    </FormLabel>
+                  <FormItem className="w-full">
                     <FormControl>
-                      <Popover
+                      <AddressNetwork
+                        address={address}
+                        label="From"
+                        fieldValue={fields.chainFrom}
                         open={popoverFromOpen}
                         onOpenChange={setPopoverFromOpen}
                       >
-                        <ChainyTrigger selectedValue={field.value} />
                         <ChainList
                           isChainGridView={isChainGridView}
                           setIsChainGridView={setIsChainGridView}
@@ -130,61 +115,42 @@ export default function MessengerPage() {
                             if (chainId !== chain?.id) switchChain({ chainId })
                           }}
                         />
-                      </Popover>
+                      </AddressNetwork>
                     </FormControl>
                   </FormItem>
                 )}
-              />
-              <RepeatButton
-                onClick={() => {
-                  form.setValue('chainFrom', fields.chainTo)
-                  form.setValue('chainTo', fields.chainFrom)
-                  const selectedChain = CHAINS.find(
-                    ({ value }) => value === fields.chainTo,
-                  )
-
-                  if (selectedChain?.chainId)
-                    switchChain({ chainId: selectedChain?.chainId })
-                }}
               />
 
               <FormField
                 control={form.control}
                 name="chainTo"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Send to</FormLabel>
-                    <Popover
-                      open={popoverToOpen}
-                      onOpenChange={setPopoverToOpen}
-                    >
-                      <ChainyTrigger selectedValue={field.value} />
-                      <ChainList
-                        isChainGridView={isChainGridView}
-                        setIsChainGridView={setIsChainGridView}
-                        selectedValue={fields.chainFrom}
-                        fieldValue={field.value}
-                        onSelect={(value) => {
-                          form.setValue('chainTo', value)
-                          setPopoverToOpen(false)
-                        }}
-                      />
-                    </Popover>
+                  <FormItem className="w-full">
+                    <FormControl>
+                      <AddressNetwork
+                        address={address}
+                        label="To"
+                        info="Dynamic recepients will be available soon."
+                        fieldValue={fields.chainTo}
+                        open={popoverToOpen}
+                        onOpenChange={setPopoverToOpen}
+                      >
+                        <ChainList
+                          isChainGridView={isChainGridView}
+                          setIsChainGridView={setIsChainGridView}
+                          selectedValue={fields.chainTo}
+                          fieldValue={field.value}
+                          onSelect={(value) => {
+                            form.setValue('chainTo', value)
+                            setPopoverToOpen(false)
+                          }}
+                        />
+                      </AddressNetwork>
+                    </FormControl>
                   </FormItem>
                 )}
               />
             </div>
-
-            <Label className="leading-10 flex items-center">
-              Recipient address
-              <InfoHover desc="Message recipient address (0x...)" />
-            </Label>
-            <Input
-              type="text"
-              autoComplete="off"
-              placeholder="Message recipient address."
-              {...register('recipient')}
-            />
 
             <Label className="leading-10 mt-4 flex items-center">
               Message content
@@ -199,7 +165,7 @@ export default function MessengerPage() {
             <Button
               className="w-full mt-5 hover:scale-[1.05]"
               type="submit"
-              disabled={!isValid}
+              disabled={!isValid || status === 'disconnected'}
               loading={
                 status === 'connecting' ||
                 status === 'reconnecting' ||
