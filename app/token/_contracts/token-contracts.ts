@@ -96,7 +96,7 @@ export const TOKEN_CONTRACTS: {
   }, // klaytn
   1116: {
     address: '0x6C0805dfdBdC36866cb86b8Ae78419D8fc60139e',
-    price: 0.018,
+    price: 0.0188,
   }, // core-dao
   5000: {
     address: '0x1010a05759a0a7Daa665f12Ec677ff5034Ecd35F',
