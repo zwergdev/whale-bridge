@@ -1,23 +1,9 @@
-import { errorToaster } from '@/app/_utils/truncatedToaster'
-import {
-  useAccount,
-  useReadContract,
-  useWriteContract as writeContract,
-} from 'wagmi'
+import { useAccount, useReadContract } from 'wagmi'
 import {
   estimateBridgeFeeOpts,
   getModernUserNFTIdsOpts,
   getUserNFTIdsOpts,
 } from '../_contracts/bridge-contracts'
-
-export const useWriteContract = () =>
-  writeContract({
-    mutation: {
-      onError(error) {
-        errorToaster(error)
-      },
-    },
-  })
 
 export const useEstimateBridgeFee = (
   chainTo: number,

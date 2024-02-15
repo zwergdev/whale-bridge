@@ -24,15 +24,15 @@ import { ChevronsUpDown, Loader } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAccount, useBalance, useSwitchChain } from 'wagmi'
-import * as z from 'zod'
 import {
   ChainList,
   ChainyTrigger,
   Paper,
 } from '../_components/chainy/chains-popover'
 import { SubmitButton } from '../_components/submit-button'
+import { useWriteContract } from '../_hooks'
 import { CHAINS } from '../_utils/chains'
-import { BridgeSchema } from '../_utils/schemas'
+import { BridgeForm, BridgeSchema } from '../_utils/schemas'
 import { truncatedToaster } from '../_utils/truncatedToaster'
 import { BridgedDialog } from './_components/bridged-dialog'
 import { bridgeOpts } from './_contracts/bridge-contracts'
@@ -40,7 +40,6 @@ import {
   useEstimateBridgeFee,
   useGetModernUserNFTIds,
   useGetUserNFTIds,
-  useWriteContract,
 } from './_hooks/actions'
 import { getNFTBalance } from './_hooks/nft-scan'
 
@@ -131,7 +130,7 @@ export default function BridgePage() {
     )
   }, [chain])
 
-  const form = useForm<z.infer<typeof BridgeSchema>>({
+  const form = useForm<BridgeForm>({
     resolver: zodResolver(BridgeSchema),
     defaultValues: {
       chainFrom:
@@ -166,7 +165,7 @@ export default function BridgePage() {
     return nfts
   }
 
-  async function bridgeNFT({ chainTo, tokenId }: z.infer<typeof BridgeSchema>) {
+  async function bridgeNFT({ chainTo, tokenId }: BridgeForm) {
     if (tokenId === '0') {
       const nfts = await refetchNFT()
 

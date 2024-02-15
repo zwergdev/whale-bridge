@@ -19,15 +19,15 @@ import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
 import { formatEther, parseEther } from 'viem'
 import { useAccount, useSwitchChain } from 'wagmi'
-import { z } from 'zod'
 import {
   ChainList,
   ChainyTrigger,
   Paper,
   RepeatButton,
 } from '../_components/chainy/chains-popover'
+import { useWriteContract } from '../_hooks'
 import { CHAINS } from '../_utils/chains'
-import { TokenSchema } from '../_utils/schemas'
+import { TokenForm, TokenSchema } from '../_utils/schemas'
 import { BalanceIndicator } from '../refuel/_components/balance-indicator'
 import tokenImage from './_assets/token.webp'
 import { InfoHover } from './_components/info-hover'
@@ -41,7 +41,6 @@ import {
   useGetBalance,
   useGetTokenBalance,
   useGetTokenFee,
-  useWriteContract,
 } from './_hooks/actions'
 
 export default function TokenPage() {
@@ -77,7 +76,7 @@ export default function TokenPage() {
     setValue('tokenBalance', Number(formatEther(data)))
   }, 500)
 
-  const form = useForm<z.infer<typeof TokenSchema>>({
+  const form = useForm<TokenForm>({
     resolver: zodResolver(TokenSchema),
     defaultValues: {
       tokenBalance: 0,
@@ -104,7 +103,7 @@ export default function TokenPage() {
     chainFrom,
     bridgeAmount,
     tokenBalance,
-  }: z.infer<typeof TokenSchema>) {
+  }: TokenForm) {
     const isDisabledChainUsed = [176, 150, 158].some(
       (id) => id === chainFrom || id === chainTo,
     )
