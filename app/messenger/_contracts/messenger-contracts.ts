@@ -41,7 +41,7 @@ export const MESSENGER_CONTRACTS: {
     price: '0.00025',
   }, // optimism
   59144: {
-    address: '0x00',
+    address: '0xA749C357A7EbE70bd0A66777C3a29F144F423156',
     price: '0.00025',
   }, // linea
   8453: {
