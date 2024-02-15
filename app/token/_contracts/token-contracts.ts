@@ -100,7 +100,7 @@ export const TOKEN_CONTRACTS: {
   }, // core-dao
   5000: {
     address: '0x1010a05759a0a7Daa665f12Ec677ff5034Ecd35F',
-    price: 0.012,
+    price: 0.01285,
   }, // mantle
   122: {
     address: '0x8D29dCf73F6e3613CBB461049Bc735B48FeF1Ca9',
