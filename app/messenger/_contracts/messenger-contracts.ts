@@ -1,4 +1,5 @@
-import { parseEther } from 'viem/utils'
+import { pack } from '@ethersproject/solidity'
+import { parseEther } from 'viem'
 import { messengerABI } from './messenger-abi'
 
 export const MESSENGER_CONTRACTS: {
@@ -116,11 +117,24 @@ export const MESSENGER_CONTRACTS: {
 export function sendMessageOpts(chainId: number) {
   return {
     address: MESSENGER_CONTRACTS[chainId].address,
+    price: parseEther(MESSENGER_CONTRACTS[chainId].price),
     abi: messengerABI,
     functionName: 'sendMessage',
     chainId,
-    value: parseEther(MESSENGER_CONTRACTS[chainId].price),
   }
+}
+
+function getMessagePayload(message: string, address: string) {
+  if (!message || !address) return '0'
+
+  return pack(['uint8', 'string'], [2, message])
+}
+
+export function getMessageDestination(chainTo: number, chainFrom: number) {
+  return (
+    MESSENGER_CONTRACTS[chainTo].address +
+    MESSENGER_CONTRACTS[chainFrom].address.slice(2)
+  )
 }
 
 export function estimateMessageFeeOpts(
@@ -137,9 +151,9 @@ export function estimateMessageFeeOpts(
     args: [
       chainTo,
       address,
-      message, // _payload (bytes) @TODO: CHANGE
+      getMessagePayload(message, address), // _payload
       false,
-      '0x00010000000000000000000000000000000000000000000000000000000000030d40', // _adapterParams
+      pack(['uint16', 'uint'], [2, 250000]), // _adapterParams
     ],
     enabled: false,
   }

@@ -26,10 +26,13 @@ import {
   RepeatButton,
 } from '../_components/chainy/chains-popover'
 import { Paper } from '../_components/chainy/chains-popover'
-import { MessengerDialog } from './_components/messenger-dialog'
-import { sendMessageOpts } from './_contracts/messenger-contracts'
-import { useEstimateRefuelFee } from './_hooks/actions'
 import { useWriteContract } from '../_hooks'
+import { MessengerDialog } from './_components/messenger-dialog'
+import {
+  getMessageDestination,
+  sendMessageOpts,
+} from './_contracts/messenger-contracts'
+import { useEstimateRefuelFee } from './_hooks/actions'
 
 export default function MessengerPage() {
   const { chain, status } = useAccount()
@@ -66,9 +69,9 @@ export default function MessengerPage() {
   const { writeContractAsync, isPending, data: hash } = useWriteContract()
 
   async function handleSendMessage({
-    recipient,
     message,
     chainTo,
+    chainFrom,
   }: MessengerForm) {
     const { data: fee }: any = await refetchFee()
 
@@ -80,13 +83,16 @@ export default function MessengerPage() {
 
     const opts = sendMessageOpts(selectedChainId)
 
+    const srcChain = CHAINS.find(({ value }) => value === chainFrom)?.chainId
+
     await writeContractAsync({
       ...opts,
       address: opts.address!,
+      value: opts.price + fee[0],
       args: [
         message,
         chainTo,
-        recipient, //_destination (bytes) @TODO CHANGE
+        getMessageDestination(srcChain!, selectedChainId),
       ],
     })
 
