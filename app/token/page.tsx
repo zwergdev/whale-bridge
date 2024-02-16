@@ -103,8 +103,8 @@ export default function TokenPage() {
     chainFrom,
     bridgeAmount,
     tokenBalance,
-  }: TokenForm) {
-    const isDisabledChainUsed = [176, 150, 158].some(
+  }: z.infer<typeof TokenSchema>) {
+    const isDisabledChainUsed = [176, 150].some(
       (id) => id === chainFrom || id === chainTo,
     )
     if (isDisabledChainUsed)
@@ -144,7 +144,7 @@ export default function TokenPage() {
   }
 
   async function onSubmitClaim() {
-    const isDisabledChainUsed = [176, 150, 158].some(
+    const isDisabledChainUsed = [176, 150].some(
       (id) => id === fields.chainFrom || id === fields.chainTo,
     )
     if (isDisabledChainUsed)
@@ -154,9 +154,11 @@ export default function TokenPage() {
 
     const amount = fields.amount
 
-    const amou = Number(amount) * TOKEN_CONTRACTS[selectedChainId].price!
+    const sum = (
+      Number(amount) * TOKEN_CONTRACTS[selectedChainId].price!
+    ).toFixed(10)
 
-    const value = parseEther(amou.toString())
+    const value = parseEther(sum)
 
     const opts = claimToken(selectedChainId)
 
@@ -197,7 +199,7 @@ export default function TokenPage() {
                           isChainGridView={isChainGridView}
                           setIsChainGridView={setIsChainGridView}
                           selectedValue={fields.chainTo}
-                          disabledChains={[176, 150, 158]}
+                          disabledChains={[176, 150]}
                           fieldValue={field.value}
                           onSelect={(value, chainId) => {
                             form.setValue('chainFrom', value)
@@ -238,7 +240,7 @@ export default function TokenPage() {
                         isChainGridView={isChainGridView}
                         setIsChainGridView={setIsChainGridView}
                         selectedValue={fields.chainFrom}
-                        disabledChains={[176, 150, 165, 158]}
+                        disabledChains={[176, 150, 165]}
                         fieldValue={field.value}
                         onSelect={(value) => {
                           form.setValue('chainTo', value)
