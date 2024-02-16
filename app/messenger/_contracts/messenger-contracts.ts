@@ -29,7 +29,7 @@ export const MESSENGER_CONTRACTS: {
     price: '0.00025',
   }, // arbitrum
   534352: {
-    address: '0x00',
+    address: '0xB676726A71D2095f39e09cdA48DdE4B35EfbAdf3',
     price: '0.00025',
   }, // scroll
   324: {
@@ -37,7 +37,7 @@ export const MESSENGER_CONTRACTS: {
     price: '0.00025',
   }, // zkSync
   10: {
-    address: '0x00',
+    address: '0x8845B2d99995C0D93260b15c46f92d4d34833b21',
     price: '0.00025',
   }, // optimism
   59144: {
@@ -53,7 +53,7 @@ export const MESSENGER_CONTRACTS: {
     price: '0.00025',
   }, // moonbeam
   43114: {
-    address: '0x00',
+    address: '0x3f8e2a5Df911f3e9151423Baa60ca1ef97A04586',
     price: '0.00025',
   }, // avalanche
   250: {
@@ -61,7 +61,7 @@ export const MESSENGER_CONTRACTS: {
     price: '0.00025',
   }, // fantom
   42220: {
-    address: '0x00',
+    address: '0xE49f67b8B7c8F261fc4b594fb545202f6d52D36f',
     price: '0.00025',
   }, // celo
   100: {
@@ -81,15 +81,15 @@ export const MESSENGER_CONTRACTS: {
     price: '0.00025',
   }, // moonriver
   1666600000: {
-    address: '0x00',
+    address: '0x4d9Da68465A5Fa08219B6E870c3FaC5f7FAb8909',
     price: '0.00025',
   }, // harmony
   2222: {
-    address: '0x00',
+    address: '0x1fF5287369E9C449e6eb8ABb891bA1dA3A4684c6',
     price: '0.00025',
   }, // kava
   7777777: {
-    address: '0x00',
+    address: '0x67B9d86A5E80Ba2400122E94C46C8694F2e30b46',
     price: '0.00025',
   }, // zora
   8217: {
@@ -105,7 +105,7 @@ export const MESSENGER_CONTRACTS: {
     price: '0.00025',
   }, // mantle
   122: {
-    address: '0x00',
+    address: '0x3EEB4a04910f1F18B4260cEC48Ecc8be672ff9B8',
     price: '0.00025',
   }, // fuse
   0: {

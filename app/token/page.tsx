@@ -19,6 +19,7 @@ import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
 import { formatEther, parseEther } from 'viem'
 import { useAccount, useSwitchChain } from 'wagmi'
+import { z } from 'zod'
 import {
   ChainList,
   ChainyTrigger,
