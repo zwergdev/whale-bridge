@@ -28,7 +28,6 @@ import * as z from 'zod'
 import {
   ChainList,
   ChainyTrigger,
-  Paper,
 } from '../_components/chainy/chains-popover'
 import { SubmitButton } from '../_components/submit-button'
 import { CHAINS } from '../_utils/chains'
@@ -43,6 +42,7 @@ import {
   useWriteContract,
 } from './_hooks/actions'
 import { getNFTBalance } from './_hooks/nft-scan'
+import { Paper } from '@/components/ui/paper'
 
 export default function BridgePage() {
   const { address, chain } = useAccount()

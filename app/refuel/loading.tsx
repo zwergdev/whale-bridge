@@ -1,7 +1,6 @@
-'use client'
+import { Paper } from '@/components/ui/paper'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Repeat2 } from 'lucide-react'
-import { Paper } from '../_components/chainy/chains-popover'
 
 export default function RefuelLoading() {
   return (
@@ -16,7 +15,7 @@ export default function RefuelLoading() {
                   <Skeleton className="w-[147px] h-[26px]" />
                   <Skeleton className="w-[58px] h-2.5" />
                 </div>
-                <Skeleton className="w-[240px] sm:w-[318px] h-[76px]" />
+                <Skeleton className="w-[240px] sm:w-[318px] h-[54px] sm:h-[76px]" />
               </div>
               <Repeat2 className="stroke-foreground opacity-75 relative md:top-3 top-1" />
               <div className="w-max">
@@ -24,7 +23,7 @@ export default function RefuelLoading() {
                   <Skeleton className="w-[130px] h-[26px]" />
                   <Skeleton className="w-[58px] h-2.5" />
                 </div>
-                <Skeleton className="w-[240px] sm:w-[318px] h-[76px]" />
+                <Skeleton className="w-[240px] sm:w-[318px] h-[54px] sm:h-[76px]" />
               </div>
             </div>
             <div className="flex items-center justify-between w-full mb-2">

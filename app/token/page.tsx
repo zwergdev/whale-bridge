@@ -23,7 +23,6 @@ import { z } from 'zod'
 import {
   ChainList,
   ChainyTrigger,
-  Paper,
   RepeatButton,
 } from '../_components/chainy/chains-popover'
 import { CHAINS } from '../_utils/chains'
@@ -43,6 +42,7 @@ import {
   useGetTokenFee,
   useWriteContract,
 } from './_hooks/actions'
+import { Paper } from '@/components/ui/paper'
 
 export default function TokenPage() {
   const { address, chain, status } = useAccount()

@@ -1,8 +1,7 @@
-'use client'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Paper } from '../_components/chainy/chains-popover'
 import { Repeat2 } from 'lucide-react'
 import { LayerZero } from '@/components/ui/icons'
+import { Paper } from '@/components/ui/paper'
 
 export default function BridgeLoading() {
   return (
@@ -17,12 +16,12 @@ export default function BridgeLoading() {
                   <Skeleton className="w-[147px] h-[26px]" />
                   <Skeleton className="w-[58px] h-3.5" />
                 </div>
-                <Skeleton className="w-[240px] sm:w-[318px] h-[76px]" />
+                <Skeleton className="w-[240px] sm:w-[318px] h-[54px] sm:h-[76px]" />
               </div>
               <Repeat2 className="stroke-foreground opacity-75 relative md:top-3 top-1" />
               <div className="w-max">
                 <Skeleton className="w-[130px] h-[26px] mb-2" />
-                <Skeleton className="w-[240px] sm:w-[318px] h-[76px]" />
+                <Skeleton className="w-[240px] sm:w-[318px] h-[54px] sm:h-[76px]" />
               </div>
             </div>
             <Skeleton className="w-full h-12" />

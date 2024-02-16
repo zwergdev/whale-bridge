@@ -8,7 +8,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Popover } from '@/components/ui/popover'
@@ -25,7 +24,6 @@ import * as z from 'zod'
 import {
   ChainList,
   ChainyTrigger,
-  Paper,
 } from '../_components/chainy/chains-popover'
 import { SubmitButton } from '../_components/submit-button'
 import { CHAINS } from '../_utils/chains'
@@ -36,6 +34,7 @@ import { MAX_REFUEL, SYMBOL_TO_CHAIN } from './_constants'
 import { getRefuelAdapter, refuelOpts } from './_contracts/refuel-contracts'
 import { useEstimateRefuelFee, useWriteContract } from './_hooks/actions'
 import { Prices, fetchPrices } from './_hooks/fetch-prices'
+import { Paper } from '@/components/ui/paper'
 
 export default function RefuelPage() {
   const [prices, setPrices] = useState<Prices>()
