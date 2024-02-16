@@ -33,7 +33,7 @@ export const MESSENGER_CONTRACTS: {
     price: '0.00025',
   }, // scroll
   324: {
-    address: '0x00',
+    address: '0x6bB2D935C58C49228A4639927Cb814e879E2c81a',
     price: '0.00025',
   }, // zkSync
   10: {
