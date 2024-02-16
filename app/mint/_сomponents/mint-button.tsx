@@ -2,7 +2,7 @@
 
 import { MINT_CONTRACTS } from '@/app/mint/_contracts/mint-contracts'
 import { Button } from '@/components/ui/button-new'
-import { useWeb3Modal, useWeb3ModalState } from '@web3modal/wagmi/react'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount, useBalance, useWaitForTransactionReceipt } from 'wagmi'
 import { truncatedToaster } from '../../_utils/truncatedToaster'
 import { mint } from '../_contracts/mint-contracts'
@@ -11,8 +11,7 @@ import { MintedDialog } from './minted-dialog'
 
 export const MintButton = () => {
   const { address, status, chain } = useAccount()
-  const { open } = useWeb3Modal()
-  const { open: isOpen } = useWeb3ModalState()
+  const { openConnectModal, connectModalOpen } = useConnectModal()
   const { data: balance } = useBalance({ address })
 
   const selectedChainId = chain?.id ?? 0
@@ -28,7 +27,7 @@ export const MintButton = () => {
 
   const handleClick = () => {
     if (address) return mintNFT()
-    open({ view: 'Connect' })
+    openConnectModal?.()
   }
 
   const { isLoading, data: waitData } = useWaitForTransactionReceipt({
@@ -49,7 +48,7 @@ export const MintButton = () => {
         className="w-full mb-5"
         onClick={handleClick}
         loading={isLoading || isPending}
-        disabled={isOpen}
+        disabled={connectModalOpen}
       >
         {address ? 'Mint' : 'Connect wallet'}
       </Button>

@@ -1,41 +1,41 @@
 'use client'
-
-import { config, projectId } from '@/app/_providers/config'
+import { RainbowKitProvider, getDefaultConfig } from '@rainbow-me/rainbowkit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { createWeb3Modal } from '@web3modal/wagmi/react'
 import { ReactNode } from 'react'
-import { State, WagmiProvider } from 'wagmi'
-import { chainImages } from './chain-images'
+import { WagmiProvider } from 'wagmi'
+import { chains } from './chain-images'
+
+import { rainbowTheme } from './rainbow-theme'
 
 const queryClient = new QueryClient()
 
+export const projectId = 'c8cb5377bf1b35c1349bb08e2025d352'
+
 if (!projectId) throw new Error('Project ID is not defined')
 
-createWeb3Modal({
-  wagmiConfig: config,
+export const config = getDefaultConfig({
+  appName: 'Whale',
+  appDescription:
+    'Multifunctional Omnichain Solution | Bridge & Refuel Powered by LayerZero',
+  appUrl: 'https://whale-app.com',
+  appIcon: 'https://whale-app.com/icon.png',
   projectId,
-  enableAnalytics: true,
-  chainImages,
-  allWallets: 'HIDE',
-  themeMode: 'dark',
-  themeVariables: {
-    '--w3m-accent': '#09bffb',
-    '--w3m-color-mix': '#0c0a09',
-    '--w3m-color-mix-strength': 30,
-    '--w3m-border-radius-master': '2px',
-  },
+  chains,
+  ssr: true,
 })
 
 export function ContextProvider({
   children,
-  initialState,
 }: {
   children: ReactNode
-  initialState?: State
 }) {
   return (
-    <WagmiProvider config={config} initialState={initialState}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>
+        <RainbowKitProvider modalSize="compact" theme={rainbowTheme}>
+          {children}
+        </RainbowKitProvider>
+      </QueryClientProvider>
     </WagmiProvider>
   )
 }
