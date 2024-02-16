@@ -7,8 +7,8 @@ export default function MintLoading() {
         <h2 className="font-semibold text-4xl mb-2.5">Mint NFT</h2>
         <Skeleton className="w-40 h-6 mb-5" />
         <Skeleton className="mb-10 w-[304px] h-[52px]" />
-        <Skeleton className="w-[500px] h-[72px] mb-20" />
-        <Skeleton className="w-full h-11" />
+        <Skeleton className="w-[500px] h-[72px] mb-12" />
+        <Skeleton className="w-full h-14" />
       </div>
       <Skeleton className="w-[440px] h-[440px]" />
     </div>
