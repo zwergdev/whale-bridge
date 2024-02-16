@@ -327,7 +327,6 @@ export default function RefuelPage() {
                       </span>
                     </div>
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
