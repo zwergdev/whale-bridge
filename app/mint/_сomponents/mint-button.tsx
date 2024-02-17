@@ -1,12 +1,12 @@
 'use client'
 
+import { useWriteContract } from '@/app/_hooks'
 import { MINT_CONTRACTS } from '@/app/mint/_contracts/mint-contracts'
 import { Button } from '@/components/ui/button-new'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount, useBalance, useWaitForTransactionReceipt } from 'wagmi'
 import { truncatedToaster } from '../../_utils/truncatedToaster'
 import { mint } from '../_contracts/mint-contracts'
-import { useWriteContract } from '../_hooks/actions'
 import { MintedDialog } from './minted-dialog'
 
 export const MintButton = () => {

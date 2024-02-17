@@ -25,8 +25,9 @@ import {
   ChainyTrigger,
   RepeatButton,
 } from '../_components/chainy/chains-popover'
+import { useWriteContract } from '../_hooks'
 import { CHAINS } from '../_utils/chains'
-import { TokenSchema } from '../_utils/schemas'
+import { TokenForm, TokenSchema } from '../_utils/schemas'
 import { BalanceIndicator } from '../refuel/_components/balance-indicator'
 import tokenImage from './_assets/token.webp'
 import { InfoHover } from './_components/info-hover'
@@ -40,7 +41,6 @@ import {
   useGetBalance,
   useGetTokenBalance,
   useGetTokenFee,
-  useWriteContract,
 } from './_hooks/actions'
 import { Paper } from '@/components/ui/paper'
 
@@ -77,7 +77,7 @@ export default function TokenPage() {
     setValue('tokenBalance', Number(formatEther(data)))
   }, 500)
 
-  const form = useForm<z.infer<typeof TokenSchema>>({
+  const form = useForm<TokenForm>({
     resolver: zodResolver(TokenSchema),
     defaultValues: {
       tokenBalance: 0,

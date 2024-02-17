@@ -32,7 +32,11 @@ export function ContextProvider({
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider modalSize="compact" theme={rainbowTheme}>
+        <RainbowKitProvider
+          modalSize="compact"
+          locale="en"
+          theme={rainbowTheme}
+        >
           {children}
         </RainbowKitProvider>
       </QueryClientProvider>

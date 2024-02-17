@@ -1,15 +1,15 @@
+import { estimateMessageFeeOpts } from '@/app/messenger/_contracts/messenger-contracts'
 import { useAccount, useReadContract } from 'wagmi'
-import { estimateRefuelFeeOpts } from '../_contracts/refuel-contracts'
 
 export const useEstimateRefuelFee = (
   chainTo: number,
   chainId: number,
-  amount: number,
+  message: string,
 ) => {
   const { address } = useAccount()
 
   const { refetch } = useReadContract(
-    estimateRefuelFeeOpts(chainTo, chainId, address!, amount),
+    estimateMessageFeeOpts(chainTo, chainId, address!, message),
   )
 
   return { refetchFee: refetch }

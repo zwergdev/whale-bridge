@@ -1,24 +1,9 @@
-import { errorToaster } from '@/app/_utils/truncatedToaster'
 import { parseEther } from 'viem'
-import {
-  useAccount,
-  useBalance,
-  useReadContract,
-  useWriteContract as writeContract,
-} from 'wagmi'
+import { useAccount, useBalance, useReadContract } from 'wagmi'
 import {
   estimateBridgeTokenFee,
   getTokenBalance,
 } from '../_contracts/token-contracts'
-
-export const useWriteContract = () =>
-  writeContract({
-    mutation: {
-      onError(error) {
-        errorToaster(error)
-      },
-    },
-  })
 
 export const useGetTokenBalance = (selectedChainId: number) => {
   const { address } = useAccount()
