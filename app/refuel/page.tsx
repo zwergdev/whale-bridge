@@ -8,7 +8,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Popover } from '@/components/ui/popover'
@@ -21,21 +20,21 @@ import { useDebouncedCallback } from 'use-debounce'
 import { formatEther } from 'viem'
 import { parseEther } from 'viem/utils'
 import { useAccount, useBalance, useSwitchChain } from 'wagmi'
-import * as z from 'zod'
 import {
   ChainList,
   ChainyTrigger,
-  Paper,
 } from '../_components/chainy/chains-popover'
 import { SubmitButton } from '../_components/submit-button'
+import { useWriteContract } from '../_hooks'
 import { CHAINS } from '../_utils/chains'
-import { RefuelSchema } from '../_utils/schemas'
+import { RefuelForm, RefuelSchema } from '../_utils/schemas'
 import { BalanceIndicator } from './_components/balance-indicator'
 import { RefueledDialog } from './_components/refueled-dialog'
 import { MAX_REFUEL, SYMBOL_TO_CHAIN } from './_constants'
 import { getRefuelAdapter, refuelOpts } from './_contracts/refuel-contracts'
-import { useEstimateRefuelFee, useWriteContract } from './_hooks/actions'
+import { useEstimateRefuelFee } from './_hooks/actions'
 import { Prices, fetchPrices } from './_hooks/fetch-prices'
+import { Paper } from '@/components/ui/paper'
 
 export default function RefuelPage() {
   const [prices, setPrices] = useState<Prices>()
@@ -77,7 +76,7 @@ export default function RefuelPage() {
     setFee(BigInt(0))
   }, [chain])
 
-  const form = useForm<z.infer<typeof RefuelSchema>>({
+  const form = useForm<RefuelForm>({
     resolver: zodResolver(RefuelSchema),
     defaultValues: {
       amount: 0,
@@ -161,7 +160,7 @@ export default function RefuelPage() {
     return '...'
   }
 
-  async function onSubmit({ chainTo, amount }: z.infer<typeof RefuelSchema>) {
+  async function onSubmit({ chainTo, amount }: RefuelForm) {
     const { data: fee }: any = await refetchFee()
 
     if (!fee)
@@ -226,6 +225,7 @@ export default function RefuelPage() {
                         setIsChainGridView={setIsChainGridView}
                         selectedValue={fields.chainTo}
                         fieldValue={field.value}
+                        isPopoverFROM-
                         onSelect={(value, chainId) => {
                           form.setValue('chainFrom', value)
                           setPopoverFromOpen(false)
