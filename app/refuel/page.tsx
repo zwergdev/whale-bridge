@@ -23,7 +23,6 @@ import { useAccount, useBalance, useSwitchChain } from 'wagmi'
 import {
   ChainList,
   ChainyTrigger,
-  Paper,
 } from '../_components/chainy/chains-popover'
 import { SubmitButton } from '../_components/submit-button'
 import { useWriteContract } from '../_hooks'
@@ -35,6 +34,7 @@ import { MAX_REFUEL, SYMBOL_TO_CHAIN } from './_constants'
 import { getRefuelAdapter, refuelOpts } from './_contracts/refuel-contracts'
 import { useEstimateRefuelFee } from './_hooks/actions'
 import { Prices, fetchPrices } from './_hooks/fetch-prices'
+import { Paper } from '@/components/ui/paper'
 
 export default function RefuelPage() {
   const [prices, setPrices] = useState<Prices>()

@@ -27,7 +27,6 @@ import { useAccount, useBalance, useSwitchChain } from 'wagmi'
 import {
   ChainList,
   ChainyTrigger,
-  Paper,
 } from '../_components/chainy/chains-popover'
 import { SubmitButton } from '../_components/submit-button'
 import { useWriteContract } from '../_hooks'
@@ -42,6 +41,7 @@ import {
   useGetUserNFTIds,
 } from './_hooks/actions'
 import { getNFTBalance } from './_hooks/nft-scan'
+import { Paper } from '@/components/ui/paper'
 
 export default function BridgePage() {
   const { address, chain } = useAccount()
