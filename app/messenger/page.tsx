@@ -126,7 +126,6 @@ export default function MessengerPage() {
                           isPopoverFROM={true}
                           onSelect={(value, chainId) => {
                             form.setValue('chainFrom', value)
-                            console.log(form.watch('chainFrom'))
                             setPopoverFromOpen(false)
                             if (chainId !== chain?.id) switchChain({ chainId })
                           }}

@@ -50,12 +50,12 @@ const selectedChain = (fieldValue: number) => {
     <div className="flex items-center w-full">
       <Image
         src={selectedChain.image}
-        width={28}
-        height={28}
+        width={32}
+        height={32}
         alt="selected-chain-icon"
-        className="w-7 h-7 rounded-full"
+        className="w-8 h-8 rounded-full"
       />
-      <p className="w-full text-lg text-center font-medium">
+      <p className="w-full text-xl text-center font-medium">
         {selectedChain.label}
       </p>
     </div>
