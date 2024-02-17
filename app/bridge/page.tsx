@@ -267,6 +267,7 @@ export default function BridgePage() {
                         isChainGridView={isChainGridView}
                         setIsChainGridView={setIsChainGridView}
                         selectedValue={fields.chainTo}
+                        isPopoverFROM={true}
                         fieldValue={field.value}
                         onSelect={(value, chainId) => {
                           form.setValue('chainFrom', value)

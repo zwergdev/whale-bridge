@@ -1,6 +1,6 @@
 'use client'
 
-import { ChainList } from '@/app/_components/chainy/chains-popover'
+import { ChainList, RepeatButton } from '@/app/_components/chainy/chains-popover'
 import { CHAINS } from '@/app/_utils/chains'
 import { MessengerForm, MessengerSchema } from '@/app/_utils/schemas'
 import { truncatedToaster } from '@/app/_utils/truncatedToaster'
@@ -39,7 +39,7 @@ export default function MessengerPage() {
       message: 'Wow, Whale Messenger is cool! 🐋',
       chainFrom:
         CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
-      chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value, // 102
+      chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value, // 102
     },
   })
   const {
@@ -90,7 +90,7 @@ export default function MessengerPage() {
       <Paper title="MESSENGER">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSendMessage)}>
-            <div className="w-full flex flex-col justify-between items-center md:mb-5 mb-7 gap-5">
+            <div className="w-full flex flex-col justify-between items-center md:mb-5 mb-7 gap-3">
               <FormField
                 control={form.control}
                 name="chainFrom"
@@ -109,6 +109,7 @@ export default function MessengerPage() {
                           setIsChainGridView={setIsChainGridView}
                           selectedValue={fields.chainTo}
                           fieldValue={field.value}
+                          isPopoverFROM={true}
                           onSelect={(value, chainId) => {
                             form.setValue('chainFrom', value)
                             setPopoverFromOpen(false)
@@ -119,6 +120,20 @@ export default function MessengerPage() {
                     </FormControl>
                   </FormItem>
                 )}
+              />
+
+              <RepeatButton
+                onClick={() => {
+                  form.setValue('chainFrom', fields.chainTo)
+                  form.setValue('chainTo', fields.chainFrom)
+
+                  const selectedChain = CHAINS.find(
+                    ({ value }) => value === fields.chainTo,
+                  )
+
+                  if (selectedChain?.chainId)
+                    switchChain({ chainId: selectedChain.chainId })
+                }}
               />
 
               <FormField
@@ -138,7 +153,7 @@ export default function MessengerPage() {
                         <ChainList
                           isChainGridView={isChainGridView}
                           setIsChainGridView={setIsChainGridView}
-                          selectedValue={fields.chainTo}
+                          selectedValue={fields.chainFrom}
                           fieldValue={field.value}
                           onSelect={(value) => {
                             form.setValue('chainTo', value)

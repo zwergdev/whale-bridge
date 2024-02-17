@@ -61,6 +61,7 @@ type ChainListProps = {
   onSelect: (value: number, chainId: number) => void
   disabledChains?: number[]
   isChainGridView: boolean
+  isPopoverFROM?: boolean
   setIsChainGridView: React.Dispatch<React.SetStateAction<boolean>>
 }
 
@@ -71,6 +72,7 @@ const ChainList = ({
   disabledChains,
   setIsChainGridView,
   isChainGridView,
+  isPopoverFROM,
 }: ChainListProps) => {
   return (
     <PopoverContent className="w-80 p-0 bg-transparent border-transparent">
@@ -131,8 +133,8 @@ const ChainList = ({
                       isChainGridView={isChainGridView}
                       disabled={
                         selectedValue === value ||
-                        isDisabled ||
-                        disabledChains?.some((chain) => chain === value)
+                        disabledChains?.some((chain) => chain === value) ||
+                        (!isPopoverFROM && isDisabled)
                       }
                       checked={value === fieldValue}
                       onSelect={() => onSelect(value, chainId)}

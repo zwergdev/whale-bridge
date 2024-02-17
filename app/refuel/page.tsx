@@ -225,6 +225,7 @@ export default function RefuelPage() {
                         setIsChainGridView={setIsChainGridView}
                         selectedValue={fields.chainTo}
                         fieldValue={field.value}
+                        isPopoverFROM-
                         onSelect={(value, chainId) => {
                           form.setValue('chainFrom', value)
                           setPopoverFromOpen(false)

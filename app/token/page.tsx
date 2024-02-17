@@ -202,6 +202,7 @@ export default function TokenPage() {
                           selectedValue={fields.chainTo}
                           disabledChains={[176, 150]}
                           fieldValue={field.value}
+                          isPopoverFROM={true}
                           onSelect={(value, chainId) => {
                             form.setValue('chainFrom', value)
                             setPopoverFromOpen(false)
