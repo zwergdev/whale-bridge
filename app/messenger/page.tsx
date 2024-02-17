@@ -1,6 +1,9 @@
 'use client'
 
-import { ChainList, RepeatButton } from '@/app/_components/chainy/chains-popover'
+import {
+  ChainList,
+  RepeatButton,
+} from '@/app/_components/chainy/chains-popover'
 import { CHAINS } from '@/app/_utils/chains'
 import { MessengerForm, MessengerSchema } from '@/app/_utils/schemas'
 import { truncatedToaster } from '@/app/_utils/truncatedToaster'
@@ -10,7 +13,7 @@ import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAccount, useSwitchChain } from 'wagmi'
 import { Paper } from '@/components/ui/paper'
@@ -33,13 +36,24 @@ export default function MessengerPage() {
 
   const selectedChainId = chain?.id ?? 0
 
+  useEffect(() => {
+    form.setValue(
+      'chainFrom',
+      CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
+    )
+    form.setValue(
+      'chainTo',
+      CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value,
+    )
+  }, [chain])
+
   const form = useForm<MessengerForm>({
     resolver: zodResolver(MessengerSchema),
     defaultValues: {
       message: 'Wow, Whale Messenger is cool! 🐋',
       chainFrom:
         CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
-      chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value, // 102
+      chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value, // 102
     },
   })
   const {
@@ -112,6 +126,7 @@ export default function MessengerPage() {
                           isPopoverFROM={true}
                           onSelect={(value, chainId) => {
                             form.setValue('chainFrom', value)
+                            console.log(form.watch('chainFrom'))
                             setPopoverFromOpen(false)
                             if (chainId !== chain?.id) switchChain({ chainId })
                           }}
