@@ -24,7 +24,7 @@ export const MESSENGER_CONTRACTS: {
     price: '0.30',
   }, // polygon
   42161: {
-    address: '0xA911fc39cB3d057c053918a8B042425d4B9cB6a4',
+    address: '0xC3E787B739fC484275B965060e3dD07Bb87C2C69',
     price: '0.0001',
   }, // arbitrum
   534352: {
@@ -126,7 +126,7 @@ export function sendMessageOpts(chainId: number) {
 function getMessagePayload(message: string, address: string) {
   if (!message || !address) return '0'
 
-  return pack(['uint8', 'string'], [2, message])
+  return pack(['uint8', 'string'], [2, message]).slice(60)
 }
 
 export function getMessageDestination(chainTo: number, chainFrom: number) {

@@ -1,4 +1,4 @@
-import { estimateMessageFeeOpts } from '@/app/messenger/_contracts/messenger-contracts'
+import { estimateMessageFeeOpts } from '../_contracts/messenger-contracts'
 import { useAccount, useReadContract } from 'wagmi'
 
 export const useEstimateRefuelFee = (

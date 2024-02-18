@@ -179,7 +179,7 @@ export default function MessengerPage() {
                           isChainGridView={isChainGridView}
                           setIsChainGridView={setIsChainGridView}
                           selectedValue={fields.chainFrom}
-                          disabledChains={[150]}
+                          disabledChains={[150, 165]}
                           fieldValue={field.value}
                           onSelect={(value) => {
                             form.setValue('chainTo', value)
