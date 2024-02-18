@@ -11,12 +11,13 @@ import { InfoHover } from '@/app/token/_components/info-hover'
 import { Button } from '@/components/ui/button-new'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { Label } from '@/components/ui/label'
+import { Paper } from '@/components/ui/paper'
 import { Textarea } from '@/components/ui/textarea'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { parseEther } from 'viem'
 import { useAccount, useSwitchChain } from 'wagmi'
-import { Paper } from '@/components/ui/paper'
 import { useWriteContract } from '../_hooks'
 import { AddressNetwork } from './_components/address-network'
 import { MessengerDialog } from './_components/messenger-dialog'
@@ -71,7 +72,14 @@ export default function MessengerPage() {
 
   const { writeContractAsync, isPending, data: hash } = useWriteContract()
 
-  async function handleSendMessage({ message, chainTo }: MessengerForm) {
+  async function onMessageSend({ message, chainTo, chainFrom }: MessengerForm) {
+    const isDisabledChainUsed = [150].some(
+      (id) => id === chainFrom || id === chainTo,
+    )
+    if (isDisabledChainUsed)
+      return truncatedToaster('Ooops...', 'This chain is temporary disabled.')
+    // @TODO: remove later logic above
+
     const { data: fee }: any = await refetchFee()
 
     if (!fee)
@@ -84,10 +92,12 @@ export default function MessengerPage() {
 
     const dstChain = CHAINS.find(({ value }) => value === chainTo)?.chainId
 
+    const value: bigint = parseEther(opts.price) + fee[0]
+
     await writeContractAsync({
       ...opts,
       address: opts.address!,
-      value: opts.price + fee[0],
+      value,
       args: [
         message,
         chainTo,
@@ -103,7 +113,7 @@ export default function MessengerPage() {
     <>
       <Paper title="MESSENGER">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSendMessage)}>
+          <form onSubmit={form.handleSubmit(onMessageSend)}>
             <div className="w-full flex flex-col justify-between items-center md:mb-5 mb-7 gap-3">
               <FormField
                 control={form.control}

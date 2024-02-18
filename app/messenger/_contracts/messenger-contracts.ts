@@ -1,5 +1,4 @@
 import { pack } from '@ethersproject/solidity'
-import { parseEther } from 'viem'
 import { messengerABI } from './messenger-abi'
 
 export const MESSENGER_CONTRACTS: {
@@ -117,7 +116,7 @@ export const MESSENGER_CONTRACTS: {
 export function sendMessageOpts(chainId: number) {
   return {
     address: MESSENGER_CONTRACTS[chainId].address,
-    price: parseEther(MESSENGER_CONTRACTS[chainId].price),
+    price: MESSENGER_CONTRACTS[chainId].price,
     abi: messengerABI,
     functionName: 'sendMessage',
     chainId,

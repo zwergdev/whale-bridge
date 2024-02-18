@@ -51,7 +51,7 @@ export const Footer = () => (
         {[
           { icon: <Telegram />, href: 'https://t.me/whale_app_com' },
           { icon: <Twitter />, href: 'https://twitter.com/Whale_app_' },
-          { icon: <Discord />, href: 'https://discord.gg/SPyXDAps' },
+          { icon: <Discord />, href: 'https://discord.gg/FdNZbwY6' },
           {
             icon: <GitBook style={{ width: '24px' }} />,
             href: 'https://whale-app.gitbook.io/whale-book/',
