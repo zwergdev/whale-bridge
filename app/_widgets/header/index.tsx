@@ -16,7 +16,7 @@ export const Header = () => {
             <MobileLogo className="w-11 h-11" />
           </Link>
 
-          <div className="hidden gap-10 lg:flex items-center">
+          <div className="hidden gap-10 xl:flex items-center">
             <Navigation />
           </div>
         </div>
@@ -29,7 +29,7 @@ export const Header = () => {
           }}
         />
 
-        <div className="lg:hidden block">
+        <div className="xl:hidden block">
           <MobileMenu />
         </div>
       </nav>
