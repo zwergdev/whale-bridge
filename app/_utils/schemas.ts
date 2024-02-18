@@ -27,6 +27,6 @@ export type TokenForm = z.infer<typeof TokenSchema>
 export const MessengerSchema = z.object({
   chainFrom: z.number(),
   chainTo: z.number(),
-  message: z.string().min(10).max(140),
+  message: z.string().min(1).max(140),
 })
 export type MessengerForm = z.infer<typeof MessengerSchema>

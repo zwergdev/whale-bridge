@@ -183,7 +183,7 @@ export default function MessengerPage() {
 
             <Label className="leading-10 mt-4 flex items-center">
               Message content
-              <InfoHover desc="Message body. Maximum 140, minimum 10 symbols." />
+              <InfoHover desc="Message body. Maximum 140, minimum 1 symbols." />
             </Label>
             <Textarea
               autoComplete="off"

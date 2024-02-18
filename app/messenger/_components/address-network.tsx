@@ -26,16 +26,20 @@ export const AddressNetwork = ({
   onOpenChange,
 }: AddressNetworkProps) => {
   return (
-    <div className="w-full">
+    <div className="max-[525px]:w-full w-max lg:w-full max-lg:mx-auto">
       <Label className="leading-10 flex items-center">
         {label}
         {info && <InfoHover align="start" desc={info} />}
       </Label>
-      <div className="flex h-10 w-full rounded-md border transition-colors duration-300 border-[#0d3b63]/50 bg-paper pl-3 py-6 text-base font-medium items-center justify-start text-muted-foreground">
-        {address ?? '0x000000000000000000000000000000000000dead'}
-        <div className="w-px h-7 shrink-0 ml-5 opacity-50 mr-3.5 bg-muted-foreground" />
+      <div className="flex h-26 lg:h-10 w-full max-lg:justify-center flex-col lg:flex-row rounded-md border transition-colors duration-300 border-[#0d3b63]/50 bg-paper py-2 lg:pl-3 lg:py-6 text-base font-medium items-center justify-start text-muted-foreground">
+        <p className="text-ellipsis overflow-hidden whitespace-nowrap w-full text-center max-lg:px-5">
+          {address ?? '0x000000000000000000000000000000000000dead'}
+        </p>
+        <div className="w-full lg:w-px h-px lg:h-7 shrink-0 max-lg:mb-2 lg:ml-5 opacity-50 max-lg:mt-2 lg:mr-3.5 bg-muted-foreground" />
         <Popover open={open} onOpenChange={onOpenChange}>
-          <ChainyTrigger selectedValue={fieldValue} />
+          <div className="flex max-lg:w-[250px] w-full">
+            <ChainyTrigger selectedValue={fieldValue} />
+          </div>
           {children}
         </Popover>
       </div>
