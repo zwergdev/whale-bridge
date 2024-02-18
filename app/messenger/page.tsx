@@ -78,6 +78,8 @@ export default function MessengerPage() {
     )
     if (isDisabledChainUsed)
       return truncatedToaster('Ooops...', 'This chain is temporary disabled.')
+    if (chainTo === 126)
+      return truncatedToaster('Ooops...', 'This chain is temporary disabled.')
     // @TODO: remove later logic above
 
     const { data: fee }: any = await refetchFee()
@@ -131,7 +133,7 @@ export default function MessengerPage() {
                         <ChainList
                           isChainGridView={isChainGridView}
                           setIsChainGridView={setIsChainGridView}
-                          disabledChains={[150]}
+                          disabledChains={[150, 126]}
                           selectedValue={fields.chainTo}
                           fieldValue={field.value}
                           isPopoverFROM={true}
@@ -179,7 +181,7 @@ export default function MessengerPage() {
                           isChainGridView={isChainGridView}
                           setIsChainGridView={setIsChainGridView}
                           selectedValue={fields.chainFrom}
-                          disabledChains={[150, 165]}
+                          disabledChains={[150, 165, 111, 110]}
                           fieldValue={field.value}
                           onSelect={(value) => {
                             form.setValue('chainTo', value)
