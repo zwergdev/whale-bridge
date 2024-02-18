@@ -14,7 +14,10 @@ const grotesk = Space_Grotesk({
   subsets: ['latin'],
 })
 
-const title = 'Whale'
+const title = {
+  template: '%s | Whale',
+  default: 'Whale', // a default is required when creating a template
+}
 const description =
   'Multifunctional Omnichain Solution | Bridge & Refuel Powered by LayerZero'
 
@@ -22,16 +25,16 @@ export const metadata: Metadata = {
   title,
   description,
   openGraph: {
-    title,
+    title: 'Whale',
     description,
     url: 'https://whale-app.com',
-    siteName: title,
+    siteName: 'Whale',
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title,
+    title: 'Whale',
     description,
   },
 }
