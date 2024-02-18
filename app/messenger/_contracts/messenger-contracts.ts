@@ -24,7 +24,7 @@ export const MESSENGER_CONTRACTS: {
     price: '0.30',
   }, // polygon
   42161: {
-    address: '0xAc07AA4524C245167d6971BE9482cE18EED26E08',
+    address: '0xA911fc39cB3d057c053918a8B042425d4B9cB6a4',
     price: '0.0001',
   }, // arbitrum
   534352: {

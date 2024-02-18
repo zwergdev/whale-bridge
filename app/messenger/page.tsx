@@ -78,7 +78,7 @@ export default function MessengerPage() {
     )
     if (isDisabledChainUsed)
       return truncatedToaster('Ooops...', 'This chain is temporary disabled.')
-    if (chainTo === 126)
+    if (chainFrom === 126)
       return truncatedToaster('Ooops...', 'This chain is temporary disabled.')
     // @TODO: remove later logic above
 
