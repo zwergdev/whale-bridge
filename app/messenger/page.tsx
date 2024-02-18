@@ -121,6 +121,7 @@ export default function MessengerPage() {
                         <ChainList
                           isChainGridView={isChainGridView}
                           setIsChainGridView={setIsChainGridView}
+                          disabledChains={[176, 150]}
                           selectedValue={fields.chainTo}
                           fieldValue={field.value}
                           isPopoverFROM={true}
@@ -168,6 +169,7 @@ export default function MessengerPage() {
                           isChainGridView={isChainGridView}
                           setIsChainGridView={setIsChainGridView}
                           selectedValue={fields.chainFrom}
+                          disabledChains={[176, 150]}
                           fieldValue={field.value}
                           onSelect={(value) => {
                             form.setValue('chainTo', value)
