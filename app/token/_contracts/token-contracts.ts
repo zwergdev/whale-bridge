@@ -106,6 +106,10 @@ export const TOKEN_CONTRACTS: {
     address: '0x8D29dCf73F6e3613CBB461049Bc735B48FeF1Ca9',
     price: 0.147,
   }, // fuse
+  1088: {
+    address: '0x84f4c0A290B5607fee0f2A1CDe5348540fecF6A1',
+    price: 0.0000035,
+  }, // metis
   0: {
     address: '0x00',
     price: 0.0000035,

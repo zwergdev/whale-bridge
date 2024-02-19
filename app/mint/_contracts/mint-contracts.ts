@@ -107,6 +107,10 @@ export const MINT_CONTRACTS: {
     address: '0x82d5a068ba58ad31c419275474333B8696B3641d',
     price: 3.70866,
   }, // fuse
+  1088: {
+    address: '0x82d5a068ba58ad31c419275474333B8696B3641d',
+    price: 0.0001,
+  }, // metis
   0: {
     address: '0x00',
     price: 0,

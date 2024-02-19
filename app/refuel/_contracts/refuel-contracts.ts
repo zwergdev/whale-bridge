@@ -82,6 +82,9 @@ const REFUEL_CONTRACTS: {
   122: {
     address: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
   }, // fuse
+  1088: {
+    address: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
+  },
   0: {
     address: '0x00',
   },

@@ -6,7 +6,7 @@ export type Prices = {
 
 export const fetchPrices = async (): Promise<Prices> => {
   const res = await fetch(
-    'https://api.coingecko.com/api/v3/simple/price?ids=ethereum,avalanche-2,xdai,binancecoin,harmony,matic-network,meter,moonriver,moonbeam,celo,fantom,kava,klay-token,coredaoorg,fuse-network-token,mantle&vs_currencies=usd',
+    'https://api.coingecko.com/api/v3/simple/price?ids=ethereum,avalanche-2,xdai,binancecoin,harmony,matic-network,meter,moonriver,moonbeam,celo,fantom,kava,klay-token,coredaoorg,fuse-network-token,mantle,metis-token&vs_currencies=usd',
     {
       referrerPolicy: 'same-origin',
       next: { revalidate: 3600 * 12 },
@@ -21,52 +21,55 @@ export const fetchPrices = async (): Promise<Prices> => {
 
   return {
     'avalanche-2': {
-      usd: 40.29,
+      usd: 39.49,
     },
     binancecoin: {
-      usd: 350.37,
+      usd: 353.15,
     },
     celo: {
-      usd: 0.765148,
+      usd: 0.777237,
     },
     coredaoorg: {
-      usd: 0.606886,
+      usd: 0.781624,
     },
     ethereum: {
-      usd: 2869.08,
+      usd: 2945.07,
     },
     fantom: {
-      usd: 0.421111,
+      usd: 0.427329,
     },
     'fuse-network-token': {
-      usd: 0.066976,
+      usd: 0.067429,
     },
     harmony: {
-      usd: 0.01815574,
+      usd: 0.01920083,
     },
     kava: {
-      usd: 0.763224,
+      usd: 0.782225,
     },
     'klay-token': {
-      usd: 0.225577,
+      usd: 0.233599,
     },
     mantle: {
-      usd: 0.78745,
+      usd: 0.758976,
     },
     'matic-network': {
-      usd: 0.992935,
+      usd: 0.992973,
     },
     meter: {
-      usd: 2.74,
+      usd: 3.18,
+    },
+    'metis-token': {
+      usd: 89.88,
     },
     moonbeam: {
-      usd: 0.442975,
+      usd: 0.462886,
     },
     moonriver: {
-      usd: 23.72,
+      usd: 24.24,
     },
     xdai: {
-      usd: 1.002,
+      usd: 1.032,
     },
   }
 }

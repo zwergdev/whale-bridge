@@ -1,10 +1,8 @@
-type DisabledPairs = {
-  [key: number]: number[]
-}
-
-export const DISABLED_PAIRS: DisabledPairs = {
+export const DISABLED_PAIRS: { [key: number]: number[] } = {
   165: [125, 138, 116, 126, 167, 145, 153, 195], // zk
-  176: [125, 138, 150, 158, 116, 167, 145, 177, 153, 195, 202, 214, 126, 183, 181], // meter
+  176: [
+    125, 138, 150, 158, 116, 167, 145, 177, 153, 195, 202, 214, 126, 183, 181,
+  ], // meter
   116: [
     165, 176, 125, 138, 150, 175, 158, 167, 153, 177, 145, 181, 195, 202, 184,
     214,
@@ -39,10 +37,10 @@ export const DISABLED_PAIRS: DisabledPairs = {
   138: [
     165, 176, 175, 158, 116, 167, 126, 153, 177, 184, 183, 181, 195, 202, 214,
   ], // fuse
+  151: [], // metis
 }
 
 // ALL CHAINS - remove which are connected
-
 // [
 //   176, // meter
 //   116, // harmony
@@ -69,4 +67,5 @@ export const DISABLED_PAIRS: DisabledPairs = {
 //   109, // polygon
 //   106, // avalanche
 //   102, // bsc
+//   151, // metis
 // ]

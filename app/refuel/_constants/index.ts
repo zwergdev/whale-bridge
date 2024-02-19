@@ -25,6 +25,7 @@ export const MAX_REFUEL: { [chainId: number]: number } = {
   5000: 10, // mantle
   1116: 0.25, // core-dao
   122: 0.05, // fuse
+  1088: 1, // metis
   10042220: 1, // gnosis --> celo
 }
 
@@ -45,4 +46,5 @@ export const SYMBOL_TO_CHAIN: { [key: string]: string } = {
   CORE: 'coredaoorg',
   FUSE: 'fuse-network-token',
   MNT: 'mantle',
+  METIS: 'metis-token',
 }
