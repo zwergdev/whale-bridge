@@ -1,6 +1,6 @@
 'use client'
 import { Popover } from '@/components/ui/popover'
-import { ChainyTrigger } from '../_components/chainy/chains-popover'
+import { ChainList, ChainyTrigger } from '../_components/chainy/chains-popover'
 import { useState } from 'react'
 import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { useForm } from 'react-hook-form'
@@ -15,7 +15,6 @@ import {
 } from './_components/papers-information'
 import { SubmitButton } from '../_components/submit-button'
 import { PaperGasStation } from './_components/paper-gas-station'
-import { ChainListGas } from './_components/chain-popover-gas-station'
 import Image from 'next/image'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
@@ -61,7 +60,8 @@ export default function GasStationPage() {
                       onOpenChange={setIsPopoverOpen}
                     >
                       <ChainyTrigger selectedValue={field.value} />
-                      <ChainListGas
+                      <ChainList
+                        isPopoverFROM={true}
                         isChainGridView={isChainGridView}
                         setIsChainGridView={setIsChainGridView}
                         selectedValue={field.value}
