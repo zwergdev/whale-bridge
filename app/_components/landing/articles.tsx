@@ -111,7 +111,7 @@ export const Articles = () => {
               height={273}
               quality={100}
               alt="mint-picture"
-              className="relative right-2 bottom-2 rounded-lg"
+              className="relative right-1.5 bottom-1.5 rounded-lg"
             />
           </div>
           <Image
@@ -150,8 +150,8 @@ export const Articles = () => {
           <Image
             src={refuel}
             placeholder="blur"
-            width={300}
-            height={300}
+            width={320}
+            height={320}
             alt="mint-picture"
             className="absolute -top-32 -right-32 rounded-lg -z-10 lg:block hidden"
           />

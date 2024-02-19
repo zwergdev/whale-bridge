@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Popover } from '@/components/ui/popover'
+import { Paper } from '@/components/ui/paper'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -20,14 +20,11 @@ import { useDebouncedCallback } from 'use-debounce'
 import { formatEther, parseEther } from 'viem'
 import { useAccount, useSwitchChain } from 'wagmi'
 import { z } from 'zod'
-import {
-  ChainList,
-  ChainyTrigger,
-  Paper,
-  RepeatButton,
-} from '../_components/chainy/chains-popover'
+import { ChainPopover } from '../_components/chainy'
+import { RepeatButton } from '../_components/chainy/chains-popover'
+import { useWriteContract } from '../_hooks'
 import { CHAINS } from '../_utils/chains'
-import { TokenSchema } from '../_utils/schemas'
+import { TokenForm, TokenSchema } from '../_utils/schemas'
 import { BalanceIndicator } from '../refuel/_components/balance-indicator'
 import tokenImage from './_assets/token.webp'
 import { InfoHover } from './_components/info-hover'
@@ -41,16 +38,12 @@ import {
   useGetBalance,
   useGetTokenBalance,
   useGetTokenFee,
-  useWriteContract,
 } from './_hooks/actions'
 
 export default function TokenPage() {
   const { address, chain, status } = useAccount()
   const { switchChain } = useSwitchChain()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [popoverFromOpen, setPopoverFromOpen] = useState(false)
-  const [isChainGridView, setIsChainGridView] = useState(false)
-  const [popoverToOpen, setPopoverToOpen] = useState(false)
   const [isLayerZeroTx, setIsLayerZeroTx] = useState(false)
 
   const { balance, symbol } = useGetBalance()
@@ -77,7 +70,7 @@ export default function TokenPage() {
     setValue('tokenBalance', Number(formatEther(data)))
   }, 500)
 
-  const form = useForm<z.infer<typeof TokenSchema>>({
+  const form = useForm<TokenForm>({
     resolver: zodResolver(TokenSchema),
     defaultValues: {
       tokenBalance: 0,
@@ -105,7 +98,7 @@ export default function TokenPage() {
     bridgeAmount,
     tokenBalance,
   }: z.infer<typeof TokenSchema>) {
-    const isDisabledChainUsed = [176, 150, 158].some(
+    const isDisabledChainUsed = [176, 150].some(
       (id) => id === chainFrom || id === chainTo,
     )
     if (isDisabledChainUsed)
@@ -145,7 +138,7 @@ export default function TokenPage() {
   }
 
   async function onSubmitClaim() {
-    const isDisabledChainUsed = [176, 150, 158].some(
+    const isDisabledChainUsed = [176, 150].some(
       (id) => id === fields.chainFrom || id === fields.chainTo,
     )
     if (isDisabledChainUsed)
@@ -155,9 +148,11 @@ export default function TokenPage() {
 
     const amount = fields.amount
 
-    const amou = Number(amount) * TOKEN_CONTRACTS[selectedChainId].price!
+    const sum = (
+      Number(amount) * TOKEN_CONTRACTS[selectedChainId].price!
+    ).toFixed(10)
 
-    const value = parseEther(amou.toString())
+    const value = parseEther(sum)
 
     const opts = claimToken(selectedChainId)
 
@@ -189,24 +184,16 @@ export default function TokenPage() {
                       <BalanceIndicator balance={balance} symbol={symbol} />
                     </FormLabel>
                     <FormControl>
-                      <Popover
-                        open={popoverFromOpen}
-                        onOpenChange={setPopoverFromOpen}
-                      >
-                        <ChainyTrigger selectedValue={field.value} />
-                        <ChainList
-                          isChainGridView={isChainGridView}
-                          setIsChainGridView={setIsChainGridView}
-                          selectedValue={fields.chainTo}
-                          disabledChains={[176, 150, 158]}
-                          fieldValue={field.value}
-                          onSelect={(value, chainId) => {
-                            form.setValue('chainFrom', value)
-                            setPopoverFromOpen(false)
-                            if (chainId !== chain?.id) switchChain({ chainId })
-                          }}
-                        />
-                      </Popover>
+                      <ChainPopover
+                        selectedValue={fields.chainTo}
+                        disabledChains={[176, 150]}
+                        fieldValue={field.value}
+                        isPopoverFROM={true}
+                        onSelect={(value, chainId) => {
+                          form.setValue('chainFrom', value)
+                          if (chainId !== chain?.id) switchChain({ chainId })
+                        }}
+                      />
                     </FormControl>
                   </FormItem>
                 )}
@@ -230,24 +217,15 @@ export default function TokenPage() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Transfer to</FormLabel>
-                    <Popover
-                      open={popoverToOpen}
-                      onOpenChange={setPopoverToOpen}
-                    >
-                      <ChainyTrigger selectedValue={field.value} />
-                      <ChainList
-                        isChainGridView={isChainGridView}
-                        setIsChainGridView={setIsChainGridView}
-                        selectedValue={fields.chainFrom}
-                        disabledChains={[176, 150, 165, 158]}
-                        fieldValue={field.value}
-                        onSelect={(value) => {
-                          form.setValue('chainTo', value)
-                          form.setValue('amount', '')
-                          setPopoverToOpen(false)
-                        }}
-                      />
-                    </Popover>
+                    <ChainPopover
+                      selectedValue={fields.chainFrom}
+                      disabledChains={[176, 150, 165]}
+                      fieldValue={field.value}
+                      onSelect={(value) => {
+                        form.setValue('chainTo', value)
+                        form.setValue('amount', '')
+                      }}
+                    />
                   </FormItem>
                 )}
               />

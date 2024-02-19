@@ -14,7 +14,8 @@ export const errorToaster = (error: Error) => {
   if (
     error?.message.includes('insufficient balance') ||
     error?.message.includes('The total cost') ||
-    error?.message.includes('OutOfFund')
+    error?.message.includes('OutOfFund') ||
+    error?.message.includes('not enough native for fees')
   )
     return toast('Error occurred!', {
       description: 'Insufficient balance.',

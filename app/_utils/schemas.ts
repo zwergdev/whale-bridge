@@ -6,12 +6,14 @@ export const BridgeSchema = z.object({
   tokenId: z.string(),
   nfts: z.array(z.string()),
 })
+export type BridgeForm = z.infer<typeof BridgeSchema>
 
 export const RefuelSchema = z.object({
   chainFrom: z.number(),
   chainTo: z.number(),
   amount: z.coerce.number().positive(),
 })
+export type RefuelForm = z.infer<typeof RefuelSchema>
 
 export const TokenSchema = z.object({
   chainFrom: z.number(),
@@ -32,3 +34,11 @@ export const GasStationSchema = z.object({
     }),
   ),
 })
+export type TokenForm = z.infer<typeof TokenSchema>
+
+export const MessengerSchema = z.object({
+  chainFrom: z.number(),
+  chainTo: z.number(),
+  message: z.string().min(1).max(140),
+})
+export type MessengerForm = z.infer<typeof MessengerSchema>

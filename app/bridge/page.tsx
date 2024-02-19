@@ -1,6 +1,5 @@
 'use client'
 
-import { RepeatButton } from '@/app/_components/chainy/chains-popover'
 import { BalanceIndicator } from '@/app/refuel/_components/balance-indicator'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,7 +10,7 @@ import {
   FormLabel,
 } from '@/components/ui/form'
 import { LayerZero } from '@/components/ui/icons'
-import { Popover } from '@/components/ui/popover'
+import { Paper } from '@/components/ui/paper'
 import {
   Select,
   SelectContent,
@@ -24,15 +23,12 @@ import { ChevronsUpDown, Loader } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAccount, useBalance, useSwitchChain } from 'wagmi'
-import * as z from 'zod'
-import {
-  ChainList,
-  ChainyTrigger,
-  Paper,
-} from '../_components/chainy/chains-popover'
+import { ChainPopover } from '../_components/chainy'
+import { RepeatButton } from '../_components/chainy/chains-popover'
 import { SubmitButton } from '../_components/submit-button'
+import { useWriteContract } from '../_hooks'
 import { CHAINS } from '../_utils/chains'
-import { BridgeSchema } from '../_utils/schemas'
+import { BridgeForm, BridgeSchema } from '../_utils/schemas'
 import { truncatedToaster } from '../_utils/truncatedToaster'
 import { BridgedDialog } from './_components/bridged-dialog'
 import { bridgeOpts } from './_contracts/bridge-contracts'
@@ -40,18 +36,14 @@ import {
   useEstimateBridgeFee,
   useGetModernUserNFTIds,
   useGetUserNFTIds,
-  useWriteContract,
 } from './_hooks/actions'
 import { getNFTBalance } from './_hooks/nft-scan'
 
 export default function BridgePage() {
   const { address, chain } = useAccount()
   const { switchChain } = useSwitchChain()
-  const [popoverFromOpen, setPopoverFromOpen] = useState(false)
-  const [popoverToOpen, setPopoverToOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isLoadingNFT, setIsLoadingNFT] = useState(true)
-  const [isChainGridView, setIsChainGridView] = useState(false)
   const { data: _balanceFrom } = useBalance({
     address,
     query: { enabled: !!address },
@@ -131,7 +123,7 @@ export default function BridgePage() {
     )
   }, [chain])
 
-  const form = useForm<z.infer<typeof BridgeSchema>>({
+  const form = useForm<BridgeForm>({
     resolver: zodResolver(BridgeSchema),
     defaultValues: {
       chainFrom:
@@ -166,7 +158,7 @@ export default function BridgePage() {
     return nfts
   }
 
-  async function bridgeNFT({ chainTo, tokenId }: z.infer<typeof BridgeSchema>) {
+  async function bridgeNFT({ chainTo, tokenId }: BridgeForm) {
     if (tokenId === '0') {
       const nfts = await refetchNFT()
 
@@ -256,26 +248,15 @@ export default function BridgePage() {
                         symbol={_balanceFrom?.symbol}
                       />
                     </FormLabel>
-                    <Popover
-                      open={popoverFromOpen}
-                      onOpenChange={setPopoverFromOpen}
-                    >
-                      <ChainyTrigger
-                        disabled={isPending}
-                        selectedValue={field.value}
-                      />
-                      <ChainList
-                        isChainGridView={isChainGridView}
-                        setIsChainGridView={setIsChainGridView}
-                        selectedValue={fields.chainTo}
-                        fieldValue={field.value}
-                        onSelect={(value, chainId) => {
-                          form.setValue('chainFrom', value)
-                          setPopoverFromOpen(false)
-                          if (chainId !== chain?.id) switchChain({ chainId })
-                        }}
-                      />
-                    </Popover>
+                    <ChainPopover
+                      selectedValue={fields.chainTo}
+                      isPopoverFROM={true}
+                      fieldValue={field.value}
+                      onSelect={(value, chainId) => {
+                        form.setValue('chainFrom', value)
+                        if (chainId !== chain?.id) switchChain({ chainId })
+                      }}
+                    />
                   </FormItem>
                 )}
               />
@@ -301,26 +282,14 @@ export default function BridgePage() {
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
                     <FormLabel>Transfer to</FormLabel>
-                    <Popover
-                      open={popoverToOpen}
-                      onOpenChange={setPopoverToOpen}
-                    >
-                      <ChainyTrigger
-                        disabled={isPending}
-                        selectedValue={field.value}
-                      />
-                      <ChainList
-                        isChainGridView={isChainGridView}
-                        setIsChainGridView={setIsChainGridView}
-                        disabledChains={[165]}
-                        selectedValue={fields.chainFrom}
-                        fieldValue={field.value}
-                        onSelect={(value) => {
-                          form.setValue('chainTo', value)
-                          setPopoverToOpen(false)
-                        }}
-                      />
-                    </Popover>
+                    <ChainPopover
+                      disabledChains={[165]}
+                      selectedValue={fields.chainFrom}
+                      fieldValue={field.value}
+                      onSelect={(value) => {
+                        form.setValue('chainTo', value)
+                      }}
+                    />
                   </FormItem>
                 )}
               />

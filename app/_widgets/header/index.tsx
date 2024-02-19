@@ -1,7 +1,8 @@
 import { MobileLogo } from '@/components/ui/icons'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 import Link from 'next/link'
-import { Navigation } from './navigation'
 import { MobileMenu } from './mobile-menu'
+import { Navigation } from './navigation'
 
 export const Header = () => {
   return (
@@ -15,14 +16,20 @@ export const Header = () => {
             <MobileLogo className="w-11 h-11" />
           </Link>
 
-          <div className="hidden gap-10 lg:flex items-center">
+          <div className="hidden gap-10 xl:flex items-center">
             <Navigation />
           </div>
         </div>
 
-        <w3m-button />
+        <ConnectButton
+          chainStatus="icon"
+          accountStatus={{
+            smallScreen: 'address',
+            largeScreen: 'full',
+          }}
+        />
 
-        <div className="lg:hidden block">
+        <div className="xl:hidden block">
           <MobileMenu />
         </div>
       </nav>
