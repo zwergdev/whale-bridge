@@ -10,7 +10,7 @@ import {
   FormLabel,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Popover } from '@/components/ui/popover'
+import { Paper } from '@/components/ui/paper'
 import { Slider } from '@/components/ui/slider'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Fuel, Loader } from 'lucide-react'
@@ -20,10 +20,7 @@ import { useDebouncedCallback } from 'use-debounce'
 import { formatEther } from 'viem'
 import { parseEther } from 'viem/utils'
 import { useAccount, useBalance, useSwitchChain } from 'wagmi'
-import {
-  ChainList,
-  ChainyTrigger,
-} from '../_components/chainy/chains-popover'
+import { ChainPopover } from '../_components/chainy'
 import { SubmitButton } from '../_components/submit-button'
 import { useWriteContract } from '../_hooks'
 import { CHAINS } from '../_utils/chains'
@@ -34,16 +31,12 @@ import { MAX_REFUEL, SYMBOL_TO_CHAIN } from './_constants'
 import { getRefuelAdapter, refuelOpts } from './_contracts/refuel-contracts'
 import { useEstimateRefuelFee } from './_hooks/actions'
 import { Prices, fetchPrices } from './_hooks/fetch-prices'
-import { Paper } from '@/components/ui/paper'
 
 export default function RefuelPage() {
   const [prices, setPrices] = useState<Prices>()
   const [fee, setFee] = useState<bigint>()
-  const [popoverFromOpen, setPopoverFromOpen] = useState(false)
-  const [popoverToOpen, setPopoverToOpen] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isFeeLoading, setIsFeeLoading] = useState(false)
-  const [isChainGridView, setIsChainGridView] = useState(false)
   const { switchChain } = useSwitchChain()
   const { address, status, chain } = useAccount()
   const { data: _balanceFrom } = useBalance({
@@ -215,24 +208,15 @@ export default function RefuelPage() {
                         symbol={_balanceFrom?.symbol}
                       />
                     </FormLabel>
-                    <Popover
-                      open={popoverFromOpen}
-                      onOpenChange={setPopoverFromOpen}
-                    >
-                      <ChainyTrigger selectedValue={field.value} />
-                      <ChainList
-                        isChainGridView={isChainGridView}
-                        setIsChainGridView={setIsChainGridView}
-                        selectedValue={fields.chainTo}
-                        fieldValue={field.value}
-                        isPopoverFROM-
-                        onSelect={(value, chainId) => {
-                          form.setValue('chainFrom', value)
-                          setPopoverFromOpen(false)
-                          if (chainId !== chain?.id) switchChain({ chainId })
-                        }}
-                      />
-                    </Popover>
+                    <ChainPopover
+                      selectedValue={fields.chainTo}
+                      fieldValue={field.value}
+                      isPopoverFROM-
+                      onSelect={(value, chainId) => {
+                        form.setValue('chainFrom', value)
+                        if (chainId !== chain?.id) switchChain({ chainId })
+                      }}
+                    />
                   </FormItem>
                 )}
               />
@@ -262,25 +246,16 @@ export default function RefuelPage() {
                         symbol={_balanceTo?.symbol}
                       />
                     </FormLabel>
-                    <Popover
-                      open={popoverToOpen}
-                      onOpenChange={setPopoverToOpen}
-                    >
-                      <ChainyTrigger selectedValue={field.value} />
-                      <ChainList
-                        isChainGridView={isChainGridView}
-                        setIsChainGridView={setIsChainGridView}
-                        selectedValue={fields.chainFrom}
-                        disabledChains={[165]}
-                        fieldValue={field.value}
-                        onSelect={(value) => {
-                          form.setValue('chainTo', value)
-                          form.setValue('amount', 0)
-                          setPopoverToOpen(false)
-                          setFee(BigInt(0))
-                        }}
-                      />
-                    </Popover>
+                    <ChainPopover
+                      selectedValue={fields.chainFrom}
+                      disabledChains={[165]}
+                      fieldValue={field.value}
+                      onSelect={(value) => {
+                        form.setValue('chainTo', value)
+                        form.setValue('amount', 0)
+                        setFee(BigInt(0))
+                      }}
+                    />
                   </FormItem>
                 )}
               />

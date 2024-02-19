@@ -20,20 +20,53 @@ export const fetchPrices = async (): Promise<Prices> => {
   if (res.ok) return await res.json()
 
   return {
-    'avalanche-2': { usd: 40.55 },
-    binancecoin: { usd: 322.48 },
-    celo: { usd: 0.718308 },
-    coredao: { usd: 1.14 },
-    ethereum: { usd: 2523.47 },
-    fantom: { usd: 0.394379 },
-    harmony: { usd: 0.01550056 },
-    kava: { usd: 0.720684 },
-    'klay-token': { usd: 0.220454 },
-    mantle: { usd: 0.663829 },
-    'matic-network': { usd: 0.853697 },
-    meter: { usd: 2.93 },
-    moonbeam: { usd: 0.383465 },
-    moonriver: { usd: 23.14 },
-    xdai: { usd: 1.004 },
+    'avalanche-2': {
+      usd: 40.29,
+    },
+    binancecoin: {
+      usd: 350.37,
+    },
+    celo: {
+      usd: 0.765148,
+    },
+    coredaoorg: {
+      usd: 0.606886,
+    },
+    ethereum: {
+      usd: 2869.08,
+    },
+    fantom: {
+      usd: 0.421111,
+    },
+    'fuse-network-token': {
+      usd: 0.066976,
+    },
+    harmony: {
+      usd: 0.01815574,
+    },
+    kava: {
+      usd: 0.763224,
+    },
+    'klay-token': {
+      usd: 0.225577,
+    },
+    mantle: {
+      usd: 0.78745,
+    },
+    'matic-network': {
+      usd: 0.992935,
+    },
+    meter: {
+      usd: 2.74,
+    },
+    moonbeam: {
+      usd: 0.442975,
+    },
+    moonriver: {
+      usd: 23.72,
+    },
+    xdai: {
+      usd: 1.002,
+    },
   }
 }

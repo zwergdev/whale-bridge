@@ -55,7 +55,7 @@ const ChainyTrigger = ({ disabled, selectedValue }: ChainyTriggerProps) => {
   )
 }
 
-type ChainListProps = {
+export type ChainListProps = {
   selectedValue: number
   fieldValue: number
   onSelect: (value: number, chainId: number) => void
