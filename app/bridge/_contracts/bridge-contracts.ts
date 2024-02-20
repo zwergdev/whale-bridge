@@ -81,6 +81,9 @@ export const BRIDGE_CONTRACTS: {
   122: {
     address: '0x82d5a068ba58ad31c419275474333B8696B3641d',
   }, // fuse
+  1088: {
+    address: '0x82d5a068ba58ad31c419275474333B8696B3641d',
+  }, // metis
   0: {
     address: '0x00',
   },

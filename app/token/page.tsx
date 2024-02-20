@@ -232,7 +232,7 @@ export default function TokenPage() {
             </div>
 
             <Label className="leading-10 flex items-center">
-              Claim BWHL
+              Claim $BWHL
               <InfoHover desc="$BWHL has an unlimited supply, the token is not intended for trading." />
             </Label>
             <div className="flex items-center justify-between w-full gap-3 sm:flex-row flex-col">
@@ -268,7 +268,7 @@ export default function TokenPage() {
               <Label className="flex items-end justify-between mb-2">
                 <div className="flex items-end justify-start gap-5">
                   <div className="flex items-center">
-                    Bridge BWHL
+                    Bridge $BWHL
                     <InfoHover desc="Bridge $BWHL to other chain." />
                   </div>
 

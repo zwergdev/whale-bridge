@@ -58,6 +58,8 @@ const calculateMinted = (next: number, chainId: number) => {
       return next - 11500000
     case 122:
       return next - 12000000
+    case 1088:
+      return next - 12500000
     default:
       return 0
   }
