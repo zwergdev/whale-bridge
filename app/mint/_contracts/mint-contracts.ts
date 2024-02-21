@@ -111,6 +111,10 @@ export const MINT_CONTRACTS: {
     address: '0x82d5a068ba58ad31c419275474333B8696B3641d',
     price: 0.0026,
   }, // metis
+  148: {
+    address: '0x84f4c0A290B5607fee0f2A1CDe5348540fecF6A1',
+    price: 10,
+  }, // shimmer-evm
   0: {
     address: '0x00',
     price: 0,

@@ -140,6 +140,12 @@ export const CHAINS = [
     image: 'chain-logo/metis.svg',
     chainId: 1088,
   },
+  {
+    label: 'ShimmerEVM',
+    value: 230,
+    image: 'chain-logo/shimmer-evm.svg',
+    chainId: 148
+  },
 ]
 
 export const TX_LINK: { [chainId: number]: string } = {
@@ -169,4 +175,5 @@ export const TX_LINK: { [chainId: number]: string } = {
   1116: 'scan.coredao.org', // core-dao
   122: 'explorer.fuse.io', // fuse
   1088: 'explorer.metis.io', // metis
+  148: 'explorer.evm.shimmer.network', // shimmer-evm
 }

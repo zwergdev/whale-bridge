@@ -26,6 +26,7 @@ export const MAX_REFUEL: { [chainId: number]: number } = {
   1116: 0.25, // core-dao
   122: 0.05, // fuse
   1088: 1, // metis
+  148: 1, // shimmer-evm
   10042220: 1, // gnosis --> celo
 }
 
@@ -47,4 +48,5 @@ export const SYMBOL_TO_CHAIN: { [key: string]: string } = {
   FUSE: 'fuse-network-token',
   MNT: 'mantle',
   METIS: 'metis-token',
+  SMR: 'shimmer',
 }

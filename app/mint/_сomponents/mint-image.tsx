@@ -28,6 +28,7 @@ import polygon from '@/public/nft/nft-polygon.webp'
 import scroll from '@/public/nft/nft-scroll.webp'
 import zk from '@/public/nft/nft-zk.webp'
 import zora from '@/public/nft/nft-zora.webp'
+import shimmer from '@/public/nft/nft-shimmer.webp'
 import Image, { StaticImageData } from 'next/image'
 import { useAccount } from 'wagmi'
 
@@ -59,6 +60,7 @@ const IMAGES: { [key: number]: StaticImageData } = {
   1116: core,
   122: fuse,
   1088: metis,
+  148: shimmer,
 }
 
 type MintImageProps = {
