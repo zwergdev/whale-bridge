@@ -84,7 +84,10 @@ const REFUEL_CONTRACTS: {
   }, // fuse
   1088: {
     address: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
-  },
+  }, // metis
+  148: {
+    address: '0x82d5a068ba58ad31c419275474333B8696B3641d',
+  }, // shimmer-emv
   0: {
     address: '0x00',
   },

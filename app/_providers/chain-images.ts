@@ -24,6 +24,7 @@ import polygonLogo from '@/public/chain-logo/polygon.svg'
 import scrollLogo from '@/public/chain-logo/scroll.svg'
 import zkLogo from '@/public/chain-logo/zk.svg'
 import zoraLogo from '@/public/chain-logo/zora.svg'
+import shimmerLogo from '@/public/chain-logo/shimmer-evm.svg'
 import {
   arbitrum,
   arbitrumNova,
@@ -51,6 +52,7 @@ import {
   zkSync,
   zora,
   metis,
+  shimmer,
 } from 'wagmi/chains'
 
 const wagmiChains = [
@@ -79,7 +81,8 @@ const wagmiChains = [
   coreDao,
   fuse,
   mantle,
-  metis
+  metis,
+  shimmer,
 ]
 
 const chainImages = {
@@ -108,7 +111,8 @@ const chainImages = {
   1116: coreLogo.src,
   5000: mantleLogo.src,
   122: fuseLogo.src,
-  1088: metisLogo.src
+  1088: metisLogo.src,
+  148: shimmerLogo.src,
 }
 
 export const chains = wagmiChains.map((chain) => {

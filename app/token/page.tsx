@@ -186,7 +186,7 @@ export default function TokenPage() {
                     <FormControl>
                       <ChainPopover
                         selectedValue={fields.chainTo}
-                        disabledChains={[176, 150]}
+                        disabledChains={[176, 150, 230]}
                         fieldValue={field.value}
                         isPopoverFROM={true}
                         onSelect={(value, chainId) => {
@@ -219,7 +219,7 @@ export default function TokenPage() {
                     <FormLabel>Transfer to</FormLabel>
                     <ChainPopover
                       selectedValue={fields.chainFrom}
-                      disabledChains={[176, 150, 165]}
+                      disabledChains={[176, 150, 165, 230]}
                       fieldValue={field.value}
                       onSelect={(value) => {
                         form.setValue('chainTo', value)

@@ -140,7 +140,8 @@ export const getNFTBalance = async (
     chainId === 1116 ||
     chainId === 5000 ||
     chainId === 122 ||
-    chainId === 1088
+    chainId === 1088 || 
+    chainId === 148
   )
     return []
 
