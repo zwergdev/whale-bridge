@@ -42,10 +42,12 @@ export default function MessengerPage() {
       'chainFrom',
       CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
     )
-    form.setValue(
-      'chainTo',
-      CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value,
-    )
+    if (watch('chainTo') === undefined || watch('chainTo') === 102) {
+      form.setValue(
+        'chainTo',
+        CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value,
+      )
+    }
   }, [chain])
 
   const form = useForm<MessengerForm>({
