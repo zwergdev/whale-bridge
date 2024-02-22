@@ -31,6 +31,7 @@ import { MAX_REFUEL, SYMBOL_TO_CHAIN } from './_constants'
 import { getRefuelAdapter, refuelOpts } from './_contracts/refuel-contracts'
 import { useEstimateRefuelFee } from './_hooks/actions'
 import { Prices, fetchPrices } from './_hooks/fetch-prices'
+import { useCheckChainTo } from '../_hooks/checkChainTo'
 
 export default function RefuelPage() {
   const [prices, setPrices] = useState<Prices>()
@@ -61,12 +62,7 @@ export default function RefuelPage() {
       'chainFrom',
       CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
     )
-    if (watch('chainTo') === undefined || watch('chainTo') === 102) {
-      form.setValue(
-        'chainTo',
-        CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value,
-      )
-    }
+    useCheckChainTo({ setValue: form.setValue, watch, chain: chain?.id })
     form.setValue('amount', 0)
     setFee(BigInt(0))
   }, [chain])
