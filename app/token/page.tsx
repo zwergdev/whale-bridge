@@ -39,6 +39,7 @@ import {
   useGetTokenBalance,
   useGetTokenFee,
 } from './_hooks/actions'
+import { useCheckChainTo } from '../_hooks/checkChainTo'
 
 export default function TokenPage() {
   const { address, chain, status } = useAccount()
@@ -55,10 +56,8 @@ export default function TokenPage() {
       'chainFrom',
       CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
     )
-    form.setValue(
-      'chainTo',
-      CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value,
-    )
+    useCheckChainTo({ setValue: form.setValue, watch, chain: chain?.id })
+
     debounceTokenBalance(1)
     setValue('bridgeAmount', undefined)
   }, [chain])

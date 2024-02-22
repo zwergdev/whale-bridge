@@ -26,6 +26,7 @@ import {
   sendMessageOpts,
 } from './_contracts/messenger-contracts'
 import { useEstimateRefuelFee } from './_hooks/actions'
+import { useCheckChainTo } from '../_hooks/checkChainTo'
 
 export default function MessengerPage() {
   const { switchChain } = useSwitchChain()
@@ -42,10 +43,7 @@ export default function MessengerPage() {
       'chainFrom',
       CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
     )
-    form.setValue(
-      'chainTo',
-      CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value,
-    )
+    useCheckChainTo({ setValue: form.setValue, watch, chain: chain?.id })
   }, [chain])
 
   const form = useForm<MessengerForm>({
