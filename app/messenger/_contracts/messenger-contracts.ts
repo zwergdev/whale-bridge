@@ -114,7 +114,7 @@ export const MESSENGER_CONTRACTS: {
   148: {
     address: '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08',
     price: '0.00025'
-  },
+  }, // shimmer-evm
   0: {
     address: '0x00',
     price: '0.00025',

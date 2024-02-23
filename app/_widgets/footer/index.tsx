@@ -9,7 +9,7 @@ import { GitBook } from '@/components/ui/icons/git-book'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { cloneElement } from 'react'
-import { Navigation } from '../header/navigation'
+import { FooterNavigation } from './footer-navigation'
 
 export const Footer = () => (
   <footer className="max-w-full mx-auto w-full text-foreground flex flex-col pb-4">
@@ -18,16 +18,6 @@ export const Footer = () => (
         <Link href="/">
           <MobileLogo className="w-11 h-11" />
         </Link>
-        <div className="hidden lg:flex items-center gap-4 lg:gap-12">
-          <Navigation isFooter />
-          <Link
-            target="_blank"
-            href="https://layerzeroscan.com/protocol/whale"
-            className="hover:text-primary transition-colors duration-300"
-          >
-            LayerZero.Scan
-          </Link>
-        </div>
       </nav>
       <Link
         href="https://layerzero.network/"
@@ -38,12 +28,12 @@ export const Footer = () => (
       </Link>
     </div>
 
-    <Separator className="lg:my-4 my-4 bg-popover" />
-    <div className="flex flex-col lg:hidden">
-      <div className="flex w-full sm:gap-10 gap-5 items-center justify-center font-medium flex-wrap lg:hidden">
-        <Navigation isFooter />
+    <Separator className="mt-4 mb-3 bg-popover" />
+    <div className="flex flex-col">
+      <div className="flex w-full lg:gap-10 gap-5 container items-center justify-start font-medium text-sm flex-wrap">
+        <FooterNavigation />
       </div>
-      <Separator className="my-4 bg-popover" />
+      <Separator className="mb-4 mt-3 bg-popover" />
     </div>
 
     <div className="container flex justify-between items-center">
