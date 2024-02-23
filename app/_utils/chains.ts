@@ -144,7 +144,7 @@ export const CHAINS = [
     label: 'ShimmerEVM',
     value: 230,
     image: 'chain-logo/shimmer-evm.svg',
-    chainId: 148
+    chainId: 148,
   },
 ]
 
