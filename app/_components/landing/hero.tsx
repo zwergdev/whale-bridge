@@ -23,9 +23,6 @@ export const Hero = () => {
           </div>
 
           <h1 className="text-foreground opacity-80 max-w-screen-sm md:text-2xl sm:text-xl text-lg font-semibold lg:text-left text-center">
-            {/* Welcome to Whale, your multifunctional omnichain solution platform
-            for seamless Web3 experiences. Mint NFTs in a Flash, Top Up Crypto
-            Gas Instantly, and Bridge Assets Seamlessly. */}
             A multifunctional omnichain solution powered by LayerZero. Mint &
             Bridge NFTs and Tokens, Refuel Gas, Send Messages.
           </h1>
