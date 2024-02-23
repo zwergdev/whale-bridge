@@ -3,6 +3,7 @@
 import { TableCell } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
 import { Copy, CopyCheck } from 'lucide-react'
+import Link from 'next/link'
 import { useState } from 'react'
 import { convert } from '../utils'
 
@@ -22,13 +23,13 @@ export const ContractCell = ({
     <TableCell className="last-of-type:text-right">
       {address ? (
         <div className="flex items-center justify-center gap-2">
-          <a
+          <Link
             href={`https://${explorer}/address/${address}`}
-            referrerPolicy="no-referrer"
+            target="_blank"
             className="hover:underline"
           >
             {convert(address)}
-          </a>
+          </Link>
 
           <button
             type="button"
