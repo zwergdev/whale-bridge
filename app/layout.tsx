@@ -6,6 +6,7 @@ import '@rainbow-me/rainbowkit/styles.css'
 import { Analytics } from '@vercel/analytics/react'
 import type { Metadata } from 'next'
 import { Space_Grotesk } from 'next/font/google'
+import { headers } from 'next/headers'
 import { ContextProvider } from './_providers/web3'
 import './globals.css'
 
@@ -47,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`bg-background ${grotesk.className}`}>
-        <ContextProvider>
+        <ContextProvider cookie={headers().get('cookie') ?? ''}>
           <div className="flex flex-col w-full items-center justify-center min-h-screen relative overflow-hidden">
             <WhaleBg className="absolute -z-10 left-[-435px] top-28 rotate-[35deg]" />
             <WhaleBg className="absolute -z-10 right-[-247px] top-36 scale-x-[-1] w-[757px] h-auto sm:block hidden" />
