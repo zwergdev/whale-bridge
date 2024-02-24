@@ -73,9 +73,9 @@ export const Articles = () => {
       <Article
         title="Mint NFT"
         bio={[
-          'Experience lightning fast NFT creation without compromising on quality.',
-          'Enjoy competitive pricing and transparent fees, ensuring value for every masterpiece minted.',
-          'Tailor your NFTs with ease, offering a personalized touch to your digital assets.',
+          'Experience lightning-fast NFT creation on 25+ networks.',
+          'Enjoy competitive pricing and transparent fees.',
+          'Send your NFT to one of 25 networks using Whale Bridge.',
         ]}
         button={{ link: '/mint', text: 'Mint NFT' }}
       >
@@ -96,9 +96,9 @@ export const Articles = () => {
         title="Bridge"
         revert
         bio={[
-          'Seamlessly bridge assets across different blockchain networks, expanding your reach and opportunities.',
-          'Benefit from robust security protocols, ensuring the safe passage of your assets during the bridging process.',
-          'Receive dedicated assistance in navigating the complexities of asset bridging, making your journey hassle-free.',
+          'Seamlessly bridge NFTs across 25+ networks, expanding your reach and opportunities.',
+          'Benefit from robust LayerZero Network, ensuring the safe passage of your assets during the bridging process.',
+          'Easily select a specific NFT from your wallet to bridge without manual entry.',
         ]}
         button={{ link: '/bridge', text: 'Bridge' }}
       >
@@ -129,9 +129,9 @@ export const Articles = () => {
       <Article
         title="Gas Refuel"
         bio={[
-          'Refuel your cryptocurrency instantly, eliminating delays in your Web3 activities',
-          'Choose from a range of gas options, optimizing transaction speed and cost to suit your preferences.',
-          'Effortlessly manage your gas funds with our intuitive dashboard, keeping you in control.',
+          'Conveniently send a small amount for transaction commission to one of 25 networks.',
+          'Use Gas Refuel for easy access to all supported networks.',
+          'Top up other networks with zero commission and guaranteed success.',
         ]}
         button={{ link: '/refuel', text: 'Refuel' }}
       >
