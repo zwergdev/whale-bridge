@@ -94,7 +94,7 @@ export const contracts: {
     image: 'moonbeam.svg',
     mint: '0xd709e73c5213Fd291d0BfA55A7D934B741398d96',
     refuel: '0xb3dd9b6Cd0f14f921E21094c213de746ceE4a2bC',
-    token: '0x4c95919db6a972bca8f6c1962f01fe703cc81b04',
+    token: '0x4C95919db6A972bCa8F6C1962F01fE703Cc81b04',
     messenger: '0x32756fa5e963Ae1E6F506579fc2867aDA7a73121',
   },
   {
@@ -157,7 +157,7 @@ export const contracts: {
     image: 'moonriver.svg',
     mint: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
     refuel: '0x82d5a068ba58ad31c419275474333B8696B3641d',
-    token: '0x67b9d86a5e80ba2400122e94c46c8694f2e30b46',
+    token: '0x67B9d86A5E80Ba2400122E94C46C8694F2e30b46',
     messenger: '0x51e1cdA8313AA908fC7a324D7059f48Cb21181A5',
   },
   {
@@ -165,7 +165,7 @@ export const contracts: {
     chain: 'Harmony',
     image: 'harmony.svg',
     mint: '0x36314E3fd0Ff6243e971814613fe73A78f29085E',
-    refuel: '0xedc03c234882fa785e7084b2c7e13bc8b7b6a4e3',
+    refuel: '0xeDc03C234882FA785e7084B2C7E13BC8b7B6a4e3',
     token: '0x9C59217728FE8F03bA72388208C736B11FD5e1E1',
     messenger: '0x4d9Da68465A5Fa08219B6E870c3FaC5f7FAb8909',
   },
