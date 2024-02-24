@@ -25,6 +25,7 @@ const description =
 export const metadata: Metadata = {
   title,
   description,
+  metadataBase: new URL('https://whale-app.com'),
   openGraph: {
     title: 'Whale',
     description,
