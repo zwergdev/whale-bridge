@@ -26,7 +26,7 @@ export const TokenSchema = z.object({
 export const GasStationSchema = z.object({
   chainFrom: z.number(),
   // selectChain: z.array(z.number())
-  selectedChain: z.array(
+  selectedChains: z.array(
     z.object({
       chain: z.string(),
       chainId: z.number(),

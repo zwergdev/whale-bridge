@@ -15,12 +15,8 @@ import {
 } from './_components/papers-information'
 import { SubmitButton } from '../_components/submit-button'
 import { PaperGasStation } from './_components/paper-gas-station'
-import Image from 'next/image'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Input } from '@/components/ui/input'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { Separator } from '@/components/ui/separator'
-import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
+import { GasAmount } from './_components/gas-amount'
 
 export default function GasStationPage() {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
@@ -33,20 +29,31 @@ export default function GasStationPage() {
     defaultValues: {
       chainFrom:
         CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
-      selectedChain: [],
+      selectedChains: [],
     },
   })
 
   const { watch, setValue } = form
-  const arraySelectedChains = watch('selectedChain')
+
+  function onSubmit(data: z.infer<typeof GasStationSchema>) {
+    toast('You submit this values:', {
+      description: (
+        <pre className="bg-paper p-4 ">
+          <code className="text-white w-full">
+            {JSON.stringify(data, null, 2)}
+          </code>
+        </pre>
+      ),
+    })
+  }
 
   return (
-    <section className="w-full max-w-screen-xl min-h-[calc(100vh-150px)] flex flex-col justify-center">
+    <section className="w-full max-w-screen-xl min-h-[calc(100vh+110px)] sm:h-screen flex flex-col justify-center">
       <h1 className="text-4xl">Gas Station</h1>
       <Form {...form}>
-        <form className="flex w-full">
-          <div className="flex w-full gap-5">
-            <PaperGasStation width="w-[400px]">
+        <form className="flex w-full" onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="flex flex-col max-lg:items-center lg:flex-row w-full gap-5">
+            <PaperGasStation width="w-full sm:w-[400px]">
               <FormField
                 control={form.control}
                 name="chainFrom"
@@ -76,114 +83,21 @@ export default function GasStationPage() {
                   </FormItem>
                 )}
               />
-              <PaperSelectedChain selectedChain={arraySelectedChains} />
-              <PaperAmount totalAmount={0} />
+              <PaperSelectedChain selectedChains={watch('selectedChains')} />
+              <PaperAmount selectedChains={watch('selectedChains')} />
               <SubmitButton disabled={false} loading={false}>
                 Gas
               </SubmitButton>
             </PaperGasStation>
-            <PaperGasStation width="w-9/12">
+            <PaperGasStation width="w-full sm:w-9/12">
               <FormField
                 control={form.control}
-                name="selectedChain"
-                render={({ field }) => (
-                  <FormItem>
-                    <ScrollArea className="h-96">
-                      <div className="w-full h-auto flex flex-col gap-4 px-5 pt-3">
-                        {CHAINS.map(({ label, image, value }, index) => (
-                          <>
-                            <div
-                              className="flex w-full justify-between items-center"
-                              key={index}
-                            >
-                              <div className="w-max flex items-center">
-                                <Checkbox
-                                  checked={
-                                    !!arraySelectedChains.find(
-                                      ({ chainId }) => chainId === value,
-                                    )
-                                  }
-                                  onCheckedChange={() => {
-                                    if (
-                                      !arraySelectedChains.find(
-                                        ({ chainId }) => chainId === value,
-                                      )
-                                    ) {
-                                      return setValue('selectedChain', [
-                                        ...arraySelectedChains,
-                                        {
-                                          chainId: value,
-                                          chain: label,
-                                        },
-                                      ])
-                                    }
-                                    if (
-                                      arraySelectedChains.find(
-                                        ({ chainId }) => chainId === value,
-                                      )
-                                    ) {
-                                      return setValue('selectedChain', [
-                                        ...arraySelectedChains.filter(
-                                          ({ chainId }) => chainId !== value,
-                                        ),
-                                      ])
-                                    }
-                                  }}
-                                />
-                                <Image
-                                  src={image}
-                                  width={35}
-                                  height={35}
-                                  alt="chain-image"
-                                  className="rounded-full mx-2"
-                                />
-                                <span className="text-lg">{label}</span>
-                              </div>
-                              <div className="flex items-center">
-                                <Input
-                                  className="h-3 max-w-36 mr-3"
-                                  placeholder="Amount"
-                                  type="number"
-                                  onChange={(e) => {
-                                    setValue(
-                                      'selectedChain',
-                                      arraySelectedChains.map((obj) =>
-                                        obj.chainId === value
-                                          ? {
-                                              ...obj,
-                                              amount: Number(e.target.value),
-                                            }
-                                          : obj,
-                                      ),
-                                    )
-                                  }}
-                                />
-                                <Button
-                                  size="sm"
-                                  onClick={() => {
-                                    setValue(
-                                      'selectedChain',
-                                      arraySelectedChains.map((obj) =>
-                                        obj.chainId === value
-                                          ? {
-                                              ...obj,
-                                              amount: 10000,
-                                            }
-                                          : obj,
-                                      ),
-                                    )
-                                  }}
-                                >
-                                  MAX
-                                </Button>
-                              </div>
-                            </div>
-                            <Separator />
-                          </>
-                        ))}
-                      </div>
-                    </ScrollArea>
-                  </FormItem>
+                name="selectedChains"
+                render={() => (
+                  <GasAmount
+                    setValue={setValue}
+                    selectedChains={watch('selectedChains')}
+                  />
                 )}
               />
             </PaperGasStation>
