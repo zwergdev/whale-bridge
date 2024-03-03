@@ -6,7 +6,7 @@ export type Prices = {
 
 export const fetchPrices = async (): Promise<Prices> => {
   const res = await fetch(
-    'https://api.coingecko.com/api/v3/simple/price?ids=ethereum,avalanche-2,xdai,binancecoin,harmony,matic-network,meter,moonriver,moonbeam,celo,fantom,kava,klay-token,coredaoorg,fuse-network-token,mantle&vs_currencies=usd',
+    'https://api.coingecko.com/api/v3/simple/price?ids=ethereum,avalanche-2,xdai,binancecoin,harmony,matic-network,meter,moonriver,moonbeam,celo,fantom,kava,klay-token,coredaoorg,fuse-network-token,mantle,metis-token,shimmer&vs_currencies=usd',
     {
       referrerPolicy: 'same-origin',
       next: { revalidate: 3600 * 12 },
@@ -20,53 +20,23 @@ export const fetchPrices = async (): Promise<Prices> => {
   if (res.ok) return await res.json()
 
   return {
-    'avalanche-2': {
-      usd: 40.29,
-    },
-    binancecoin: {
-      usd: 350.37,
-    },
-    celo: {
-      usd: 0.765148,
-    },
-    coredaoorg: {
-      usd: 0.606886,
-    },
-    ethereum: {
-      usd: 2869.08,
-    },
-    fantom: {
-      usd: 0.421111,
-    },
-    'fuse-network-token': {
-      usd: 0.066976,
-    },
-    harmony: {
-      usd: 0.01815574,
-    },
-    kava: {
-      usd: 0.763224,
-    },
-    'klay-token': {
-      usd: 0.225577,
-    },
-    mantle: {
-      usd: 0.78745,
-    },
-    'matic-network': {
-      usd: 0.992935,
-    },
-    meter: {
-      usd: 2.74,
-    },
-    moonbeam: {
-      usd: 0.442975,
-    },
-    moonriver: {
-      usd: 23.72,
-    },
-    xdai: {
-      usd: 1.002,
-    },
+    'avalanche-2': { usd: 36.72 },
+    binancecoin: { usd: 368.49 },
+    celo: { usd: 0.710108 },
+    coredaoorg: { usd: 0.607305 },
+    ethereum: { usd: 2906.63 },
+    fantom: { usd: 0.396291 },
+    'fuse-network-token': { usd: 0.066719 },
+    harmony: { usd: 0.01780552 },
+    kava: { usd: 0.758906 },
+    'klay-token': { usd: 0.217448 },
+    mantle: { usd: 0.702472 },
+    'matic-network': { usd: 0.922479 },
+    meter: { usd: 2.82 },
+    'metis-token': { usd: 84.14 },
+    moonbeam: { usd: 0.421003 },
+    moonriver: { usd: 22.53 },
+    shimmer: { usd: 0.02276118 },
+    xdai: { usd: 1.009 },
   }
 }

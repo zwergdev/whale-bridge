@@ -10,6 +10,8 @@ import {
 import Link from 'next/link'
 import { TX_LINK } from '../../_utils/chains'
 import { MintImage } from './mint-image'
+import { X } from '@/components/ui/icons'
+import { useEffect, useState } from 'react'
 
 type MintedDialogProps = {
   hash?: string
@@ -18,11 +20,24 @@ type MintedDialogProps = {
 }
 
 export const MintedDialog = ({ open, hash, chainId }: MintedDialogProps) => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (open) setIsOpen(true)
+  }, [open])
+
   return (
-    <AlertDialog open={open}>
+    <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>You've successfully minted WHL!</AlertDialogTitle>
+          <AlertDialogTitle className="flex items-center justify-between">
+            <span>You've successfully minted WHL!</span>{' '}
+            <X
+              className="w-5 h-5 cursor-pointer"
+              onClick={() => setIsOpen((prev) => !prev)}
+            />
+          </AlertDialogTitle>
           <AlertDialogDescription className="relative">
             <div className="flex gap-4 items-center">
               <MintImage size={100} />
@@ -34,7 +49,7 @@ export const MintedDialog = ({ open, hash, chainId }: MintedDialogProps) => {
                   href={`https://${TX_LINK[chainId]}/tx/${hash}`}
                   className="text-foreground underline"
                 >
-                  {`${TX_LINK[chainId]}/tx/${hash}`}
+                  {`${TX_LINK[chainId]}`}
                 </Link>
               </div>
             </div>

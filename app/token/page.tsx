@@ -39,6 +39,7 @@ import {
   useGetTokenBalance,
   useGetTokenFee,
 } from './_hooks/actions'
+import { useCheckChainTo } from '../_hooks/checkChainTo'
 
 export default function TokenPage() {
   const { address, chain, status } = useAccount()
@@ -55,10 +56,8 @@ export default function TokenPage() {
       'chainFrom',
       CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
     )
-    form.setValue(
-      'chainTo',
-      CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value,
-    )
+    useCheckChainTo({ setValue: form.setValue, watch, chain: chain?.id })
+
     debounceTokenBalance(1)
     setValue('bridgeAmount', undefined)
   }, [chain])
@@ -186,7 +185,7 @@ export default function TokenPage() {
                     <FormControl>
                       <ChainPopover
                         selectedValue={fields.chainTo}
-                        disabledChains={[176, 150]}
+                        disabledChains={[176, 150, 230]}
                         fieldValue={field.value}
                         isPopoverFROM={true}
                         onSelect={(value, chainId) => {
@@ -219,7 +218,7 @@ export default function TokenPage() {
                     <FormLabel>Transfer to</FormLabel>
                     <ChainPopover
                       selectedValue={fields.chainFrom}
-                      disabledChains={[176, 150, 165]}
+                      disabledChains={[176, 150, 165, 230]}
                       fieldValue={field.value}
                       onSelect={(value) => {
                         form.setValue('chainTo', value)
@@ -232,7 +231,7 @@ export default function TokenPage() {
             </div>
 
             <Label className="leading-10 flex items-center">
-              Claim BWHL
+              Claim $BWHL
               <InfoHover desc="$BWHL has an unlimited supply, the token is not intended for trading." />
             </Label>
             <div className="flex items-center justify-between w-full gap-3 sm:flex-row flex-col">
@@ -268,7 +267,7 @@ export default function TokenPage() {
               <Label className="flex items-end justify-between mb-2">
                 <div className="flex items-end justify-start gap-5">
                   <div className="flex items-center">
-                    Bridge BWHL
+                    Bridge $BWHL
                     <InfoHover desc="Bridge $BWHL to other chain." />
                   </div>
 

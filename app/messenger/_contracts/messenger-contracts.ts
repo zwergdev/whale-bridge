@@ -107,6 +107,14 @@ export const MESSENGER_CONTRACTS: {
     address: '0x3EEB4a04910f1F18B4260cEC48Ecc8be672ff9B8',
     price: '4.17',
   }, // fuse
+  1088: {
+    address: '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08',
+    price: '0.0033',
+  }, // metis
+  148: {
+    address: '0xa0d013b84FBAeFF5AbFc92A412a44572382dCA08',
+    price: '0.00025'
+  }, // shimmer-evm
   0: {
     address: '0x00',
     price: '0.00025',

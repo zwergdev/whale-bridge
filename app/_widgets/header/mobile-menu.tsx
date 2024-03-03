@@ -20,7 +20,7 @@ export const MobileMenu = () => {
           <Link href="/" onClick={() => setOpen(false)}>
             <MobileLogo className="w-11 h-11" />
           </Link>
-          <Navigation isFooter onClick={() => setOpen(false)} />
+          <Navigation disableBefore onClick={() => setOpen(false)} />
         </div>
       </SheetContent>
     </Sheet>

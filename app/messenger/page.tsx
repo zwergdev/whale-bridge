@@ -26,6 +26,7 @@ import {
   sendMessageOpts,
 } from './_contracts/messenger-contracts'
 import { useEstimateRefuelFee } from './_hooks/actions'
+import { useCheckChainTo } from '../_hooks/checkChainTo'
 
 export default function MessengerPage() {
   const { switchChain } = useSwitchChain()
@@ -42,10 +43,7 @@ export default function MessengerPage() {
       'chainFrom',
       CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
     )
-    form.setValue(
-      'chainTo',
-      CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value,
-    )
+    useCheckChainTo({ setValue: form.setValue, watch, chain: chain?.id })
   }, [chain])
 
   const form = useForm<MessengerForm>({
@@ -133,7 +131,7 @@ export default function MessengerPage() {
                         <ChainList
                           isChainGridView={isChainGridView}
                           setIsChainGridView={setIsChainGridView}
-                          disabledChains={[150, 126]}
+                          disabledChains={[150, 126, 126]}
                           selectedValue={fields.chainTo}
                           fieldValue={field.value}
                           isPopoverFROM={true}
@@ -181,7 +179,7 @@ export default function MessengerPage() {
                           isChainGridView={isChainGridView}
                           setIsChainGridView={setIsChainGridView}
                           selectedValue={fields.chainFrom}
-                          disabledChains={[150, 165, 111, 110]}
+                          disabledChains={[150, 165, 111, 110, 126]}
                           fieldValue={field.value}
                           onSelect={(value) => {
                             form.setValue('chainTo', value)

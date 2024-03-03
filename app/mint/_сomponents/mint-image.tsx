@@ -18,6 +18,7 @@ import defaultImage from '@/public/nft/nft-l0.webp'
 import linea from '@/public/nft/nft-linea.webp'
 import mantle from '@/public/nft/nft-mantle.webp'
 import meter from '@/public/nft/nft-meter.webp'
+import metis from '@/public/nft/nft-metis.webp'
 import moonbeam from '@/public/nft/nft-moonbeam.webp'
 import moonriver from '@/public/nft/nft-moonriver.webp'
 import opbnb from '@/public/nft/nft-opbnb.webp'
@@ -27,6 +28,7 @@ import polygon from '@/public/nft/nft-polygon.webp'
 import scroll from '@/public/nft/nft-scroll.webp'
 import zk from '@/public/nft/nft-zk.webp'
 import zora from '@/public/nft/nft-zora.webp'
+import shimmer from '@/public/nft/nft-shimmer.webp'
 import Image, { StaticImageData } from 'next/image'
 import { useAccount } from 'wagmi'
 
@@ -57,6 +59,8 @@ const IMAGES: { [key: number]: StaticImageData } = {
   5000: mantle,
   1116: core,
   122: fuse,
+  1088: metis,
+  148: shimmer,
 }
 
 type MintImageProps = {
