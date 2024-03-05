@@ -49,7 +49,7 @@ export default function GasStationPage() {
 
   return (
     <section className="w-full max-w-screen-xl min-h-[calc(100vh+110px)] sm:h-screen flex flex-col justify-center">
-      <h1 className="text-4xl">Gas Station</h1>
+      <h1 className="text-4xl font-semibold">Gas Station</h1>
       <Form {...form}>
         <form className="flex w-full" onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col max-lg:items-center lg:flex-row w-full gap-5">

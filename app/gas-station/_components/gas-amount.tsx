@@ -20,10 +20,7 @@ export const GasAmount = ({
 }) => {
   const MAX_AMOUNT_GAS = 100
 
-  function selectChainHandle({
-    value,
-    label,
-  }: { value: number; label: string }) {
+  function selectChainHandle(value: number, label: string) {
     if (!selectedChains.find(({ chainId }) => chainId === value)) {
       return setValue('selectedChains', [
         ...selectedChains,
@@ -39,6 +36,31 @@ export const GasAmount = ({
       ])
     }
   }
+
+  function maxAmountHandle(value: number, label: string) {
+    if (!selectedChains.find(({ chainId }) => chainId === value)) {
+      return setValue('selectedChains', [
+        ...selectedChains,
+        {
+          chainId: value,
+          chain: label,
+          amount: MAX_AMOUNT_GAS,
+        },
+      ])
+    }
+    return setValue(
+      'selectedChains',
+      selectedChains.map((obj) =>
+        obj.chainId === value
+          ? {
+              ...obj,
+              amount: MAX_AMOUNT_GAS,
+            }
+          : obj,
+      ),
+    )
+  }
+
   return (
     <FormItem>
       <ScrollArea className="h-96">
@@ -54,7 +76,7 @@ export const GasAmount = ({
                     checked={
                       !!selectedChains.find(({ chainId }) => chainId === value)
                     }
-                    onCheckedChange={() => selectChainHandle({ value, label })}
+                    onCheckedChange={() => selectChainHandle(value, label)}
                   />
                   <Image
                     src={image}
@@ -67,7 +89,7 @@ export const GasAmount = ({
                 </div>
                 <div className="flex max-sm:w-full max-sm:justify-between items-center">
                   <Input
-                    className="h-1 sm:h-3 sm:max-w-36 mr-3"
+                    className="py-5 sm:h-3 sm:max-w-36 mr-3"
                     placeholder="Amount"
                     type="number"
                     value={
@@ -92,19 +114,8 @@ export const GasAmount = ({
                   />
                   <Button
                     size="sm"
-                    onClick={() => {
-                      setValue(
-                        'selectedChains',
-                        selectedChains.map((obj) =>
-                          obj.chainId === value
-                            ? {
-                                ...obj,
-                                amount: MAX_AMOUNT_GAS,
-                              }
-                            : obj,
-                        ),
-                      )
-                    }}
+                    className="h-4 py-5"
+                    onClick={() => maxAmountHandle(value, label)}
                   >
                     MAX
                   </Button>

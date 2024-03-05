@@ -42,7 +42,7 @@ export const PaperSelectedChain = ({
         ) : (
           selectedChains.map(({ chain, amount }, index) => (
             <div key={index} className="flex items-center justify-between">
-              <span>{chain}</span>
+              <span className="text-primary">{chain}</span>
               <span>{amount ? amount : '0'}</span>
             </div>
           ))
