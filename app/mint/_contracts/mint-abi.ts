@@ -11,6 +11,25 @@ export const mintABI = [
   },
   {
     inputs: [],
+    name: 'nextMintId',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'uint16', name: '_srcChainId', type: 'uint16' },
+      { internalType: 'bytes', name: '_srcAddress', type: 'bytes' },
+      { internalType: 'uint64', name: '_nonce', type: 'uint64' },
+      { internalType: 'bytes', name: '_payload', type: 'bytes' },
+    ],
+    name: 'nonblockingLzReceive',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'mint',
     outputs: [],
     stateMutability: 'payable',
