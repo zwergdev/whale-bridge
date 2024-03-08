@@ -21,12 +21,12 @@ const ROADMAP = [
     done: true,
   },
   {
-    title: 'Now',
-    now: true,
+    title: 'Gas Station',
+    done: true,
   },
   {
-    title: 'Gas Station',
-    done: false,
+    title: 'Now',
+    now: true,
   },
 ]
 

@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import Image from 'next/image'
+import { inputAmountHandle, maxAmountHandle, selectChainHandle } from './utils'
 
 export const GasAmount = ({
   selectedChains,
@@ -18,52 +19,9 @@ export const GasAmount = ({
   }[]
   setValue: any
 }) => {
-  const MAX_AMOUNT_GAS = 100
-
-  function selectChainHandle(value: number, label: string) {
-    if (!selectedChains.find(({ chainId }) => chainId === value)) {
-      return setValue('selectedChains', [
-        ...selectedChains,
-        {
-          chainId: value,
-          chain: label,
-        },
-      ])
-    }
-    if (selectedChains.find(({ chainId }) => chainId === value)) {
-      return setValue('selectedChains', [
-        ...selectedChains.filter(({ chainId }) => chainId !== value),
-      ])
-    }
-  }
-
-  function maxAmountHandle(value: number, label: string) {
-    if (!selectedChains.find(({ chainId }) => chainId === value)) {
-      return setValue('selectedChains', [
-        ...selectedChains,
-        {
-          chainId: value,
-          chain: label,
-          amount: MAX_AMOUNT_GAS,
-        },
-      ])
-    }
-    return setValue(
-      'selectedChains',
-      selectedChains.map((obj) =>
-        obj.chainId === value
-          ? {
-              ...obj,
-              amount: MAX_AMOUNT_GAS,
-            }
-          : obj,
-      ),
-    )
-  }
-
   return (
     <FormItem>
-      <ScrollArea className="h-96">
+      <ScrollArea className="h-[500px]">
         <div className="w-full h-auto flex flex-col gap-4 px-5 pt-3">
           {CHAINS.map(({ label, image, value }, index) => (
             <>
@@ -76,14 +34,21 @@ export const GasAmount = ({
                     checked={
                       !!selectedChains.find(({ chainId }) => chainId === value)
                     }
-                    onCheckedChange={() => selectChainHandle(value, label)}
+                    onCheckedChange={() =>
+                      selectChainHandle({
+                        value,
+                        label,
+                        selectedChains,
+                        setValue,
+                      })
+                    }
                   />
                   <Image
                     src={image}
                     width={35}
                     height={35}
                     alt="chain-image"
-                    className="rounded-full mx-2"
+                    className="rounded-full ml-4 mr-2"
                   />
                   <span className="text-lg">{label}</span>
                 </div>
@@ -96,26 +61,27 @@ export const GasAmount = ({
                       selectedChains.find(({ chainId }) => chainId === value)
                         ?.amount ?? ''
                     }
-                    onChange={(e) => {
-                      setValue(
-                        'selectedChains',
-                        selectedChains.map((obj) =>
-                          obj.chainId === value
-                            ? {
-                                ...obj,
-                                amount: e.target.value
-                                  ? Number(e.target.value)
-                                  : undefined,
-                              }
-                            : obj,
-                        ),
-                      )
-                    }}
+                    onChange={(e) =>
+                      inputAmountHandle({
+                        value,
+                        label,
+                        selectedChains,
+                        setValue,
+                        event: e,
+                      })
+                    }
                   />
                   <Button
                     size="sm"
                     className="h-4 py-5"
-                    onClick={() => maxAmountHandle(value, label)}
+                    onClick={() =>
+                      maxAmountHandle({
+                        value,
+                        label,
+                        selectedChains,
+                        setValue,
+                      })
+                    }
                   >
                     MAX
                   </Button>

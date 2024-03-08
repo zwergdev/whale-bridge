@@ -10,6 +10,7 @@ const NAVIGATION = [
   { href: '/refuel', label: 'Gas Refuel' },
   { href: '/token', label: 'OFT Bridge' },
   { href: '/messenger', label: 'Messenger' },
+  { href: '/gas-station', label: 'Gas Station' },
   { href: '/profile', label: 'Profile' },
   { href: '/contracts', label: 'Contracts' },
   { href: 'https://layerzeroscan.com/protocol/whale', label: 'LayerZero.Scan' },

@@ -48,62 +48,64 @@ export default function GasStationPage() {
   }
 
   return (
-    <section className="w-full max-w-screen-xl min-h-[calc(100vh+110px)] sm:h-screen flex flex-col justify-center">
-      <h1 className="text-4xl font-semibold">Gas Station</h1>
-      <Form {...form}>
-        <form className="flex w-full" onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="flex flex-col max-lg:items-center lg:flex-row w-full gap-5">
-            <PaperGasStation width="w-full sm:w-[400px]">
-              <FormField
-                control={form.control}
-                name="chainFrom"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="flex items-end">
-                      Source Chain
-                    </FormLabel>
-                    <Popover
-                      open={isPopoverOpen}
-                      onOpenChange={setIsPopoverOpen}
-                    >
-                      <ChainyTrigger selectedValue={field.value} />
-                      <ChainList
-                        isPopoverFROM={true}
-                        isChainGridView={isChainGridView}
-                        setIsChainGridView={setIsChainGridView}
-                        selectedValue={field.value}
-                        fieldValue={field.value}
-                        onSelect={(value, chainId) => {
-                          setValue('chainFrom', value)
-                          setIsPopoverOpen(false)
-                          if (chainId !== chain?.id) switchChain({ chainId })
-                        }}
-                      />
-                    </Popover>
-                  </FormItem>
-                )}
-              />
-              <PaperSelectedChain selectedChains={watch('selectedChains')} />
-              <PaperAmount selectedChains={watch('selectedChains')} />
-              <SubmitButton disabled={false} loading={false}>
-                Gas
-              </SubmitButton>
-            </PaperGasStation>
-            <PaperGasStation width="w-full sm:w-9/12">
-              <FormField
-                control={form.control}
-                name="selectedChains"
-                render={() => (
-                  <GasAmount
-                    setValue={setValue}
-                    selectedChains={watch('selectedChains')}
-                  />
-                )}
-              />
-            </PaperGasStation>
-          </div>
-        </form>
-      </Form>
-    </section>
+    <>
+      <section className="w-full max-w-screen-xl min-h-[calc(100vh-170px)] pt-32 flex flex-col justify-center">
+        <h1 className="text-4xl font-semibold">Gas Station</h1>
+        <Form {...form}>
+          <form className="flex w-full" onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="flex flex-col max-lg:items-center h-max lg:flex-row w-full gap-5">
+              <PaperGasStation width="w-full sm:w-[400px]">
+                <FormField
+                  control={form.control}
+                  name="chainFrom"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-end">
+                        Source Chain
+                      </FormLabel>
+                      <Popover
+                        open={isPopoverOpen}
+                        onOpenChange={setIsPopoverOpen}
+                      >
+                        <ChainyTrigger selectedValue={field.value} />
+                        <ChainList
+                          isPopoverFROM={true}
+                          isChainGridView={isChainGridView}
+                          setIsChainGridView={setIsChainGridView}
+                          selectedValue={field.value}
+                          fieldValue={field.value}
+                          onSelect={(value, chainId) => {
+                            setValue('chainFrom', value)
+                            setIsPopoverOpen(false)
+                            if (chainId !== chain?.id) switchChain({ chainId })
+                          }}
+                        />
+                      </Popover>
+                    </FormItem>
+                  )}
+                />
+                <PaperSelectedChain selectedChains={watch('selectedChains')} />
+                <PaperAmount selectedChains={watch('selectedChains')} />
+                <SubmitButton disabled={false} loading={false}>
+                  Gas
+                </SubmitButton>
+              </PaperGasStation>
+              <PaperGasStation width="w-full sm:w-9/12">
+                <FormField
+                  control={form.control}
+                  name="selectedChains"
+                  render={() => (
+                    <GasAmount
+                      setValue={setValue}
+                      selectedChains={watch('selectedChains')}
+                    />
+                  )}
+                />
+              </PaperGasStation>
+            </div>
+          </form>
+        </Form>
+      </section>
+    </>
   )
 }
