@@ -1,134 +1,217 @@
 'use client'
-import { estimateFees } from '@/app/gas-station/_contracts/index'
-import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form'
-import { Popover } from '@/components/ui/popover'
+
+import { Button } from '@/components/ui/button-new'
+import { CHAIN_TO_SYMBOL, MAX_TO_FILL, SYMBOL_TO_CHAIN } from '@/lib/constants'
+import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
-import { useAccount, useSwitchChain } from 'wagmi'
-import { z } from 'zod'
-import { ChainList, ChainyTrigger } from '../_components/chainy/chains-popover'
-import { SubmitButton } from '../_components/submit-button'
+import { useEffect, useState } from 'react'
+import { useFieldArray, useForm } from 'react-hook-form'
+import { useSwitchChain } from 'wagmi'
+import { Prices, fetchPrices, useGetAccount, useWriteContract } from '../_hooks'
 import { CHAINS } from '../_utils/chains'
-import { GasStationSchema } from '../_utils/schemas'
-import { GasAmount } from './_components/gas-amount'
-import { PaperGasStation } from './_components/paper-gas-station'
-import {
-  PaperAmount,
-  PaperSelectedChain,
-} from './_components/papers-information'
+import { GasForm, GasSchema } from '../_utils/schemas'
+import { ChainTo, Label, SelectedChain } from './_components'
+import { GasDialog } from './_components/gas-dialog'
+import { ChainParams, estimateFees, writeFillParams } from './_contracts'
+import { ChainSelector, SelectedChains, Total } from './_features'
 
 export default function GasStationPage() {
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false)
-  const [isChainGridView, setIsChainGridView] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
   const { switchChain } = useSwitchChain()
-  const { chain } = useAccount()
+  const { chainId, address } = useGetAccount()
+  const [prices, setPrices] = useState<Prices>()
 
-  const form = useForm<z.infer<typeof GasStationSchema>>({
-    resolver: zodResolver(GasStationSchema),
+  useEffect(() => {
+    ;(async () => {
+      const prices = await fetchPrices()
+      setPrices(prices)
+    })()
+  }, [])
+
+  useEffect(() => {
+    setValue('chainFrom', chainId === 0 ? 110 : chainId)
+  }, [chainId])
+
+  const {
+    setValue,
+    watch,
+    control,
+    handleSubmit,
+    formState: { isValid, errors },
+    register,
+  } = useForm<GasForm>({
+    resolver: zodResolver(GasSchema),
+    mode: 'all',
     defaultValues: {
-      chainFrom:
-        CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
-      selectedChains: [],
+      selectedChains: CHAINS.map((obj) => ({
+        chainId: String(obj.chainId),
+        name: obj.label,
+        logo: obj.image,
+        v2Value: obj.v2Value,
+      })),
+      chainFrom: chainId === 0 ? 110 : chainId,
     },
   })
 
-  const { watch, setValue } = form
+  const { fields: arrayFields, move } = useFieldArray({
+    control,
+    name: 'selectedChains',
+  })
 
-  const getSelected = () => {
-    const selected = watch('selectedChains')
+  const fields = watch()
 
-    if (selected.length === 0) return {}
+  const { writeContractAsync, data: hash } = useWriteContract()
 
-    return selected
-      .filter((chain) => chain.amount)
-      .map((chain) => ({
-        v2Value: CHAINS.find((cc) => cc.value === chain.chainId)?.v2Value,
-        chainId: chain.chainId,
-        valueInEther: String(chain.amount),
-      }))
-      .reduce((obj: any, item) => {
-        obj[item.chainId] = item
-        return obj
-      }, {})
+  const contractParams = fields.selectedChains
+    .filter((o) => Number(o.valueInEther) > 0)
+    .reduce((obj, item) => {
+      obj[item.name] = {
+        v2Value: item.v2Value,
+        chainId: item.chainId,
+        valueInEther: item.valueInEther!,
+      }
+      return obj
+    }, {} as ChainParams)
+
+  const { fee, refetchFee } = estimateFees(chainId, contractParams)
+
+  const onSubmit = async (data: GasForm) => {
+    const fees: any = await refetchFee()
+    const lzFees = fees.data.reduce((p: bigint, c: bigint) => p + c, BigInt(0))
+
+    await writeContractAsync(
+      writeFillParams(chainId, lzFees, data.address, contractParams),
+    )
+
+    return setIsDialogOpen(true)
   }
 
-  const { fee } = estimateFees(chain?.id ?? 0, getSelected())
+  const fromSymbol = CHAIN_TO_SYMBOL[fields.chainFrom]
+  const usd = prices ? prices[SYMBOL_TO_CHAIN[fromSymbol]].usd : 0
 
-  console.log(fee)
-
-  function onSubmit(data: z.infer<typeof GasStationSchema>) {
-    toast('You submit this values:', {
-      description: (
-        <pre className="bg-paper p-4 ">
-          <code className="text-white w-full">
-            {JSON.stringify(data, null, 2)}
-          </code>
-        </pre>
-      ),
-    })
-  }
+  const selectedChains = fields.selectedChains.filter(
+    (ch) => Number(ch.valueInEther) > 0,
+  )
 
   return (
     <>
-      <section className="w-full max-w-screen-xl min-h-[calc(100vh-170px)] pt-32 flex flex-col justify-center">
-        <h1 className="text-4xl font-semibold">Gas Station</h1>
-        <Form {...form}>
-          <form className="flex w-full" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="flex flex-col max-lg:items-center h-max lg:flex-row w-full gap-5">
-              <PaperGasStation width="w-full sm:w-[400px]">
-                <FormField
-                  control={form.control}
-                  name="chainFrom"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="flex items-end">
-                        Source Chain
-                      </FormLabel>
-                      <Popover
-                        open={isPopoverOpen}
-                        onOpenChange={setIsPopoverOpen}
-                      >
-                        <ChainyTrigger selectedValue={field.value} />
-                        <ChainList
-                          isPopoverFROM={true}
-                          isChainGridView={isChainGridView}
-                          setIsChainGridView={setIsChainGridView}
-                          selectedValue={field.value}
-                          fieldValue={field.value}
-                          onSelect={(value, chainId) => {
-                            setValue('chainFrom', value)
-                            setIsPopoverOpen(false)
-                            if (chainId !== chain?.id) switchChain({ chainId })
-                          }}
-                        />
-                      </Popover>
-                    </FormItem>
-                  )}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="max-w-[1053px] w-full min-h-[calc(100vh-160px)] pt-40 flex lg:items-start items-center justify-center gap-5 lg:flex-row flex-col"
+      >
+        <article className="max-w-sm sticky top-10 flex items-center justify-center flex-col h-full w-full p-4 gap-6 text-foreground rounded-md border-popover border bg-[#011e37]/30 backdrop-blur-md">
+          <ChainSelector />
+
+          <SelectedChains
+            qty={selectedChains.length}
+            total={fields.selectedChains.length}
+          >
+            {selectedChains.length ? (
+              selectedChains.map((field) => (
+                <SelectedChain
+                  key={field.name}
+                  name={field.name}
+                  amount={field.valueInEther}
+                  symbol={CHAIN_TO_SYMBOL[Number(field.chainId)]}
+                  usamount={
+                    prices
+                      ? Number(field.valueInEther) *
+                        prices[
+                          SYMBOL_TO_CHAIN[
+                            CHAIN_TO_SYMBOL[Number(field.chainId)]
+                          ]
+                        ].usd
+                      : 0
+                  }
                 />
-                <PaperSelectedChain selectedChains={watch('selectedChains')} />
-                <PaperAmount selectedChains={watch('selectedChains')} />
-                <SubmitButton disabled={false} loading={false}>
-                  Gas
-                </SubmitButton>
-              </PaperGasStation>
-              <PaperGasStation width="w-full sm:w-9/12">
-                <FormField
-                  control={form.control}
-                  name="selectedChains"
-                  render={() => (
-                    <GasAmount
-                      setValue={setValue}
-                      selectedChains={watch('selectedChains')}
-                    />
-                  )}
-                />
-              </PaperGasStation>
+              ))
+            ) : (
+              <p className="text-[13px] leading-none">Empty</p>
+            )}
+          </SelectedChains>
+
+          <Total
+            disabled={
+              !address ||
+              chainId !== fields.chainFrom ||
+              !isValid ||
+              !selectedChains.length
+            }
+            usd={usd}
+            symbol={fromSymbol}
+            value={fee as bigint[]}
+          >
+            <div className="relative w-full">
+              <input
+                type="text"
+                {...register('address')}
+                autoComplete="off"
+                placeholder="Address"
+                className={cn(
+                  'h-10 bg-white border w-full border-muted-foreground outline-none relative z-50 py-3 px-2 placeholder:text-black/30 text-black text-sm',
+                  errors.address && 'border-destructive',
+                )}
+              />
+              {errors?.address?.message && (
+                <Label className="left-auto top-auto -bottom-2 right-1.5 z-50 text-destructive">
+                  {errors.address.message}
+                </Label>
+              )}
             </div>
-          </form>
-        </Form>
-      </section>
+          </Total>
+
+          {address && chainId !== fields.chainFrom && (
+            <Button
+              onClick={() => switchChain?.({ chainId: fields.chainFrom })}
+              type="button"
+              className="h-10 w-full text-2xl uppercase"
+            >
+              SWITCH NETWORK
+            </Button>
+          )}
+        </article>
+
+        <article className="max-w-[590px] flex items-center justify-center flex-col h-full w-full p-4 gap-2 text-foreground rounded-md border-popover border bg-[#011e37]/30 backdrop-blur-md">
+          <div className="w-full flex flex-col border border-ring rounded-md overflow-hidden">
+            {arrayFields.map(({ id, name, logo, chainId }, i) => (
+              <ChainTo
+                key={id}
+                name={name}
+                logo={logo}
+                selected={
+                  Number(
+                    fields.selectedChains.find((c) => c.name === name)
+                      ?.valueInEther,
+                  ) > 0
+                }
+                symbol={CHAIN_TO_SYMBOL[Number(chainId)]}
+                max={MAX_TO_FILL[Number(chainId)]}
+                valueInEther={fields.selectedChains[i].valueInEther}
+                onChange={(v) => {
+                  setValue(`selectedChains.${Number(i)}.valueInEther`, v)
+                  move(i, 0)
+                }}
+                onMaxClick={() => {
+                  {
+                    setValue(
+                      `selectedChains.${Number(i)}.valueInEther`,
+                      MAX_TO_FILL[Number(chainId)].toString(),
+                    )
+                    move(i, 0)
+                  }
+                }}
+              />
+            ))}
+          </div>
+        </article>
+      </form>
+      <GasDialog
+        hash={hash}
+        open={isDialogOpen}
+        onOpenChange={setIsDialogOpen}
+        chainId={chainId}
+        srcChainId={CHAINS.find((c) => c.chainId === chainId)?.v2Value!}
+      />
     </>
   )
 }

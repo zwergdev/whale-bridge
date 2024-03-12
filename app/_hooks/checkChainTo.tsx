@@ -1,6 +1,6 @@
+import { UseFormSetValue, UseFormWatch } from 'react-hook-form'
 import { DISABLED_PAIRS } from '../_components/chainy/disabled-pairs'
 import { CHAINS } from '../_utils/chains'
-import { UseFormWatch, UseFormSetValue } from 'react-hook-form'
 
 interface PropsHook {
   // I use any type because every shape has its own type. And each type of form is impossible to register

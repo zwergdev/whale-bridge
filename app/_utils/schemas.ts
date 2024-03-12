@@ -22,19 +22,24 @@ export const TokenSchema = z.object({
   amount: z.string().optional(),
   bridgeAmount: z.string().optional(),
 })
+export type TokenForm = z.infer<typeof TokenSchema>
 
-export const GasStationSchema = z.object({
+export const GasSchema = z.object({
   chainFrom: z.number(),
-  // selectChain: z.array(z.number())
+  address: z
+    .string()
+    .regex(new RegExp(/^0x[a-fA-F0-9]{40}$/), 'Invalid address!'),
   selectedChains: z.array(
     z.object({
-      chain: z.string(),
-      chainId: z.number(),
-      amount: z.number().optional(),
+      name: z.string(),
+      logo: z.string(),
+      v2Value: z.number(),
+      chainId: z.string(),
+      valueInEther: z.string().optional(),
     }),
   ),
 })
-export type TokenForm = z.infer<typeof TokenSchema>
+export type GasForm = z.infer<typeof GasSchema>
 
 export const MessengerSchema = z.object({
   chainFrom: z.number(),
