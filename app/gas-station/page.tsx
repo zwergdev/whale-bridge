@@ -1,22 +1,23 @@
 'use client'
-import { Popover } from '@/components/ui/popover'
-import { ChainList, ChainyTrigger } from '../_components/chainy/chains-popover'
-import { useState } from 'react'
+import { estimateFees } from '@/app/gas-station/_contracts/index'
 import { Form, FormField, FormItem, FormLabel } from '@/components/ui/form'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { GasStationSchema } from '../_utils/schemas'
+import { Popover } from '@/components/ui/popover'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { CHAINS } from '../_utils/chains'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { useAccount, useSwitchChain } from 'wagmi'
+import { z } from 'zod'
+import { ChainList, ChainyTrigger } from '../_components/chainy/chains-popover'
+import { SubmitButton } from '../_components/submit-button'
+import { CHAINS } from '../_utils/chains'
+import { GasStationSchema } from '../_utils/schemas'
+import { GasAmount } from './_components/gas-amount'
+import { PaperGasStation } from './_components/paper-gas-station'
 import {
   PaperAmount,
   PaperSelectedChain,
 } from './_components/papers-information'
-import { SubmitButton } from '../_components/submit-button'
-import { PaperGasStation } from './_components/paper-gas-station'
-import { toast } from 'sonner'
-import { GasAmount } from './_components/gas-amount'
 
 export default function GasStationPage() {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
@@ -34,6 +35,28 @@ export default function GasStationPage() {
   })
 
   const { watch, setValue } = form
+
+  const getSelected = () => {
+    const selected = watch('selectedChains')
+
+    if (selected.length === 0) return {}
+
+    return selected
+      .filter((chain) => chain.amount)
+      .map((chain) => ({
+        v2Value: CHAINS.find((cc) => cc.value === chain.chainId)?.v2Value,
+        chainId: chain.chainId,
+        valueInEther: String(chain.amount),
+      }))
+      .reduce((obj: any, item) => {
+        obj[item.chainId] = item
+        return obj
+      }, {})
+  }
+
+  const { fee } = estimateFees(chain?.id ?? 0, getSelected())
+
+  console.log(fee)
 
   function onSubmit(data: z.infer<typeof GasStationSchema>) {
     toast('You submit this values:', {
