@@ -10,7 +10,7 @@ import { useSwitchChain } from 'wagmi'
 import { Prices, fetchPrices, useGetAccount, useWriteContract } from '../_hooks'
 import { CHAINS } from '../_utils/chains'
 import { GasForm, GasSchema } from '../_utils/schemas'
-import { ChainTo, Label, SelectedChain } from './_components'
+import { ChainTo, SelectedChain } from './_components'
 import { GasDialog } from './_components/gas-dialog'
 import { ChainParams, estimateFees, writeFillParams } from './_contracts'
 import { ChainSelector, SelectedChains, Total } from './_features'
@@ -29,7 +29,7 @@ export default function GasStationPage() {
   }, [])
 
   useEffect(() => {
-    setValue('chainFrom', chainId === 0 ? 110 : chainId)
+    setValue('chainFrom', chainId === 0 ? 42161 : chainId)
   }, [chainId])
 
   const {
@@ -49,7 +49,7 @@ export default function GasStationPage() {
         logo: obj.image,
         v2Value: obj.v2Value,
       })),
-      chainFrom: chainId === 0 ? 110 : chainId,
+      chainFrom: chainId === 0 ? 42161 : chainId,
     },
   })
 
@@ -148,14 +148,14 @@ export default function GasStationPage() {
                 autoComplete="off"
                 placeholder="Address"
                 className={cn(
-                  'h-10 bg-white border w-full border-muted-foreground outline-none relative z-50 py-3 px-2 placeholder:text-black/30 text-black text-sm',
+                  'h-10 border-[#0d3b63]/50 bg-popover hover:bg-popover rounded-md border w-full relative z-50 py-3 px-2 outline-none text-sm placeholder:text-muted-foreground',
                   errors.address && 'border-destructive',
                 )}
               />
               {errors?.address?.message && (
-                <Label className="left-auto top-auto -bottom-2 right-1.5 z-50 text-destructive">
+                <div className="absolute -top-2.5 right-1.5 border-destructive border rounded-sm bg-popover px-1 z-50 text-destructive text-xs h-4 flex items-center">
                   {errors.address.message}
-                </Label>
+                </div>
               )}
             </div>
           </Total>

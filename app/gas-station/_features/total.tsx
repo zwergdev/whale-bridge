@@ -47,11 +47,11 @@ export const Total = ({
           </span>
         </div>
 
-        <div className="w-full flex items-center justify-between gap-2">
+        <div className="w-full flex items-center justify-between gap-2 flex-col">
           {children}
           <Button
             type="submit"
-            className="h-10 w-24 text-2xl"
+            className="h-10 w-full text-2xl"
             disabled={disabled || valueInEther * usd <= 0}
           >
             SEND

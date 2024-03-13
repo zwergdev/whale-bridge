@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button-new'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import { Label } from '../_components'
 
 type ChainToProps = {
   name: string
@@ -58,9 +57,9 @@ export const ChainTo = ({
             )}
           />
           {isError && (
-            <Label className="left-auto top-auto -bottom-2 right-1.5 z-50 text-destructive text-xs py-0 h-3.5 flex items-center">
-              MAX: {max} {symbol}
-            </Label>
+            <div className="absolute -bottom-2.5 left-1.5 border-destructive border rounded-sm bg-popover px-1 z-50 text-destructive text-xs h-4 flex items-center">
+              MAX {max} {symbol}
+            </div>
           )}
         </div>
 
