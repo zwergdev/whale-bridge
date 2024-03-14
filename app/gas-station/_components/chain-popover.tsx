@@ -22,7 +22,7 @@ export function ChainPopoverGasStation({
   const chain = CHAINS.find(({ chainId }) => chainId === selectedChain)!
   return (
     <>
-      <Popover>
+      <Popover >
         <PopoverTrigger asChild>
           <Button
             role="combobox"
