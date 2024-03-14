@@ -50,7 +50,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`bg-background ${grotesk.className}`}>
         <ContextProvider cookie={headers().get('cookie') ?? ''}>
-          <div className="flex flex-col w-full items-center justify-center min-h-screen relative overflow-hidden">
+          <div className="flex flex-col w-full items-center justify-center min-h-screen relative overflow-clip">
             <WhaleBg className="absolute -z-10 left-[-435px] top-28 rotate-[35deg]" />
             <WhaleBg className="absolute -z-10 right-[-247px] top-36 scale-x-[-1] w-[757px] h-auto sm:block hidden" />
             <WhaleBg className="absolute -z-10 right-[-247px] top-36 scale-x-[-1] w-[757px] h-auto sm:block hidden" />

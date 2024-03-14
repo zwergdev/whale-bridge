@@ -13,7 +13,8 @@ import { GasForm, GasSchema } from '../_utils/schemas'
 import { ChainTo, SelectedChain } from './_components'
 import { GasDialog } from './_components/gas-dialog'
 import { ChainParams, estimateFees, writeFillParams } from './_contracts'
-import { ChainSelector, SelectedChains, Total } from './_features'
+import { SelectedChains, Total } from './_features'
+import { ChainPopoverGasStation } from './_components/chain-popover'
 
 export default function GasStationPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -99,8 +100,11 @@ export default function GasStationPage() {
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-[1053px] w-full min-h-[calc(100vh-160px)] pt-40 flex lg:items-start items-center justify-center gap-5 lg:flex-row flex-col"
       >
-        <article className="max-w-sm sticky top-10 flex items-center justify-center flex-col h-full w-full p-4 gap-6 text-foreground rounded-md border-popover border bg-[#011e37]/30 backdrop-blur-md">
-          <ChainSelector />
+        <article className="max-w-sm sticky top-24 flex items-center justify-center flex-col h-full w-full p-4 gap-6 text-foreground rounded-md border-popover border bg-[#011e37]/30 backdrop-blur-md">
+          <ChainPopoverGasStation
+            selectedChain={fields.chainFrom}
+            onSelect={(n) => setValue('chainFrom', n)}
+          />
 
           <SelectedChains
             qty={selectedChains.length}
