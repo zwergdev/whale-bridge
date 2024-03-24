@@ -1,6 +1,6 @@
 'use client'
 
-import { CHAINS } from '@/app/_utils/chains'
+import { CHAINS } from '@/lib/constants/chains'
 import {
   Popover,
   PopoverClose,

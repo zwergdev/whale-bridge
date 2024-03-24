@@ -1,6 +1,4 @@
 'use client'
-
-import { truncatedToaster } from '@/app/_utils/truncatedToaster'
 import {
   Form,
   FormControl,
@@ -20,11 +18,10 @@ import { useDebouncedCallback } from 'use-debounce'
 import { formatEther, parseEther } from 'viem'
 import { useAccount, useSwitchChain } from 'wagmi'
 import { z } from 'zod'
-import { ChainPopover } from '../_components/chainy'
-import { RepeatButton } from '../_components/chainy/chains-popover'
+import { ChainPopover, RepeatButton } from '@/app/_components/chainy'
 import { useWriteContract } from '../_hooks'
-import { CHAINS } from '../_utils/chains'
-import { TokenForm, TokenSchema } from '../_utils/schemas'
+import { CHAINS } from '@/lib/constants'
+import { TokenForm, TokenSchema, truncatedToaster } from '@/app/_utils'
 import { BalanceIndicator } from '../refuel/_components/balance-indicator'
 import tokenImage from './_assets/token.webp'
 import { InfoHover } from './_components/info-hover'

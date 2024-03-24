@@ -14,7 +14,7 @@ import {
 import { Check, Loader, Plus } from '@/components/ui/icons'
 import Link from 'next/link'
 import { cloneElement, useState } from 'react'
-import { TX_LINK } from '../../_utils/chains'
+import { TX_LINK } from '@/lib/constants'
 
 type RefueledDialogProps = {
   hash?: `0x${string}`

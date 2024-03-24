@@ -1,12 +1,8 @@
 'use client'
 
-import {
-  ChainList,
-  RepeatButton,
-} from '@/app/_components/chainy/chains-popover'
-import { CHAINS } from '@/app/_utils/chains'
-import { MessengerForm, MessengerSchema } from '@/app/_utils/schemas'
-import { truncatedToaster } from '@/app/_utils/truncatedToaster'
+import { ChainList, RepeatButton } from '@/app/_components/chainy'
+import { CHAINS } from '@/lib/constants/chains'
+import { MessengerForm, MessengerSchema, truncatedToaster } from '@/app/_utils'
 import { InfoHover } from '@/app/token/_components/info-hover'
 import {
   Form,

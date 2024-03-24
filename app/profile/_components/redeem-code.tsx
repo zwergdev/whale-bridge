@@ -1,6 +1,6 @@
 'use client'
 
-import { truncatedToaster } from '@/app/_utils/truncatedToaster'
+import { truncatedToaster } from '@/app/_utils'
 import {
   Form,
   FormField,

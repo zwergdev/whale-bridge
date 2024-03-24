@@ -1,4 +1,4 @@
-import { CHAINS } from '@/app/_utils/chains'
+import { CHAINS } from '@/lib/constants/chains'
 import { InfoHover } from '@/app/token/_components/info-hover'
 import {
   Popover,

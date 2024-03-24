@@ -1,5 +1,4 @@
-import { DISABLED_PAIRS } from '@/lib/constants'
-import { CHAINS } from '../_utils/chains'
+import { DISABLED_PAIRS, CHAINS } from '@/lib/constants'
 import { UseFormWatch, UseFormSetValue } from 'react-hook-form'
 
 interface PropsHook {

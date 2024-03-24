@@ -12,8 +12,7 @@ import {
 } from '@/components/ui'
 import { ChevronDown, Repeat2 } from '@/components/ui/icons'
 import Image from 'next/image'
-import { CHAINS } from '../../_utils/chains'
-import { DISABLED_PAIRS } from '@/lib/constants'
+import { DISABLED_PAIRS, CHAINS } from '@/lib/constants'
 
 const selectedChain = (fieldValue: number) => {
   const selectedChain = CHAINS.find(({ value }) => value === fieldValue)

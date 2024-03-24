@@ -1,4 +1,4 @@
-import { errorToaster } from '@/app/_utils/truncatedToaster'
+import { errorToaster } from '@/app/_utils'
 import { useWriteContract as writeContract } from 'wagmi'
 
 export const useWriteContract = () =>

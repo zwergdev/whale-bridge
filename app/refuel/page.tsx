@@ -1,7 +1,6 @@
 'use client'
 
 import { RepeatButton } from '@/app/_components/chainy/chains-popover'
-import { truncatedToaster } from '@/app/_utils/truncatedToaster'
 import {
   Form,
   FormControl,
@@ -20,11 +19,11 @@ import { useDebouncedCallback } from 'use-debounce'
 import { formatEther } from 'viem'
 import { parseEther } from 'viem/utils'
 import { useAccount, useBalance, useSwitchChain } from 'wagmi'
-import { ChainPopover } from '../_components/chainy'
-import { SubmitButton } from '../_components/submit-button'
+import { ChainPopover } from '@/app/_components/chainy'
+import { SubmitButton } from '@/app/_components/submit-button'
 import { useWriteContract } from '../_hooks'
-import { CHAINS } from '../_utils/chains'
-import { RefuelForm, RefuelSchema } from '../_utils/schemas'
+import { CHAINS } from '@/lib/constants'
+import { RefuelForm, RefuelSchema, truncatedToaster } from '@/app/_utils'
 import { BalanceIndicator } from './_components/balance-indicator'
 import { RefueledDialog } from './_components/refueled-dialog'
 import { MAX_REFUEL, SYMBOL_TO_CHAIN } from './_constants'

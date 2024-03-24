@@ -5,7 +5,7 @@ import { MINT_CONTRACTS } from '@/app/mint/_contracts/mint-contracts'
 import { ButtonNew } from '@/components/ui'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount, useBalance, useWaitForTransactionReceipt } from 'wagmi'
-import { truncatedToaster } from '../../_utils/truncatedToaster'
+import { truncatedToaster } from '@/app/_utils'
 import { mint } from '../_contracts/mint-contracts'
 import { MintedDialog } from './minted-dialog'
 

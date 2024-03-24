@@ -8,7 +8,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui'
 import Link from 'next/link'
-import { TX_LINK } from '../../_utils/chains'
+import { TX_LINK } from '@/lib/constants'
 import { MintImage } from './mint-image'
 import { X } from '@/components/ui/icons'
 import { useEffect, useState } from 'react'
