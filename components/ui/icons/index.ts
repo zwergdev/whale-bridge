@@ -1,4 +1,20 @@
-export { LayoutGrid, LayoutList, X } from 'lucide-react'
+export {
+  LayoutGrid,
+  LayoutList,
+  X,
+  ChevronDown,
+  Repeat2,
+  Menu,
+  ChevronsUpDown,
+  Loader,
+  Plus,
+  Check,
+  CopyCheck,
+  Copy,
+  Info,
+  Search,
+  ChevronUp,
+} from 'lucide-react'
 export * from './telegram'
 export * from './twitter'
 export * from './logo'

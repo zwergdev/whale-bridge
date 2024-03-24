@@ -1,5 +1,5 @@
 import { Skeleton, Paper } from '@/components/ui'
-import { Repeat2 } from 'lucide-react'
+import { Repeat2 } from '@/components/ui/icons'
 
 export default function TokenLoading() {
   return (

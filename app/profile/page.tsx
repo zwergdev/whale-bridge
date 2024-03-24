@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { Loader } from 'lucide-react'
+import { Loader } from '@/components/ui/icons'
 import { useEffect } from 'react'
 import { useAccount } from 'wagmi'
 import { CreateCode } from './_components/create-code'

@@ -1,7 +1,7 @@
 'use client'
 
 import { BalanceIndicator } from '@/app/refuel/_components/balance-indicator'
-import { LayerZero } from '@/components/ui/icons'
+import { LayerZero, ChevronsUpDown, Loader } from '@/components/ui/icons'
 import {
   Select,
   SelectContent,
@@ -17,7 +17,6 @@ import {
 } from '@/components/ui'
 import { delay } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ChevronsUpDown, Loader } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAccount, useBalance, useSwitchChain } from 'wagmi'

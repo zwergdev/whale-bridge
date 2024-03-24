@@ -10,7 +10,7 @@ import {
   PopoverTrigger,
   ScrollArea,
 } from '@/components/ui'
-import { ChevronDown, Repeat2 } from 'lucide-react'
+import { ChevronDown, Repeat2 } from '@/components/ui/icons'
 import Image from 'next/image'
 import { CHAINS } from '../../_utils/chains'
 import { DISABLED_PAIRS } from '@/lib/constants'

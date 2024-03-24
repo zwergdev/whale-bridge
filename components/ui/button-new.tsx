@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils'
-import { Loader } from 'lucide-react'
+import { Loader } from '@/components/ui/icons'
 import * as React from 'react'
 
 export interface ButtonNewProps

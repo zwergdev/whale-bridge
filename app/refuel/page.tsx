@@ -13,7 +13,7 @@ import {
   Slider,
 } from '@/components/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Fuel, Loader } from 'lucide-react'
+import { Fuel, Loader } from '@/components/ui/icons'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'

@@ -1,5 +1,5 @@
 import { delay } from '@/lib/utils'
-import { Copy, CopyCheck } from 'lucide-react'
+import { Copy, CopyCheck } from '@/components/ui/icons'
 import { useState } from 'react'
 import { ReferalsCounter } from './referrals-counter'
 

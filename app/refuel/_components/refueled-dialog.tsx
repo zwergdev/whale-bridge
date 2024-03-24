@@ -11,7 +11,7 @@ import {
   MessageStatus,
   waitForMessageReceived,
 } from '@layerzerolabs/scan-client'
-import { Check, Loader, Plus } from 'lucide-react'
+import { Check, Loader, Plus } from '@/components/ui/icons'
 import Link from 'next/link'
 import { cloneElement, useState } from 'react'
 import { TX_LINK } from '../../_utils/chains'

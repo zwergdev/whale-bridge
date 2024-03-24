@@ -2,7 +2,7 @@
 
 import { TableCell } from '@/components/ui'
 import { cn } from '@/lib/utils'
-import { Copy, CopyCheck } from 'lucide-react'
+import { Copy, CopyCheck } from '@/components/ui/icons'
 import Link from 'next/link'
 import { useState } from 'react'
 import { convert } from '../utils'

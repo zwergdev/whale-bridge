@@ -7,7 +7,7 @@ import {
   FormControl,
   Button,
 } from '@/components/ui'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown } from '@/components/ui/icons'
 import Image from 'next/image'
 
 type AddressNetworkProps = {

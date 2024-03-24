@@ -1,5 +1,4 @@
-import { Repeat2 } from 'lucide-react'
-import { LayerZero } from '@/components/ui/icons'
+import { LayerZero, Repeat2 } from '@/components/ui/icons'
 import { Paper, Skeleton } from '@/components/ui'
 
 export default function BridgeLoading() {

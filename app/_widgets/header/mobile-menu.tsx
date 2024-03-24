@@ -1,8 +1,7 @@
 'use client'
 
-import { MobileLogo } from '@/components/ui/icons'
+import { MobileLogo, Menu } from '@/components/ui/icons'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui'
-import { Menu } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Navigation } from './navigation'
