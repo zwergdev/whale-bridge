@@ -9,13 +9,13 @@ import {
 import Image from 'next/image'
 import { Caption } from './_components/caption'
 import { ContractCell } from './_components/contract-cell'
-import { contracts } from './contracts'
+import { ALL_CONTRACTS } from '@/lib/constants'
 
 export default function ContractsPage() {
   return (
     <section className="pt-40 overflow-visible w-full md:w-auto">
       <Table>
-        <Caption chainsLength={contracts.length} />
+        <Caption chainsLength={ALL_CONTRACTS.length} />
         <TableHeader>
           <TableRow>
             <TableHead>Chain</TableHead>
@@ -26,7 +26,7 @@ export default function ContractsPage() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {contracts.map((chain) => (
+          {ALL_CONTRACTS.map((chain) => (
             <TableRow key={chain.chain}>
               <TableCell className="font-medium flex items-center whitespace-nowrap">
                 <Image

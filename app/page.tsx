@@ -1,4 +1,4 @@
-import { Articles, FAQ, Hero, Roadmap } from './_sections'
+import { Articles, FAQ, Hero, Roadmap } from '@/components/home'
 
 export default function Home() {
   return (

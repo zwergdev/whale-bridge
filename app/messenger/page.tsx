@@ -20,8 +20,7 @@ import { useForm } from 'react-hook-form'
 import { parseEther } from 'viem'
 import { useAccount, useSwitchChain } from 'wagmi'
 import { useWriteContract } from '../_hooks'
-import { AddressNetwork } from './_components/address-network'
-import { MessengerDialog } from './_components/messenger-dialog'
+import { AddressNetwork, MessengerDialog } from './_components'
 import {
   getMessageDestination,
   sendMessageOpts,

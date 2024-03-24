@@ -1,5 +1,5 @@
-import { Footer } from '@/app/_widgets/footer'
 import { Header } from '@/app/_widgets/header'
+import { Footer } from '@/app/_widgets/footer'
 import { WhaleBg } from '@/components/ui/icons'
 import { ToasterSonner } from '@/components/ui'
 import { GoogleAnalytics } from '@next/third-parties/google'
