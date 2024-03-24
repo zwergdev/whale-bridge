@@ -1,6 +1,6 @@
 'use client'
 
-import { Popover } from '@/components/ui/popover'
+import { Popover } from '@/components/ui'
 import React, { useState } from 'react'
 import { ChainList, ChainListProps, ChainyTrigger } from './chains-popover'
 

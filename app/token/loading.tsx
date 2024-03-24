@@ -1,5 +1,4 @@
-import { Paper } from '@/components/ui/paper'
-import { Skeleton } from '@/components/ui/skeleton'
+import { Skeleton, Paper } from '@/components/ui'
 import { Repeat2 } from 'lucide-react'
 
 export default function TokenLoading() {

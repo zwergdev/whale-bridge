@@ -1,17 +1,17 @@
 'use client'
 
 import { truncatedToaster } from '@/app/_utils/truncatedToaster'
-import { Button } from '@/components/ui/button-new'
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Paper } from '@/components/ui/paper'
+  Input,
+  Label,
+  Paper,
+  ButtonNew,
+} from '@/components/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -248,7 +248,7 @@ export default function TokenPage() {
                   width={32}
                   height={32}
                 />
-                <Button
+                <ButtonNew
                   type="button"
                   className="min-w-32 sm:w-auto w-full hover:scale-100 h-12"
                   disabled={
@@ -257,7 +257,7 @@ export default function TokenPage() {
                   onClick={onSubmitClaim}
                 >
                   CLAIM
-                </Button>
+                </ButtonNew>
               </div>
             </div>
 
@@ -309,14 +309,14 @@ export default function TokenPage() {
               </div>
             </div>
 
-            <Button
+            <ButtonNew
               className="w-full mt-5 hover:scale-[1.05]"
               type="submit"
               disabled={!fields.tokenBalance || !fields.bridgeAmount}
               loading={isPending || status !== 'connected'}
             >
               {status === 'disconnected' ? 'CONNECT WALLET' : 'BRIDGE'}
-            </Button>
+            </ButtonNew>
           </form>
         </Form>
       </Paper>

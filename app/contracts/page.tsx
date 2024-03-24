@@ -5,7 +5,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
+} from '@/components/ui'
 import Image from 'next/image'
 import { Caption } from './_components/caption'
 import { ContractCell } from './_components/contract-cell'

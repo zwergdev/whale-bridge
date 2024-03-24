@@ -1,9 +1,12 @@
 import { CHAINS } from '@/app/_utils/chains'
 import { InfoHover } from '@/app/token/_components/info-hover'
-import { Button } from '@/components/ui/button'
-import { FormControl } from '@/components/ui/form'
-import { Label } from '@/components/ui/label'
-import { Popover, PopoverTrigger } from '@/components/ui/popover'
+import {
+  Popover,
+  PopoverTrigger,
+  Label,
+  FormControl,
+  Button,
+} from '@/components/ui'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 

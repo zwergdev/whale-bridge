@@ -1,6 +1,6 @@
 'use client'
 
-import { Progress } from '@/components/ui/progress'
+import { Progress } from '@/components/ui'
 import { cn } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 import { useAccount } from 'wagmi'

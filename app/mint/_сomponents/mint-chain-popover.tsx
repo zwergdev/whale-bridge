@@ -6,7 +6,7 @@ import {
   PopoverClose,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover'
+} from '@/components/ui'
 import { ChevronsUpDown } from 'lucide-react'
 import Image from 'next/image'
 import { useSwitchChain } from 'wagmi'

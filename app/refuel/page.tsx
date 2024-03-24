@@ -8,10 +8,10 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Paper } from '@/components/ui/paper'
-import { Slider } from '@/components/ui/slider'
+  Input,
+  Paper,
+  Slider,
+} from '@/components/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Fuel, Loader } from 'lucide-react'
 import { useEffect, useState } from 'react'

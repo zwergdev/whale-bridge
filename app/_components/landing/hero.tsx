@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button-new'
+import { ButtonNew } from '@/components/ui'
 import { LayerZeroLogo, Logo } from '@/components/ui/icons'
 import heroImage from '@/public/general/hero.webp'
 import Image from 'next/image'
@@ -28,7 +28,7 @@ export const Hero = () => {
           </h1>
 
           <Link href="/mint" className="mt:mb-16 mt-10">
-            <Button className="w-80">Launch App</Button>
+            <ButtonNew className="w-80">Launch App</ButtonNew>
           </Link>
         </div>
 

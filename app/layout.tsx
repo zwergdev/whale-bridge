@@ -1,7 +1,7 @@
 import { Footer } from '@/app/_widgets/footer'
 import { Header } from '@/app/_widgets/header'
 import { WhaleBg } from '@/components/ui/icons'
-import { Toaster } from '@/components/ui/sonner'
+import { ToasterSonner } from '@/components/ui'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import '@rainbow-me/rainbowkit/styles.css'
 import type { Metadata } from 'next'
@@ -63,7 +63,7 @@ export default function RootLayout({
             <Footer />
           </div>
         </ContextProvider>
-        <Toaster />
+        <ToasterSonner />
         <GoogleAnalytics gaId="G-14JT3CWP2G" />
       </body>
     </html>

@@ -2,12 +2,12 @@ import { cn } from '@/lib/utils'
 import { Loader } from 'lucide-react'
 import * as React from 'react'
 
-export interface ButtonProps
+export interface ButtonNewProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const ButtonNew = React.forwardRef<HTMLButtonElement, ButtonNewProps>(
   (
     { className, disabled, children, loading, ...props },
     ref,
@@ -31,6 +31,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     )
   },
 )
-Button.displayName = 'Button'
+ButtonNew.displayName = 'Button'
 
-export { Button }
+export { ButtonNew }

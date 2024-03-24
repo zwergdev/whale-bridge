@@ -6,7 +6,7 @@ import {
   Twitter,
 } from '@/components/ui/icons'
 import { GitBook } from '@/components/ui/icons/git-book'
-import { Separator } from '@/components/ui/separator'
+import { Separator } from '@/components/ui'
 import Link from 'next/link'
 import { cloneElement } from 'react'
 import { FooterNavigation } from './footer-navigation'

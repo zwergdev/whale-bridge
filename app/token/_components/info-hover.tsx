@@ -2,7 +2,7 @@ import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from '@/components/ui/hover-card'
+} from '@/components/ui'
 import { Info } from 'lucide-react'
 
 export const InfoHover = ({

@@ -1,6 +1,6 @@
 'use client'
 
-import { TableCell } from '@/components/ui/table'
+import { TableCell } from '@/components/ui'
 import { cn } from '@/lib/utils'
 import { Copy, CopyCheck } from 'lucide-react'
 import Link from 'next/link'

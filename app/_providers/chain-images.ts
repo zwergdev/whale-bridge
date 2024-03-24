@@ -1,30 +1,3 @@
-import arbitrumNovaLogo from '@/public/chain-logo/arb-nova.svg'
-import arbLogo from '@/public/chain-logo/arb.svg'
-import avalancheLogo from '@/public/chain-logo/avalanche.svg'
-import baseLogo from '@/public/chain-logo/base.svg'
-import bnbLogo from '@/public/chain-logo/bnb.svg'
-import celoLogo from '@/public/chain-logo/celo.svg'
-import coreLogo from '@/public/chain-logo/core-dao.svg'
-import fantomLogo from '@/public/chain-logo/fantom.svg'
-import fuseLogo from '@/public/chain-logo/fuse.svg'
-import gnosisLogo from '@/public/chain-logo/gnosis.svg'
-import harmonyLogo from '@/public/chain-logo/harmony.svg'
-import kavaLogo from '@/public/chain-logo/kava.svg'
-import klaytnLogo from '@/public/chain-logo/klaytn.svg'
-import lineaLogo from '@/public/chain-logo/linea.svg'
-import mantleLogo from '@/public/chain-logo/mantle.svg'
-import meterLogo from '@/public/chain-logo/meter.svg'
-import moonbeamLogo from '@/public/chain-logo/moonbeam.svg'
-import moonriverLogo from '@/public/chain-logo/moonriver.svg'
-import opBnbLogo from '@/public/chain-logo/op-bnb.svg'
-import metisLogo from '@/public/chain-logo/metis.svg'
-import optimismLogo from '@/public/chain-logo/optimism.svg'
-import polygonZkLogo from '@/public/chain-logo/polygon-zk.svg'
-import polygonLogo from '@/public/chain-logo/polygon.svg'
-import scrollLogo from '@/public/chain-logo/scroll.svg'
-import zkLogo from '@/public/chain-logo/zk.svg'
-import zoraLogo from '@/public/chain-logo/zora.svg'
-import shimmerLogo from '@/public/chain-logo/shimmer-evm.svg'
 import {
   arbitrum,
   arbitrumNova,
@@ -86,33 +59,33 @@ const wagmiChains = [
 ]
 
 const chainImages = {
-  324: zkLogo.src,
-  42170: arbitrumNovaLogo.src,
-  56: bnbLogo.src,
-  137: polygonLogo.src,
-  59144: lineaLogo.src,
-  42161: arbLogo.src,
-  534352: scrollLogo.src,
-  10: optimismLogo.src,
-  8453: baseLogo.src,
-  1284: moonbeamLogo.src,
-  43114: avalancheLogo.src,
-  250: fantomLogo.src,
-  42220: celoLogo.src,
-  100: gnosisLogo.src,
-  1101: polygonZkLogo.src,
-  82: meterLogo.src,
-  1285: moonriverLogo.src,
-  1666600000: harmonyLogo.src,
-  204: opBnbLogo.src,
-  2222: kavaLogo.src,
-  7777777: zoraLogo.src,
-  8217: klaytnLogo.src,
-  1116: coreLogo.src,
-  5000: mantleLogo.src,
-  122: fuseLogo.src,
-  1088: metisLogo.src,
-  148: shimmerLogo.src,
+  324: '/chain-logo/zk.svg',
+  42170: '/chain-logo/arb-nova.svg',
+  56: '/chain-logo/bnb.svg',
+  137: '/chain-logo/polygon.svg',
+  59144: '/chain-logo/linea.svg',
+  42161: '/chain-logo/arb.svg',
+  534352: '/chain-logo/scroll.svg',
+  10: '/chain-logo/optimism.svg',
+  8453: '/chain-logo/base.svg',
+  1284: '/chain-logo/moonbeam.svg',
+  43114: '/chain-logo/avalanche.svg',
+  250: '/chain-logo/fantom.svg',
+  42220: '/chain-logo/celo.svg',
+  100: '/chain-logo/gnosis.svg',
+  1101: '/chain-logo/polygon-zk.svg',
+  82: '/chain-logo/meter.svg',
+  1285: '/chain-logo/moonriver.svg',
+  1666600000: '/chain-logo/harmony.svg',
+  204: '/chain-logo/op-bnb.svg',
+  2222: '/chain-logo/kava.svg',
+  7777777: '/chain-logo/zora.svg',
+  8217: '/chain-logo/klaytn.svg',
+  1116: '/chain-logo/core-dao.svg',
+  5000: '/chain-logo/mantle.svg',
+  122: '/chain-logo/fuse.svg',
+  1088: '/chain-logo/metis.svg',
+  148: '/chain-logo/shimmer-evm.svg',
 }
 
 export const chains = wagmiChains.map((chain) => {

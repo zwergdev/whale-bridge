@@ -1,5 +1,5 @@
 import { CheckDone, CheckPending } from '@/components/ui/icons'
-import { Separator } from '@/components/ui/separator'
+import { Separator } from '@/components/ui'
 import { cn } from '@/lib/utils'
 import { SectionWrapper } from './misc'
 

@@ -1,4 +1,4 @@
-import { DISABLED_PAIRS } from '../_components/chainy/disabled-pairs'
+import { DISABLED_PAIRS } from '@/lib/constants'
 import { CHAINS } from '../_utils/chains'
 import { UseFormWatch, UseFormSetValue } from 'react-hook-form'
 

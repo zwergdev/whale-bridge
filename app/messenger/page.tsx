@@ -8,11 +8,16 @@ import { CHAINS } from '@/app/_utils/chains'
 import { MessengerForm, MessengerSchema } from '@/app/_utils/schemas'
 import { truncatedToaster } from '@/app/_utils/truncatedToaster'
 import { InfoHover } from '@/app/token/_components/info-hover'
-import { Button } from '@/components/ui/button-new'
-import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
-import { Label } from '@/components/ui/label'
-import { Paper } from '@/components/ui/paper'
-import { Textarea } from '@/components/ui/textarea'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  Textarea,
+  Button,
+  Label,
+  Paper,
+} from '@/components/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'

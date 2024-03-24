@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button-new'
+import { ButtonNew } from '@/components/ui'
 import { CheckPending } from '@/components/ui/icons'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
@@ -54,7 +54,7 @@ const Article = ({
         ))}
 
         <Link href={button.link}>
-          <Button className="w-38 md:mt-2 mt-0">{button.text}</Button>
+          <ButtonNew className="w-38 md:mt-2 mt-0">{button.text}</ButtonNew>
         </Link>
       </div>
       {children}

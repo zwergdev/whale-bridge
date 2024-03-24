@@ -5,7 +5,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion'
+} from '@/components/ui'
 import { Tail } from '@/components/ui/icons'
 import { SectionWrapper } from './misc'
 

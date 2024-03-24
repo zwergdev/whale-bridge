@@ -1,18 +1,19 @@
-import { Button } from '@/components/ui/button'
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from '@/components/ui/command'
-import { FormControl } from '@/components/ui/form'
-import { PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { ScrollArea } from '@/components/ui/scroll-area'
+  Button,
+  FormControl,
+  PopoverContent,
+  PopoverTrigger,
+  ScrollArea,
+} from '@/components/ui'
 import { ChevronDown, Repeat2 } from 'lucide-react'
 import Image from 'next/image'
 import { CHAINS } from '../../_utils/chains'
-import { DISABLED_PAIRS } from './disabled-pairs'
+import { DISABLED_PAIRS } from '@/lib/constants'
 
 const selectedChain = (fieldValue: number) => {
   const selectedChain = CHAINS.find(({ value }) => value === fieldValue)

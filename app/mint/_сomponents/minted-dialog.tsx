@@ -6,7 +6,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
+} from '@/components/ui'
 import Link from 'next/link'
 import { TX_LINK } from '../../_utils/chains'
 import { MintImage } from './mint-image'
