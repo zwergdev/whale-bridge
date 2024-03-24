@@ -2,7 +2,11 @@
 
 import { Popover } from '@/components/ui'
 import React, { useState } from 'react'
-import { ChainList, ChainListProps, ChainyTrigger } from './chains-popover'
+import {
+  ChainList,
+  ChainListProps,
+  ChainyTrigger,
+} from './chains-popover'
 
 type ChainsPopoverProps = Omit<
   ChainListProps,

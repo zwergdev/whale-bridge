@@ -1,6 +1,6 @@
 'use client'
 
-import { RepeatButton } from '@/app/_components/chainy/chains-popover'
+import { RepeatButton } from '@/app/_components/chains-popover'
 import {
   Form,
   FormControl,
@@ -11,11 +11,7 @@ import {
   Paper,
   Slider,
 } from '@/components/ui'
-import {
-  Prices,
-  fetchPrices,
-  useEstimateRefuelFee,
-} from './_hooks'
+import { Prices, fetchPrices, useEstimateRefuelFee } from './_hooks'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Fuel, Loader } from '@/components/ui/icons'
 import { useEffect, useState } from 'react'
@@ -24,8 +20,7 @@ import { useDebouncedCallback } from 'use-debounce'
 import { formatEther } from 'viem'
 import { parseEther } from 'viem/utils'
 import { useAccount, useBalance, useSwitchChain } from 'wagmi'
-import { ChainPopover } from '@/app/_components/chainy'
-import { SubmitButton } from '@/app/_components/submit-button'
+import { ChainPopover, SubmitButton } from '@/app/_components'
 import { useWriteContract, useCheckChainTo } from '@/app/_hooks'
 import { RefuelForm, RefuelSchema, truncatedToaster } from '@/app/_utils'
 import { BalanceIndicator } from './_components/balance-indicator'
