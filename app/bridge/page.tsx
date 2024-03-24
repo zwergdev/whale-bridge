@@ -22,7 +22,7 @@ import { useForm } from 'react-hook-form'
 import { useAccount, useBalance, useSwitchChain } from 'wagmi'
 import { ChainPopover, RepeatButton } from '@/app/_components/chainy'
 import { SubmitButton } from '../_components/submit-button'
-import { useWriteContract } from '../_hooks'
+import { useWriteContract, useCheckChainTo } from '@/app/_hooks'
 import { CHAINS } from '@/lib/constants'
 import { BridgeForm, BridgeSchema, truncatedToaster } from '@/app/_utils'
 import { BridgedDialog } from './_components/bridged-dialog'
@@ -31,9 +31,8 @@ import {
   useEstimateBridgeFee,
   useGetModernUserNFTIds,
   useGetUserNFTIds,
-} from './_hooks/actions'
-import { getNFTBalance } from './_hooks/nft-scan'
-import { useCheckChainTo } from '../_hooks/checkChainTo'
+  getNFTBalance,
+} from '@/app/bridge/_hooks'
 
 export default function BridgePage() {
   const { address, chain } = useAccount()

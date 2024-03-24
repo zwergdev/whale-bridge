@@ -11,6 +11,11 @@ import {
   Paper,
   Slider,
 } from '@/components/ui'
+import {
+  Prices,
+  fetchPrices,
+  useEstimateRefuelFee,
+} from './_hooks'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Fuel, Loader } from '@/components/ui/icons'
 import { useEffect, useState } from 'react'
@@ -21,16 +26,12 @@ import { parseEther } from 'viem/utils'
 import { useAccount, useBalance, useSwitchChain } from 'wagmi'
 import { ChainPopover } from '@/app/_components/chainy'
 import { SubmitButton } from '@/app/_components/submit-button'
-import { useWriteContract } from '../_hooks'
-import { CHAINS } from '@/lib/constants'
+import { useWriteContract, useCheckChainTo } from '@/app/_hooks'
 import { RefuelForm, RefuelSchema, truncatedToaster } from '@/app/_utils'
 import { BalanceIndicator } from './_components/balance-indicator'
 import { RefueledDialog } from './_components/refueled-dialog'
-import { MAX_REFUEL, SYMBOL_TO_CHAIN } from './_constants'
+import { MAX_REFUEL, SYMBOL_TO_CHAIN, CHAINS } from '@/lib/constants'
 import { getRefuelAdapter, refuelOpts } from './_contracts/refuel-contracts'
-import { useEstimateRefuelFee } from './_hooks/actions'
-import { Prices, fetchPrices } from './_hooks/fetch-prices'
-import { useCheckChainTo } from '../_hooks/checkChainTo'
 
 export default function RefuelPage() {
   const [prices, setPrices] = useState<Prices>()
