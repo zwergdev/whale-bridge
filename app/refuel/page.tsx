@@ -21,7 +21,7 @@ import { formatEther } from 'viem'
 import { parseEther } from 'viem/utils'
 import { useAccount, useBalance, useSwitchChain } from 'wagmi'
 import { ChainPopover, SubmitButton, TransactionDialog } from '@/app/_components'
-import { useWriteContract, useCheckChainTo, useSetChainFrom } from '@/app/_hooks'
+import { useWriteContract, useCheckChainTo, useSetChainFrom, useCustomSwitchChain } from '@/app/_hooks'
 import { RefuelForm, RefuelSchema, truncatedToaster } from '@/app/_utils'
 import { BalanceIndicator } from './_components'
 import { MAX_REFUEL, SYMBOL_TO_CHAIN, CHAINS } from '@/lib/constants'
@@ -213,16 +213,16 @@ export default function RefuelPage() {
               />
 
               <RepeatButton
-                onClick={() => {
-                  form.setValue('chainFrom', fields.chainTo)
-                  form.setValue('chainTo', fields.chainFrom)
-                  const selectedChain = CHAINS.find(
-                    ({ value }) => value === fields.chainTo,
-                  )
-
-                  if (selectedChain?.chainId)
-                    switchChain({ chainId: selectedChain.chainId })
-                }}
+                onClick={() =>
+                  useCustomSwitchChain({
+                    switchChain(chainId) {
+                      switchChain({ chainId })
+                    },
+                    setValue: form.setValue,
+                    chainFrom: fields.chainFrom,
+                    chainTo: fields.chainTo,
+                  })
+                }
               />
 
               <FormField

@@ -20,13 +20,18 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAccount, useBalance, useSwitchChain } from 'wagmi'
-import { ChainPopover, RepeatButton, SubmitButton, TransactionDialog } from '@/app/_components'
+import {
+  ChainPopover,
+  RepeatButton,
+  SubmitButton,
+  TransactionDialog,
+} from '@/app/_components'
 import {
   useWriteContract,
   useCheckChainTo,
   useSetChainFrom,
+  useCustomSwitchChain,
 } from '@/app/_hooks'
-import { CHAINS } from '@/lib/constants'
 import { BridgeForm, BridgeSchema, truncatedToaster } from '@/app/_utils'
 import { bridgeOpts } from './_contracts/bridge-contracts'
 import { USER_NFT, MODERN_USER_NFT } from '@/lib/constants'
@@ -241,16 +246,15 @@ export default function BridgePage() {
 
               <RepeatButton
                 onClick={() => {
-                  form.setValue('chainFrom', fields.chainTo)
-                  form.setValue('chainTo', fields.chainFrom)
                   ref.current = Date.now().toString()
-
-                  const selectedChain = CHAINS.find(
-                    ({ value }) => value === fields.chainTo,
-                  )
-
-                  if (selectedChain?.chainId)
-                    switchChain({ chainId: selectedChain.chainId })
+                  useCustomSwitchChain({
+                    switchChain(chainId) {
+                      switchChain({ chainId })
+                    },
+                    setValue: form.setValue,
+                    chainFrom: fields.chainFrom,
+                    chainTo: fields.chainTo,
+                  })
                 }}
               />
 

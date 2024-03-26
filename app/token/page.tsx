@@ -18,13 +18,17 @@ import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
 import { formatEther, parseEther } from 'viem'
 import { useAccount, useSwitchChain } from 'wagmi'
-import { ChainPopover, RepeatButton, TransactionDialog } from '@/app/_components'
+import {
+  ChainPopover,
+  RepeatButton,
+  TransactionDialog,
+} from '@/app/_components'
 import {
   useCheckChainTo,
+  useCustomSwitchChain,
   useSetChainFrom,
   useWriteContract,
 } from '@/app/_hooks'
-import { CHAINS } from '@/lib/constants'
 import { TokenForm, TokenSchema, truncatedToaster } from '@/app/_utils'
 import { BalanceIndicator } from '../refuel/_components/balance-indicator'
 import tokenImage from './_assets/token.webp'
@@ -192,16 +196,16 @@ export default function TokenPage() {
                 )}
               />
               <RepeatButton
-                onClick={() => {
-                  form.setValue('chainFrom', fields.chainTo)
-                  form.setValue('chainTo', fields.chainFrom)
-                  const selectedChain = CHAINS.find(
-                    ({ value }) => value === fields.chainTo,
-                  )
-
-                  if (selectedChain?.chainId)
-                    switchChain({ chainId: selectedChain?.chainId })
-                }}
+                onClick={() =>
+                  useCustomSwitchChain({
+                    switchChain(chainId) {
+                      switchChain({ chainId })
+                    },
+                    setValue: form.setValue,
+                    chainFrom: fields.chainFrom,
+                    chainTo: fields.chainTo,
+                  })
+                }
               />
 
               <FormField

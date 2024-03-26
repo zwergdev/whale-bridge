@@ -23,6 +23,7 @@ import {
   useWriteContract,
   useCheckChainTo,
   useSetChainFrom,
+  useCustomSwitchChain,
 } from '@/app/_hooks'
 import { AddressNetwork } from './_components'
 import {
@@ -144,17 +145,16 @@ export default function MessengerPage() {
               />
 
               <RepeatButton
-                onClick={() => {
-                  form.setValue('chainFrom', fields.chainTo)
-                  form.setValue('chainTo', fields.chainFrom)
-
-                  const selectedChain = CHAINS.find(
-                    ({ value }) => value === fields.chainTo,
-                  )
-
-                  if (selectedChain?.chainId)
-                    switchChain({ chainId: selectedChain.chainId })
-                }}
+                onClick={() =>
+                  useCustomSwitchChain({
+                    switchChain(chainId) {
+                      switchChain({ chainId })
+                    },
+                    setValue: form.setValue,
+                    chainFrom: fields.chainFrom,
+                    chainTo: fields.chainTo,
+                  })
+                }
               />
 
               <FormField
