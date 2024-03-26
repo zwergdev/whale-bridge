@@ -20,10 +20,10 @@ import { useDebouncedCallback } from 'use-debounce'
 import { formatEther } from 'viem'
 import { parseEther } from 'viem/utils'
 import { useAccount, useBalance, useSwitchChain } from 'wagmi'
-import { ChainPopover, SubmitButton } from '@/app/_components'
-import { useWriteContract, useCheckChainTo } from '@/app/_hooks'
+import { ChainPopover, SubmitButton, TransactionDialog } from '@/app/_components'
+import { useWriteContract, useCheckChainTo, useSetChainFrom } from '@/app/_hooks'
 import { RefuelForm, RefuelSchema, truncatedToaster } from '@/app/_utils'
-import { RefueledDialog, BalanceIndicator } from './_components'
+import { BalanceIndicator } from './_components'
 import { MAX_REFUEL, SYMBOL_TO_CHAIN, CHAINS } from '@/lib/constants'
 import { getRefuelAdapter, refuelOpts } from './_contracts/refuel-contracts'
 
@@ -52,11 +52,11 @@ export default function RefuelPage() {
   }, [])
 
   useEffect(() => {
+    form.setValue('chainFrom', useSetChainFrom({ chain: chain?.id }))
     form.setValue(
-      'chainFrom',
-      CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
+      'chainTo',
+      useCheckChainTo({ watch, chain: chain?.id })!,
     )
-    useCheckChainTo({ setValue: form.setValue, watch, chain: chain?.id })
     form.setValue('amount', 0)
     setFee(BigInt(0))
   }, [chain])
@@ -65,9 +65,8 @@ export default function RefuelPage() {
     resolver: zodResolver(RefuelSchema),
     defaultValues: {
       amount: 0,
-      chainFrom:
-        CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
-      chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value, // 102
+      chainFrom: useSetChainFrom({ chain: chain?.id }), // 175
+      chainTo: useCheckChainTo({ chain: chain?.id })!, // 102
     },
   })
 
@@ -358,7 +357,7 @@ export default function RefuelPage() {
           </form>
         </Form>
       </Paper>
-      <RefueledDialog
+      <TransactionDialog
         hash={hash}
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}

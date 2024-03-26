@@ -1,13 +1,12 @@
-import { Header } from '@/app/_widgets/header'
-import { Footer } from '@/app/_widgets/footer'
+import { Header, Footer } from '@/app/_widgets'
 import { WhaleBg } from '@/components/ui/icons'
 import { ToasterSonner } from '@/components/ui'
 import { GoogleAnalytics } from '@next/third-parties/google'
-import '@rainbow-me/rainbowkit/styles.css'
 import type { Metadata } from 'next'
 import { Space_Grotesk } from 'next/font/google'
 import { headers } from 'next/headers'
 import { ContextProvider } from './_providers/web3'
+import '@rainbow-me/rainbowkit/styles.css'
 import './globals.css'
 
 const grotesk = Space_Grotesk({

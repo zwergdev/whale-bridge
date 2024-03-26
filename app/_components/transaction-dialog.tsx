@@ -1,3 +1,4 @@
+import { MintImage } from '@/app/mint/_сomponents/mint-image'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,21 +17,23 @@ import Link from 'next/link'
 import { cloneElement, useState } from 'react'
 import { TX_LINK } from '@/lib/constants'
 
-type MessengerDialogProps = {
+type TransactionDialogProps = {
   hash?: `0x${string}`
   open: boolean
   chainId: number
   onOpenChange: (open: boolean) => void
   chainTo: number
+  isLayerZero?: boolean
 }
 
-export const MessengerDialog = ({
+export const TransactionDialog = ({
   open,
   hash,
   chainId,
   onOpenChange,
   chainTo,
-}: MessengerDialogProps) => {
+  isLayerZero = true,
+}: TransactionDialogProps) => {
   const [txStatus, setTxStatus] = useState(MessageStatus.INFLIGHT)
 
   waitForMessageReceived(chainTo, hash!).then(({ status }) => {
@@ -45,7 +48,7 @@ export const MessengerDialog = ({
     if (txStatus === MessageStatus.INFLIGHT) {
       return {
         icon: <Loader className="animate-spin-slow" />,
-        text: 'Messenger transaction in process.',
+        text: 'Bridge transaction in process.',
       }
     }
     if (txStatus === MessageStatus.DELIVERED) {
@@ -66,59 +69,63 @@ export const MessengerDialog = ({
         <AlertDialogHeader>
           <AlertDialogTitle>Transaction status</AlertDialogTitle>
           <AlertDialogDescription className="flex flex-col items-center justify-center py-8 relative">
-            {(() => {
-              const { icon, text } = renderStatus()
-              return (
-                <>
-                  {cloneElement(icon, { size: 32 })}
-                  <p className="text-xl font-medium text-foreground mt-4 mb-2">
-                    {text}
-                  </p>
-                </>
-              )
-            })()}
-            <p>
-              You can verify its status using the{' '}
-              <Link
-                href="https://layerzeroscan.com/"
-                target="_blank"
-                className="text-foreground hover:underline"
-              >
-                LayerZero
-              </Link>{' '}
-              explorer.
-            </p>
+            {isLayerZero ? (
+              <>
+                {(() => {
+                  const { icon, text } = renderStatus()
+                  return (
+                    <>
+                      {cloneElement(icon, { size: 32 })}
+                      <p className="text-xl font-medium text-foreground mt-4 mb-2">
+                        {text}
+                      </p>
+                    </>
+                  )
+                })()}
+                <p>
+                  You can verify its status using the{' '}
+                  <Link
+                    href="https://layerzeroscan.com/"
+                    target="_blank"
+                    className="text-foreground hover:underline"
+                  >
+                    LayerZero
+                  </Link>{' '}
+                  explorer.
+                </p>
+              </>
+            ) : (
+              <Check className="stroke-green-600 mb-16" size={52} />
+            )}
 
             <div className="flex gap-4 items-center mt-16 w-full">
+              <MintImage size={100} />
               <div className="truncate max-w-96 text-left">
-                <p>
-                  Transaction link:{' '}
-                  <Link
-                    target="_blank"
-                    href={`https://${TX_LINK[chainId]}/tx/${hash}`}
-                    className="text-foreground underline"
-                  >
-                    {`${TX_LINK[chainId]}/tx/${hash}`}
-                  </Link>
-                </p>
+                <p>Transaction link:</p>
 
-                <p className="mt-4">
-                  LayerZero link:{' '}
-                  <Link
-                    target="_blank"
-                    href={`https://layerzeroscan.com/tx/${hash}`}
-                    className="text-foreground underline"
-                  >
-                    {`layerzeroscan.com/tx/${hash}`}
-                  </Link>
-                </p>
+                <Link
+                  target="_blank"
+                  href={`https://${TX_LINK[chainId]}/tx/${hash}`}
+                  className="text-foreground underline"
+                >
+                  {`${TX_LINK[chainId]}/tx/${hash}`}
+                </Link>
+                <p className="mt-4">LayerZero link:</p>
+
+                <Link
+                  target="_blank"
+                  href={`https://layerzeroscan.com/tx/${hash}`}
+                  className="text-foreground underline"
+                >
+                  {`layerzeroscan.com/tx/${hash}`}
+                </Link>
               </div>
             </div>
             <div className="w-32 h-32 -z-10 bg-primary blur-[150px] absolute -bottom-20 left-0" />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction>New Message</AlertDialogAction>
+          <AlertDialogAction>New Transaction</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

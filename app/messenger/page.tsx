@@ -1,6 +1,6 @@
 'use client'
 
-import { ChainList, RepeatButton } from '@/app/_components'
+import { ChainList, RepeatButton, TransactionDialog } from '@/app/_components'
 import { CHAINS } from '@/lib/constants/chains'
 import { MessengerForm, MessengerSchema, truncatedToaster } from '@/app/_utils'
 import { InfoHover } from '@/app/token/_components/info-hover'
@@ -19,14 +19,17 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { parseEther } from 'viem'
 import { useAccount, useSwitchChain } from 'wagmi'
-import { useWriteContract } from '../_hooks'
-import { AddressNetwork, MessengerDialog } from './_components'
+import {
+  useWriteContract,
+  useCheckChainTo,
+  useSetChainFrom,
+} from '@/app/_hooks'
+import { AddressNetwork } from './_components'
 import {
   getMessageDestination,
   sendMessageOpts,
 } from './_contracts/messenger-contracts'
 import { useEstimateRefuelFee } from './_hooks/actions'
-import { useCheckChainTo } from '../_hooks/checkChainTo'
 
 export default function MessengerPage() {
   const { switchChain } = useSwitchChain()
@@ -39,20 +42,16 @@ export default function MessengerPage() {
   const selectedChainId = chain?.id ?? 0
 
   useEffect(() => {
-    form.setValue(
-      'chainFrom',
-      CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
-    )
-    useCheckChainTo({ setValue: form.setValue, watch, chain: chain?.id })
+    form.setValue('chainFrom', useSetChainFrom({ chain: chain?.id }))
+    form.setValue('chainTo', useCheckChainTo({ watch, chain: chain?.id })!)
   }, [chain])
 
   const form = useForm<MessengerForm>({
     resolver: zodResolver(MessengerSchema),
     defaultValues: {
       message: 'Wow, Whale Messenger is cool! 🐋',
-      chainFrom:
-        CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
-      chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value, // 102
+      chainFrom: useSetChainFrom({ chain: chain?.id }), // 175
+      chainTo: useCheckChainTo({ chain: chain?.id })!, // 102
     },
   })
   const {
@@ -74,11 +73,8 @@ export default function MessengerPage() {
     const isDisabledChainUsed = [150].some(
       (id) => id === chainFrom || id === chainTo,
     )
-    if (isDisabledChainUsed)
+    if (isDisabledChainUsed || chainFrom === 126)
       return truncatedToaster('Ooops...', 'This chain is temporary disabled.')
-    if (chainFrom === 126)
-      return truncatedToaster('Ooops...', 'This chain is temporary disabled.')
-    // @TODO: remove later logic above
 
     const { data: fee }: any = await refetchFee()
 
@@ -221,7 +217,7 @@ export default function MessengerPage() {
           </form>
         </Form>
       </Paper>
-      <MessengerDialog
+      <TransactionDialog
         hash={hash}
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}

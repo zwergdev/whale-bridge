@@ -1,15 +1,9 @@
-import {
-  Discord,
-  LayerZero,
-  MobileLogo,
-  Telegram,
-  Twitter,
-} from '@/components/ui/icons'
-import { GitBook } from '@/components/ui/icons/git-book'
 import { Separator } from '@/components/ui'
 import Link from 'next/link'
 import { cloneElement } from 'react'
 import { FooterNavigation } from './footer-navigation'
+import { FOOTER_LINKS } from '@/lib/constants'
+import { LayerZero, MobileLogo } from '@/components/ui/icons'
 
 export const Footer = () => (
   <footer className="max-w-full mx-auto w-full text-foreground flex flex-col pb-4">
@@ -38,15 +32,7 @@ export const Footer = () => (
 
     <div className="container flex justify-between items-center">
       <div className="flex items-center gap-4">
-        {[
-          { icon: <Telegram />, href: 'https://t.me/whale_app_com' },
-          { icon: <Twitter />, href: 'https://twitter.com/Whale_app_' },
-          { icon: <Discord />, href: 'https://discord.gg/FdNZbwY6' },
-          {
-            icon: <GitBook style={{ width: '24px' }} />,
-            href: 'https://whale-app.gitbook.io/whale-book/',
-          },
-        ].map(({ icon, href }, idx) => (
+        {FOOTER_LINKS.map(({ icon, href }, idx) => (
           <Link href={href} key={idx} target="_blank">
             {cloneElement(icon, {
               className:

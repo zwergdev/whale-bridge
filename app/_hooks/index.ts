@@ -1,2 +1,2 @@
 export * from './write-contract'
-export * from './checkChainTo'
+export * from './use-set-chains'

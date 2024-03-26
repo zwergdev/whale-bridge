@@ -7,8 +7,7 @@ import {
   TableRow,
 } from '@/components/ui'
 import Image from 'next/image'
-import { Caption } from './_components/caption'
-import { ContractCell } from './_components/contract-cell'
+import { ContractCell, Caption } from './_components'
 import { ALL_CONTRACTS } from '@/lib/constants'
 
 export default function ContractsPage() {

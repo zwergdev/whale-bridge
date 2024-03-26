@@ -10,6 +10,7 @@ import {
   Paper,
   ButtonNew,
 } from '@/components/ui'
+import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -17,15 +18,17 @@ import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
 import { formatEther, parseEther } from 'viem'
 import { useAccount, useSwitchChain } from 'wagmi'
-import { z } from 'zod'
-import { ChainPopover, RepeatButton } from '@/app/_components'
-import { useWriteContract } from '../_hooks'
+import { ChainPopover, RepeatButton, TransactionDialog } from '@/app/_components'
+import {
+  useCheckChainTo,
+  useSetChainFrom,
+  useWriteContract,
+} from '@/app/_hooks'
 import { CHAINS } from '@/lib/constants'
 import { TokenForm, TokenSchema, truncatedToaster } from '@/app/_utils'
 import { BalanceIndicator } from '../refuel/_components/balance-indicator'
 import tokenImage from './_assets/token.webp'
-import { InfoHover } from './_components/info-hover'
-import { TokenDialog } from './_components/token-dialog'
+import { InfoHover } from './_components'
 import {
   TOKEN_CONTRACTS,
   bridgeToken,
@@ -36,7 +39,6 @@ import {
   useGetTokenBalance,
   useGetTokenFee,
 } from './_hooks/actions'
-import { useCheckChainTo } from '../_hooks/checkChainTo'
 
 export default function TokenPage() {
   const { address, chain, status } = useAccount()
@@ -49,12 +51,8 @@ export default function TokenPage() {
   const selectedChainId = chain?.id ?? 0
 
   useEffect(() => {
-    form.setValue(
-      'chainFrom',
-      CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
-    )
-    useCheckChainTo({ setValue: form.setValue, watch, chain: chain?.id })
-
+    form.setValue('chainFrom', useSetChainFrom({ chain: chain?.id }))
+    form.setValue('chainTo', useCheckChainTo({ watch, chain: chain?.id })!)
     debounceTokenBalance(1)
     setValue('bridgeAmount', undefined)
   }, [chain])
@@ -70,9 +68,8 @@ export default function TokenPage() {
     resolver: zodResolver(TokenSchema),
     defaultValues: {
       tokenBalance: 0,
-      chainFrom:
-        CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
-      chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value, // 102
+      chainFrom: useSetChainFrom({ chain: chain?.id }), // 175
+      chainTo: useCheckChainTo({ chain: chain?.id })!, // 102
     },
   })
   const { watch, setValue, register } = form
@@ -317,7 +314,7 @@ export default function TokenPage() {
           </form>
         </Form>
       </Paper>
-      <TokenDialog
+      <TransactionDialog
         isLayerZero={isLayerZeroTx}
         hash={hash}
         open={isDialogOpen}
