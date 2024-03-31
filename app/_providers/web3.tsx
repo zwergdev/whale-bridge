@@ -15,7 +15,7 @@ import { rainbowTheme } from './rainbow-theme'
 
 const queryClient = new QueryClient()
 
-export const projectId = 'c8cb5377bf1b35c1349bb08e2025d352'
+const projectId = 'c8cb5377bf1b35c1349bb08e2025d352'
 
 if (!projectId) throw new Error('Project ID is not defined')
 

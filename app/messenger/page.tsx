@@ -3,7 +3,7 @@
 import { ChainList, RepeatButton, TransactionDialog } from '@/app/_components'
 import { CHAINS } from '@/lib/constants/chains'
 import { MessengerForm, MessengerSchema, truncatedToaster } from '@/app/_utils'
-import { InfoHover } from '@/app/token/_components/info-hover'
+import { InfoHover } from '@/app/_components/info-hover'
 import {
   Form,
   FormControl,

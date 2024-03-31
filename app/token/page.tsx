@@ -22,6 +22,7 @@ import {
   ChainPopover,
   RepeatButton,
   TransactionDialog,
+  InfoHover
 } from '@/app/_components'
 import {
   useCheckChainTo,
@@ -32,7 +33,6 @@ import {
 import { TokenForm, TokenSchema, truncatedToaster } from '@/app/_utils'
 import { BalanceIndicator } from '../refuel/_components/balance-indicator'
 import tokenImage from './_assets/token.webp'
-import { InfoHover } from './_components'
 import {
   TOKEN_CONTRACTS,
   bridgeToken,
