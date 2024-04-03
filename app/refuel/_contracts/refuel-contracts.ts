@@ -1,6 +1,6 @@
 import { pack } from '@ethersproject/solidity'
 import { parseEther } from 'viem/utils'
-import { refuelABI } from './refuel-abi'
+import { refuelABI } from '@/lib/abi/refuel-abi'
 
 const REFUEL_CONTRACTS: {
   [chainId: number]: {
