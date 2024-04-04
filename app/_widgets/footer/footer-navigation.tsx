@@ -1,14 +1,18 @@
 'use client'
 
+import { HYPERLANE_NAVIGATION_HEADER, NAVIGATION_FOOTER } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { NAVIGATION_FOOTER } from '@/lib/constants'
 
 export const FooterNavigation = () => {
   const pathname = usePathname()
 
-  return NAVIGATION_FOOTER.map(({ href, label }, index) => (
+  const definedNavigation = pathname.includes('/hyperlane')
+    ? HYPERLANE_NAVIGATION_HEADER
+    : NAVIGATION_FOOTER
+
+  return definedNavigation.map(({ href, label }, index) => (
     <Link
       href={href}
       key={index}
