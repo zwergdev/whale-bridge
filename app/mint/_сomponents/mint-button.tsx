@@ -2,10 +2,10 @@
 
 import { useWriteContract } from '@/app/_hooks'
 import { MINT_CONTRACTS } from '@/app/mint/_contracts/mint-contracts'
-import { Button } from '@/components/ui/button-new'
+import { ButtonNew } from '@/components/ui'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount, useBalance, useWaitForTransactionReceipt } from 'wagmi'
-import { truncatedToaster } from '../../_utils/truncatedToaster'
+import { truncatedToaster } from '@/app/_utils'
 import { mint } from '../_contracts/mint-contracts'
 import { MintedDialog } from './minted-dialog'
 
@@ -37,21 +37,21 @@ export const MintButton = () => {
 
   if (status === 'reconnecting' || status === 'connecting')
     return (
-      <Button className="w-full mb-5" loading>
+      <ButtonNew className="w-full mb-5" loading>
         Loading...
-      </Button>
+      </ButtonNew>
     )
 
   return (
     <>
-      <Button
+      <ButtonNew
         className="w-full mb-5"
         onClick={handleClick}
         loading={isLoading || isPending}
         disabled={connectModalOpen}
       >
         {address ? 'Mint' : 'Connect wallet'}
-      </Button>
+      </ButtonNew>
 
       <MintedDialog hash={hash} open={!!waitData} chainId={selectedChainId} />
     </>

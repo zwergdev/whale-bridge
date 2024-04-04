@@ -1,9 +1,11 @@
-import { MintButton } from './_сomponents/mint-button'
-import { MintChainPopover } from './_сomponents/mint-chain-popover'
-import { MintImage } from './_сomponents/mint-image'
-import { ReadMore } from './_сomponents/read-more'
-import { TotalMinted } from './_сomponents/total-minted'
-import { TotalSupply } from './_сomponents/total-supply'
+import {
+  MintButton,
+  MintChainPopover,
+  MintImage,
+  ReadMore,
+  TotalMinted,
+  TotalSupply,
+} from '@/app/mint/_сomponents'
 
 export default function MintPage() {
   return (

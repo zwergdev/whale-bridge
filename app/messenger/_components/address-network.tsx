@@ -1,10 +1,13 @@
-import { CHAINS } from '@/app/_utils/chains'
-import { InfoHover } from '@/app/token/_components/info-hover'
-import { Button } from '@/components/ui/button'
-import { FormControl } from '@/components/ui/form'
-import { Label } from '@/components/ui/label'
-import { Popover, PopoverTrigger } from '@/components/ui/popover'
-import { ChevronDown } from 'lucide-react'
+import { CHAINS } from '@/lib/constants/chains'
+import { InfoHover } from '@/app/_components/info-hover'
+import {
+  Popover,
+  PopoverTrigger,
+  Label,
+  FormControl,
+  Button,
+} from '@/components/ui'
+import { ChevronDown } from '@/components/ui/icons'
 import Image from 'next/image'
 
 type AddressNetworkProps = {

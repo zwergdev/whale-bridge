@@ -1,4 +1,4 @@
-export const contracts: {
+export const ALL_CONTRACTS: {
   explorer: string
   chain: string
   image: string

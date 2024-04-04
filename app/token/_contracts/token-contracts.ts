@@ -1,4 +1,4 @@
-import { tokenABI } from './token-abi'
+import { tokenABI } from '@/lib/abi/token-abi'
 
 export const TOKEN_CONTRACTS: {
   [chainId: number]: {

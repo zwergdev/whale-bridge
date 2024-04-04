@@ -1,5 +1,5 @@
 import { parseEther } from 'viem/utils'
-import { mintABI } from './mint-abi'
+import { mintABI } from '@/lib/abi/mint-abi'
 
 export const MINT_CONTRACTS: {
   [chainId: number]: {

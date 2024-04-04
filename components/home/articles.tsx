@@ -1,13 +1,8 @@
-import { Button } from '@/components/ui/button-new'
+import { ButtonNew } from '@/components/ui'
 import { CheckPending } from '@/components/ui/icons'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
-import bridge from '../../../public/general/bridge-menu.webp'
-import refuel from '../../../public/general/refuel-menu.webp'
-import bridgeNFT from '../../../public/nft/nft-bridge.webp'
-import l0NFT from '../../../public/nft/nft-l0.webp'
-import refuelNFT from '../../../public/nft/nft-refuel.webp'
 import { SectionWrapper } from './misc'
 
 type ArticleProps = {
@@ -54,7 +49,7 @@ const Article = ({
         ))}
 
         <Link href={button.link}>
-          <Button className="w-38 md:mt-2 mt-0">{button.text}</Button>
+          <ButtonNew className="w-38 md:mt-2 mt-0">{button.text}</ButtonNew>
         </Link>
       </div>
       {children}
@@ -81,9 +76,8 @@ export const Articles = () => {
       >
         <div className="border border-primary rounded-lg">
           <Image
-            src={l0NFT}
+            src="/nft/nft-l0.webp"
             quality={100}
-            placeholder="blur"
             width={440}
             height={440}
             alt="mint-picture"
@@ -105,8 +99,7 @@ export const Articles = () => {
         <div className="relative lg:mt-32 mt-0">
           <div className="border border-primary rounded-lg">
             <Image
-              src={bridge}
-              placeholder="blur"
+              src="/general/bridge-menu.webp"
               width={500}
               height={273}
               quality={100}
@@ -115,8 +108,7 @@ export const Articles = () => {
             />
           </div>
           <Image
-            src={bridgeNFT}
-            placeholder="blur"
+            src="/nft/nft-bridge.webp"
             width={300}
             height={300}
             alt="mint-picture"
@@ -138,8 +130,7 @@ export const Articles = () => {
         <div className="relative lg:mt-24 mt-0">
           <div className="border border-primary rounded-lg">
             <Image
-              src={refuelNFT}
-              placeholder="blur"
+              src="/nft/nft-refuel.webp"
               quality={100}
               width={350}
               height={350}
@@ -148,8 +139,7 @@ export const Articles = () => {
             />
           </div>
           <Image
-            src={refuel}
-            placeholder="blur"
+            src="/general/refuel-menu.webp"
             width={320}
             height={320}
             alt="mint-picture"

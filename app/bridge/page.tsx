@@ -1,44 +1,46 @@
 'use client'
 
 import { BalanceIndicator } from '@/app/refuel/_components/balance-indicator'
-import { Button } from '@/components/ui/button'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from '@/components/ui/form'
-import { LayerZero } from '@/components/ui/icons'
-import { Paper } from '@/components/ui/paper'
+import { LayerZero, ChevronsUpDown, Loader } from '@/components/ui/icons'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from '@/components/ui/select'
+  Paper,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  Button,
+} from '@/components/ui'
 import { delay } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ChevronsUpDown, Loader } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useAccount, useBalance, useSwitchChain } from 'wagmi'
-import { ChainPopover } from '../_components/chainy'
-import { RepeatButton } from '../_components/chainy/chains-popover'
-import { SubmitButton } from '../_components/submit-button'
-import { useWriteContract } from '../_hooks'
-import { CHAINS } from '../_utils/chains'
-import { BridgeForm, BridgeSchema } from '../_utils/schemas'
-import { truncatedToaster } from '../_utils/truncatedToaster'
-import { BridgedDialog } from './_components/bridged-dialog'
+import {
+  ChainPopover,
+  RepeatButton,
+  SubmitButton,
+  TransactionDialog,
+} from '@/app/_components'
+import {
+  useWriteContract,
+  useCheckChainTo,
+  useSetChainFrom,
+  useCustomSwitchChain,
+} from '@/app/_hooks'
+import { BridgeForm, BridgeSchema, truncatedToaster } from '@/app/_utils'
 import { bridgeOpts } from './_contracts/bridge-contracts'
+import { USER_NFT, MODERN_USER_NFT } from '@/lib/constants'
 import {
   useEstimateBridgeFee,
   useGetModernUserNFTIds,
   useGetUserNFTIds,
-} from './_hooks/actions'
-import { getNFTBalance } from './_hooks/nft-scan'
-import { useCheckChainTo } from '../_hooks/checkChainTo'
+  getNFTBalance,
+} from '@/app/bridge/_hooks'
 
 export default function BridgePage() {
   const { address, chain } = useAccount()
@@ -62,28 +64,12 @@ export default function BridgePage() {
       await delay(2000)
 
       const recursiveFunction = async (attempt = 0): Promise<any[]> => {
-        if (
-          chain?.id === 42220 ||
-          chain?.id === 1101 ||
-          chain?.id === 82 ||
-          chain?.id === 1285 ||
-          chain?.id === 1666600000
-        ) {
+        if (USER_NFT.includes(chain?.id!)) {
           const { data: nfts }: any = await refetchUserNFT()
           return nfts.map((nft: any) => nft.toString())
         }
 
-        if (
-          chain?.id === 204 ||
-          chain?.id === 2222 ||
-          chain?.id === 7777777 ||
-          chain?.id === 8217 ||
-          chain?.id === 1116 ||
-          chain?.id === 5000 ||
-          chain?.id === 122 ||
-          chain?.id === 1088 ||
-          chain?.id === 148
-        ) {
+        if (MODERN_USER_NFT.includes(chain?.id!)) {
           const { data: nfts }: any = await refetchModernUserNFT()
           return nfts.map((nft: any) => nft.toString())
         }
@@ -116,19 +102,15 @@ export default function BridgePage() {
   }, [address, chain, ref.current])
 
   useEffect(() => {
-    form.setValue(
-      'chainFrom',
-      CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
-    )
-    useCheckChainTo({ setValue: form.setValue, watch, chain: chain?.id })
+    form.setValue('chainFrom', useSetChainFrom({ chain: chain?.id }))
+    form.setValue('chainTo', useCheckChainTo({ watch, chain: chain?.id })!)
   }, [chain])
 
   const form = useForm<BridgeForm>({
     resolver: zodResolver(BridgeSchema),
     defaultValues: {
-      chainFrom:
-        CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
-      chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value, // 102
+      chainFrom: useSetChainFrom({ chain: chain?.id }), // 175
+      chainTo: useCheckChainTo({ chain: chain?.id })!, // 102
       tokenId: '0',
       nfts: [],
     },
@@ -264,16 +246,15 @@ export default function BridgePage() {
 
               <RepeatButton
                 onClick={() => {
-                  form.setValue('chainFrom', fields.chainTo)
-                  form.setValue('chainTo', fields.chainFrom)
                   ref.current = Date.now().toString()
-
-                  const selectedChain = CHAINS.find(
-                    ({ value }) => value === fields.chainTo,
-                  )
-
-                  if (selectedChain?.chainId)
-                    switchChain({ chainId: selectedChain.chainId })
+                  useCustomSwitchChain({
+                    switchChain(chainId) {
+                      switchChain({ chainId })
+                    },
+                    setValue: form.setValue,
+                    chainFrom: fields.chainFrom,
+                    chainTo: fields.chainTo,
+                  })
                 }}
               />
 
@@ -325,7 +306,7 @@ export default function BridgePage() {
           </form>
         </Form>
       </Paper>
-      <BridgedDialog
+      <TransactionDialog
         hash={hash}
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}

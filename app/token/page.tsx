@@ -1,17 +1,16 @@
 'use client'
-
-import { truncatedToaster } from '@/app/_utils/truncatedToaster'
-import { Button } from '@/components/ui/button-new'
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Paper } from '@/components/ui/paper'
+  Input,
+  Label,
+  Paper,
+  ButtonNew,
+} from '@/components/ui'
+import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -19,16 +18,21 @@ import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
 import { formatEther, parseEther } from 'viem'
 import { useAccount, useSwitchChain } from 'wagmi'
-import { z } from 'zod'
-import { ChainPopover } from '../_components/chainy'
-import { RepeatButton } from '../_components/chainy/chains-popover'
-import { useWriteContract } from '../_hooks'
-import { CHAINS } from '../_utils/chains'
-import { TokenForm, TokenSchema } from '../_utils/schemas'
+import {
+  ChainPopover,
+  RepeatButton,
+  TransactionDialog,
+  InfoHover,
+} from '@/app/_components'
+import {
+  useCheckChainTo,
+  useCustomSwitchChain,
+  useSetChainFrom,
+  useWriteContract,
+} from '@/app/_hooks'
+import { TokenForm, TokenSchema, truncatedToaster } from '@/app/_utils'
 import { BalanceIndicator } from '../refuel/_components/balance-indicator'
 import tokenImage from './_assets/token.webp'
-import { InfoHover } from './_components/info-hover'
-import { TokenDialog } from './_components/token-dialog'
 import {
   TOKEN_CONTRACTS,
   bridgeToken,
@@ -39,7 +43,6 @@ import {
   useGetTokenBalance,
   useGetTokenFee,
 } from './_hooks/actions'
-import { useCheckChainTo } from '../_hooks/checkChainTo'
 
 export default function TokenPage() {
   const { address, chain, status } = useAccount()
@@ -52,12 +55,8 @@ export default function TokenPage() {
   const selectedChainId = chain?.id ?? 0
 
   useEffect(() => {
-    form.setValue(
-      'chainFrom',
-      CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
-    )
-    useCheckChainTo({ setValue: form.setValue, watch, chain: chain?.id })
-
+    form.setValue('chainFrom', useSetChainFrom({ chain: chain?.id }))
+    form.setValue('chainTo', useCheckChainTo({ watch, chain: chain?.id })!)
     debounceTokenBalance(1)
     setValue('bridgeAmount', undefined)
   }, [chain])
@@ -73,9 +72,8 @@ export default function TokenPage() {
     resolver: zodResolver(TokenSchema),
     defaultValues: {
       tokenBalance: 0,
-      chainFrom:
-        CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
-      chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value, // 102
+      chainFrom: useSetChainFrom({ chain: chain?.id }), // 175
+      chainTo: useCheckChainTo({ chain: chain?.id })!, // 102
     },
   })
   const { watch, setValue, register } = form
@@ -198,16 +196,16 @@ export default function TokenPage() {
                 )}
               />
               <RepeatButton
-                onClick={() => {
-                  form.setValue('chainFrom', fields.chainTo)
-                  form.setValue('chainTo', fields.chainFrom)
-                  const selectedChain = CHAINS.find(
-                    ({ value }) => value === fields.chainTo,
-                  )
-
-                  if (selectedChain?.chainId)
-                    switchChain({ chainId: selectedChain?.chainId })
-                }}
+                onClick={() =>
+                  useCustomSwitchChain({
+                    switchChain(chainId) {
+                      switchChain({ chainId })
+                    },
+                    setValue: form.setValue,
+                    chainFrom: fields.chainFrom,
+                    chainTo: fields.chainTo,
+                  })
+                }
               />
 
               <FormField
@@ -248,7 +246,7 @@ export default function TokenPage() {
                   width={32}
                   height={32}
                 />
-                <Button
+                <ButtonNew
                   type="button"
                   className="min-w-32 sm:w-auto w-full hover:scale-100 h-12"
                   disabled={
@@ -257,7 +255,7 @@ export default function TokenPage() {
                   onClick={onSubmitClaim}
                 >
                   CLAIM
-                </Button>
+                </ButtonNew>
               </div>
             </div>
 
@@ -309,18 +307,18 @@ export default function TokenPage() {
               </div>
             </div>
 
-            <Button
+            <ButtonNew
               className="w-full mt-5 hover:scale-[1.05]"
               type="submit"
               disabled={!fields.tokenBalance || !fields.bridgeAmount}
               loading={isPending || status !== 'connected'}
             >
               {status === 'disconnected' ? 'CONNECT WALLET' : 'BRIDGE'}
-            </Button>
+            </ButtonNew>
           </form>
         </Form>
       </Paper>
-      <TokenDialog
+      <TransactionDialog
         isLayerZero={isLayerZeroTx}
         hash={hash}
         open={isDialogOpen}

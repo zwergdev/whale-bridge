@@ -1,32 +1,36 @@
 'use client'
 
+import { ChainList, RepeatButton, TransactionDialog } from '@/app/_components'
+import { CHAINS } from '@/lib/constants/chains'
+import { MessengerForm, MessengerSchema, truncatedToaster } from '@/app/_utils'
+import { InfoHover } from '@/app/_components/info-hover'
 import {
-  ChainList,
-  RepeatButton,
-} from '@/app/_components/chainy/chains-popover'
-import { CHAINS } from '@/app/_utils/chains'
-import { MessengerForm, MessengerSchema } from '@/app/_utils/schemas'
-import { truncatedToaster } from '@/app/_utils/truncatedToaster'
-import { InfoHover } from '@/app/token/_components/info-hover'
-import { Button } from '@/components/ui/button-new'
-import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
-import { Label } from '@/components/ui/label'
-import { Paper } from '@/components/ui/paper'
-import { Textarea } from '@/components/ui/textarea'
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  Textarea,
+  Button,
+  Label,
+  Paper,
+} from '@/components/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { parseEther } from 'viem'
 import { useAccount, useSwitchChain } from 'wagmi'
-import { useWriteContract } from '../_hooks'
-import { AddressNetwork } from './_components/address-network'
-import { MessengerDialog } from './_components/messenger-dialog'
+import {
+  useWriteContract,
+  useCheckChainTo,
+  useSetChainFrom,
+  useCustomSwitchChain,
+} from '@/app/_hooks'
+import { AddressNetwork } from './_components'
 import {
   getMessageDestination,
   sendMessageOpts,
 } from './_contracts/messenger-contracts'
 import { useEstimateRefuelFee } from './_hooks/actions'
-import { useCheckChainTo } from '../_hooks/checkChainTo'
 
 export default function MessengerPage() {
   const { switchChain } = useSwitchChain()
@@ -39,20 +43,16 @@ export default function MessengerPage() {
   const selectedChainId = chain?.id ?? 0
 
   useEffect(() => {
-    form.setValue(
-      'chainFrom',
-      CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
-    )
-    useCheckChainTo({ setValue: form.setValue, watch, chain: chain?.id })
+    form.setValue('chainFrom', useSetChainFrom({ chain: chain?.id }))
+    form.setValue('chainTo', useCheckChainTo({ watch, chain: chain?.id })!)
   }, [chain])
 
   const form = useForm<MessengerForm>({
     resolver: zodResolver(MessengerSchema),
     defaultValues: {
       message: 'Wow, Whale Messenger is cool! 🐋',
-      chainFrom:
-        CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
-      chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[3].value, // 102
+      chainFrom: useSetChainFrom({ chain: chain?.id }), // 175
+      chainTo: useCheckChainTo({ chain: chain?.id })!, // 102
     },
   })
   const {
@@ -74,11 +74,8 @@ export default function MessengerPage() {
     const isDisabledChainUsed = [150].some(
       (id) => id === chainFrom || id === chainTo,
     )
-    if (isDisabledChainUsed)
+    if (isDisabledChainUsed || chainFrom === 126)
       return truncatedToaster('Ooops...', 'This chain is temporary disabled.')
-    if (chainFrom === 126)
-      return truncatedToaster('Ooops...', 'This chain is temporary disabled.')
-    // @TODO: remove later logic above
 
     const { data: fee }: any = await refetchFee()
 
@@ -148,17 +145,16 @@ export default function MessengerPage() {
               />
 
               <RepeatButton
-                onClick={() => {
-                  form.setValue('chainFrom', fields.chainTo)
-                  form.setValue('chainTo', fields.chainFrom)
-
-                  const selectedChain = CHAINS.find(
-                    ({ value }) => value === fields.chainTo,
-                  )
-
-                  if (selectedChain?.chainId)
-                    switchChain({ chainId: selectedChain.chainId })
-                }}
+                onClick={() =>
+                  useCustomSwitchChain({
+                    switchChain(chainId) {
+                      switchChain({ chainId })
+                    },
+                    setValue: form.setValue,
+                    chainFrom: fields.chainFrom,
+                    chainTo: fields.chainTo,
+                  })
+                }
               />
 
               <FormField
@@ -221,7 +217,7 @@ export default function MessengerPage() {
           </form>
         </Form>
       </Paper>
-      <MessengerDialog
+      <TransactionDialog
         hash={hash}
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}

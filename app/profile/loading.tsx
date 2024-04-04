@@ -1,4 +1,4 @@
-import { Loader } from 'lucide-react'
+import { Loader } from '@/components/ui/icons'
 export default function ProfileLoading() {
   return (
     <div className="flex items-center justify-center h-[calc(100vh-160px)] w-screen">

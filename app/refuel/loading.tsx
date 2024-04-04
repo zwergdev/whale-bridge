@@ -1,6 +1,5 @@
-import { Paper } from '@/components/ui/paper'
-import { Skeleton } from '@/components/ui/skeleton'
-import { Repeat2 } from 'lucide-react'
+import { Paper, Skeleton } from '@/components/ui'
+import { Repeat2 } from '@/components/ui/icons'
 
 export default function RefuelLoading() {
   return (

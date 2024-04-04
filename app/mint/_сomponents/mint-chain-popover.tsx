@@ -1,13 +1,13 @@
 'use client'
 
-import { CHAINS } from '@/app/_utils/chains'
+import { CHAINS } from '@/lib/constants/chains'
 import {
   Popover,
   PopoverClose,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover'
-import { ChevronsUpDown } from 'lucide-react'
+} from '@/components/ui'
+import { ChevronsUpDown } from '@/components/ui/icons'
 import Image from 'next/image'
 import { useSwitchChain } from 'wagmi'
 

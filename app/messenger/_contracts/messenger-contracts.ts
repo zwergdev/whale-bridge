@@ -1,5 +1,5 @@
 import { pack } from '@ethersproject/solidity'
-import { messengerABI } from './messenger-abi'
+import { messengerABI } from '@/lib/abi/messenger-abi'
 
 export const MESSENGER_CONTRACTS: {
   [chainId: number]: {

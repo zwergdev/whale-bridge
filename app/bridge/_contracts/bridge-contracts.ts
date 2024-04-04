@@ -1,5 +1,5 @@
 import { parseEther } from 'viem/utils'
-import { bridgeABI, celoBridgeABI, modernBridgeABI } from './bridge-abi'
+import { bridgeABI, celoBridgeABI, modernBridgeABI } from '@/lib/abi/bridge-abi'
 
 export const BRIDGE_CONTRACTS: {
   [chainId: number]: {

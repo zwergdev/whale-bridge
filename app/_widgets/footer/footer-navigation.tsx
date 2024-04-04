@@ -3,25 +3,15 @@
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-
-const NAVIGATION = [
-  { href: '/mint', label: 'Mint NFT' },
-  { href: '/bridge', label: 'Bridge NFT' },
-  { href: '/refuel', label: 'Gas Refuel' },
-  { href: '/token', label: 'OFT Bridge' },
-  { href: '/messenger', label: 'Messenger' },
-  { href: '/profile', label: 'Profile' },
-  { href: '/contracts', label: 'Contracts' },
-  { href: 'https://layerzeroscan.com/protocol/whale', label: 'LayerZero.Scan' },
-]
+import { NAVIGATION_FOOTER } from '@/lib/constants'
 
 export const FooterNavigation = () => {
   const pathname = usePathname()
 
-  return NAVIGATION.map(({ href, label }) => (
+  return NAVIGATION_FOOTER.map(({ href, label }, index) => (
     <Link
       href={href}
-      key={href}
+      key={index}
       className={cn(
         'hover:text-primary transition-colors flex relative items-center duration-300',
         pathname === href ? 'text-primary' : 'text-foreground',

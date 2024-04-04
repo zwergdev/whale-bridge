@@ -1,4 +1,4 @@
-import { TableCaption } from '@/components/ui/table'
+import { TableCaption } from '@/components/ui'
 
 export const Caption = (props: { chainsLength: number }) => {
   return (

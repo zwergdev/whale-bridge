@@ -1,13 +1,12 @@
-import { Footer } from '@/app/_widgets/footer'
-import { Header } from '@/app/_widgets/header'
+import { Header, Footer } from '@/app/_widgets'
 import { WhaleBg } from '@/components/ui/icons'
-import { Toaster } from '@/components/ui/sonner'
+import { ToasterSonner } from '@/components/ui'
 import { GoogleAnalytics } from '@next/third-parties/google'
-import '@rainbow-me/rainbowkit/styles.css'
 import type { Metadata } from 'next'
 import { Space_Grotesk } from 'next/font/google'
 import { headers } from 'next/headers'
 import { ContextProvider } from './_providers/web3'
+import '@rainbow-me/rainbowkit/styles.css'
 import './globals.css'
 
 const grotesk = Space_Grotesk({
@@ -63,7 +62,7 @@ export default function RootLayout({
             <Footer />
           </div>
         </ContextProvider>
-        <Toaster />
+        <ToasterSonner />
         <GoogleAnalytics gaId="G-14JT3CWP2G" />
       </body>
     </html>

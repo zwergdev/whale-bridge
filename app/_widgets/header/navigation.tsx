@@ -3,15 +3,7 @@
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-
-const NAVIGATION = [
-  { href: '/mint', label: 'Mint NFT' },
-  { href: '/bridge', label: 'Bridge NFT' },
-  { href: '/refuel', label: 'Gas Refuel' },
-  { href: '/token', label: 'OFT Bridge' },
-  { href: '/messenger', label: 'Messenger', isNew: true },
-  { href: '/profile', label: 'Profile' },
-]
+import { NAVIGATION_HEADER } from '@/lib/constants'
 
 type NavigationProps = {
   disableBefore?: boolean
@@ -21,7 +13,7 @@ type NavigationProps = {
 export const Navigation = ({ disableBefore, onClick }: NavigationProps) => {
   const pathname = usePathname()
 
-  return NAVIGATION.map(({ href, label, isNew }) => (
+  return NAVIGATION_HEADER.map(({ href, label, isNew }) => (
     <Link
       key={href}
       href={href}

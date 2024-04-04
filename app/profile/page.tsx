@@ -1,14 +1,16 @@
 'use client'
 
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { Loader } from 'lucide-react'
+import { Loader } from '@/components/ui/icons'
 import { useEffect } from 'react'
 import { useAccount } from 'wagmi'
-import { CreateCode } from './_components/create-code'
-import { NoWalletPage } from './_components/no-wallet-page'
-import { OwnedCode } from './_components/owned-code'
-import { RedeemCode } from './_components/redeem-code'
-import { RedeemedCode } from './_components/redeemed-code'
+import {
+  CreateCode,
+  NoWalletPage,
+  OwnedCode,
+  RedeemCode,
+  RedeemedCode,
+} from './_components'
 import { getUser } from './actions'
 
 export default function ProfilePage() {

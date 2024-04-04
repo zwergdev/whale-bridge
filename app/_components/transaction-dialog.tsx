@@ -7,31 +7,33 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
+} from '@/components/ui'
 import {
   MessageStatus,
   waitForMessageReceived,
 } from '@layerzerolabs/scan-client'
-import { Check, Loader, Plus } from 'lucide-react'
+import { Check, Loader, Plus } from '@/components/ui/icons'
 import Link from 'next/link'
 import { cloneElement, useState } from 'react'
-import { TX_LINK } from '../../_utils/chains'
+import { TX_LINK } from '@/lib/constants'
 
-type BridgedDialogProps = {
+type TransactionDialogProps = {
   hash?: `0x${string}`
   open: boolean
   chainId: number
   onOpenChange: (open: boolean) => void
   chainTo: number
+  isLayerZero?: boolean
 }
 
-export const BridgedDialog = ({
+export const TransactionDialog = ({
   open,
   hash,
   chainId,
   onOpenChange,
   chainTo,
-}: BridgedDialogProps) => {
+  isLayerZero = true,
+}: TransactionDialogProps) => {
   const [txStatus, setTxStatus] = useState(MessageStatus.INFLIGHT)
 
   waitForMessageReceived(chainTo, hash!).then(({ status }) => {
@@ -67,28 +69,34 @@ export const BridgedDialog = ({
         <AlertDialogHeader>
           <AlertDialogTitle>Transaction status</AlertDialogTitle>
           <AlertDialogDescription className="flex flex-col items-center justify-center py-8 relative">
-            {(() => {
-              const { icon, text } = renderStatus()
-              return (
-                <>
-                  {cloneElement(icon, { size: 32 })}
-                  <p className="text-xl font-medium text-foreground mt-4 mb-2">
-                    {text}
-                  </p>
-                </>
-              )
-            })()}
-            <p>
-              You can verify its status using the{' '}
-              <Link
-                href="https://layerzeroscan.com/"
-                target="_blank"
-                className="text-foreground hover:underline"
-              >
-                LayerZero
-              </Link>{' '}
-              explorer.
-            </p>
+            {isLayerZero ? (
+              <>
+                {(() => {
+                  const { icon, text } = renderStatus()
+                  return (
+                    <>
+                      {cloneElement(icon, { size: 32 })}
+                      <p className="text-xl font-medium text-foreground mt-4 mb-2">
+                        {text}
+                      </p>
+                    </>
+                  )
+                })()}
+                <p>
+                  You can verify its status using the{' '}
+                  <Link
+                    href="https://layerzeroscan.com/"
+                    target="_blank"
+                    className="text-foreground hover:underline"
+                  >
+                    LayerZero
+                  </Link>{' '}
+                  explorer.
+                </p>
+              </>
+            ) : (
+              <Check className="stroke-green-600 mb-16" size={52} />
+            )}
 
             <div className="flex gap-4 items-center mt-16 w-full">
               <MintImage size={100} />

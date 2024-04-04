@@ -1,37 +1,31 @@
 'use client'
 
-import { RepeatButton } from '@/app/_components/chainy/chains-popover'
-import { truncatedToaster } from '@/app/_utils/truncatedToaster'
+import { RepeatButton } from '@/app/_components/chains-popover'
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Paper } from '@/components/ui/paper'
-import { Slider } from '@/components/ui/slider'
+  Input,
+  Paper,
+  Slider,
+} from '@/components/ui'
+import { Prices, fetchPrices, useEstimateRefuelFee } from './_hooks'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Fuel, Loader } from 'lucide-react'
+import { Fuel, Loader } from '@/components/ui/icons'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
 import { formatEther } from 'viem'
 import { parseEther } from 'viem/utils'
 import { useAccount, useBalance, useSwitchChain } from 'wagmi'
-import { ChainPopover } from '../_components/chainy'
-import { SubmitButton } from '../_components/submit-button'
-import { useWriteContract } from '../_hooks'
-import { CHAINS } from '../_utils/chains'
-import { RefuelForm, RefuelSchema } from '../_utils/schemas'
-import { BalanceIndicator } from './_components/balance-indicator'
-import { RefueledDialog } from './_components/refueled-dialog'
-import { MAX_REFUEL, SYMBOL_TO_CHAIN } from './_constants'
+import { ChainPopover, SubmitButton, TransactionDialog } from '@/app/_components'
+import { useWriteContract, useCheckChainTo, useSetChainFrom, useCustomSwitchChain } from '@/app/_hooks'
+import { RefuelForm, RefuelSchema, truncatedToaster } from '@/app/_utils'
+import { BalanceIndicator } from './_components'
+import { MAX_REFUEL, SYMBOL_TO_CHAIN, CHAINS } from '@/lib/constants'
 import { getRefuelAdapter, refuelOpts } from './_contracts/refuel-contracts'
-import { useEstimateRefuelFee } from './_hooks/actions'
-import { Prices, fetchPrices } from './_hooks/fetch-prices'
-import { useCheckChainTo } from '../_hooks/checkChainTo'
 
 export default function RefuelPage() {
   const [prices, setPrices] = useState<Prices>()
@@ -58,11 +52,11 @@ export default function RefuelPage() {
   }, [])
 
   useEffect(() => {
+    form.setValue('chainFrom', useSetChainFrom({ chain: chain?.id }))
     form.setValue(
-      'chainFrom',
-      CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175,
+      'chainTo',
+      useCheckChainTo({ watch, chain: chain?.id })!,
     )
-    useCheckChainTo({ setValue: form.setValue, watch, chain: chain?.id })
     form.setValue('amount', 0)
     setFee(BigInt(0))
   }, [chain])
@@ -71,9 +65,8 @@ export default function RefuelPage() {
     resolver: zodResolver(RefuelSchema),
     defaultValues: {
       amount: 0,
-      chainFrom:
-        CHAINS.find(({ chainId }) => chainId === chain?.id)?.value ?? 175, // 175
-      chainTo: CHAINS.filter(({ chainId }) => chainId !== chain?.id)[0].value, // 102
+      chainFrom: useSetChainFrom({ chain: chain?.id }), // 175
+      chainTo: useCheckChainTo({ chain: chain?.id })!, // 102
     },
   })
 
@@ -220,16 +213,16 @@ export default function RefuelPage() {
               />
 
               <RepeatButton
-                onClick={() => {
-                  form.setValue('chainFrom', fields.chainTo)
-                  form.setValue('chainTo', fields.chainFrom)
-                  const selectedChain = CHAINS.find(
-                    ({ value }) => value === fields.chainTo,
-                  )
-
-                  if (selectedChain?.chainId)
-                    switchChain({ chainId: selectedChain.chainId })
-                }}
+                onClick={() =>
+                  useCustomSwitchChain({
+                    switchChain(chainId) {
+                      switchChain({ chainId })
+                    },
+                    setValue: form.setValue,
+                    chainFrom: fields.chainFrom,
+                    chainTo: fields.chainTo,
+                  })
+                }
               />
 
               <FormField
@@ -364,7 +357,7 @@ export default function RefuelPage() {
           </form>
         </Form>
       </Paper>
-      <RefueledDialog
+      <TransactionDialog
         hash={hash}
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
