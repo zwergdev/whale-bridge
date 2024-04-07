@@ -131,19 +131,19 @@ export const CHAINS = [
   {
     label: 'Fuse',
     value: 138,
-    image: 'chain-logo/fuse.svg',
+    image: '/chain-logo/fuse.svg',
     chainId: 122,
   },
   {
     label: 'Metis',
     value: 151,
-    image: 'chain-logo/metis.svg',
+    image: '/chain-logo/metis.svg',
     chainId: 1088,
   },
   {
     label: 'ShimmerEVM',
     value: 230,
-    image: 'chain-logo/shimmer-evm.svg',
+    image: '/chain-logo/shimmer-evm.svg',
     chainId: 148,
   },
 ]

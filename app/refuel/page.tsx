@@ -19,9 +19,20 @@ import { useForm } from 'react-hook-form'
 import { useDebouncedCallback } from 'use-debounce'
 import { formatEther } from 'viem'
 import { parseEther } from 'viem/utils'
-import { useAccount, useBalance, useSwitchChain } from 'wagmi'
-import { ChainPopover, SubmitButton, TransactionDialog } from '@/app/_components'
-import { useWriteContract, useCheckChainTo, useSetChainFrom, useCustomSwitchChain } from '@/app/_hooks'
+import { useAccount, useSwitchChain } from 'wagmi'
+import {
+  ChainPopover,
+  SubmitButton,
+  TransactionDialog,
+} from '@/app/_components'
+import {
+  useWriteContract,
+  useCheckChainTo,
+  useSetChainFrom,
+  useCustomSwitchChain,
+  useGetBalance,
+  useGetBalanceTo,
+} from '@/app/_hooks'
 import { RefuelForm, RefuelSchema, truncatedToaster } from '@/app/_utils'
 import { BalanceIndicator } from './_components'
 import { MAX_REFUEL, SYMBOL_TO_CHAIN, CHAINS } from '@/lib/constants'
@@ -34,13 +45,7 @@ export default function RefuelPage() {
   const [isFeeLoading, setIsFeeLoading] = useState(false)
   const { switchChain } = useSwitchChain()
   const { address, status, chain } = useAccount()
-  const { data: _balanceFrom } = useBalance({
-    address,
-    query: {
-      enabled: !!address,
-    },
-  })
-  const balanceFrom = Number(Number(_balanceFrom?.formatted).toFixed(5))
+  const { balanceFrom, infoBalanceFrom, symbol } = useGetBalance()
 
   const selectedChainId = chain?.id ?? 0
 
@@ -53,10 +58,7 @@ export default function RefuelPage() {
 
   useEffect(() => {
     form.setValue('chainFrom', useSetChainFrom({ chain: chain?.id }))
-    form.setValue(
-      'chainTo',
-      useCheckChainTo({ watch, chain: chain?.id })!,
-    )
+    form.setValue('chainTo', useCheckChainTo({ watch, chain: chain?.id })!)
     form.setValue('amount', 0)
     setFee(BigInt(0))
   }, [chain])
@@ -74,18 +76,10 @@ export default function RefuelPage() {
 
   const fields = watch()
 
-  const balanceToChainId = CHAINS.find(
-    ({ value }) => value === fields?.chainTo,
-  )?.chainId
+  const balanceToChainId = CHAINS.find(({ value }) => value === fields?.chainTo)
+    ?.chainId!
 
-  const { data: _balanceTo } = useBalance({
-    chainId: balanceToChainId,
-    address,
-    query: {
-      enabled: !!address,
-    },
-  })
-  const balanceTo = Number(Number(_balanceTo?.formatted).toFixed(5))
+  const { balanceTo, symbolTo } = useGetBalanceTo(balanceToChainId)
 
   const maxRefuelValue =
     fields.chainFrom === 145 && fields.chainTo === 125
@@ -115,8 +109,6 @@ export default function RefuelPage() {
   const feeAmount = () => {
     if (isFeeLoading) return '...'
 
-    const symbol = _balanceFrom?.symbol
-
     if (fee && symbol && prices) {
       const amount = Number(formatEther(fee))
 
@@ -130,16 +122,14 @@ export default function RefuelPage() {
   const expectedOutput = () => {
     if (isFeeLoading) return '...'
 
-    const symbol = _balanceTo?.symbol
-
-    if (fee && symbol && prices) {
+    if (fee && symbolTo && prices) {
       const amount = fields.amount
 
-      const usd = prices[SYMBOL_TO_CHAIN[symbol]].usd
+      const usd = prices[SYMBOL_TO_CHAIN[symbolTo]].usd
 
-      return `${Number(amount).toFixed(5)} ${symbol} ($${(amount * usd).toFixed(
-        2,
-      )})`
+      return `${Number(amount).toFixed(5)} ${symbolTo} ($${(
+        amount * usd
+      ).toFixed(2)})`
     }
     return '...'
   }
@@ -150,10 +140,10 @@ export default function RefuelPage() {
     if (!fee)
       return truncatedToaster('Error occurred!', 'Failed to fetch refuel cost.')
 
-    if (!_balanceFrom)
+    if (!infoBalanceFrom)
       return truncatedToaster('Error occurred!', 'Balance undefined.')
 
-    if (fee[0] > _balanceFrom?.value) {
+    if (fee[0] > infoBalanceFrom) {
       return truncatedToaster('Error occurred!', 'Insufficient balance.')
     }
 
@@ -194,10 +184,7 @@ export default function RefuelPage() {
                   <FormItem className="flex flex-col">
                     <FormLabel className="flex items-end justify-between">
                       Transfer from
-                      <BalanceIndicator
-                        balance={balanceFrom}
-                        symbol={_balanceFrom?.symbol}
-                      />
+                      <BalanceIndicator balance={balanceFrom} symbol={symbol} />
                     </FormLabel>
                     <ChainPopover
                       selectedValue={fields.chainTo}
@@ -232,10 +219,7 @@ export default function RefuelPage() {
                   <FormItem className="flex flex-col">
                     <FormLabel className="flex items-end justify-between">
                       Transfer to
-                      <BalanceIndicator
-                        balance={balanceTo}
-                        symbol={_balanceTo?.symbol}
-                      />
+                      <BalanceIndicator balance={balanceTo} symbol={symbolTo} />
                     </FormLabel>
                     <ChainPopover
                       selectedValue={fields.chainFrom}
@@ -285,11 +269,11 @@ export default function RefuelPage() {
                         disabled={status !== 'connected'}
                         autoComplete="off"
                         type="number"
-                        placeholder={`0.01 ${_balanceTo?.symbol ?? 'XXX'}`}
+                        placeholder={`0.01 ${symbolTo}`}
                       />
 
                       <span className="absolute text-lg right-3 font-medium">
-                        {_balanceTo?.symbol ?? 'XXX'}
+                        {symbolTo}
                       </span>
                     </div>
                   </FormControl>
@@ -347,10 +331,12 @@ export default function RefuelPage() {
             )}
 
             <SubmitButton
-              disabled={!!_balanceFrom && !!fee && fee > _balanceFrom?.value}
+              disabled={
+                !!infoBalanceFrom && !!fee && fee > infoBalanceFrom?.value
+              }
               loading={isFeeLoading || isLoadingRefuel}
             >
-              {!!_balanceFrom && !!fee && fee > _balanceFrom?.value
+              {!!infoBalanceFrom && !!fee && fee > infoBalanceFrom?.value
                 ? 'Insufficient balance'
                 : 'Refuel'}
             </SubmitButton>

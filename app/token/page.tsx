@@ -27,6 +27,7 @@ import {
 import {
   useCheckChainTo,
   useCustomSwitchChain,
+  useGetBalance,
   useSetChainFrom,
   useWriteContract,
 } from '@/app/_hooks'
@@ -39,7 +40,6 @@ import {
   claimToken,
 } from './_contracts/token-contracts'
 import {
-  useGetBalance,
   useGetTokenBalance,
   useGetTokenFee,
 } from './_hooks/actions'
@@ -50,7 +50,7 @@ export default function TokenPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isLayerZeroTx, setIsLayerZeroTx] = useState(false)
 
-  const { balance, symbol } = useGetBalance()
+  const { balanceFrom, symbol } = useGetBalance()
 
   const selectedChainId = chain?.id ?? 0
 
@@ -178,7 +178,7 @@ export default function TokenPage() {
                   <FormItem>
                     <FormLabel className="flex items-end justify-between">
                       Transfer from
-                      <BalanceIndicator balance={balance} symbol={symbol} />
+                      <BalanceIndicator balance={balanceFrom} symbol={symbol} />
                     </FormLabel>
                     <FormControl>
                       <ChainPopover

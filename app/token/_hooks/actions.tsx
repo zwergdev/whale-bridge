@@ -33,15 +33,3 @@ export const useGetTokenFee = (
 
   return { refetchFee }
 }
-
-export const useGetBalance = () => {
-  const { address } = useAccount()
-
-  const { data } = useBalance({
-    address,
-    query: { enabled: !!address },
-  })
-  const balance = Number(Number(data?.formatted).toFixed(5))
-
-  return { balance, symbol: data?.symbol }
-}

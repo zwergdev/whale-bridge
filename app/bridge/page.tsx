@@ -19,7 +19,7 @@ import { delay } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useAccount, useBalance, useSwitchChain } from 'wagmi'
+import { useAccount, useSwitchChain } from 'wagmi'
 import {
   ChainPopover,
   RepeatButton,
@@ -31,6 +31,7 @@ import {
   useCheckChainTo,
   useSetChainFrom,
   useCustomSwitchChain,
+  useGetBalance,
 } from '@/app/_hooks'
 import { BridgeForm, BridgeSchema, truncatedToaster } from '@/app/_utils'
 import { bridgeOpts } from './_contracts/bridge-contracts'
@@ -47,11 +48,7 @@ export default function BridgePage() {
   const { switchChain } = useSwitchChain()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isLoadingNFT, setIsLoadingNFT] = useState(true)
-  const { data: _balanceFrom } = useBalance({
-    address,
-    query: { enabled: !!address },
-  })
-  const balanceFrom = Number(Number(_balanceFrom?.formatted).toFixed(5))
+  const { balanceFrom, symbol } = useGetBalance()
   const ref = useRef('a')
 
   const selectedChainId = chain?.id ?? 0
@@ -228,7 +225,7 @@ export default function BridgePage() {
                       Transfer from
                       <BalanceIndicator
                         balance={balanceFrom}
-                        symbol={_balanceFrom?.symbol}
+                        symbol={symbol}
                       />
                     </FormLabel>
                     <ChainPopover

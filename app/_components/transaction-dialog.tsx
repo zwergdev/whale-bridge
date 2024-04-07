@@ -1,3 +1,4 @@
+'use client'
 import { MintImage } from '@/app/mint/_сomponents/mint-image'
 import {
   AlertDialog,
