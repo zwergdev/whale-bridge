@@ -312,6 +312,7 @@ export default function BridgePage() {
         onOpenChange={setIsDialogOpen}
         chainId={selectedChainId}
         chainTo={fields.chainTo}
+        isBridge={true}
       />
     </>
   )
