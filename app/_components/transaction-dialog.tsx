@@ -25,6 +25,7 @@ type TransactionDialogProps = {
   onOpenChange: (open: boolean) => void
   chainTo: number
   isLayerZero?: boolean
+  isBridge?: boolean
 }
 
 export const TransactionDialog = ({
@@ -34,6 +35,7 @@ export const TransactionDialog = ({
   onOpenChange,
   chainTo,
   isLayerZero = true,
+  isBridge = false,
 }: TransactionDialogProps) => {
   const [txStatus, setTxStatus] = useState(MessageStatus.INFLIGHT)
 
@@ -100,7 +102,7 @@ export const TransactionDialog = ({
             )}
 
             <div className="flex gap-4 items-center mt-16 w-full">
-              <MintImage size={100} />
+              {isBridge && <MintImage size={100} />}
               <div className="truncate max-w-96 text-left">
                 <p>Transaction link:</p>
 
