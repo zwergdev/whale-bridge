@@ -1,6 +1,11 @@
 'use client'
 import { ChainPopover, RepeatButton, SubmitButton } from '@/app/_components'
-import { useCustomSwitchChain, useGetBalance } from '@/app/_hooks'
+import {
+  useCheckChainTo,
+  useCustomSwitchChain,
+  useGetBalance,
+  useSetChainFrom,
+} from '@/app/_hooks'
 import { useGetAccount } from '@/app/_hooks/use-get-account'
 import { BridgeForm, BridgeSchema } from '@/app/_utils'
 import { BalanceIndicator } from '@/app/refuel/_components'
@@ -17,16 +22,15 @@ export default function HyperlaneBridge() {
   const { balanceFrom, symbol } = useGetBalance()
 
   useEffect(() => {
-    setValue('chainFrom', chainId === 0 ? 42161 : chainId)
-    if (chainId === fields.chainTo)
-      setValue('chainTo', chainId === 1559 ? 56 : 137)
-  }, [chainId])
+    setValue('chainFrom', useSetChainFrom({ chain: chainId! }))
+    setValue('chainTo', useCheckChainTo({ watch, chain: chainId! })!)
+  }, [chain])
 
   const form = useForm<BridgeForm>({
     resolver: zodResolver(BridgeSchema),
     defaultValues: {
-      chainFrom: chainId === 0 ? 42161 : chainId,
-      chainTo: chainId === 42161 ? 42170 : 56,
+      chainFrom: useSetChainFrom({ chain: chainId! }), // 175
+      chainTo: useCheckChainTo({ chain: chainId! })!, // 102
       tokenId: '0',
       nfts: [],
     },

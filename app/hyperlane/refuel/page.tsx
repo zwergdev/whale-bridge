@@ -1,9 +1,11 @@
 'use client'
 import { ChainPopover, RepeatButton, SubmitButton } from '@/app/_components'
 import {
+  useCheckChainTo,
   useCustomSwitchChain,
   useGetBalance,
   useGetBalanceTo,
+  useSetChainFrom,
 } from '@/app/_hooks'
 import { useGetAccount } from '@/app/_hooks/use-get-account'
 import { RefuelForm, RefuelSchema } from '@/app/_utils'
@@ -22,18 +24,18 @@ export default function HyperlaneRefuel() {
   const { symbol, balanceFrom } = useGetBalance()
 
   useEffect(() => {
-    setValue('chainFrom', chainId === 0 ? 42161 : chainId)
-    if (chainId === fields.chainTo)
-      setValue('chainTo', chainId === 1559 ? 56 : 137)
+    setValue('chainFrom', useSetChainFrom({ chain: chainId! }))
+    setValue('chainTo', useCheckChainTo({ watch, chain: chainId! })!)
     setValue('amount', 0)
+    // setFee(BigInt(0))
   }, [chainId])
 
   const form = useForm<RefuelForm>({
     resolver: zodResolver(RefuelSchema),
     defaultValues: {
       amount: 0,
-      chainFrom: chainId === 0 ? 42161 : chainId,
-      chainTo: chainId === 42161 ? 42170 : 56,
+      chainFrom: useSetChainFrom({ chain: chainId! }), // 175
+      chainTo: useCheckChainTo({ chain: chainId! })!, // 102
     },
   })
 
