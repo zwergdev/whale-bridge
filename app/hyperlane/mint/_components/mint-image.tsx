@@ -1,5 +1,6 @@
 'use client'
 import { useGetAccount } from '@/app/_hooks/use-get-account'
+import { NFT_IMAGES } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 
@@ -17,7 +18,7 @@ export const MintImage = ({ className, size = 440 }: MintImageProps) => {
     <Image
       src={
         chainId && status === 'connected'
-          ? '/nft/nft-l0.webp'
+          ? NFT_IMAGES[chainId]
           : '/nft/nft-l0.webp'
       }
       quality={100}

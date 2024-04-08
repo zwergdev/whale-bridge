@@ -4,9 +4,10 @@ import { useCustomSwitchChain, useGetBalance } from '@/app/_hooks'
 import { useGetAccount } from '@/app/_hooks/use-get-account'
 import { BridgeForm, BridgeSchema } from '@/app/_utils'
 import { BalanceIndicator } from '@/app/refuel/_components'
-import { Paper } from '@/components/ui'
+import { Form, Paper } from '@/components/ui'
 import { LayerZero } from '@/components/ui/icons'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useSwitchChain } from 'wagmi'
 
@@ -15,7 +16,13 @@ export default function HyperlaneBridge() {
   const { switchChain } = useSwitchChain()
   const { balanceFrom, symbol } = useGetBalance()
 
-  const { watch, setValue } = useForm<BridgeForm>({
+  useEffect(() => {
+    setValue('chainFrom', chainId === 0 ? 42161 : chainId)
+    if (chainId === fields.chainTo)
+      setValue('chainTo', chainId === 1559 ? 56 : 137)
+  }, [chainId])
+
+  const form = useForm<BridgeForm>({
     resolver: zodResolver(BridgeSchema),
     defaultValues: {
       chainFrom: chainId === 0 ? 42161 : chainId,
@@ -24,64 +31,67 @@ export default function HyperlaneBridge() {
       nfts: [],
     },
   })
+  const { watch, setValue } = form
 
   const fields = watch()
 
   return (
     <>
       <Paper title="NFT BRIDGE">
-        <form className="relative">
-          <div className="w-full flex items-center justify-center">
-            <div className="w-full flex flex-col">
-              <div className="flex w-full justify-center items-center">
-                <span>Transfer from</span>
-                <BalanceIndicator balance={balanceFrom} symbol={symbol} />
+        <Form {...form}>
+          <form className="relative">
+            <div className="w-full flex justify-between items-center mb-16 gap-5 md:gap-0 md:flex-row flex-col">
+              <div className="flex flex-col">
+                <div className="flex w-full justify-between items-center">
+                  <span>Transfer from</span>
+                  <BalanceIndicator balance={balanceFrom} symbol={symbol} />
+                </div>
+                <ChainPopover
+                  selectedValue={fields.chainTo}
+                  isPopoverFROM={true}
+                  // fieldValue={field.value}
+                  fieldValue={fields.chainFrom}
+                  onSelect={(value, chainId) => {
+                    setValue('chainFrom', value)
+                    if (chainId !== chain?.id) switchChain({ chainId })
+                  }}
+                />
               </div>
-              <ChainPopover
-                selectedValue={fields.chainTo}
-                isPopoverFROM={true}
-                // fieldValue={field.value}
-                fieldValue={fields.chainFrom}
-                onSelect={(value, chainId) => {
-                  setValue('chainFrom', value)
-                  if (chainId !== chain?.id) switchChain({ chainId })
+              <RepeatButton
+                onClick={() => {
+                  // ref.current = Date.now().toString()
+                  useCustomSwitchChain({
+                    switchChain(chainId) {
+                      switchChain({ chainId })
+                    },
+                    setValue: setValue,
+                    chainFrom: fields.chainFrom,
+                    chainTo: fields.chainTo,
+                  })
                 }}
               />
-            </div>
-            <RepeatButton
-              onClick={() => {
-                // ref.current = Date.now().toString()
-                useCustomSwitchChain({
-                  switchChain(chainId) {
-                    switchChain({ chainId })
-                  },
-                  setValue: setValue,
-                  chainFrom: fields.chainFrom,
-                  chainTo: fields.chainTo,
-                })
-              }}
-            />
-            <div className="w-full flex flex-col">
-              <div className="flex w-full justify-start items-center">
-                <span>Transfer to</span>
+              <div className="flex flex-col">
+                <div className="flex justify-start items-center">
+                  <span>Transfer to</span>
+                </div>
+                <ChainPopover
+                  selectedValue={fields.chainFrom}
+                  // fieldValue={field.value}
+                  disabledChains={[165]}
+                  fieldValue={fields.chainTo}
+                  onSelect={(value) => {
+                    setValue('chainTo', value)
+                  }}
+                />
               </div>
-              <ChainPopover
-                selectedValue={fields.chainFrom}
-                // fieldValue={field.value}
-                disabledChains={[165]}
-                fieldValue={fields.chainTo}
-                onSelect={(value) => {
-                  setValue('chainTo', value)
-                }}
-              />
             </div>
-          </div>
-          {/* <SubmitButton disabled={!isValid} loading={isPending || isLoadingNFT}> */}
-          <SubmitButton disabled={false}>Bridge</SubmitButton>
-          <a href="https://layerzero.network/" rel="noreferrer">
-            <LayerZero className="text-center w-full mt-10" />
-          </a>
-        </form>
+            {/* <SubmitButton disabled={!isValid} loading={isPending || isLoadingNFT}> */}
+            <SubmitButton disabled={false}>Bridge</SubmitButton>
+            <a href="https://layerzero.network/" rel="noreferrer">
+              <LayerZero className="text-center w-full mt-10" />
+            </a>
+          </form>
+        </Form>
       </Paper>
     </>
   )
