@@ -10,7 +10,16 @@ import {
 import { useGetAccount } from '@/app/_hooks/use-get-account'
 import { RefuelForm, RefuelSchema } from '@/app/_utils'
 import { BalanceIndicator } from '@/app/refuel/_components'
-import { Paper, Slider, Input, Form, FormLabel } from '@/components/ui'
+import {
+  Paper,
+  Slider,
+  Input,
+  Form,
+  FormLabel,
+  FormField,
+  FormItem,
+  FormControl,
+} from '@/components/ui'
 import { CHAINS, MAX_REFUEL } from '@/lib/constants'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
@@ -114,37 +123,51 @@ export default function HyperlaneRefuel() {
               />
             </div>
           </div>
-          <div className="relative flex flex-col items-center">
-            <div className="flex w-full items-end justify-between mb-1.5">
-              Enter Refuel Amount
-              <button
-                type="button"
-                className="text-[10px] opacity-75 cursor-pointer text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4]"
-                onClick={() => {
-                  setValue('amount', maxRefuelValue)
-                  // debounceFee(1)
-                }}
-              >
-                MAX
-              </button>
-            </div>
-            <Input
-              onChange={(e) => {
-                const isError = Number.isNaN(Number(e.target.value))
-                if (isError) return
-                // onChange(e)
-                // debounceFee(1)
-                console.log(e)
-              }}
-              disabled={status !== 'connected'}
-              autoComplete="off"
-              type="number"
-              placeholder={`0.01 ${symbolTo ?? 'XXX'}`}
-            />
-            <span className="absolute text-lg right-3 bottom-2.5 font-medium">
-              {symbolTo}
-            </span>
-          </div>
+          {/* @TODO: refactor this code block */}
+          <FormField
+            control={form.control}
+            name="amount"
+            render={({ field: { onChange, ...rest } }) => (
+              <FormItem>
+                <FormLabel className="flex items-end justify-between">
+                  Enter Refuel Amount
+                  <button
+                    type="button"
+                    className="text-[10px] opacity-75 cursor-pointer text-primary duration-200 transition-opacity mr-1 hover:opacity-100 leading-[0.4]"
+                    onClick={() => {
+                      setValue('amount', maxRefuelValue)
+                      // debounceFee(1)
+                    }}
+                  >
+                    MAX
+                  </button>
+                </FormLabel>
+                <FormControl>
+                  <div className="relative flex items-center">
+                    <Input
+                      {...rest}
+                      onChange={(e) => {
+                        const isError = Number.isNaN(Number(e.target.value))
+
+                        if (isError) return
+
+                        onChange(e)
+                        // debounceFee(1)
+                      }}
+                      disabled={status !== 'connected'}
+                      autoComplete="off"
+                      type="number"
+                      placeholder={`0.01 ${symbolTo}`}
+                    />
+
+                    <span className="absolute text-lg right-3 font-medium">
+                      {symbolTo}
+                    </span>
+                  </div>
+                </FormControl>
+              </FormItem>
+            )}
+          />
           <div className="flex items-center justify-between w-full my-5 gap-5 text-sm font-medium max-w-xl mx-auto">
             <span className="flex items-center justify-center rounded-md py-3 max-w-20 w-full border border-primary">
               0
