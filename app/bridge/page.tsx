@@ -195,7 +195,7 @@ export default function BridgePage() {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="flex items-center justify-center gap-2 pl-2">
+                      <SelectTrigger className="flex-row-center gap-2 pl-2">
                         Select NFT
                         <ChevronsUpDown />
                       </SelectTrigger>
@@ -224,7 +224,7 @@ export default function BridgePage() {
                 name="chainFrom"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel className="flex items-end justify-between">
+                    <FormLabel className="flex-end">
                       Transfer from
                       <BalanceIndicator
                         balance={balanceFrom}
@@ -278,7 +278,7 @@ export default function BridgePage() {
             </div>
 
             {!isLoadingNFT && !fields.nfts.length && address && (
-              <div className="flex items-center justify-start mb-2">
+              <div className="flex-center justify-start mb-2">
                 <p className="mx-2 text-lg">No NFTs found!</p>
                 <Button
                   type="button"

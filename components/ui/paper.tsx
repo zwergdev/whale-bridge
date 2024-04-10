@@ -5,7 +5,7 @@ type PaperProps = {
 }
 export const Paper = ({ title, children, subtitle }: PaperProps) => {
   return (
-    <section className="w-full min-h-[calc(100vh-160px)] flex items-center justify-center pt-40">
+    <section className="w-full min-h-[calc(100vh-160px)] flex-row-center pt-40">
       <div className="text-sm text-foreground rounded-md border-popover border max-w-screen-md overflow-hidden w-full p-6 relative bg-[#011e37]/30 backdrop-blur-md flex flex-col">
         <div className="w-32 h-32 -z-10 bg-primary blur-[150px] absolute -bottom-20 left-0" />
         <div className="w-32 h-32 -z-10 bg-primary blur-[200px] absolute -top-20 right-20" />

@@ -57,7 +57,7 @@ const RoadmapItem = ({
   done,
   now,
 }: Partial<{ title: string; done: boolean; now: boolean }>) => (
-  <div className="flex items-center md:flex-col flex-row-reverse justify-center gap-4">
+  <div className="flex-center md:flex-col flex-row-reverse justify-center gap-4">
     <h3
       className={cn(
         'text-lg font-semibold',

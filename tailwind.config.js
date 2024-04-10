@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin')
+
 module.exports = {
   darkMode: ['class'],
   content: [
@@ -76,5 +78,44 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    plugin(({ addComponents }) => {
+      addComponents({
+        '.flex-row-center': {
+          display: 'flex',
+          'align-items': 'center',
+          'justify-content': 'center',
+          'flex-direction': 'row',
+        },
+        '.flex-col-center': {
+          display: 'flex',
+          'align-items': 'center',
+          'justify-content': 'center',
+          'flex-direction': 'column',
+        },
+        '.flex-container-between-col': {
+          display: 'flex',
+          width: '100%',
+          'align-items': 'center',
+          'justify-content': 'space-between',
+          'flex-direction': 'column',
+        },
+        '.flex-end': {
+          display: 'flex',
+          'align-items': 'end',
+          'justify-content': 'space-between',
+        },
+        '.flex-center': {
+          display: 'flex',
+          'align-items': 'center',
+        },
+        '.flex-center-between': {
+          display: 'flex',
+          'align-items': 'center',
+          'justify-content': 'space-between',
+        },
+      })
+    }),
+  ],
 }

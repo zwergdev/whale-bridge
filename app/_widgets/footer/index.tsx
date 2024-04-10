@@ -7,8 +7,8 @@ import { LayerZero, MobileLogo } from '@/components/ui/icons'
 
 export const Footer = () => (
   <footer className="max-w-full mx-auto w-full text-foreground flex flex-col pb-4">
-    <div className="container flex items-center justify-between">
-      <nav className="flex items-center gap-10 lg:gap-12 font-medium">
+    <div className="container flex-center justify-between">
+      <nav className="flex-center gap-10 lg:gap-12 font-medium">
         <Link href="/">
           <MobileLogo className="w-11 h-11" />
         </Link>
@@ -30,8 +30,8 @@ export const Footer = () => (
       <Separator className="mb-4 mt-3 bg-popover" />
     </div>
 
-    <div className="container flex justify-between items-center">
-      <div className="flex items-center gap-4">
+    <div className="container flex-center-between">
+      <div className="flex-center gap-4">
         {FOOTER_LINKS.map(({ icon, href }, idx) => (
           <Link href={href} key={idx} target="_blank">
             {cloneElement(icon, {

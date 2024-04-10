@@ -7,13 +7,13 @@ import Link from 'next/link'
 export const Hero = () => {
   return (
     <section className="flex flex-col items-center justify-center relative w-full sm:pt-40 pt-40 min-h-[calc(100vh-100px)]">
-      <div className="flex items-center lg:justify-between justify-center lg:gap-0 gap-14 w-full h-full lg:flex-row flex-col">
+      <div className="flex-center lg:justify-between justify-center lg:gap-0 gap-14 w-full h-full lg:flex-row flex-col">
         <div className="flex flex-col lg:items-start items-center justify-center w-full">
           <div className="w-full max-w-screen-sm relative">
             <Link
               href="https://layerzeroscan.com/protocol/whale"
               target="_blank"
-              className="absolute flex items-center animate-pulse -top-20 w-52 left-1/2 -translate-x-1/2 bg-background border border-popover px-4 py-1.5 text-sm rounded-lg"
+              className="absolute flex-center animate-pulse -top-20 w-52 left-1/2 -translate-x-1/2 bg-background border border-popover px-4 py-1.5 text-sm rounded-lg"
               style={{ boxShadow: '0 0 20px 1px #0d3b63' }}
             >
               Powered by <LayerZeroLogo className="w-4 h-4 mx-1" /> LayerZero

@@ -32,7 +32,7 @@ export const MintedDialog = ({ open, hash, chainId }: MintedDialogProps) => {
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="flex items-center justify-between">
+          <AlertDialogTitle className="flex-center-between">
             <span>You've successfully minted WHL!</span>{' '}
             <X
               className="w-5 h-5 cursor-pointer"
