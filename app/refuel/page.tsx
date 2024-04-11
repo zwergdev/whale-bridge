@@ -175,7 +175,7 @@ export default function RefuelPage() {
       <Paper
         title="REFUEL GAS"
         subtitle={
-          <div className="flex-row-center gap-1.5 text-xs opacity-75 border border-primary py-2 px-3 rounded">
+          <div className="flex-row-center gap-1.5 text-xs opacity-75 border-basic py-2 px-3 rounded">
             <Fuel size={14} className="mb-0.5 stroke-yellow-200" />
             <span className="font-bold">
               Free{' '}
@@ -298,7 +298,7 @@ export default function RefuelPage() {
             />
 
             <div className="flex-center-between w-full my-5 gap-5 text-sm font-medium max-w-xl mx-auto">
-              <span className="flex-row-center rounded-md py-3 max-w-20 w-full border border-primary">
+              <span className="flex-row-center rounded-md py-3 max-w-20 w-full border-basic">
                 0
               </span>
               <Slider
@@ -312,7 +312,7 @@ export default function RefuelPage() {
                   debounceFee(1)
                 }}
               />
-              <span className="flex-row-center rounded-md py-3 w-fit min-w-20 px-2 border border-primary">
+              <span className="flex-row-center rounded-md py-3 w-fit min-w-20 px-2 border-basic">
                 {maxRefuelValue ?? 0}
               </span>
             </div>

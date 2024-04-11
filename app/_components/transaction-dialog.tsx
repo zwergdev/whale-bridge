@@ -123,7 +123,7 @@ export const TransactionDialog = ({
                 </Link>
               </div>
             </div>
-            <div className="w-32 h-32 -z-10 bg-primary blur-[150px] absolute -bottom-20 left-0" />
+            <div className="container-absolute blur-[150px] -bottom-20 left-0" />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -13,7 +13,7 @@ export const Hero = () => {
             <Link
               href="https://layerzeroscan.com/protocol/whale"
               target="_blank"
-              className="absolute flex-center animate-pulse -top-20 w-52 left-1/2 -translate-x-1/2 bg-background border border-popover px-4 py-1.5 text-sm rounded-lg"
+              className="absolute flex-center animate-pulse -top-20 w-52 left-1/2 -translate-x-1/2 bg-background border-basic px-4 py-1.5 text-sm rounded-lg"
               style={{ boxShadow: '0 0 20px 1px #0d3b63' }}
             >
               Powered by <LayerZeroLogo className="w-4 h-4 mx-1" /> LayerZero
@@ -40,9 +40,9 @@ export const Hero = () => {
         />
       </div>
 
-      <div className="w-56 h-56 -z-20 bg-primary blur-[350px] absolute bottom-20 -right-20" />
-      <div className="w-56 h-56 -z-20 bg-primary blur-[350px] absolute -top-10 -left-20" />
-      <div className="w-56 h-56 -z-20 bg-popover blur-[250px] absolute bottom-20 -left-20" />
+      <div className="w-56 h-56 -z-20 container-absolute blur-[350px] bottom-20 -right-20" />
+      <div className="w-56 h-56 -z-20 container-absolute blur-[350px] -top-10 -left-20" />
+      <div className="w-56 h-56 -z-20 container-absolute blur-[250px] bottom-20 -left-20" />
     </section>
   )
 }

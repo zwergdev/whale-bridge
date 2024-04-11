@@ -115,6 +115,16 @@ module.exports = {
           'align-items': 'center',
           'justify-content': 'space-between',
         },
+        '.border-basic': {
+          border: '1px #09bffb solid',
+        },
+        '.container-absolute': {
+          position: 'absolute',
+          'z-index': '-10',
+          width: '8rem',
+          height: '8rem',
+          'background-color': '#09bffb',
+        },
       })
     }),
   ],
