@@ -170,7 +170,7 @@ export default function TokenPage() {
       <Paper title="TOKEN">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmitBridge)}>
-            <div className="w-full flex justify-between items-center md:mb-5 mb-7 gap-5 md:gap-0 md:flex-row flex-col">
+            <div className="flex-container-between-col md:mb-5 mb-7 gap-5 md:gap-0 md:flex-row ">
               <FormField
                 control={form.control}
                 name="chainFrom"
@@ -232,7 +232,7 @@ export default function TokenPage() {
               Claim $BWHL
               <InfoHover desc="$BWHL has an unlimited supply, the token is not intended for trading." />
             </Label>
-            <div className="flex-center-between w-full gap-3 sm:flex-row flex-col">
+            <div className="flex-container-between-col gap-3 sm:flex-row">
               <Input
                 type="number"
                 placeholder="Amount to claim"
@@ -289,7 +289,7 @@ export default function TokenPage() {
                 </button>
               </Label>
               <div className="flex gap-3">
-                <div className="flex justify-center bg-popover items-center rounded px-2">
+                <div className="flex-row-center bg-popover rounded px-2">
                   <Image
                     src={tokenImage}
                     alt="token-image"

@@ -218,7 +218,7 @@ export default function BridgePage() {
               )}
             />
 
-            <div className="w-full flex justify-between items-center mb-16 gap-5 md:gap-0 md:flex-row flex-col">
+            <div className="flex-container-between-col mb-16 gap-5 md:gap-0 md:flex-row">
               <FormField
                 control={form.control}
                 name="chainFrom"
