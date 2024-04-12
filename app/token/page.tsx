@@ -170,13 +170,13 @@ export default function TokenPage() {
       <Paper title="TOKEN">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmitBridge)}>
-            <div className="w-full flex justify-between items-center md:mb-5 mb-7 gap-5 md:gap-0 md:flex-row flex-col">
+            <div className="flex-container-between-col md:mb-5 mb-7 gap-5 md:gap-0 md:flex-row ">
               <FormField
                 control={form.control}
                 name="chainFrom"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="flex items-end justify-between">
+                    <FormLabel className="flex-end">
                       Transfer from
                       <BalanceIndicator balance={balanceFrom} symbol={symbol} />
                     </FormLabel>
@@ -228,18 +228,18 @@ export default function TokenPage() {
               />
             </div>
 
-            <Label className="leading-10 flex items-center">
+            <Label className="leading-10 flex-center">
               Claim $BWHL
               <InfoHover desc="$BWHL has an unlimited supply, the token is not intended for trading." />
             </Label>
-            <div className="flex items-center justify-between w-full gap-3 sm:flex-row flex-col">
+            <div className="flex-container-between-col gap-3 sm:flex-row">
               <Input
                 type="number"
                 placeholder="Amount to claim"
                 autoComplete="off"
                 {...register('amount')}
               />
-              <div className="flex items-center gap-3 sm:w-auto w-full">
+              <div className="flex-center gap-3 sm:w-auto w-full">
                 <Image
                   src={tokenImage}
                   alt="token-image"
@@ -262,9 +262,9 @@ export default function TokenPage() {
             <p className="w-full text-center mt-6 text-lg font-semibold">AND</p>
 
             <div className="mt-5">
-              <Label className="flex items-end justify-between mb-2">
+              <Label className="flex-end mb-2">
                 <div className="flex items-end justify-start gap-5">
-                  <div className="flex items-center">
+                  <div className="flex-center">
                     Bridge $BWHL
                     <InfoHover desc="Bridge $BWHL to other chain." />
                   </div>
@@ -289,7 +289,7 @@ export default function TokenPage() {
                 </button>
               </Label>
               <div className="flex gap-3">
-                <div className="flex justify-center bg-popover items-center rounded px-2">
+                <div className="flex-row-center bg-popover rounded px-2">
                   <Image
                     src={tokenImage}
                     alt="token-image"

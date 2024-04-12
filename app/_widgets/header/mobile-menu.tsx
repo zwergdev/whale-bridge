@@ -49,7 +49,7 @@ export const MobileMenu = () => {
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger className="flex items-center justify-center">
+      <SheetTrigger className="flex-row-center">
         <Menu />
       </SheetTrigger>
       <SheetContent side="top">

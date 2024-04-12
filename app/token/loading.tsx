@@ -6,7 +6,7 @@ export default function TokenLoading() {
     <>
       <Paper title="TOKEN">
         <div className="w-full">
-          <div className="w-full flex flex-col gap-5 md:gap-0 md:flex-row justify-between items-center mb-5">
+          <div className="flex-container-between-col gap-5 md:gap-0 md:flex-row mb-5">
             <div className="w-max">
               <div className="flex justify-between items-center w-full mb-2">
                 <Skeleton className="w-[147px] h-[24px]" />
@@ -29,7 +29,7 @@ export default function TokenLoading() {
             </div>
           </div>
           <p className="w-full text-center mt-6 text-lg font-semibold">AND</p>
-          <div className="flex items-center justify-between w-full mb-2 mt-5">
+          <div className="flex-center-between w-full mb-2 mt-5">
             <Skeleton className="w-[147px] h-[24px]" />
             <Skeleton className="w-[58px] h-3.5" />
           </div>

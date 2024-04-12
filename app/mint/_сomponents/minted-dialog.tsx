@@ -32,7 +32,7 @@ export const MintedDialog = ({ open, hash, chainId }: MintedDialogProps) => {
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="flex items-center justify-between">
+          <AlertDialogTitle className="flex-center-between">
             <span>You've successfully minted WHL!</span>{' '}
             <X
               className="w-5 h-5 cursor-pointer"
@@ -54,7 +54,7 @@ export const MintedDialog = ({ open, hash, chainId }: MintedDialogProps) => {
                 </Link>
               </div>
             </div>
-            <div className="w-32 h-32 -z-10 bg-primary blur-[150px] absolute -bottom-20 left-0" />
+            <div className="container-absolute blur-[150px] -bottom-20 left-0" />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

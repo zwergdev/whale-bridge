@@ -111,7 +111,7 @@ export default function MessengerPage() {
       <Paper title="MESSENGER">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onMessageSend)}>
-            <div className="w-full flex flex-col justify-between items-center md:mb-5 mb-7 gap-3">
+            <div className="flex-container-between-col md:mb-5 mb-7 gap-3">
               <FormField
                 control={form.control}
                 name="chainFrom"
@@ -189,7 +189,7 @@ export default function MessengerPage() {
               />
             </div>
 
-            <Label className="leading-10 mt-4 flex items-center">
+            <Label className="leading-10 mt-4 flex-center">
               Message content
               <InfoHover
                 desc="Message body. Maximum 140, minimum 1 symbols."

@@ -71,7 +71,7 @@ export const TransactionDialog = ({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Transaction status</AlertDialogTitle>
-          <AlertDialogDescription className="flex flex-col items-center justify-center py-8 relative">
+          <AlertDialogDescription className="flex-col-center py-8 relative">
             {isLayerZero ? (
               <>
                 {(() => {
@@ -124,7 +124,7 @@ export const TransactionDialog = ({
                 </Link>
               </div>
             </div>
-            <div className="w-32 h-32 -z-10 bg-primary blur-[150px] absolute -bottom-20 left-0" />
+            <div className="container-absolute blur-[150px] -bottom-20 left-0" />
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

@@ -16,7 +16,7 @@ export const MintChainPopover = () => {
 
   return (
     <Popover modal>
-      <PopoverTrigger className="mb-10 rounded-full w-fit border border-primary bg-[#011e37]/30 backdrop-blur-md flex items-center gap-2.5 justify-start p-2.5 hover:bg-[#011e37]/60 transition-colors duration-300">
+      <PopoverTrigger className="mb-10 rounded-full w-fit border-basic bg-[#011e37]/30 backdrop-blur-md flex-center gap-2.5 justify-start p-2.5 hover:bg-[#011e37]/60 transition-colors duration-300">
         {Array.from(CHAINS)
           .splice(0, 3)
           .map(({ image }, idx) => (
