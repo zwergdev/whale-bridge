@@ -74,7 +74,7 @@ export const Articles = () => {
         ]}
         button={{ link: '/mint', text: 'Mint NFT' }}
       >
-        <div className="border border-primary rounded-lg">
+        <div className="border-basic rounded-lg">
           <Image
             src="/nft/nft-l0.webp"
             quality={100}
@@ -97,7 +97,7 @@ export const Articles = () => {
         button={{ link: '/bridge', text: 'Bridge' }}
       >
         <div className="relative lg:mt-32 mt-0">
-          <div className="border border-primary rounded-lg">
+          <div className="border-basic rounded-lg">
             <Image
               src="/general/bridge-menu.webp"
               width={500}
@@ -114,7 +114,7 @@ export const Articles = () => {
             alt="mint-picture"
             className="absolute -top-32 -left-16 rounded-lg scale-x-[-1] z-10 lg:block hidden"
           />
-          <div className="w-56 h-56 -z-10 bg-primary blur-[250px] absolute bottom-0 right-0" />
+          <div className="w-56 h-56 container-absolute blur-[250px] bottom-0 right-0" />
         </div>
       </Article>
 
@@ -128,7 +128,7 @@ export const Articles = () => {
         button={{ link: '/refuel', text: 'Refuel' }}
       >
         <div className="relative lg:mt-24 mt-0">
-          <div className="border border-primary rounded-lg">
+          <div className="border-basic rounded-lg">
             <Image
               src="/nft/nft-refuel.webp"
               quality={100}
@@ -145,7 +145,7 @@ export const Articles = () => {
             alt="mint-picture"
             className="absolute -top-32 -right-32 rounded-lg -z-10 lg:block hidden"
           />
-          <div className="w-56 h-56 -z-10 bg-primary blur-[200px] absolute bottom-0 right-0" />
+          <div className="w-56 h-56 container-absolute blur-[200px] bottom-0 right-0" />
         </div>
       </Article>
       <div className="mb-32 h-px" />

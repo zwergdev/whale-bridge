@@ -27,7 +27,7 @@ export default function ContractsPage() {
         <TableBody>
           {ALL_CONTRACTS.map((chain) => (
             <TableRow key={chain.chain}>
-              <TableCell className="font-medium flex items-center whitespace-nowrap">
+              <TableCell className="font-medium flex-center whitespace-nowrap">
                 <Image
                   src={`/chain-logo/${chain.image}`}
                   width={20}

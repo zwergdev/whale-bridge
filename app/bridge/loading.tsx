@@ -8,9 +8,9 @@ export default function BridgeLoading() {
         <div className="relative">
           <Skeleton className="w-[111px] h-6 absolute -top-12 right-0" />
           <div className="w-full">
-            <div className="w-full flex flex-col gap-5 md:gap-0 md:flex-row justify-between items-center mb-16">
+            <div className="w-full flex-center-between flex-col gap-5 md:gap-0 md:flex-row mb-16">
               <div className="w-max">
-                <div className="flex justify-between items-center w-full mb-2">
+                <div className="flex-center-between w-full mb-2">
                   <Skeleton className="w-[147px] h-[26px]" />
                   <Skeleton className="w-[58px] h-3.5" />
                 </div>

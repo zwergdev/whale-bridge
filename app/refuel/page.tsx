@@ -175,7 +175,7 @@ export default function RefuelPage() {
       <Paper
         title="REFUEL GAS"
         subtitle={
-          <div className="flex items-center justify-center gap-1.5 text-xs opacity-75 border border-primary py-2 px-3 rounded">
+          <div className="flex-row-center gap-1.5 text-xs opacity-75 border-basic py-2 px-3 rounded">
             <Fuel size={14} className="mb-0.5 stroke-yellow-200" />
             <span className="font-bold">
               Free{' '}
@@ -186,13 +186,13 @@ export default function RefuelPage() {
       >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="w-full flex justify-between items-center md:mb-5 mb-7 gap-5 md:gap-0 md:flex-row flex-col">
+            <div className="w-full flex-center-between md:mb-5 mb-7 gap-5 md:gap-0 md:flex-row flex-col">
               <FormField
                 control={form.control}
                 name="chainFrom"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel className="flex items-end justify-between">
+                    <FormLabel className="flex-end">
                       Transfer from
                       <BalanceIndicator
                         balance={balanceFrom}
@@ -230,7 +230,7 @@ export default function RefuelPage() {
                 name="chainTo"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel className="flex items-end justify-between">
+                    <FormLabel className="flex-end">
                       Transfer to
                       <BalanceIndicator
                         balance={balanceTo}
@@ -257,7 +257,7 @@ export default function RefuelPage() {
               name="amount"
               render={({ field: { onChange, ...rest } }) => (
                 <FormItem>
-                  <FormLabel className="flex items-end justify-between">
+                  <FormLabel className="flex-end">
                     Enter Refuel Amount
                     <button
                       type="button"
@@ -271,7 +271,7 @@ export default function RefuelPage() {
                     </button>
                   </FormLabel>
                   <FormControl>
-                    <div className="relative flex items-center">
+                    <div className="relative flex-center">
                       <Input
                         {...rest}
                         onChange={(e) => {
@@ -297,8 +297,8 @@ export default function RefuelPage() {
               )}
             />
 
-            <div className="flex items-center justify-between w-full my-5 gap-5 text-sm font-medium max-w-xl mx-auto">
-              <span className="flex items-center justify-center rounded-md py-3 max-w-20 w-full border border-primary">
+            <div className="flex-center-between w-full my-5 gap-5 text-sm font-medium max-w-xl mx-auto">
+              <span className="flex-row-center rounded-md py-3 max-w-20 w-full border-basic">
                 0
               </span>
               <Slider
@@ -312,7 +312,7 @@ export default function RefuelPage() {
                   debounceFee(1)
                 }}
               />
-              <span className="flex items-center justify-center rounded-md py-3 w-fit min-w-20 px-2 border border-primary">
+              <span className="flex-row-center rounded-md py-3 w-fit min-w-20 px-2 border-basic">
                 {maxRefuelValue ?? 0}
               </span>
             </div>
@@ -325,19 +325,19 @@ export default function RefuelPage() {
                 <>
                   <FormLabel className="mb-4">Transaction Summary</FormLabel>
                   <div>
-                    <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5">
+                    <div className="flex-center-between w-full font-medium md:text-base text-xs py-2.5">
                       Estimated Transfer Time:
                       <span className="font-semibold">
                         ~{fields.chainFrom === 109 ? '18 mins' : '1 min'}
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary">
+                    <div className="flex-center-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary">
                       Refuel cost:
                       <span className="font-semibold">{feeAmount()}</span>
                     </div>
 
-                    <div className="flex items-center justify-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary md:mb-5 mb-2">
+                    <div className="flex-center-between w-full font-medium md:text-base text-xs py-2.5 border-t border-t-primary md:mb-5 mb-2">
                       Expected Output:
                       <span className="font-semibold">{expectedOutput()}</span>
                     </div>

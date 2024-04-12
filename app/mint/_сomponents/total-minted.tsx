@@ -97,7 +97,7 @@ export const TotalMinted = () => {
     >
       <Progress className="mb-2.5" value={percentMinted} />
 
-      <div className="flex w-full justify-between items-center text-base font-medium">
+      <div className="flex-center-between w-full text-base font-medium">
         <p>Total Minted</p>
         <p>
           {percentMinted}% ({minted}/{499999})

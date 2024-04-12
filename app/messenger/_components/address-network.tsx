@@ -30,7 +30,7 @@ export const AddressNetwork = ({
 }: AddressNetworkProps) => {
   return (
     <div className="max-[525px]:w-full w-max lg:w-full max-lg:mx-auto">
-      <Label className="leading-10 flex items-center">
+      <Label className="leading-10 flex-center">
         {label}
         {info && <InfoHover align="start" desc={info} />}
       </Label>
@@ -54,7 +54,7 @@ const selectedChain = (fieldValue: number) => {
   const selectedChain = CHAINS.find(({ value }) => value === fieldValue)
   if (!selectedChain) return 'Select chain'
   return (
-    <div className="flex items-center w-full">
+    <div className="flex-center w-full">
       <Image
         src={selectedChain.image}
         width={32}

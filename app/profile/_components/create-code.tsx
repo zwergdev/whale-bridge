@@ -84,7 +84,7 @@ export const CreateCode = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mb-10 max-w-[440px] w-full mx-auto flex items-center justify-items-start"
+        className="mb-10 max-w-[440px] w-full mx-auto flex-center justify-items-start"
       >
         <div className="flex sm:items-end items-center justify-center gap-5 sm:flex-row flex-col">
           <FormField

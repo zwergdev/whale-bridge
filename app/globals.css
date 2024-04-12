@@ -40,7 +40,6 @@
   }
 }
 
-
 @layer base {
   * {
     @apply border-border antialiased selection:bg-popover selection:text-foreground;

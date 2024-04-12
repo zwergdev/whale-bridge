@@ -18,7 +18,7 @@ const selectedChain = (fieldValue: number) => {
   const selectedChain = CHAINS.find(({ value }) => value === fieldValue)
   if (!selectedChain) return 'Select chain'
   return (
-    <div className="flex items-center w-full">
+    <div className="flex-center w-full">
       <Image
         src={selectedChain.image}
         width={48}

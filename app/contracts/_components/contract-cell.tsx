@@ -22,7 +22,7 @@ export const ContractCell = ({
   return (
     <TableCell className="last-of-type:text-right">
       {address ? (
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex-row-center gap-2">
           <Link
             href={`https://${explorer}/address/${address}`}
             target="_blank"

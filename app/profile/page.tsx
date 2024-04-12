@@ -32,13 +32,13 @@ export default function ProfilePage() {
 
   if (isLoading)
     return (
-      <div className="flex items-center justify-center h-[calc(100vh-160px)] w-screen">
+      <div className="flex-row-center h-[calc(100vh-160px)] w-screen">
         <Loader className="h-8 w-8 animate-spin-slow" />
       </div>
     )
 
   return (
-    <section className="flex max-w-screen-xl mx-auto w-full flex-col items-center justify-center pt-40 gap-5 min-h-[calc(100vh-160px)]">
+    <section className="flex-col-center max-w-screen-xl mx-auto w-full pt-40 gap-5 min-h-[calc(100vh-160px)]">
       <h6 className="font-medium text-xl text-muted-foreground mb-6 cursor-not-allowed">
         Leaderboard
       </h6>
