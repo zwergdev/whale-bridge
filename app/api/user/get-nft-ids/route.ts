@@ -6,9 +6,9 @@ type RequestBody = {
 }
 
 const API_KEYS = {
-  element: '836618cabf89a3313263626025eaa225',
-  opensea: '6d680f1285bf452e83c7bcbb11f260cc',
-  nftscan: 'ifwgRnIiWn5MrEkd8ne6797E',
+  element: process.env.ELEMENT_API_KEY!,
+  opensea: process.env.OPENSEA_API_KEY!,
+  nftscan: process.env.NFTSCAN_API_KEY!,
 }
 
 const CHAINS: { [key: number]: { chain: string; collection: string } } = {
