@@ -1,10 +1,10 @@
 'use server'
 
-import { COLLECTIONS_NFT } from "@/lib/constants"
+import { COLLECTIONS_NFT } from '@/lib/constants'
 
 const API_KEYS = {
-  opensea: '6d680f1285bf452e83c7bcbb11f260cc',
-  nftscan: 'ifwgRnIiWn5MrEkd8ne6797E',
+  opensea: process.env.OPENSEA_API_KEY!,
+  nftscan: process.env.NFTSCAN_API_KEY!,
 }
 
 const fetchFromOpensea = async (address: string) => {
@@ -79,7 +79,7 @@ export const getNFTBalance = async (
     chainId === 1116 ||
     chainId === 5000 ||
     chainId === 122 ||
-    chainId === 1088 || 
+    chainId === 1088 ||
     chainId === 148
   )
     return []
