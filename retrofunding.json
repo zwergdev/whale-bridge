@@ -1,7 +1,5 @@
 {
-  "retroFunding": {
-    "ethereum": {
-      "ProjectID": "xxxxxx"
-    }
+  "opRetro": {
+    "projectId": "0x9ee9c906642c79f905691d25a3bac3627b2f709e8bc20883afda1c4f2b76ef7e"
   }
 }
