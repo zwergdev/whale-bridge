@@ -1,6 +1,0 @@
-export * from './create-code'
-export * from './no-wallet-page'
-export * from './owned-code'
-export * from './redeem-code'
-export * from './redeemed-code'
-export * from './referrals-counter'

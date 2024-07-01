@@ -1,9 +1,9 @@
 'use client'
 
+import { NAVIGATION_HEADER } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { NAVIGATION_HEADER } from '@/lib/constants'
 
 type NavigationProps = {
   disableBefore?: boolean
@@ -13,7 +13,7 @@ type NavigationProps = {
 export const Navigation = ({ disableBefore, onClick }: NavigationProps) => {
   const pathname = usePathname()
 
-  return NAVIGATION_HEADER.map(({ href, label, isNew }) => (
+  return NAVIGATION_HEADER.map(({ href, label }) => (
     <Link
       key={href}
       href={href}
@@ -26,14 +26,6 @@ export const Navigation = ({ disableBefore, onClick }: NavigationProps) => {
         disableBefore && 'before:hidden',
       )}
     >
-      {isNew && !disableBefore && (
-        <div
-          className="absolute -right-3.5 -top-3.5 text-[10px] leading-none bg-yellow-500 animate-pulse px-1.5 py-0.5 rounded hover:text-foreground text-foreground font-bold"
-          style={{ boxShadow: '0 0 8px yellow' }}
-        >
-          NEW
-        </div>
-      )}
       {label}
     </Link>
   ))

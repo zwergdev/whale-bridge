@@ -6,8 +6,7 @@ export const NAVIGATION_HEADER = [
   { href: '/bridge', label: 'Bridge NFT' },
   { href: '/refuel', label: 'Gas Refuel' },
   { href: '/token', label: 'OFT Bridge' },
-  { href: '/messenger', label: 'Messenger', isNew: true },
-  { href: '/profile', label: 'Profile' },
+  { href: '/messenger', label: 'Messenger' },
 ]
 
 export const NAVIGATION_FOOTER = [
@@ -16,7 +15,6 @@ export const NAVIGATION_FOOTER = [
   { href: '/refuel', label: 'Gas Refuel' },
   { href: '/token', label: 'OFT Bridge' },
   { href: '/messenger', label: 'Messenger' },
-  { href: '/profile', label: 'Profile' },
   { href: '/contracts', label: 'Contracts' },
   { href: 'https://layerzeroscan.com/protocol/whale', label: 'LayerZero.Scan' },
 ]
